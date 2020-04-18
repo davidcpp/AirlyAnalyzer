@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AirQualityForecastAccuracy>
+
+@{
+  ViewData["Title"] = "Index";
+  //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.Pm25Error)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Pm10Error)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.AirlyCaqiError)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.TillDateTime)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.ForecastRequestDateTime)
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Pm25Error)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Pm10Error)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqiError)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.TillDateTime)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.ForecastRequestDateTime)
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

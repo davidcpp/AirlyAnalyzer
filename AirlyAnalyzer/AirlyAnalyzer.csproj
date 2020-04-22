@@ -12,9 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="AirQualityForecastAccuracy_extended.cs" />
-    <Compile Remove="Controllers\ForecastControllerActions.cs" />
-    <Compile Remove="Controllers\HomeController.cs" />
     <Compile Remove="Migrations\20200328205537_InitialCreate.cs" />
     <Compile Remove="Migrations\20200328205537_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200403205836_ChangeVariablesNames.cs" />
@@ -33,29 +30,6 @@
     <Compile Remove="Migrations\20200407150144_ChangePropertiesTypes2.Designer.cs" />
     <Compile Remove="Migrations\20200416222512_newMigration.cs" />
     <Compile Remove="Migrations\20200416222512_newMigration.Designer.cs" />
-    <Compile Remove="Models\AirQualityForecastAccuracy_extended.cs" />
-    <Compile Remove="Models\AirQualityMeasurements.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Views\Forecast\Create.cshtml" />
-    <Content Remove="Views\Forecast\Delete.cshtml" />
-    <Content Remove="Views\Forecast\Details.cshtml" />
-    <Content Remove="Views\Forecast\Edit.cshtml" />
-    <Content Remove="Views\Forecast\IndexActions.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="App_Data\AirlyApiDatabaseV2.mdf" />
-    <None Remove="App_Data\AirlyApiDatabaseV2_backup_2.mdf" />
-    <None Remove="App_Data\AirlyApiDatabaseV2_log.ldf" />
-    <None Remove="App_Data\AirlyApiDatabaseV2_log_backup_2.ldf" />
-    <None Remove="App_Data\dbo.ArchiveForecasts.data_4.04.2020.sql" />
-    <None Remove="App_Data\dbo.ArchiveMeasurements.data_4.04.2020.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="C:\Users\Dawid\source\repos\AirlyAnalyzer_unnecessary\appsettings.json" Link="appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,7 +46,5 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
-
-
 
 </Project>

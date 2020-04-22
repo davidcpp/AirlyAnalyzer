@@ -1,3 +1,4 @@
+using System.IO;
 using AirlyAnalyzer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,8 +28,11 @@ namespace AirlyAnalyzer
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
+      string dataDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data");
+
       services.AddDbContext<AirlyContext>(options
-        => options.UseSqlServer(Configuration.GetConnectionString("AirlyDbConnection")));
+        => options.UseSqlServer(
+          Configuration.GetConnectionString("AirlyDbConnection").Replace("[DataDirectory]", dataDirectoryPath)));
       services.AddControllersWithViews();
     }
 

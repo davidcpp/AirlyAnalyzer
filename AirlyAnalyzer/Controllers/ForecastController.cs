@@ -1,10 +1,10 @@
-﻿using AirlyAnalyzer.Data;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AirlyAnalyzer.Data;
 using AirlyAnalyzer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using static AirlyAnalyzer.Models.ModelExtensions;
 
 namespace AirlyAnalyzer.Controllers

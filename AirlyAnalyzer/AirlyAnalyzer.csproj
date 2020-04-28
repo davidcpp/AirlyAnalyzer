@@ -4,33 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Views\Home\**" />
-    <Content Remove="Views\Home\**" />
-    <EmbeddedResource Remove="Views\Home\**" />
-    <None Remove="Views\Home\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20200328205537_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200328205537_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20200403205836_ChangeVariablesNames.cs" />
-    <Compile Remove="Migrations\20200403205836_ChangeVariablesNames.Designer.cs" />
-    <Compile Remove="Migrations\20200406114328_ChangeAccuracyProperties.cs" />
-    <Compile Remove="Migrations\20200406114328_ChangeAccuracyProperties.Designer.cs" />
-    <Compile Remove="Migrations\20200407144214_newMigration.cs" />
-    <Compile Remove="Migrations\20200407144214_newMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200407145542_TestMigration.cs" />
-    <Compile Remove="Migrations\20200407145542_TestMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200407145924_TestMigration.cs" />
-    <Compile Remove="Migrations\20200407145924_TestMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200407145931_TestMigration2.cs" />
-    <Compile Remove="Migrations\20200407145931_TestMigration2.Designer.cs" />
-    <Compile Remove="Migrations\20200407150144_ChangePropertiesTypes2.cs" />
-    <Compile Remove="Migrations\20200407150144_ChangePropertiesTypes2.Designer.cs" />
-    <Compile Remove="Migrations\20200416222512_newMigration.cs" />
-    <Compile Remove="Migrations\20200416222512_newMigration.Designer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />

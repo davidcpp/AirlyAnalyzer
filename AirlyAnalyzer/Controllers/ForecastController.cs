@@ -37,10 +37,12 @@ namespace AirlyAnalyzer.Controllers
       context.SaveNewMeasurements(history, requestDateTime);
       context.SaveNewForecasts(forecast, requestDateTime);
 
-      var lastForecastAccuracy = context.ForecastAccuracyRates.ToList().Last();
+      var lastForecastAccuracy = context.ForecastAccuracyRates.ToList().Count > 0 ?
+        context.ForecastAccuracyRates.ToList().Last() : new AirQualityForecastAccuracy();
       var archiveMeasurements = context.ArchiveMeasurements.ToList();
 
-      var lastMeasurement = archiveMeasurements.Last();
+      var lastMeasurement = archiveMeasurements.Count > 0 ?
+        archiveMeasurements.Last() : new AirQualityMeasurement();
       var archiveForecasts = context.ArchiveForecasts.ToList();
 
       if (context.ForecastAccuracyRates.Count() > 0

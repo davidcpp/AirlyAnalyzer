@@ -41,38 +41,32 @@ namespace AirlyAnalyzer.Controllers
         context.ForecastAccuracyRates.ToList().Last() : new AirQualityForecastAccuracy();
       var archiveMeasurements = context.ArchiveMeasurements.ToList();
 
-      var lastMeasurement = archiveMeasurements.Count > 0 ?
-        archiveMeasurements.Last() : new AirQualityMeasurement();
       var archiveForecasts = context.ArchiveForecasts.ToList();
 
-      if (context.ForecastAccuracyRates.Count() > 0
-        && lastForecastAccuracy.TillDateTime < lastMeasurement.TillDateTime)
+      int i = archiveMeasurements.Count - 1;
+      while (i >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[i].TillDateTime)
       {
-        int i = archiveMeasurements.Count - 1;
-        while (i >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[i].TillDateTime)
-        {
-          i--;
-        }
+        i--;
+      }
 
-        int j = archiveForecasts.Count - 1;
-        while (j >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[j].TillDateTime)
-        {
-          j--;
-        }
+      int j = archiveForecasts.Count - 1;
+      while (j >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[j].TillDateTime)
+      {
+        j--;
+      }
 
-        int numberOfElements = archiveMeasurements.Count - (i + 1);
+      int numberOfElements = archiveMeasurements.Count - (i + 1);
 
-        if (numberOfElements > 0)
-        {
-          var newForecasts = archiveForecasts.GetRange(j + 1, numberOfElements);
+      if (numberOfElements > 0)
+      {
+        var newForecasts = archiveForecasts.GetRange(j + 1, numberOfElements);
 
-          var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
-            archiveMeasurements.GetRange(i + 1, numberOfElements),
-            config.GetValue<short>("AppSettings:AirlyApi:InstallationId"));
+        var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
+          archiveMeasurements.GetRange(i + 1, numberOfElements),
+          config.GetValue<short>("AppSettings:AirlyApi:InstallationId"));
 
-          context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);
-          await context.SaveChangesAsync();
-        }
+        context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);
+        await context.SaveChangesAsync();
       }
 
       return View(context.ForecastAccuracyRates.ToList());

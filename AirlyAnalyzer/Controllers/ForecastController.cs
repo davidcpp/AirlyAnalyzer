@@ -47,20 +47,20 @@ namespace AirlyAnalyzer.Controllers
         && lastForecastAccuracy.TillDateTime < lastMeasurement.TillDateTime)
       {
         int i = archiveMeasurements.Count - 1;
-        while (lastForecastAccuracy.TillDateTime < archiveMeasurements[i].TillDateTime)
+        while (i >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[i].TillDateTime)
         {
           i--;
         }
 
         int j = archiveForecasts.Count - 1;
-        while (lastForecastAccuracy.TillDateTime < archiveForecasts[j].TillDateTime)
+        while (j >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[j].TillDateTime)
         {
           j--;
         }
 
         int numberOfElements = archiveMeasurements.Count - (i + 1);
 
-        if ((i + 1) < archiveMeasurements.Count)
+        if (numberOfElements > 0)
         {
           var newForecasts = archiveForecasts.GetRange(j + 1, numberOfElements);
 

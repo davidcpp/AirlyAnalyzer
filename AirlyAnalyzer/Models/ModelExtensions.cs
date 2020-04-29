@@ -107,6 +107,31 @@ namespace AirlyAnalyzer.Models
       }
     }
 
+    public static void CalculateNewMeasurementsRange(
+      List<AirQualityMeasurement> archiveMeasurements,
+      List<AirQualityForecast> archiveForecasts,
+      AirQualityForecastAccuracy lastForecastAccuracy,
+      out int measurementsStartIndex,
+      out int forecastsStartIndex,
+      out int numberOfElements)
+    {
+      measurementsStartIndex = archiveMeasurements.Count - 1;
+      while (measurementsStartIndex >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[measurementsStartIndex].TillDateTime)
+      {
+        measurementsStartIndex--;
+      }
+      measurementsStartIndex++;
+
+      forecastsStartIndex = archiveForecasts.Count - 1;
+      while (forecastsStartIndex >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[forecastsStartIndex].TillDateTime)
+      {
+        forecastsStartIndex--;
+      }
+      forecastsStartIndex++;
+
+      numberOfElements = archiveMeasurements.Count - measurementsStartIndex;
+    }
+
     public static List<AirQualityForecastAccuracy> CalculateForecastAccuracy(
       this List<AirQualityForecast> archiveForecasts,
       List<AirQualityMeasurement> archiveMeasurements,

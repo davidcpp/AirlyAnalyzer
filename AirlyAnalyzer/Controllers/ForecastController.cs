@@ -43,26 +43,19 @@ namespace AirlyAnalyzer.Controllers
       var lastForecastAccuracy = context.ForecastAccuracyRates.ToList().Count > 0 ?
         context.ForecastAccuracyRates.ToList().Last() : new AirQualityForecastAccuracy();
 
-      int i = archiveMeasurements.Count - 1;
-      while (i >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[i].TillDateTime)
-      {
-        i--;
-      }
-
-      int j = archiveForecasts.Count - 1;
-      while (j >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[j].TillDateTime)
-      {
-        j--;
-      }
-
-      int numberOfElements = archiveMeasurements.Count - (i + 1);
+      CalculateNewMeasurementsRange(archiveMeasurements,
+        archiveForecasts,
+        lastForecastAccuracy,
+        out int measurementsStartIndex,
+        out int forecastsStartIndex,
+        out int numberOfElements);
 
       if (numberOfElements > 0)
       {
-        var newForecasts = archiveForecasts.GetRange(j + 1, numberOfElements);
+        var newForecasts = archiveForecasts.GetRange(forecastsStartIndex, numberOfElements);
 
         var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
-          archiveMeasurements.GetRange(i + 1, numberOfElements),
+          archiveMeasurements.GetRange(measurementsStartIndex, numberOfElements),
           config.GetValue<short>("AppSettings:AirlyApi:InstallationId"));
 
         context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);

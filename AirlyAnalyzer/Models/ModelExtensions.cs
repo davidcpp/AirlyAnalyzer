@@ -160,8 +160,8 @@ namespace AirlyAnalyzer.Models
 
           var accuracyRate = new AirQualityForecastAccuracy
           {
-            FromDateTime = archiveMeasurements[j].FromDateTime,
-            TillDateTime = archiveMeasurements[j].TillDateTime,
+            FromDateTime = archiveForecasts[i].FromDateTime,
+            TillDateTime = archiveForecasts[i].TillDateTime,
             ForecastRequestDateTime = archiveForecasts[i].RequestDateTime,
             InstallationId = installationId,
             AirlyCaqiError = Convert.ToInt16(airlyCaqiRelativeError * 100),

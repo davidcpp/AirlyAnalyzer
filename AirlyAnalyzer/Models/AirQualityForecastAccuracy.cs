@@ -9,9 +9,9 @@ namespace AirlyAnalyzer.Models
     private DateTime forecastRequestDateTime;
 
     public short InstallationId { get; set; }
+    public short AirlyCaqiError { get; set; }
     public short Pm25Error { get; set; }
     public short Pm10Error { get; set; }
-    public short AirlyCaqiError { get; set; }
 
     public DateTime FromDateTime
     {

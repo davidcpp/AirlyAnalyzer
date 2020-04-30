@@ -141,15 +141,11 @@ namespace AirlyAnalyzer.Models
 
       for (int i = 0, j = 0; j < archiveMeasurements.Count && i < archiveForecasts.Count;)
       {
-        var currentForecastDateTime = archiveForecasts[i].TillDateTime.ToUniversalTime();
         var currentMeasurementDateTime = archiveMeasurements[j].TillDateTime.ToUniversalTime();
+        var currentForecastDateTime = archiveForecasts[i].TillDateTime.ToUniversalTime();
 
         if (currentForecastDateTime == currentMeasurementDateTime)
         {
-          double airlyCaqiRelativeError =
-            (double)(archiveMeasurements[j].AirlyCaqi - archiveForecasts[i].AirlyCaqi)
-            / (double)archiveMeasurements[j].AirlyCaqi;
-
           double pm25RelativeError =
             (double)(archiveMeasurements[j].Pm25 - archiveForecasts[i].Pm25)
             / (double)archiveMeasurements[j].Pm25;
@@ -158,15 +154,19 @@ namespace AirlyAnalyzer.Models
             (double)(archiveMeasurements[j].Pm10 - archiveForecasts[i].Pm10)
             / (double)archiveMeasurements[j].Pm10;
 
+          double airlyCaqiRelativeError =
+            (double)(archiveMeasurements[j].AirlyCaqi - archiveForecasts[i].AirlyCaqi)
+            / (double)archiveMeasurements[j].AirlyCaqi;
+
           var accuracyRate = new AirQualityForecastAccuracy
           {
+            InstallationId = installationId,
             FromDateTime = archiveForecasts[i].FromDateTime,
             TillDateTime = archiveForecasts[i].TillDateTime,
-            ForecastRequestDateTime = archiveForecasts[i].RequestDateTime,
-            InstallationId = installationId,
             AirlyCaqiError = Convert.ToInt16(airlyCaqiRelativeError * 100),
             Pm25Error = Convert.ToInt16(pm25RelativeError * 100),
             Pm10Error = Convert.ToInt16(pm10RelativeError * 100),
+            ForecastRequestDateTime = archiveForecasts[i].RequestDateTime,
           };
 
           forecastAccuracyRates.Add(accuracyRate);

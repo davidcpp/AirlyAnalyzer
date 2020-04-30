@@ -11,13 +11,13 @@
   <thead>
     <tr>
       <th>
+        @Html.DisplayNameFor(model => model.AirlyCaqiError)
+      </th>
+      <th>
         @Html.DisplayNameFor(model => model.Pm25Error)
       </th>
       <th>
         @Html.DisplayNameFor(model => model.Pm10Error)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.AirlyCaqiError)
       </th>
       <th>
         @Html.DisplayNameFor(model => model.TillDateTime)
@@ -33,13 +33,13 @@
     {
       <tr>
         <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqiError)%
+        </td>
+        <td>
           @Html.DisplayFor(modelItem => item.Pm25Error)%
         </td>
         <td>
           @Html.DisplayFor(modelItem => item.Pm10Error)%
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.AirlyCaqiError)%
         </td>
         <td>
           @Html.DisplayFor(modelItem => item.TillDateTime)

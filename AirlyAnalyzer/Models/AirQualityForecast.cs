@@ -9,9 +9,9 @@ namespace AirlyAnalyzer.Models
     private DateTime requestDateTime;
 
     public short InstallationId { get; set; }
+    public byte AirlyCaqi { get; set; }
     public short Pm25 { get; set; }
     public short Pm10 { get; set; }
-    public byte AirlyCaqi { get; set; }
 
     public DateTime FromDateTime
     {

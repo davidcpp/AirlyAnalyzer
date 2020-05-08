@@ -20,6 +20,9 @@
         @Html.DisplayNameFor(model => model.Pm10Error)
       </th>
       <th>
+        @Html.DisplayNameFor(model => model.FromDateTime)
+      </th>
+      <th>
         @Html.DisplayNameFor(model => model.TillDateTime)
       </th>
       <th>
@@ -40,6 +43,9 @@
         </td>
         <td>
           @Html.DisplayFor(modelItem => item.Pm10Error)%
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.FromDateTime)
         </td>
         <td>
           @Html.DisplayFor(modelItem => item.TillDateTime)

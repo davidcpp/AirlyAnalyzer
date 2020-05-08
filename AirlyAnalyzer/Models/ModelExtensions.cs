@@ -137,9 +137,17 @@ namespace AirlyAnalyzer.Models
       List<AirQualityMeasurement> archiveMeasurements,
       short installationId)
     {
-      var forecastAccuracyRates = new List<AirQualityForecastAccuracy>();
+      int dailyCounter = 0, counter = 0;
+      int firstForecastItemIndex = 0;
 
-      for (int i = 0, j = 0; i < archiveMeasurements.Count && j < archiveForecasts.Count;)
+      int caqiErrorsDailySum = 0, pm25ErrorsDailySum = 0, pm10ErrorsDailySum = 0;
+      int caqiErrorsTotalSum = 0, pm25ErrorsTotalSum = 0, pm10ErrorsTotalSum = 0;
+      int i = 0, j = 0;
+
+      var forecastAccuracyRates = new List<AirQualityForecastAccuracy>();
+      AirQualityForecastAccuracy dailyAccuracyRate;
+
+      for (; i < archiveMeasurements.Count && j < archiveForecasts.Count;)
       {
         var currentMeasurementDateTime = archiveMeasurements[i].TillDateTime.ToUniversalTime();
         var currentForecastDateTime = archiveForecasts[j].TillDateTime.ToUniversalTime();
@@ -161,15 +169,43 @@ namespace AirlyAnalyzer.Models
           var accuracyRate = new AirQualityForecastAccuracy
           {
             InstallationId = installationId,
-            FromDateTime = archiveForecasts[j].FromDateTime,
-            TillDateTime = archiveForecasts[j].TillDateTime,
+            FromDateTime = archiveMeasurements[i].FromDateTime,
+            TillDateTime = archiveMeasurements[i].TillDateTime,
             AirlyCaqiError = Convert.ToInt16(airlyCaqiRelativeError * 100),
             Pm25Error = Convert.ToInt16(pm25RelativeError * 100),
             Pm10Error = Convert.ToInt16(pm10RelativeError * 100),
-            ForecastRequestDateTime = archiveForecasts[j].RequestDateTime,
+            ForecastRequestDateTime = archiveMeasurements[i].RequestDateTime,
           };
 
           forecastAccuracyRates.Add(accuracyRate);
+
+          caqiErrorsDailySum += Math.Abs(accuracyRate.AirlyCaqiError);
+          pm25ErrorsDailySum += Math.Abs(accuracyRate.Pm25Error);
+          pm10ErrorsDailySum += Math.Abs(accuracyRate.Pm10Error);
+
+          if (j != 0 && archiveMeasurements[i].RequestDateTime != archiveMeasurements[i - 1].RequestDateTime)
+          {
+            // Calculate MAPE of daily forecast
+            if (dailyCounter >= 23)
+            {
+              dailyAccuracyRate = generateForecastAccuracyRate(
+                caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
+              forecastAccuracyRates.Add(dailyAccuracyRate);
+            }
+
+            counter += dailyCounter;
+            caqiErrorsTotalSum += caqiErrorsDailySum;
+            pm25ErrorsTotalSum += pm25ErrorsDailySum;
+            pm10ErrorsTotalSum += pm10ErrorsDailySum;
+
+            dailyCounter = 0;
+            firstForecastItemIndex = i;
+            caqiErrorsDailySum = 0;
+            pm25ErrorsDailySum = 0;
+            pm10ErrorsDailySum = 0;
+          }
+
+          dailyCounter++;
           i++; j++;
         }
         else if (currentForecastDateTime > currentMeasurementDateTime)
@@ -182,7 +218,34 @@ namespace AirlyAnalyzer.Models
         }
       }
 
+      var lastDailyAccuracyRate = generateForecastAccuracyRate(
+        caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
+      forecastAccuracyRates.Add(lastDailyAccuracyRate);
+
+      firstForecastItemIndex = 0;
+      counter += dailyCounter;
+
+      // Calculate MAPE of all previous daily forecasts
+      var totalAccuracyRate = generateForecastAccuracyRate(
+        caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, counter);
+      forecastAccuracyRates.Add(totalAccuracyRate);
+
       return forecastAccuracyRates;
+
+      AirQualityForecastAccuracy generateForecastAccuracyRate(
+        int caqiErrorsSum, int pm25ErrorsSum, int pm10ErrorsSum, int counter)
+      {
+        return new AirQualityForecastAccuracy
+        {
+          InstallationId = installationId,
+          FromDateTime = archiveMeasurements[firstForecastItemIndex].FromDateTime,
+          TillDateTime = archiveMeasurements[i - 1].TillDateTime,
+          AirlyCaqiError = (short)(caqiErrorsSum / counter),
+          Pm25Error = (short)(pm25ErrorsSum / counter),
+          Pm10Error = (short)(pm10ErrorsSum / counter),
+          ForecastRequestDateTime = archiveMeasurements[i - 1].RequestDateTime,
+        };
+      }
     }
   }
 }

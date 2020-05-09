@@ -46,32 +46,43 @@ namespace AirlyAnalyzer.Models
       return airQualityForecasts;
     }
 
-    public static Measurements DownloadInstallationMeasurements(IConfiguration config)
+    public static IEnumerable<Measurements> DownloadInstallationMeasurements(
+      IConfiguration config,
+      List<short> installationIDsList)
     {
       string response;
 
-      using (var webClient = new WebClient())
+      for (int i = 0; i < installationIDsList.Count; i++)
       {
-        webClient.BaseAddress = config.GetValue<string>("AppSettings:AirlyApi:Uri");
-        webClient.Headers.Remove(HttpRequestHeader.Accept);
-        webClient.Headers.Add(HttpRequestHeader.Accept, config.GetValue<string>("AirlyApi:ContentType"));
-        webClient.Headers.Add(AirlyApiKeyHeaderName, config.GetValue<string>("AppSettings:AirlyApi:Key"));
-        response = webClient.DownloadString(config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri") +
-          config.GetValue<int>("AppSettings:AirlyApi:InstallationId").ToString());
-      }
+        using (var webClient = new WebClient())
+        {
+          short currentInstallationId = config.GetValue<short>($"AppSettings:AirlyApi:InstallationIds:{i}");
 
-      return JsonConvert.DeserializeObject<Measurements>(response);
+          webClient.BaseAddress = config.GetValue<string>("AppSettings:AirlyApi:Uri");
+          webClient.Headers.Remove(HttpRequestHeader.Accept);
+          webClient.Headers.Add(HttpRequestHeader.Accept, config.GetValue<string>("AirlyApi:ContentType"));
+          webClient.Headers.Add(AirlyApiKeyHeaderName, config.GetValue<string>("AppSettings:AirlyApi:Key"));
+          response = webClient.DownloadString(config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri") +
+            currentInstallationId.ToString());
+
+          yield return JsonConvert.DeserializeObject<Measurements>(response);
+        }
+      }
     }
 
     public static void SaveNewMeasurements(
       this AirlyContext context,
       List<AirQualityMeasurement> history,
-      DateTime requestTime)
+      DateTime requestTime,
+      short installationId)
     {
+      var archiveMeasurementsForInstallation =
+        context.ArchiveMeasurements.Where(x => x.InstallationId == installationId).ToList();
+
       // Check if some of measurements there already are in Database
-      if (context.ArchiveMeasurements.Count() > 0)
+      if (archiveMeasurementsForInstallation.Count > 0)
       {
-        var dbLastElement = context.ArchiveMeasurements.ToList().Last();
+        var dbLastElement = archiveMeasurementsForInstallation.Last();
         while (history.Count > 0 && history[0].FromDateTime <= dbLastElement.FromDateTime)
         {
           history.RemoveAt(0);
@@ -88,12 +99,16 @@ namespace AirlyAnalyzer.Models
     public static void SaveNewForecasts(
       this AirlyContext context,
       List<AirQualityForecast> forecast,
-      DateTime requestTime)
+      DateTime requestTime,
+      short installationId)
     {
+      var archiveForecastsForInstallation =
+        context.ArchiveForecasts.Where(x => x.InstallationId == installationId).ToList();
+
       // Check if some of forecasts there already are in Database
-      if (context.ArchiveForecasts.Count() > 0)
+      if (archiveForecastsForInstallation.Count > 0)
       {
-        var dbLastElement = context.ArchiveForecasts.ToList().Last();
+        var dbLastElement = archiveForecastsForInstallation.Last();
         while (forecast.Count > 0 && forecast[0].FromDateTime <= dbLastElement.FromDateTime)
         {
           forecast.RemoveAt(0);

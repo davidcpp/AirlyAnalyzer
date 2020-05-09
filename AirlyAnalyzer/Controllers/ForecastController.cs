@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AirlyAnalyzer.Data;
@@ -13,55 +14,68 @@ namespace AirlyAnalyzer.Controllers
   {
     private readonly AirlyContext context;
     private readonly IConfiguration config;
+    private readonly List<short> installationIDsList;
 
     public ForecastController(AirlyContext context, IConfiguration config)
     {
       this.context = context;
       this.config = config;
+      installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
     }
 
     // GET: Forecast
     public async Task<IActionResult> Index()
     {
       var requestDateTime = DateTime.UtcNow;
-      var responseMeasurements = DownloadInstallationMeasurements(config);
+      var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList).ToList();
 
-      var history = responseMeasurements.History.ConvertToAirQualityMeasurements(
-        config.GetValue<short>("AppSettings:AirlyApi:InstallationId"),
-        requestDateTime);
+      var historyList = new List<List<AirQualityMeasurement>>();
+      var forecastList = new List<List<AirQualityForecast>>();
 
-      var forecast = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-        config.GetValue<short>("AppSettings:AirlyApi:InstallationId"),
-        requestDateTime);
-
-      context.SaveNewMeasurements(history, requestDateTime);
-      context.SaveNewForecasts(forecast, requestDateTime);
-
-      var archiveMeasurements = context.ArchiveMeasurements.ToList();
-      var archiveForecasts = context.ArchiveForecasts.ToList();
-
-      var lastForecastAccuracy = context.ForecastAccuracyRates.ToList().Count > 0 ?
-        context.ForecastAccuracyRates.ToList().Last() : new AirQualityForecastAccuracy();
-
-      CalculateNewMeasurementsRange(archiveMeasurements,
-        archiveForecasts,
-        lastForecastAccuracy,
-        out int measurementsStartIndex,
-        out int forecastsStartIndex,
-        out int numberOfElements);
-
-      if (numberOfElements > 0)
+      for (int i = 0; i < responseMeasurements.Count; i++)
       {
-        var newForecasts = archiveForecasts.GetRange(forecastsStartIndex, numberOfElements);
+        var history = responseMeasurements[i].History.ConvertToAirQualityMeasurements(
+          installationIDsList[i], requestDateTime);
+        historyList.Add(history);
 
-        var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
-          archiveMeasurements.GetRange(measurementsStartIndex, numberOfElements),
-          config.GetValue<short>("AppSettings:AirlyApi:InstallationId"));
+        var forecast = responseMeasurements[i].Forecast.ConvertToAirQualityForecasts(
+          installationIDsList[i], requestDateTime);
+        forecastList.Add(forecast);
 
-        context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);
-        await context.SaveChangesAsync();
+        context.SaveNewMeasurements(history, requestDateTime, installationIDsList[i]);
+        context.SaveNewForecasts(forecast, requestDateTime, installationIDsList[i]);
+
+        var archiveMeasurements =
+          context.ArchiveMeasurements.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+
+        var archiveForecastAccuracyRates =
+          context.ForecastAccuracyRates.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+
+        var lastForecastAccuracy = archiveForecastAccuracyRates.Count > 0 ?
+          archiveForecastAccuracyRates.Last() : new AirQualityForecastAccuracy();
+
+        var archiveForecasts =
+          context.ArchiveForecasts.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+
+        CalculateNewMeasurementsRange(archiveMeasurements,
+          archiveForecasts,
+          lastForecastAccuracy,
+          out int measurementsStartIndex,
+          out int forecastsStartIndex,
+          out int numberOfElements);
+
+        if (numberOfElements > 0)
+        {
+          var newForecasts = archiveForecasts.GetRange(forecastsStartIndex, numberOfElements);
+
+          var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
+            archiveMeasurements.GetRange(measurementsStartIndex, numberOfElements),
+            installationIDsList[i]);
+
+          context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);
+          await context.SaveChangesAsync();
+        }
       }
-
       return View(context.ForecastAccuracyRates.ToList());
     }
   }

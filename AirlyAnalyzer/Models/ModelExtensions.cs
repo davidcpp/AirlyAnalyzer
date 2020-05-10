@@ -233,14 +233,20 @@ namespace AirlyAnalyzer.Models
         }
       }
 
-      var lastDailyAccuracyRate = generateForecastAccuracyRate(
-        caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
-      forecastAccuracyRates.Add(lastDailyAccuracyRate);
+      if (dailyCounter >= 23)
+      {
+        var lastDailyAccuracyRate = generateForecastAccuracyRate(
+          caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
+        forecastAccuracyRates.Add(lastDailyAccuracyRate);
+      }
 
       firstForecastItemIndex = 0;
       counter += dailyCounter;
+      caqiErrorsTotalSum += caqiErrorsDailySum;
+      pm25ErrorsTotalSum += pm25ErrorsDailySum;
+      pm10ErrorsTotalSum += pm10ErrorsDailySum;
 
-      // Calculate MAPE of all previous daily forecasts
+      // Calculate MAPE of all previous forecasts
       var totalAccuracyRate = generateForecastAccuracyRate(
         caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, counter);
       forecastAccuracyRates.Add(totalAccuracyRate);

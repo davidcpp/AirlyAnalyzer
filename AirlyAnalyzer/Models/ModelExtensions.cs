@@ -12,8 +12,8 @@ namespace AirlyAnalyzer.Models
   {
     private const string AirlyApiKeyHeaderName = "apikey";
 
-    public static List<AirQualityMeasurement>
-      ConvertToAirQualityMeasurements(this List<AveragedValues> averagedValues, short installationId, DateTime requestTime)
+    public static List<AirQualityMeasurement> ConvertToAirQualityMeasurements(
+      this List<AveragedValues> averagedValues, short installationId, DateTime requestTime)
     {
       var airQualityMeasurements = new List<AirQualityMeasurement>();
 
@@ -62,8 +62,8 @@ namespace AirlyAnalyzer.Models
           webClient.Headers.Remove(HttpRequestHeader.Accept);
           webClient.Headers.Add(HttpRequestHeader.Accept, config.GetValue<string>("AirlyApi:ContentType"));
           webClient.Headers.Add(AirlyApiKeyHeaderName, config.GetValue<string>("AppSettings:AirlyApi:Key"));
-          response = webClient.DownloadString(config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri") +
-            currentInstallationId.ToString());
+          response = webClient.DownloadString(config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri")
+            + currentInstallationId.ToString());
 
           yield return JsonConvert.DeserializeObject<Measurements>(response);
         }
@@ -130,19 +130,19 @@ namespace AirlyAnalyzer.Models
       out int forecastsStartIndex,
       out int numberOfElements)
     {
-      measurementsStartIndex = archiveMeasurements.Count - 1;
-      while (measurementsStartIndex >= 0 && lastForecastError.TillDateTime < archiveMeasurements[measurementsStartIndex].TillDateTime)
+      int i = archiveMeasurements.Count - 1;
+      while (i >= 0 && lastForecastError.TillDateTime < archiveMeasurements[i].TillDateTime)
       {
-        measurementsStartIndex--;
+        i--;
       }
-      measurementsStartIndex++;
+      measurementsStartIndex = ++i;
 
-      forecastsStartIndex = archiveForecasts.Count - 1;
-      while (forecastsStartIndex >= 0 && lastForecastError.TillDateTime < archiveForecasts[forecastsStartIndex].TillDateTime)
+      i = archiveForecasts.Count - 1;
+      while (i >= 0 && lastForecastError.TillDateTime < archiveForecasts[i].TillDateTime)
       {
-        forecastsStartIndex--;
+        i--;
       }
-      forecastsStartIndex++;
+      forecastsStartIndex = ++i;
 
       numberOfElements = archiveMeasurements.Count - measurementsStartIndex;
     }

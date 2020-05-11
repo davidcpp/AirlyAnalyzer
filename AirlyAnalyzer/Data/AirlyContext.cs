@@ -18,13 +18,13 @@ namespace AirlyAnalyzer.Data
     {
       modelBuilder.Entity<AirQualityForecast>()
         .ToTable("ArchiveForecasts")
-        .HasKey(x => new { x.FromDateTime, x.TillDateTime, x.InstallationId });
+        .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime});
       modelBuilder.Entity<AirQualityMeasurement>()
         .ToTable("ArchiveMeasurements")
-        .HasKey(x => new { x.FromDateTime, x.TillDateTime, x.InstallationId });
+        .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
       modelBuilder.Entity<AirQualityForecastError>()
         .ToTable("ForecastErrors")
-        .HasKey(x => new { x.FromDateTime, x.TillDateTime, x.InstallationId });
+        .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
 
       modelBuilder
         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);

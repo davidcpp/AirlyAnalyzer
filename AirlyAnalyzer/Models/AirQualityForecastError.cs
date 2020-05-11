@@ -6,12 +6,12 @@ namespace AirlyAnalyzer.Models
   {
     private DateTime fromDateTime;
     private DateTime tillDateTime;
-    private DateTime forecastRequestDateTime;
+    private DateTime requestDateTime;
 
     public short InstallationId { get; set; }
-    public short AirlyCaqiError { get; set; }
-    public short Pm25Error { get; set; }
-    public short Pm10Error { get; set; }
+    public short AirlyCaqiPctError { get; set; }
+    public short Pm25PctError { get; set; }
+    public short Pm10PctError { get; set; }
 
     public DateTime FromDateTime
     {
@@ -25,10 +25,10 @@ namespace AirlyAnalyzer.Models
       set => tillDateTime = value.ToUniversalTime();
     }
 
-    public DateTime ForecastRequestDateTime
+    public DateTime RequestDateTime
     {
-      get => forecastRequestDateTime.ToLocalTime();
-      set => forecastRequestDateTime = value.ToUniversalTime();
+      get => requestDateTime.ToLocalTime();
+      set => requestDateTime = value.ToUniversalTime();
     }
   }
 }

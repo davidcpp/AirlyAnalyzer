@@ -186,17 +186,17 @@ namespace AirlyAnalyzer.Models
             InstallationId = installationId,
             FromDateTime = archiveMeasurements[i].FromDateTime,
             TillDateTime = archiveMeasurements[i].TillDateTime,
-            AirlyCaqiError = Convert.ToInt16(airlyCaqiRelativeError * 100),
-            Pm25Error = Convert.ToInt16(pm25RelativeError * 100),
-            Pm10Error = Convert.ToInt16(pm10RelativeError * 100),
-            ForecastRequestDateTime = archiveMeasurements[i].RequestDateTime,
+            AirlyCaqiPctError = Convert.ToInt16(airlyCaqiRelativeError * 100),
+            Pm25PctError = Convert.ToInt16(pm25RelativeError * 100),
+            Pm10PctError = Convert.ToInt16(pm10RelativeError * 100),
+            RequestDateTime = archiveMeasurements[i].RequestDateTime,
           };
 
           forecastErrors.Add(error);
 
-          caqiErrorsDailySum += Math.Abs(error.AirlyCaqiError);
-          pm25ErrorsDailySum += Math.Abs(error.Pm25Error);
-          pm10ErrorsDailySum += Math.Abs(error.Pm10Error);
+          caqiErrorsDailySum += Math.Abs(error.AirlyCaqiPctError);
+          pm25ErrorsDailySum += Math.Abs(error.Pm25PctError);
+          pm10ErrorsDailySum += Math.Abs(error.Pm10PctError);
 
           if (j != 0 && archiveMeasurements[i].RequestDateTime != archiveMeasurements[i - 1].RequestDateTime)
           {
@@ -261,10 +261,10 @@ namespace AirlyAnalyzer.Models
           InstallationId = installationId,
           FromDateTime = archiveMeasurements[firstForecastItemIndex].FromDateTime,
           TillDateTime = archiveMeasurements[i - 1].TillDateTime,
-          AirlyCaqiError = (short)(caqiErrorsSum / counter),
-          Pm25Error = (short)(pm25ErrorsSum / counter),
-          Pm10Error = (short)(pm10ErrorsSum / counter),
-          ForecastRequestDateTime = archiveMeasurements[i - 1].RequestDateTime,
+          AirlyCaqiPctError = (short)(caqiErrorsSum / counter),
+          Pm25PctError = (short)(pm25ErrorsSum / counter),
+          Pm10PctError = (short)(pm10ErrorsSum / counter),
+          RequestDateTime = archiveMeasurements[i - 1].RequestDateTime,
         };
       }
     }

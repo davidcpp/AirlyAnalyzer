@@ -20,6 +20,9 @@
         @Html.DisplayNameFor(model => model.Pm10Error)
       </th>
       <th>
+        @Html.DisplayNameFor(model => model.InstallationId)
+      </th>
+      <th>
         @Html.DisplayNameFor(model => model.FromDateTime)
       </th>
       <th>
@@ -34,26 +37,29 @@
   <tbody>
     @foreach (var item in Model)
     {
-      <tr>
-        <td>
-          @Html.DisplayFor(modelItem => item.AirlyCaqiError)%
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Pm25Error)%
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Pm10Error)%
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.FromDateTime)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.TillDateTime)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.ForecastRequestDateTime)
-        </td>
-      </tr>
+    <tr>
+      <td>
+        @Html.DisplayFor(modelItem => item.AirlyCaqiError)%
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Pm25Error)%
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Pm10Error)%
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.InstallationId)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.FromDateTime)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.TillDateTime)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.ForecastRequestDateTime)
+      </td>
+    </tr>
     }
   </tbody>
 </table>

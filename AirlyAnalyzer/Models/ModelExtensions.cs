@@ -89,7 +89,7 @@ namespace AirlyAnalyzer.Models
         }
       }
 
-      if (requestTime.Hour >= 19 && history.Count >= 23)
+      if (requestTime.Hour >= 21 && history.Count >= 23)
       {
         context.ArchiveMeasurements.AddRange(history);
         context.SaveChanges();
@@ -115,7 +115,7 @@ namespace AirlyAnalyzer.Models
         }
       }
 
-      if (requestTime.Hour >= 19 && forecast.Count >= 23)
+      if (requestTime.Hour >= 21 && forecast.Count >= 23)
       {
         context.ArchiveForecasts.AddRange(forecast);
         context.SaveChanges();

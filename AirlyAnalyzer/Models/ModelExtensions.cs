@@ -125,20 +125,20 @@ namespace AirlyAnalyzer.Models
     public static void CalculateNewMeasurementsRange(
       List<AirQualityMeasurement> archiveMeasurements,
       List<AirQualityForecast> archiveForecasts,
-      AirQualityForecastAccuracy lastForecastAccuracy,
+      AirQualityForecastError lastForecastError,
       out int measurementsStartIndex,
       out int forecastsStartIndex,
       out int numberOfElements)
     {
       measurementsStartIndex = archiveMeasurements.Count - 1;
-      while (measurementsStartIndex >= 0 && lastForecastAccuracy.TillDateTime < archiveMeasurements[measurementsStartIndex].TillDateTime)
+      while (measurementsStartIndex >= 0 && lastForecastError.TillDateTime < archiveMeasurements[measurementsStartIndex].TillDateTime)
       {
         measurementsStartIndex--;
       }
       measurementsStartIndex++;
 
       forecastsStartIndex = archiveForecasts.Count - 1;
-      while (forecastsStartIndex >= 0 && lastForecastAccuracy.TillDateTime < archiveForecasts[forecastsStartIndex].TillDateTime)
+      while (forecastsStartIndex >= 0 && lastForecastError.TillDateTime < archiveForecasts[forecastsStartIndex].TillDateTime)
       {
         forecastsStartIndex--;
       }
@@ -147,7 +147,7 @@ namespace AirlyAnalyzer.Models
       numberOfElements = archiveMeasurements.Count - measurementsStartIndex;
     }
 
-    public static List<AirQualityForecastAccuracy> CalculateForecastAccuracy(
+    public static List<AirQualityForecastError> CalculateForecastErrors(
       this List<AirQualityForecast> archiveForecasts,
       List<AirQualityMeasurement> archiveMeasurements,
       short installationId)
@@ -159,8 +159,8 @@ namespace AirlyAnalyzer.Models
       int caqiErrorsTotalSum = 0, pm25ErrorsTotalSum = 0, pm10ErrorsTotalSum = 0;
       int i = 0, j = 0;
 
-      var forecastAccuracyRates = new List<AirQualityForecastAccuracy>();
-      AirQualityForecastAccuracy dailyAccuracyRate;
+      var forecastErrors = new List<AirQualityForecastError>();
+      AirQualityForecastError dailyError;
 
       for (; i < archiveMeasurements.Count && j < archiveForecasts.Count;)
       {
@@ -181,7 +181,7 @@ namespace AirlyAnalyzer.Models
             (double)(archiveMeasurements[i].AirlyCaqi - archiveForecasts[j].AirlyCaqi)
             / (double)archiveMeasurements[i].AirlyCaqi;
 
-          var accuracyRate = new AirQualityForecastAccuracy
+          var error = new AirQualityForecastError
           {
             InstallationId = installationId,
             FromDateTime = archiveMeasurements[i].FromDateTime,
@@ -192,20 +192,20 @@ namespace AirlyAnalyzer.Models
             ForecastRequestDateTime = archiveMeasurements[i].RequestDateTime,
           };
 
-          forecastAccuracyRates.Add(accuracyRate);
+          forecastErrors.Add(error);
 
-          caqiErrorsDailySum += Math.Abs(accuracyRate.AirlyCaqiError);
-          pm25ErrorsDailySum += Math.Abs(accuracyRate.Pm25Error);
-          pm10ErrorsDailySum += Math.Abs(accuracyRate.Pm10Error);
+          caqiErrorsDailySum += Math.Abs(error.AirlyCaqiError);
+          pm25ErrorsDailySum += Math.Abs(error.Pm25Error);
+          pm10ErrorsDailySum += Math.Abs(error.Pm10Error);
 
           if (j != 0 && archiveMeasurements[i].RequestDateTime != archiveMeasurements[i - 1].RequestDateTime)
           {
             // Calculate MAPE of daily forecast
             if (dailyCounter >= 23)
             {
-              dailyAccuracyRate = generateForecastAccuracyRate(
+              dailyError = generateForecastError(
                 caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
-              forecastAccuracyRates.Add(dailyAccuracyRate);
+              forecastErrors.Add(dailyError);
             }
 
             counter += dailyCounter;
@@ -235,9 +235,9 @@ namespace AirlyAnalyzer.Models
 
       if (dailyCounter >= 23)
       {
-        var lastDailyAccuracyRate = generateForecastAccuracyRate(
+        var lastDailyError = generateForecastError(
           caqiErrorsDailySum, pm25ErrorsDailySum, pm10ErrorsDailySum, dailyCounter);
-        forecastAccuracyRates.Add(lastDailyAccuracyRate);
+        forecastErrors.Add(lastDailyError);
       }
 
       firstForecastItemIndex = 0;
@@ -247,16 +247,16 @@ namespace AirlyAnalyzer.Models
       pm10ErrorsTotalSum += pm10ErrorsDailySum;
 
       // Calculate MAPE of all previous forecasts
-      var totalAccuracyRate = generateForecastAccuracyRate(
+      var totalError = generateForecastError(
         caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, counter);
-      forecastAccuracyRates.Add(totalAccuracyRate);
+      forecastErrors.Add(totalError);
 
-      return forecastAccuracyRates;
+      return forecastErrors;
 
-      AirQualityForecastAccuracy generateForecastAccuracyRate(
+      AirQualityForecastError generateForecastError(
         int caqiErrorsSum, int pm25ErrorsSum, int pm10ErrorsSum, int counter)
       {
-        return new AirQualityForecastAccuracy
+        return new AirQualityForecastError
         {
           InstallationId = installationId,
           FromDateTime = archiveMeasurements[firstForecastItemIndex].FromDateTime,

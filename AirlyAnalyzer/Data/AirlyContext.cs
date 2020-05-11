@@ -12,7 +12,7 @@ namespace AirlyAnalyzer.Data
 
     public DbSet<AirQualityForecast> ArchiveForecasts { get; set; }
     public DbSet<AirQualityMeasurement> ArchiveMeasurements { get; set; }
-    public DbSet<AirQualityForecastAccuracy> ForecastAccuracyRates { get; set; }
+    public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,8 +22,8 @@ namespace AirlyAnalyzer.Data
       modelBuilder.Entity<AirQualityMeasurement>()
         .ToTable("ArchiveMeasurements")
         .HasKey(x => new { x.FromDateTime, x.TillDateTime, x.InstallationId });
-      modelBuilder.Entity<AirQualityForecastAccuracy>()
-        .ToTable("ForecastAccuracyRates")
+      modelBuilder.Entity<AirQualityForecastError>()
+        .ToTable("ForecastErrors")
         .HasKey(x => new { x.FromDateTime, x.TillDateTime, x.InstallationId });
 
       modelBuilder

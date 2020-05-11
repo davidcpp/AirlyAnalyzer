@@ -2,7 +2,7 @@
 
 namespace AirlyAnalyzer.Models
 {
-  public class AirQualityForecastAccuracy
+  public class AirQualityForecastError
   {
     private DateTime fromDateTime;
     private DateTime tillDateTime;

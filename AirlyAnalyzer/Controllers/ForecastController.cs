@@ -48,18 +48,18 @@ namespace AirlyAnalyzer.Controllers
         var archiveMeasurements =
           context.ArchiveMeasurements.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
-        var archiveForecastAccuracyRates =
-          context.ForecastAccuracyRates.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+        var archiveForecastErrors =
+          context.ForecastErrors.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
-        var lastForecastAccuracy = archiveForecastAccuracyRates.Count > 0 ?
-          archiveForecastAccuracyRates.Last() : new AirQualityForecastAccuracy();
+        var lastForecastError = archiveForecastErrors.Count > 0 ?
+          archiveForecastErrors.Last() : new AirQualityForecastError();
 
         var archiveForecasts =
           context.ArchiveForecasts.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
         CalculateNewMeasurementsRange(archiveMeasurements,
           archiveForecasts,
-          lastForecastAccuracy,
+          lastForecastError,
           out int measurementsStartIndex,
           out int forecastsStartIndex,
           out int numberOfElements);
@@ -68,15 +68,15 @@ namespace AirlyAnalyzer.Controllers
         {
           var newForecasts = archiveForecasts.GetRange(forecastsStartIndex, numberOfElements);
 
-          var newForecastAccuracyRates = newForecasts.CalculateForecastAccuracy(
+          var newForecastErrors = newForecasts.CalculateForecastErrors(
             archiveMeasurements.GetRange(measurementsStartIndex, numberOfElements),
             installationIDsList[i]);
 
-          context.ForecastAccuracyRates.AddRange(newForecastAccuracyRates);
+          context.ForecastErrors.AddRange(newForecastErrors);
           await context.SaveChangesAsync();
         }
       }
-      return View(context.ForecastAccuracyRates.ToList());
+      return View(context.ForecastErrors.ToList());
     }
   }
 }

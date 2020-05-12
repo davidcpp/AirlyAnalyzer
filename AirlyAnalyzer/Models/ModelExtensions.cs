@@ -198,7 +198,7 @@ namespace AirlyAnalyzer.Models
           pm25ErrorsDailySum += Math.Abs(error.Pm25PctError);
           pm10ErrorsDailySum += Math.Abs(error.Pm10PctError);
 
-          if (j != 0 && archiveMeasurements[i].RequestDateTime != archiveMeasurements[i - 1].RequestDateTime)
+          if (i != 0 && archiveMeasurements[i].RequestDateTime != archiveMeasurements[i - 1].RequestDateTime)
           {
             // Calculate MAPE of daily forecast
             if (dailyCounter >= 23)
@@ -225,11 +225,11 @@ namespace AirlyAnalyzer.Models
         }
         else if (currentForecastDateTime > currentMeasurementDateTime)
         {
-          i++;
+          archiveMeasurements.RemoveAt(i);
         }
         else
         {
-          j++;
+          archiveForecasts.RemoveAt(j);
         }
       }
 

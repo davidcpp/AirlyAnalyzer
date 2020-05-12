@@ -152,7 +152,7 @@ namespace AirlyAnalyzer.Models
       List<AirQualityMeasurement> archiveMeasurements,
       short installationId)
     {
-      int dailyCounter = 0, counter = 0;
+      int dailyCounter = 0;
       int firstForecastItemIndex = 0;
 
       int caqiErrorsDailySum = 0, pm25ErrorsDailySum = 0, pm10ErrorsDailySum = 0;
@@ -208,7 +208,6 @@ namespace AirlyAnalyzer.Models
               forecastErrors.Add(dailyError);
             }
 
-            counter += dailyCounter;
             caqiErrorsTotalSum += caqiErrorsDailySum;
             pm25ErrorsTotalSum += pm25ErrorsDailySum;
             pm10ErrorsTotalSum += pm10ErrorsDailySum;
@@ -241,14 +240,13 @@ namespace AirlyAnalyzer.Models
       }
 
       firstForecastItemIndex = 0;
-      counter += dailyCounter;
       caqiErrorsTotalSum += caqiErrorsDailySum;
       pm25ErrorsTotalSum += pm25ErrorsDailySum;
       pm10ErrorsTotalSum += pm10ErrorsDailySum;
 
       // Calculate MAPE of all previous forecasts
       var totalError = generateForecastError(
-        caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, counter);
+        caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, archiveMeasurements.Count);
       forecastErrors.Add(totalError);
 
       return forecastErrors;

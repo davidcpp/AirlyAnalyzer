@@ -39,18 +39,13 @@ namespace AirlyAnalyzer.Controllers
       {
         var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList).ToList();
 
-        var historyList = new List<List<AirQualityMeasurement>>();
-        var forecastList = new List<List<AirQualityForecast>>();
-
         for (int i = 0; i < responseMeasurements.Count; i++)
         {
           var history = responseMeasurements[i].History.ConvertToAirQualityMeasurements(
             installationIDsList[i], requestDateTime);
-          historyList.Add(history);
 
           var forecast = responseMeasurements[i].Forecast.ConvertToAirQualityForecasts(
             installationIDsList[i], requestDateTime);
-          forecastList.Add(forecast);
 
           context.SaveNewMeasurements(history, installationIDsList[i], minNumberOfMeasurements);
           context.SaveNewForecasts(forecast, installationIDsList[i], minNumberOfMeasurements);

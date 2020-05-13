@@ -239,16 +239,6 @@ namespace AirlyAnalyzer.Models
         forecastErrors.Add(lastDailyError);
       }
 
-      firstForecastItemIndex = 0;
-      caqiErrorsTotalSum += caqiErrorsDailySum;
-      pm25ErrorsTotalSum += pm25ErrorsDailySum;
-      pm10ErrorsTotalSum += pm10ErrorsDailySum;
-
-      // Calculate MAPE of all previous forecasts
-      var totalError = generateForecastError(
-        caqiErrorsTotalSum, pm25ErrorsTotalSum, pm10ErrorsTotalSum, archiveMeasurements.Count);
-      forecastErrors.Add(totalError);
-
       return forecastErrors;
 
       AirQualityForecastError generateForecastError(

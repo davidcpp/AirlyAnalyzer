@@ -73,8 +73,8 @@ namespace AirlyAnalyzer.Models
     public static void SaveNewMeasurements(
       this AirlyContext context,
       List<AirQualityMeasurement> history,
-      DateTime requestTime,
-      short installationId)
+      short installationId,
+      short minNumberOfMeasurements)
     {
       var archiveMeasurementsForInstallation =
         context.ArchiveMeasurements.Where(x => x.InstallationId == installationId).ToList();
@@ -89,7 +89,7 @@ namespace AirlyAnalyzer.Models
         }
       }
 
-      if (requestTime.Hour >= 21 && history.Count >= 23)
+      if (history.Count >= minNumberOfMeasurements)
       {
         context.ArchiveMeasurements.AddRange(history);
         context.SaveChanges();
@@ -99,8 +99,8 @@ namespace AirlyAnalyzer.Models
     public static void SaveNewForecasts(
       this AirlyContext context,
       List<AirQualityForecast> forecast,
-      DateTime requestTime,
-      short installationId)
+      short installationId,
+      short minNumberOfMeasurements)
     {
       var archiveForecastsForInstallation =
         context.ArchiveForecasts.Where(x => x.InstallationId == installationId).ToList();
@@ -115,7 +115,7 @@ namespace AirlyAnalyzer.Models
         }
       }
 
-      if (requestTime.Hour >= 21 && forecast.Count >= 23)
+      if (forecast.Count >= minNumberOfMeasurements)
       {
         context.ArchiveForecasts.AddRange(forecast);
         context.SaveChanges();

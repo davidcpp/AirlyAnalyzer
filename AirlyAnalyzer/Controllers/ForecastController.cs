@@ -15,36 +15,50 @@ namespace AirlyAnalyzer.Controllers
     private readonly AirlyContext context;
     private readonly IConfiguration config;
     private readonly List<short> installationIDsList;
+    private readonly short minNumberOfMeasurements;
 
     public ForecastController(AirlyContext context, IConfiguration config)
     {
       this.context = context;
       this.config = config;
       installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+      minNumberOfMeasurements =
+        config.GetSection("AppSettings:AirlyApi:MinNumberOfMeasurements").Get<short>();
     }
 
     // GET: Forecast
     public async Task<IActionResult> Index()
     {
       var requestDateTime = DateTime.UtcNow;
-      var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList).ToList();
 
-      var historyList = new List<List<AirQualityMeasurement>>();
-      var forecastList = new List<List<AirQualityForecast>>();
+      var lastMeasurement = context.ArchiveMeasurements.ToList().Count > 0 ?
+        context.ArchiveMeasurements.ToList().Last() : new AirQualityMeasurement();
+      var requestDateTimeDiff = requestDateTime - lastMeasurement.TillDateTime.ToUniversalTime();
 
-      for (int i = 0; i < responseMeasurements.Count; i++)
+      if (requestDateTimeDiff.TotalHours >= minNumberOfMeasurements)
       {
-        var history = responseMeasurements[i].History.ConvertToAirQualityMeasurements(
-          installationIDsList[i], requestDateTime);
-        historyList.Add(history);
+        var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList).ToList();
 
-        var forecast = responseMeasurements[i].Forecast.ConvertToAirQualityForecasts(
-          installationIDsList[i], requestDateTime);
-        forecastList.Add(forecast);
+        var historyList = new List<List<AirQualityMeasurement>>();
+        var forecastList = new List<List<AirQualityForecast>>();
 
-        context.SaveNewMeasurements(history, requestDateTime, installationIDsList[i]);
-        context.SaveNewForecasts(forecast, requestDateTime, installationIDsList[i]);
+        for (int i = 0; i < responseMeasurements.Count; i++)
+        {
+          var history = responseMeasurements[i].History.ConvertToAirQualityMeasurements(
+            installationIDsList[i], requestDateTime);
+          historyList.Add(history);
 
+          var forecast = responseMeasurements[i].Forecast.ConvertToAirQualityForecasts(
+            installationIDsList[i], requestDateTime);
+          forecastList.Add(forecast);
+
+          context.SaveNewMeasurements(history, installationIDsList[i], minNumberOfMeasurements);
+          context.SaveNewForecasts(forecast, installationIDsList[i], minNumberOfMeasurements);
+        }
+      }
+
+      for (int i = 0; i < installationIDsList.Count; i++)
+      {
         var archiveMeasurements =
           context.ArchiveMeasurements.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 

@@ -29,26 +29,29 @@ namespace AirlyAnalyzer.Controllers
     // GET: Forecast
     public async Task<IActionResult> Index()
     {
-      var requestDateTime = DateTime.UtcNow;
-
-      var lastMeasurement = context.ArchiveMeasurements.ToList().Count > 0 ?
-        context.ArchiveMeasurements.ToList().Last() : new AirQualityMeasurement();
-      var requestDateTimeDiff = requestDateTime - lastMeasurement.TillDateTime.ToUniversalTime();
-
-      if (requestDateTimeDiff.TotalHours >= minNumberOfMeasurements)
+      for (int i = 0; i < installationIDsList.Count; i++)
       {
-        var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList).ToList();
+        var requestDateTime = DateTime.UtcNow;
 
-        for (int i = 0; i < responseMeasurements.Count; i++)
+        var archiveMeasurements =
+          context.ArchiveMeasurements.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+
+        var lastMeasurement = archiveMeasurements.Count > 0 ?
+          archiveMeasurements.Last() : new AirQualityMeasurement();
+        var requestDateTimeDiff = requestDateTime - lastMeasurement.TillDateTime.ToUniversalTime();
+
+        if (requestDateTimeDiff.TotalHours >= minNumberOfMeasurements)
         {
-          var history = responseMeasurements[i].History.ConvertToAirQualityMeasurements(
+          var responseMeasurements = DownloadInstallationMeasurements(config, installationIDsList[i]);
+
+          var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
             installationIDsList[i], requestDateTime);
 
-          var forecast = responseMeasurements[i].Forecast.ConvertToAirQualityForecasts(
+          var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
             installationIDsList[i], requestDateTime);
 
-          context.SaveNewMeasurements(history, installationIDsList[i], minNumberOfMeasurements);
-          context.SaveNewForecasts(forecast, installationIDsList[i], minNumberOfMeasurements);
+          context.SaveNewMeasurements(newMeasurements, installationIDsList[i], minNumberOfMeasurements);
+          context.SaveNewForecasts(newForecasts, installationIDsList[i], minNumberOfMeasurements);
         }
       }
 
@@ -57,14 +60,14 @@ namespace AirlyAnalyzer.Controllers
         var archiveMeasurements =
           context.ArchiveMeasurements.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
+        var archiveForecasts =
+          context.ArchiveForecasts.Where(x => x.InstallationId == installationIDsList[i]).ToList();
+
         var archiveForecastErrors =
           context.ForecastErrors.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
         var lastForecastError = archiveForecastErrors.Count > 0 ?
           archiveForecastErrors.Last() : new AirQualityForecastError();
-
-        var archiveForecasts =
-          context.ArchiveForecasts.Where(x => x.InstallationId == installationIDsList[i]).ToList();
 
         CalculateNewMeasurementsRange(archiveMeasurements,
           archiveForecasts,

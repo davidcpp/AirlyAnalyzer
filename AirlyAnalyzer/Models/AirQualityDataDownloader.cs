@@ -10,7 +10,11 @@ namespace AirlyAnalyzer.Models
 {
   public class AirQualityDataDownloader
   {
-    private const string AirlyApiKeyHeaderName = "apikey";
+    private readonly string airlyApiKeyHeaderName;
+    private readonly string airlyApiKey;
+    private readonly string contentType;
+    private readonly string measurementsUri;
+    private readonly string uri;
 
     private readonly AirlyContext _context;
     private readonly IConfiguration _config;
@@ -28,6 +32,12 @@ namespace AirlyAnalyzer.Models
       _config = config;
       _installationIdsList = installationIdsList;
       _minNumberOfMeasurements = minNumberOfMeasurements;
+
+      airlyApiKeyHeaderName = _config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
+      airlyApiKey = _config.GetValue<string>("AppSettings:AirlyApi:Key");
+      contentType = _config.GetValue<string>("AppSettings:AirlyApi:ContentType");
+      measurementsUri = _config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
+      uri = _config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
     public void DownloadAllAirQualityData()
@@ -66,12 +76,11 @@ namespace AirlyAnalyzer.Models
 
       using (var webClient = new WebClient())
       {
-        webClient.BaseAddress = _config.GetValue<string>("AppSettings:AirlyApi:Uri");
+        webClient.BaseAddress = uri;
         webClient.Headers.Remove(HttpRequestHeader.Accept);
-        webClient.Headers.Add(HttpRequestHeader.Accept, _config.GetValue<string>("AirlyApi:ContentType"));
-        webClient.Headers.Add(AirlyApiKeyHeaderName, _config.GetValue<string>("AppSettings:AirlyApi:Key"));
-        response = webClient.DownloadString(_config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri")
-          + installationId.ToString());
+        webClient.Headers.Add(HttpRequestHeader.Accept, contentType);
+        webClient.Headers.Add(airlyApiKeyHeaderName, airlyApiKey);
+        response = webClient.DownloadString(measurementsUri + installationId.ToString());
       }
       return JsonConvert.DeserializeObject<Measurements>(response);
     }

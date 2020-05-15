@@ -11,17 +11,17 @@ namespace AirlyAnalyzer.Controllers
 {
   public class ForecastController : Controller
   {
-    private readonly AirlyContext context;
-    private readonly IConfiguration config;
-    private readonly List<short> installationIDsList;
-    private readonly short minNumberOfMeasurements;
+    private readonly AirlyContext _context;
+    private readonly IConfiguration _config;
+    private readonly List<short> _installationIDsList;
+    private readonly short _minNumberOfMeasurements;
 
     public ForecastController(AirlyContext context, IConfiguration config)
     {
-      this.context = context;
-      this.config = config;
-      installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
-      minNumberOfMeasurements =
+      _context = context;
+      _config = config;
+      _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+      _minNumberOfMeasurements =
         config.GetSection("AppSettings:AirlyApi:MinNumberOfMeasurements").Get<short>();
     }
 
@@ -29,17 +29,17 @@ namespace AirlyAnalyzer.Controllers
     public async Task<IActionResult> Index()
     {
       var airQualityDataDownloader = new AirQualityDataDownloader(
-        context, config, installationIDsList, minNumberOfMeasurements);
+        _context, _config, _installationIDsList, _minNumberOfMeasurements);
 
       airQualityDataDownloader.DownloadAllAirQualityData();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(
-        context, installationIDsList, minNumberOfMeasurements);
+        _context, _installationIDsList, _minNumberOfMeasurements);
 
       forecastErrorsCalculation.CalculateAllNewForecastErrors();
       await forecastErrorsCalculation.SaveResultsInDatabase();
 
-      return View(context.ForecastErrors.ToList());
+      return View(_context.ForecastErrors.ToList());
     }
   }
 }

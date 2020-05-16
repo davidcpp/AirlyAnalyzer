@@ -1,13 +1,17 @@
 ﻿using AirlyAnalyzer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace AirlyAnalyzer.Data
 {
   public class AirlyContext : DbContext
   {
-    public AirlyContext(DbContextOptions<AirlyContext> options) : base(options)
+    private readonly byte _maxErrorTypeLength;
+
+    public AirlyContext(DbContextOptions<AirlyContext> options, IConfiguration config) : base(options)
     {
+      _maxErrorTypeLength = config.GetValue<byte>("AppSettings:Databases:MaxErrorTypeLength");
     }
 
     public DbSet<AirQualityForecast> ArchiveForecasts { get; set; }
@@ -25,6 +29,12 @@ namespace AirlyAnalyzer.Data
       modelBuilder.Entity<AirQualityForecastError>()
         .ToTable("ForecastErrors")
         .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
+
+      modelBuilder.Entity<AirQualityForecastError>()
+        .Property(x => x.ErrorType)
+        .HasConversion<string>()
+        .IsUnicode(false)
+        .HasMaxLength(_maxErrorTypeLength);
 
       modelBuilder
         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);

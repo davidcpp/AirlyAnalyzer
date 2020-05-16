@@ -13,6 +13,8 @@ namespace AirlyAnalyzer.Models
     public short Pm25PctError { get; set; }
     public short Pm10PctError { get; set; }
 
+    public ForecastErrorType ErrorType { get; set; }
+
     public DateTime FromDateTime
     {
       get => fromDateTime.ToLocalTime();
@@ -30,5 +32,11 @@ namespace AirlyAnalyzer.Models
       get => requestDateTime.ToLocalTime();
       set => requestDateTime = value.ToUniversalTime();
     }
+  }
+
+  public enum ForecastErrorType
+  {
+    Hourly,
+    Daily,
   }
 }

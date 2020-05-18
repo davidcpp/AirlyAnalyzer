@@ -88,7 +88,7 @@ namespace AirlyAnalyzer.Models
           }
         }
 
-        if (dailyForecastErrorsSum.Counter > 23)
+        if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
         {
           dailyForecastErrorsSum.LastForecastIndex = i - 1;
           var lastDailyError = CalculateMeanForecastError(

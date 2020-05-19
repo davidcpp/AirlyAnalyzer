@@ -111,15 +111,15 @@ namespace AirlyAnalyzer.Models
     {
       double pm25RelativeError =
         (double)(_newArchiveMeasurements[i].Pm25 - _newArchiveForecasts[j].Pm25)
-        / (double)_newArchiveMeasurements[i].Pm25;
+        / (_newArchiveMeasurements[i].Pm25 > 0 ? (double)_newArchiveMeasurements[i].Pm25 : 1);
 
       double pm10RelativeError =
         (double)(_newArchiveMeasurements[i].Pm10 - _newArchiveForecasts[j].Pm10)
-        / (double)_newArchiveMeasurements[i].Pm10;
+        / (_newArchiveMeasurements[i].Pm10 > 0 ? (double)_newArchiveMeasurements[i].Pm10 : 1);
 
       double airlyCaqiRelativeError =
         (double)(_newArchiveMeasurements[i].AirlyCaqi - _newArchiveForecasts[j].AirlyCaqi)
-        / (double)_newArchiveMeasurements[i].AirlyCaqi;
+        / (_newArchiveMeasurements[i].AirlyCaqi > 0 ? (double)_newArchiveMeasurements[i].AirlyCaqi : 1);
 
       var forecastError = new AirQualityForecastError
       {

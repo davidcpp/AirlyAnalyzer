@@ -72,17 +72,16 @@ namespace AirlyAnalyzer.Models
 
     private Measurements DownloadInstallationData(short installationId)
     {
-      string response;
-
       using (var webClient = new WebClient())
       {
         webClient.BaseAddress = uri;
         webClient.Headers.Remove(HttpRequestHeader.Accept);
         webClient.Headers.Add(HttpRequestHeader.Accept, contentType);
         webClient.Headers.Add(airlyApiKeyHeaderName, airlyApiKey);
-        response = webClient.DownloadString(measurementsUri + installationId.ToString());
+        string response = webClient.DownloadString(measurementsUri + installationId.ToString());
+
+        return JsonConvert.DeserializeObject<Measurements>(response);
       }
-      return JsonConvert.DeserializeObject<Measurements>(response);
     }
 
     private void SaveNewMeasurements(List<AirQualityMeasurement> newMeasurements, short installationId)

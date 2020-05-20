@@ -21,8 +21,7 @@ namespace AirlyAnalyzer.Controllers
       _context = context;
       _config = config;
       _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
-      _minNumberOfMeasurements =
-        config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
+      _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
     }
 
     // GET: Forecast

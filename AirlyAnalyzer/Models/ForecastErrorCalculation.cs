@@ -65,6 +65,7 @@ namespace AirlyAnalyzer.Models
                 dailyForecastErrorsSum.LastForecastIndex = i - 1;
                 dailyForecastError = CalculateMeanForecastError(
                   dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
+
                 CalculatedForecastErrors.Add(dailyForecastError);
               }
 
@@ -93,6 +94,7 @@ namespace AirlyAnalyzer.Models
           dailyForecastErrorsSum.LastForecastIndex = i - 1;
           var lastDailyError = CalculateMeanForecastError(
             dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
+
           CalculatedForecastErrors.Add(lastDailyError);
         }
 
@@ -178,6 +180,7 @@ namespace AirlyAnalyzer.Models
       {
         i--;
       }
+
       measurementsStartIndex = ++i;
 
       i = _archiveForecasts.Count - 1;
@@ -185,6 +188,7 @@ namespace AirlyAnalyzer.Models
       {
         i--;
       }
+
       forecastsStartIndex = ++i;
 
       numberOfElements = _archiveMeasurements.Count - measurementsStartIndex;

@@ -208,25 +208,6 @@ namespace AirlyAnalyzer.Models
       public int FirstForecastIndex { get; set; } = 0;
       public int LastForecastIndex { get; set; } = 0;
 
-      public ErrorSum()
-      {
-      }
-
-      public ErrorSum(int caqi, int pm25, int pm10, int counter)
-      {
-        Caqi = caqi;
-        Pm25 = pm25;
-        Pm10 = pm10;
-        Counter = counter;
-      }
-
-      public void Add(ErrorSum errorSum)
-      {
-        Caqi += errorSum?.Caqi ?? 0;
-        Pm25 += errorSum?.Pm25 ?? 0;
-        Pm10 += errorSum?.Pm10 ?? 0;
-      }
-
       public void AddAbs(AirQualityForecastError error)
       {
         Caqi += Math.Abs(error.AirlyCaqiPctError);

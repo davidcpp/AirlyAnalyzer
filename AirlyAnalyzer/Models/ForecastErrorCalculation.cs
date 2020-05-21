@@ -111,17 +111,22 @@ namespace AirlyAnalyzer.Models
     private AirQualityForecastError CalculateHourlyForecastError(
       short installationId, int i, int j)
     {
-      double pm25RelativeError =
-        (double)(_newArchiveMeasurements[i].Pm25 - _newArchiveForecasts[j].Pm25)
-        / (_newArchiveMeasurements[i].Pm25 > 0 ? (double)_newArchiveMeasurements[i].Pm25 : 1);
+      short pm25Error = (short)(_newArchiveMeasurements[i].Pm25 - _newArchiveForecasts[j].Pm25);
+      short pm10Error = (short)(_newArchiveMeasurements[i].Pm10 - _newArchiveForecasts[j].Pm10);
+      short airlyCaqiError = (short)(_newArchiveMeasurements[i].AirlyCaqi - _newArchiveForecasts[j].AirlyCaqi);
 
-      double pm10RelativeError =
-        (double)(_newArchiveMeasurements[i].Pm10 - _newArchiveForecasts[j].Pm10)
-        / (_newArchiveMeasurements[i].Pm10 > 0 ? (double)_newArchiveMeasurements[i].Pm10 : 1);
+      double pm25Measurement =
+        _newArchiveMeasurements[i].Pm25 > 0 ? (double)_newArchiveMeasurements[i].Pm25 : 1;
 
-      double airlyCaqiRelativeError =
-        (double)(_newArchiveMeasurements[i].AirlyCaqi - _newArchiveForecasts[j].AirlyCaqi)
-        / (_newArchiveMeasurements[i].AirlyCaqi > 0 ? (double)_newArchiveMeasurements[i].AirlyCaqi : 1);
+      double pm10Measurement =
+        _newArchiveMeasurements[i].Pm10 > 0 ? (double)_newArchiveMeasurements[i].Pm10 : 1;
+
+      double airlyCaqiMeasurement =
+        _newArchiveMeasurements[i].AirlyCaqi > 0 ? (double)_newArchiveMeasurements[i].AirlyCaqi : 1;
+
+      double pm25RelativeError = (double)pm25Error / pm25Measurement;
+      double pm10RelativeError = (double)pm10Error / pm10Measurement;
+      double airlyCaqiRelativeError = (double)airlyCaqiError / airlyCaqiMeasurement;
 
       var forecastError = new AirQualityForecastError
       {
@@ -131,6 +136,9 @@ namespace AirlyAnalyzer.Models
         AirlyCaqiPctError = Convert.ToInt16(airlyCaqiRelativeError * 100),
         Pm25PctError = Convert.ToInt16(pm25RelativeError * 100),
         Pm10PctError = Convert.ToInt16(pm10RelativeError * 100),
+        AirlyCaqiError = airlyCaqiError,
+        Pm25Error = pm25Error,
+        Pm10Error = pm10Error,
         RequestDateTime = _newArchiveMeasurements[i].RequestDateTime,
         ErrorType = ForecastErrorType.Hourly,
       };
@@ -146,9 +154,12 @@ namespace AirlyAnalyzer.Models
         InstallationId = installationId,
         FromDateTime = _newArchiveMeasurements[errorSum.FirstForecastIndex].FromDateTime,
         TillDateTime = _newArchiveMeasurements[errorSum.LastForecastIndex].TillDateTime,
-        AirlyCaqiPctError = (short)(errorSum.Caqi / errorSum.Counter),
-        Pm25PctError = (short)(errorSum.Pm25 / errorSum.Counter),
-        Pm10PctError = (short)(errorSum.Pm10 / errorSum.Counter),
+        AirlyCaqiPctError = (short)(errorSum.CaqiPct / errorSum.Counter),
+        Pm25PctError = (short)(errorSum.Pm25Pct / errorSum.Counter),
+        Pm10PctError = (short)(errorSum.Pm10Pct / errorSum.Counter),
+        AirlyCaqiError = (short)(errorSum.Caqi / errorSum.Counter),
+        Pm25Error = (short)(errorSum.Pm25 / errorSum.Counter),
+        Pm10Error = (short)(errorSum.Pm10 / errorSum.Counter),
         RequestDateTime = _newArchiveMeasurements[errorSum.LastForecastIndex].RequestDateTime,
         ErrorType = errorType,
       };
@@ -200,6 +211,10 @@ namespace AirlyAnalyzer.Models
 
     private class ErrorSum
     {
+      public int CaqiPct { get; set; } = 0;
+      public int Pm25Pct { get; set; } = 0;
+      public int Pm10Pct { get; set; } = 0;
+
       public int Caqi { get; set; } = 0;
       public int Pm25 { get; set; } = 0;
       public int Pm10 { get; set; } = 0;
@@ -210,17 +225,27 @@ namespace AirlyAnalyzer.Models
 
       public void AddAbs(AirQualityForecastError error)
       {
-        Caqi += Math.Abs(error.AirlyCaqiPctError);
-        Pm25 += Math.Abs(error.Pm25PctError);
-        Pm10 += Math.Abs(error.Pm10PctError);
+        CaqiPct += Math.Abs(error.AirlyCaqiPctError);
+        Pm25Pct += Math.Abs(error.Pm25PctError);
+        Pm10Pct += Math.Abs(error.Pm10PctError);
+
+        Caqi += Math.Abs(error.AirlyCaqiError);
+        Pm25 += Math.Abs(error.Pm25Error);
+        Pm10 += Math.Abs(error.Pm10Error);
+
         Counter++;
       }
 
       public void Reset(int firstForecastIndex)
       {
+        CaqiPct = 0;
+        Pm25Pct = 0;
+        Pm10Pct = 0;
+
         Caqi = 0;
         Pm25 = 0;
         Pm10 = 0;
+
         Counter = 0;
         FirstForecastIndex = firstForecastIndex;
         LastForecastIndex = 0;

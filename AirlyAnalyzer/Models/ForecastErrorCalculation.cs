@@ -8,9 +8,6 @@ namespace AirlyAnalyzer.Models
 {
   public class ForecastErrorsCalculation
   {
-    private List<AirQualityMeasurement> _archiveMeasurements;
-    private List<AirQualityForecast> _archiveForecasts;
-    private List<AirQualityForecastError> _archiveForecastErrors;
     private List<AirQualityMeasurement> _newArchiveMeasurements;
     private List<AirQualityForecast> _newArchiveForecasts;
 
@@ -43,8 +40,7 @@ namespace AirlyAnalyzer.Models
         short installationId = _installationIdsList[index];
         int i = 0, j = 0;
 
-        SelectArchiveDataForId(installationId);
-        SelectNotProcessedArchiveData();
+        SelectNotProcessedArchiveData(installationId);
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
@@ -165,48 +161,38 @@ namespace AirlyAnalyzer.Models
       };
     }
 
-    private void SelectArchiveDataForId(short installationId)
+    private void SelectNotProcessedArchiveData(short installationId)
     {
-      _archiveMeasurements = _context.ArchiveMeasurements
-        .Where(x => x.InstallationId == installationId).ToList();
+      var lastForecastErrorDate = DateTime.MinValue;
 
-      _archiveForecasts = _context.ArchiveForecasts
-        .Where(x => x.InstallationId == installationId).ToList();
-
-      _archiveForecastErrors = _context.ForecastErrors
-        .Where(x => x.InstallationId == installationId).ToList();
-    }
-
-    private void SelectNotProcessedArchiveData()
-    {
-      int measurementsStartIndex;
-      int forecastsStartIndex;
-      int numberOfElements;
-
-      var lastForecastError = _archiveForecastErrors.Count > 0 ?
-        _archiveForecastErrors.Last() : new AirQualityForecastError();
-
-      int i = _archiveMeasurements.Count - 1;
-      while (i >= 0 && lastForecastError.TillDateTime < _archiveMeasurements[i].TillDateTime)
+      if (_context.ForecastErrors.Any())
       {
-        i--;
+        lastForecastErrorDate = _context.ForecastErrors
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.TillDateTime)
+          .Select(e => e.TillDateTime)
+          .First();
       }
 
-      measurementsStartIndex = ++i;
+      _newArchiveMeasurements = _context.ArchiveMeasurements
+        .Where(m => m.InstallationId == installationId
+                 && m.TillDateTime > lastForecastErrorDate)
+        .ToList();
 
-      i = _archiveForecasts.Count - 1;
-      while (i >= 0 && lastForecastError.TillDateTime < _archiveForecasts[i].TillDateTime)
+      if (_newArchiveMeasurements.Count == 0)
       {
-        i--;
+        _newArchiveForecasts = new List<AirQualityForecast>();
       }
+      else
+      {
+        var lastMeasurementDate = _newArchiveMeasurements.Last().TillDateTime.ToUniversalTime();
 
-      forecastsStartIndex = ++i;
-
-      numberOfElements = _archiveMeasurements.Count - measurementsStartIndex;
-
-      // Measurements and forecasts for which there are no calculated forecast errors
-      _newArchiveMeasurements = _archiveMeasurements.GetRange(measurementsStartIndex, numberOfElements);
-      _newArchiveForecasts = _archiveForecasts.GetRange(forecastsStartIndex, numberOfElements);
+        _newArchiveForecasts = _context.ArchiveForecasts
+          .Where(f => f.InstallationId == installationId
+                   && f.TillDateTime > lastForecastErrorDate
+                   && f.TillDateTime <= lastMeasurementDate)
+          .ToList();
+      }
     }
 
     private class ErrorSum

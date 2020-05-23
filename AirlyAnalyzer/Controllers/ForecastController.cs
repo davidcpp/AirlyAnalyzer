@@ -33,10 +33,14 @@ namespace AirlyAnalyzer.Controllers
       airQualityDataDownloader.DownloadAllAirQualityData();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(
-        _context, _installationIDsList, _minNumberOfMeasurements);
+        _context, _config, _installationIDsList, _minNumberOfMeasurements);
 
-      forecastErrorsCalculation.CalculateAllNewForecastErrors();
-      await forecastErrorsCalculation.SaveResultsInDatabase();
+      if (forecastErrorsCalculation.CalculateAllNewForecastErrors() > 0)
+      {
+        await forecastErrorsCalculation.SaveResultsInDatabase();
+        forecastErrorsCalculation.CalculateAllTotalForecastErrors();
+        await forecastErrorsCalculation.SaveResultsInDatabase();
+      }
 
       return View(_context.ForecastErrors.ToList());
     }

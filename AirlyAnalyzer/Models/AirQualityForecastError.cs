@@ -41,5 +41,6 @@ namespace AirlyAnalyzer.Models
   {
     Hourly,
     Daily,
+    Total,
   }
 }

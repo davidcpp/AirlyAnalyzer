@@ -1,4 +1,5 @@
 ﻿using AirlyAnalyzer.Data;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +18,22 @@ namespace AirlyAnalyzer.Models
     /// <summary>
     /// Minimal number of measurements to calculate daily forecast error
     /// </summary>
+    private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
     public ForecastErrorsCalculation(
-      AirlyContext context, List<short> installationIdsList, short minNumberOfMeasurements)
+      AirlyContext context, IConfiguration config, List<short> installationIdsList, short minNumberOfMeasurements)
     {
       _context = context;
       _installationIdsList = installationIdsList;
+      _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 
     public List<AirQualityForecastError> CalculatedForecastErrors { get; }
       = new List<AirQualityForecastError>();
 
-    public void CalculateAllNewForecastErrors()
+    public int CalculateAllNewForecastErrors()
     {
       AirQualityForecastError dailyForecastError;
       var dailyForecastErrorsSum = new ErrorSum();
@@ -96,11 +99,39 @@ namespace AirlyAnalyzer.Models
 
         dailyForecastErrorsSum.Reset(0);
       }
+      return CalculatedForecastErrors.Count;
+    }
+
+    public void CalculateAllTotalForecastErrors()
+    {
+      foreach (short installationId in _installationIdsList)
+      {
+        var dailyForecastErrors = _context.ForecastErrors
+          .Where(e => e.InstallationId == installationId && e.ErrorType == ForecastErrorType.Daily)
+          .ToList();
+
+        if (dailyForecastErrors.Count > 0)
+        {
+          var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
+          CalculatedForecastErrors.Add(installationForecastError);
+        }
+      }
+
+      if (CalculatedForecastErrors.Count > 0)
+      {
+        RemoveOldTotalErrorsFromDatabase();
+
+        // Assumption of the latest TillDateTime in last totalForecastErrors element
+        CalculatedForecastErrors.OrderBy(e => e.FromDateTime);
+        var totalForecastError = CalculateTotalForecastError(CalculatedForecastErrors, _idForAllInstallations);
+        CalculatedForecastErrors.Add(totalForecastError);
+      }
     }
 
     public async Task<int> SaveResultsInDatabase()
     {
       _context.ForecastErrors.AddRange(CalculatedForecastErrors);
+      CalculatedForecastErrors.Clear();
       return await _context.SaveChangesAsync();
     }
 
@@ -159,6 +190,40 @@ namespace AirlyAnalyzer.Models
         RequestDateTime = _newArchiveMeasurements[errorSum.LastForecastIndex].RequestDateTime,
         ErrorType = errorType,
       };
+    }
+
+    private AirQualityForecastError CalculateTotalForecastError(
+      List<AirQualityForecastError> allForecastErrors, short installationId)
+    {
+      return new AirQualityForecastError
+      {
+        InstallationId = installationId,
+        FromDateTime = allForecastErrors[0].FromDateTime,
+        TillDateTime = allForecastErrors.Last().TillDateTime,
+        AirlyCaqiPctError =
+          (short)(allForecastErrors.Sum(e => e.AirlyCaqiPctError) / allForecastErrors.Count),
+        Pm25PctError =
+          (short)(allForecastErrors.Sum(e => e.Pm25PctError) / allForecastErrors.Count),
+        Pm10PctError =
+          (short)(allForecastErrors.Sum(e => e.Pm10PctError) / allForecastErrors.Count),
+        AirlyCaqiError =
+          (short)(allForecastErrors.Sum(e => e.AirlyCaqiError) / allForecastErrors.Count),
+        Pm25Error =
+          (short)(allForecastErrors.Sum(e => e.Pm25Error) / allForecastErrors.Count),
+        Pm10Error =
+          (short)(allForecastErrors.Sum(e => e.Pm10Error) / allForecastErrors.Count),
+        RequestDateTime = allForecastErrors.Last().RequestDateTime,
+        ErrorType = ForecastErrorType.Total,
+      };
+    }
+
+    private void RemoveOldTotalErrorsFromDatabase()
+    {
+      var oldTotalForecastErrors = _context.ForecastErrors
+        .Where(e => e.ErrorType == ForecastErrorType.Total)
+        .ToList();
+
+      _context.ForecastErrors.RemoveRange(oldTotalForecastErrors);
     }
 
     private void SelectNotProcessedArchiveData(short installationId)

@@ -35,12 +35,7 @@ namespace AirlyAnalyzer.Controllers
       var forecastErrorsCalculation = new ForecastErrorsCalculation(
         _context, _config, _installationIDsList, _minNumberOfMeasurements);
 
-      if (forecastErrorsCalculation.CalculateAllNewForecastErrors() > 0)
-      {
-        await forecastErrorsCalculation.SaveResultsInDatabase();
-        forecastErrorsCalculation.CalculateAllTotalForecastErrors();
-        await forecastErrorsCalculation.SaveResultsInDatabase();
-      }
+      await forecastErrorsCalculation.CalculateAll();
 
       return View(_context.ForecastErrors.ToList());
     }

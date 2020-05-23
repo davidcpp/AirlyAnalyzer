@@ -33,6 +33,16 @@ namespace AirlyAnalyzer.Models
     public List<AirQualityForecastError> CalculatedForecastErrors { get; }
       = new List<AirQualityForecastError>();
 
+    public async Task CalculateAll()
+    {
+      if (CalculateAllNewForecastErrors() > 0)
+      {
+        await SaveResultsInDatabase();
+        CalculateAllTotalForecastErrors();
+        await SaveResultsInDatabase();
+      }
+    }
+
     public int CalculateAllNewForecastErrors()
     {
       AirQualityForecastError dailyForecastError;

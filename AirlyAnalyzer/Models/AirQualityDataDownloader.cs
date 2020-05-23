@@ -17,7 +17,6 @@ namespace AirlyAnalyzer.Models
     private readonly string uri;
 
     private readonly AirlyContext _context;
-    private readonly IConfiguration _config;
 
     private readonly List<short> _installationIdsList;
     private readonly short _minNumberOfMeasurements;
@@ -29,15 +28,14 @@ namespace AirlyAnalyzer.Models
       short minNumberOfMeasurements)
     {
       _context = context;
-      _config = config;
       _installationIdsList = installationIdsList;
       _minNumberOfMeasurements = minNumberOfMeasurements;
 
-      airlyApiKeyHeaderName = _config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
-      airlyApiKey = _config.GetValue<string>("AppSettings:AirlyApi:Key");
-      contentType = _config.GetValue<string>("AppSettings:AirlyApi:ContentType");
-      measurementsUri = _config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
-      uri = _config.GetValue<string>("AppSettings:AirlyApi:Uri");
+      airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
+      airlyApiKey = config.GetValue<string>("AppSettings:AirlyApi:Key");
+      contentType = config.GetValue<string>("AppSettings:AirlyApi:ContentType");
+      measurementsUri = config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
+      uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
     public void DownloadAllAirQualityData()

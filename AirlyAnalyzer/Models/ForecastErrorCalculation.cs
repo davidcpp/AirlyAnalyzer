@@ -14,11 +14,11 @@ namespace AirlyAnalyzer.Models
 
     private readonly AirlyContext _context;
     private readonly List<short> _installationIdsList;
+    private readonly short _idForAllInstallations;
 
     /// <summary>
     /// Minimal number of measurements to calculate daily forecast error
     /// </summary>
-    private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
     public ForecastErrorsCalculation(
@@ -26,8 +26,9 @@ namespace AirlyAnalyzer.Models
     {
       _context = context;
       _installationIdsList = installationIdsList;
-      _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
       _minNumberOfMeasurements = minNumberOfMeasurements;
+
+      _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
     }
 
     public List<AirQualityForecastError> CalculatedForecastErrors { get; }

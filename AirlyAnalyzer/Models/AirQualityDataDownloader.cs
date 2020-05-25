@@ -43,14 +43,18 @@ namespace AirlyAnalyzer.Models
       for (int i = 0; i < _installationIdsList.Count; i++)
       {
         var requestDateTime = DateTime.UtcNow;
+        var lastMeasurementDate = DateTime.MinValue;
 
-        var archiveMeasurements =
-          _context.ArchiveMeasurements.Where(x => x.InstallationId == _installationIdsList[i]).ToList();
+        if (_context.ArchiveMeasurements.Any())
+        {
+          lastMeasurementDate = _context.ArchiveMeasurements
+            .Where(e => e.InstallationId == _installationIdsList[i])
+            .OrderByDescending(e => e.FromDateTime)
+            .Select(e => e.TillDateTime)
+            .First();
+        }
 
-        var lastMeasurement = archiveMeasurements.Count > 0 ?
-          archiveMeasurements.Last() : new AirQualityMeasurement();
-
-        var requestDateTimeDiff = requestDateTime - lastMeasurement.TillDateTime.ToUniversalTime();
+        var requestDateTimeDiff = requestDateTime - lastMeasurementDate;
 
         if (requestDateTimeDiff.TotalHours >= _minNumberOfMeasurements)
         {
@@ -84,17 +88,21 @@ namespace AirlyAnalyzer.Models
 
     private void SaveNewMeasurements(List<AirQualityMeasurement> newMeasurements, short installationId)
     {
-      var archiveMeasurements =
-        _context.ArchiveMeasurements.Where(x => x.InstallationId == installationId).ToList();
+      var lastMeasurementDate = DateTime.MinValue;
 
       // Check if some of measurements there already are in Database
-      if (archiveMeasurements.Count > 0)
+      if (_context.ArchiveMeasurements.Any())
       {
-        var dbLastElement = archiveMeasurements.Last();
-        while (newMeasurements.Count > 0 && newMeasurements[0].FromDateTime <= dbLastElement.FromDateTime)
-        {
-          newMeasurements.RemoveAt(0);
-        }
+        lastMeasurementDate = _context.ArchiveMeasurements
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.FromDateTime)
+          .Select(e => e.FromDateTime)
+          .First();
+      }
+
+      while (newMeasurements.Count > 0 && newMeasurements[0].FromDateTime <= lastMeasurementDate)
+      {
+        newMeasurements.RemoveAt(0);
       }
 
       if (newMeasurements.Count >= _minNumberOfMeasurements)
@@ -106,17 +114,21 @@ namespace AirlyAnalyzer.Models
 
     private void SaveNewForecasts(List<AirQualityForecast> newForecasts, short installationId)
     {
-      var archiveForecasts =
-        _context.ArchiveForecasts.Where(x => x.InstallationId == installationId).ToList();
+      var lastForecastDate = DateTime.MinValue;
 
       // Check if some of forecasts there already are in Database
-      if (archiveForecasts.Count > 0)
+      if (_context.ArchiveForecasts.Any())
       {
-        var dbLastElement = archiveForecasts.Last();
-        while (newForecasts.Count > 0 && newForecasts[0].FromDateTime <= dbLastElement.FromDateTime)
-        {
-          newForecasts.RemoveAt(0);
-        }
+        lastForecastDate = _context.ArchiveForecasts
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.FromDateTime)
+          .Select(e => e.FromDateTime)
+          .First();
+      }
+
+      while (newForecasts.Count > 0 && newForecasts[0].FromDateTime <= lastForecastDate)
+      {
+        newForecasts.RemoveAt(0);
       }
 
       if (newForecasts.Count >= _minNumberOfMeasurements)

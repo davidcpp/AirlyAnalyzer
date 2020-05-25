@@ -53,7 +53,7 @@ namespace AirlyAnalyzer.Models
       {
         int i = 0, j = 0;
 
-        SelectNotProcessedArchiveData(installationId);
+        SelectDataToProcessing(installationId);
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
@@ -236,7 +236,7 @@ namespace AirlyAnalyzer.Models
       _context.ForecastErrors.RemoveRange(oldTotalForecastErrors);
     }
 
-    private void SelectNotProcessedArchiveData(short installationId)
+    private void SelectDataToProcessing(short installationId)
     {
       var lastForecastErrorDate = DateTime.MinValue;
 

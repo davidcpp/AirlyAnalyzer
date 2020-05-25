@@ -49,9 +49,8 @@ namespace AirlyAnalyzer.Models
       AirQualityForecastError dailyForecastError;
       var dailyForecastErrorsSum = new ErrorSum();
 
-      for (int index = 0; index < _installationIdsList.Count; index++)
+      foreach (short installationId in _installationIdsList)
       {
-        short installationId = _installationIdsList[index];
         int i = 0, j = 0;
 
         SelectNotProcessedArchiveData(installationId);

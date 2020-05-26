@@ -31,7 +31,7 @@ namespace AirlyAnalyzer.Models
       _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
     }
 
-    public List<AirQualityForecastError> CalculatedForecastErrors { get; }
+    private List<AirQualityForecastError> _calculatedForecastErrors { get; }
       = new List<AirQualityForecastError>();
 
     public async Task CalculateAll()
@@ -75,14 +75,14 @@ namespace AirlyAnalyzer.Models
                 dailyForecastError = CalculateMeanForecastError(
                   dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
 
-                CalculatedForecastErrors.Add(dailyForecastError);
+                _calculatedForecastErrors.Add(dailyForecastError);
               }
 
               dailyForecastErrorsSum.Reset(i);
             }
 
             var forecastHourlyError = CalculateHourlyForecastError(installationId, i, j);
-            CalculatedForecastErrors.Add(forecastHourlyError);
+            _calculatedForecastErrors.Add(forecastHourlyError);
 
             dailyForecastErrorsSum.AddAbs(forecastHourlyError);
 
@@ -104,12 +104,12 @@ namespace AirlyAnalyzer.Models
           var lastDailyError = CalculateMeanForecastError(
             dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
 
-          CalculatedForecastErrors.Add(lastDailyError);
+          _calculatedForecastErrors.Add(lastDailyError);
         }
 
         dailyForecastErrorsSum.Reset(0);
       }
-      return CalculatedForecastErrors.Count;
+      return _calculatedForecastErrors.Count;
     }
 
     public void CalculateAllTotalForecastErrors()
@@ -123,25 +123,25 @@ namespace AirlyAnalyzer.Models
         if (dailyForecastErrors.Count > 0)
         {
           var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
-          CalculatedForecastErrors.Add(installationForecastError);
+          _calculatedForecastErrors.Add(installationForecastError);
         }
       }
 
-      if (CalculatedForecastErrors.Count > 0)
+      if (_calculatedForecastErrors.Count > 0)
       {
         RemoveOldTotalErrorsFromDatabase();
 
         // Assumption of the latest TillDateTime in last totalForecastErrors element
-        CalculatedForecastErrors.OrderBy(e => e.FromDateTime);
-        var totalForecastError = CalculateTotalForecastError(CalculatedForecastErrors, _idForAllInstallations);
-        CalculatedForecastErrors.Add(totalForecastError);
+        _calculatedForecastErrors.OrderBy(e => e.FromDateTime);
+        var totalForecastError = CalculateTotalForecastError(_calculatedForecastErrors, _idForAllInstallations);
+        _calculatedForecastErrors.Add(totalForecastError);
       }
     }
 
     public async Task<int> SaveResultsInDatabase()
     {
-      _context.ForecastErrors.AddRange(CalculatedForecastErrors);
-      CalculatedForecastErrors.Clear();
+      _context.ForecastErrors.AddRange(_calculatedForecastErrors);
+      _calculatedForecastErrors.Clear();
       return await _context.SaveChangesAsync();
     }
 

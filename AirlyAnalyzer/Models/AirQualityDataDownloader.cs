@@ -97,7 +97,8 @@ namespace AirlyAnalyzer.Models
           .Where(e => e.InstallationId == installationId)
           .OrderByDescending(e => e.FromDateTime)
           .Select(e => e.FromDateTime)
-          .First();
+          .First()
+          .ToLocalTime();
       }
 
       while (newMeasurements.Count > 0 && newMeasurements[0].FromDateTime <= lastMeasurementDate)
@@ -123,7 +124,8 @@ namespace AirlyAnalyzer.Models
           .Where(e => e.InstallationId == installationId)
           .OrderByDescending(e => e.FromDateTime)
           .Select(e => e.FromDateTime)
-          .First();
+          .First()
+          .ToLocalTime();
       }
 
       while (newForecasts.Count > 0 && newForecasts[0].FromDateTime <= lastForecastDate)

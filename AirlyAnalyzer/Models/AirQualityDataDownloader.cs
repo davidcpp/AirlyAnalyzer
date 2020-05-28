@@ -10,11 +10,11 @@ namespace AirlyAnalyzer.Models
 {
   public class AirQualityDataDownloader
   {
-    private readonly string airlyApiKeyHeaderName;
-    private readonly string airlyApiKey;
-    private readonly string contentType;
-    private readonly string measurementsUri;
-    private readonly string uri;
+    private readonly string _airlyApiKeyHeaderName;
+    private readonly string _airlyApiKey;
+    private readonly string _contentType;
+    private readonly string _measurementsUri;
+    private readonly string _uri;
 
     private readonly AirlyContext _context;
 
@@ -31,11 +31,11 @@ namespace AirlyAnalyzer.Models
       _installationIdsList = installationIdsList;
       _minNumberOfMeasurements = minNumberOfMeasurements;
 
-      airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
-      airlyApiKey = config.GetValue<string>("AppSettings:AirlyApi:Key");
-      contentType = config.GetValue<string>("AppSettings:AirlyApi:ContentType");
-      measurementsUri = config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
-      uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
+      _airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
+      _airlyApiKey = config.GetValue<string>("AppSettings:AirlyApi:Key");
+      _contentType = config.GetValue<string>("AppSettings:AirlyApi:ContentType");
+      _measurementsUri = config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
+      _uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
     public void DownloadAllAirQualityData()
@@ -76,11 +76,11 @@ namespace AirlyAnalyzer.Models
     {
       using (var webClient = new WebClient())
       {
-        webClient.BaseAddress = uri;
+        webClient.BaseAddress = _uri;
         webClient.Headers.Remove(HttpRequestHeader.Accept);
-        webClient.Headers.Add(HttpRequestHeader.Accept, contentType);
-        webClient.Headers.Add(airlyApiKeyHeaderName, airlyApiKey);
-        string response = webClient.DownloadString(measurementsUri + installationId.ToString());
+        webClient.Headers.Add(HttpRequestHeader.Accept, _contentType);
+        webClient.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
+        string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
 
         return JsonConvert.DeserializeObject<Measurements>(response);
       }

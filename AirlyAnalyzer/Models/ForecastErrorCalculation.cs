@@ -55,14 +55,14 @@ namespace AirlyAnalyzer.Models
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
-          var currentMeasurementDateTime = _newArchiveMeasurements[i].TillDateTime.ToUniversalTime();
-          var currentForecastDateTime = _newArchiveForecasts[j].TillDateTime.ToUniversalTime();
+          var currentMeasurementDateTime = _newArchiveMeasurements[i].TillDateTime;
+          var currentForecastDateTime = _newArchiveForecasts[j].TillDateTime;
 
           if (currentForecastDateTime == currentMeasurementDateTime)
           {
             var currentMeasurementRequestTime = _newArchiveMeasurements[i].RequestDateTime;
             var previousMeasurementRequestTime = i != 0 ?
-              _newArchiveMeasurements[i - 1].RequestDateTime : new DateTime();
+              _newArchiveMeasurements[i - 1].RequestDateTime : DateTime.MinValue;
 
             // Calculate MAPE of daily forecast
             if (i != 0 && currentMeasurementRequestTime != previousMeasurementRequestTime)

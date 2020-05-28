@@ -11,6 +11,8 @@ namespace AirlyAnalyzer.Models
   {
     private List<AirQualityMeasurement> _newArchiveMeasurements;
     private List<AirQualityForecast> _newArchiveForecasts;
+    private readonly List<AirQualityForecastError> _calculatedForecastErrors
+      = new List<AirQualityForecastError>();
 
     private readonly AirlyContext _context;
     private readonly List<short> _installationIdsList;
@@ -30,9 +32,6 @@ namespace AirlyAnalyzer.Models
 
       _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
     }
-
-    private List<AirQualityForecastError> _calculatedForecastErrors { get; }
-      = new List<AirQualityForecastError>();
 
     public async Task CalculateAll()
     {

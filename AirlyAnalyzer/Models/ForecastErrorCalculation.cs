@@ -46,21 +46,12 @@ namespace AirlyAnalyzer.Models
 
     public int CalculateAllNewForecastErrors()
     {
-      AirQualityForecastError dailyForecastError;
-
       foreach (short installationId in _installationIdsList)
       {
         int i = 0, j = 0;
 
         SelectDataToProcessing(installationId);
-
-        var firstFromDateTime = _newArchiveMeasurements.Count > 0 ?
-          _newArchiveMeasurements[0].FromDateTime : DateTime.MinValue;
-
-        var firstRequestDateTime = _newArchiveMeasurements.Count > 0 ?
-          _newArchiveMeasurements[0].RequestDateTime : DateTime.MinValue;
-
-        var dailyForecastErrorsSum = new ErrorSum(firstFromDateTime, firstRequestDateTime);
+        var dailyForecastErrorsSum = InitDailyErrorSum();
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
@@ -78,9 +69,8 @@ namespace AirlyAnalyzer.Models
             {
               if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
               {
-                dailyForecastErrorsSum.TillDateTime = _newArchiveMeasurements[i - 1].TillDateTime;
-                dailyForecastError = CalculateMeanForecastError(
-                  dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
+                var dailyForecastError = CalculateMeanForecastError(
+                  dailyForecastErrorsSum, ForecastErrorType.Daily, installationId, i - 1);
 
                 _calculatedForecastErrors.Add(dailyForecastError);
               }
@@ -108,9 +98,8 @@ namespace AirlyAnalyzer.Models
 
         if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
         {
-          dailyForecastErrorsSum.TillDateTime = _newArchiveMeasurements[i - 1].TillDateTime;
           var lastDailyError = CalculateMeanForecastError(
-            dailyForecastErrorsSum, ForecastErrorType.Daily, installationId);
+            dailyForecastErrorsSum, ForecastErrorType.Daily, installationId, i - 1);
 
           _calculatedForecastErrors.Add(lastDailyError);
         }
@@ -190,8 +179,12 @@ namespace AirlyAnalyzer.Models
     }
 
     private AirQualityForecastError CalculateMeanForecastError(
-      ErrorSum errorSum, ForecastErrorType errorType, short installationId)
+      ErrorSum errorSum,
+      ForecastErrorType errorType,
+      short installationId,
+      int lastMeasurementIndex)
     {
+      errorSum.TillDateTime = _newArchiveMeasurements[lastMeasurementIndex].TillDateTime;
       return new AirQualityForecastError
       {
         InstallationId = installationId,
@@ -231,6 +224,17 @@ namespace AirlyAnalyzer.Models
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
         ErrorType = ForecastErrorType.Total,
       };
+    }
+
+    private ErrorSum InitDailyErrorSum()
+    {
+      var firstFromDateTime = _newArchiveMeasurements.Count > 0 ?
+        _newArchiveMeasurements[0].FromDateTime : DateTime.MinValue;
+
+      var firstRequestDateTime = _newArchiveMeasurements.Count > 0 ?
+        _newArchiveMeasurements[0].RequestDateTime : DateTime.MinValue;
+
+      return new ErrorSum(firstFromDateTime, firstRequestDateTime);
     }
 
     private void RemoveOldTotalErrorsFromDatabase()

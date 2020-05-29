@@ -40,7 +40,7 @@ namespace AirlyAnalyzer.Models
 
     public void DownloadAllAirQualityData()
     {
-      for (int i = 0; i < _installationIdsList.Count; i++)
+      foreach (short installationId in _installationIdsList)
       {
         var requestDateTime = DateTime.UtcNow;
         var lastMeasurementDate = DateTime.MinValue;
@@ -48,7 +48,7 @@ namespace AirlyAnalyzer.Models
         if (_context.ArchiveMeasurements.Any())
         {
           lastMeasurementDate = _context.ArchiveMeasurements
-            .Where(e => e.InstallationId == _installationIdsList[i])
+            .Where(e => e.InstallationId == installationId)
             .OrderByDescending(e => e.FromDateTime)
             .Select(e => e.TillDateTime)
             .First();
@@ -58,16 +58,16 @@ namespace AirlyAnalyzer.Models
 
         if (requestDateTimeDiff.TotalHours >= _minNumberOfMeasurements)
         {
-          var responseMeasurements = DownloadInstallationData(_installationIdsList[i]);
+          var responseMeasurements = DownloadInstallationData(installationId);
 
           var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
-            _installationIdsList[i], requestDateTime);
+            installationId, requestDateTime);
 
           var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-            _installationIdsList[i], requestDateTime);
+            installationId, requestDateTime);
 
-          SaveNewMeasurements(newMeasurements, _installationIdsList[i]);
-          SaveNewForecasts(newForecasts, _installationIdsList[i]);
+          SaveNewMeasurements(newMeasurements, installationId);
+          SaveNewForecasts(newForecasts, installationId);
         }
       }
     }

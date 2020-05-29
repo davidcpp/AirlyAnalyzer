@@ -47,10 +47,10 @@ namespace AirlyAnalyzer.Models
     {
       foreach (short installationId in _installationIdsList)
       {
+        var dailyForecastErrorsSum = new ErrorSum();
         int i = 0, j = 0;
 
         SelectDataToProcessing(installationId);
-        var dailyForecastErrorsSum = InitDailyErrorSum();
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
@@ -64,7 +64,7 @@ namespace AirlyAnalyzer.Models
               _newArchiveMeasurements[i - 1].RequestDateTime : DateTime.MinValue;
 
             // Calculate MAPE of daily forecast
-            if (i != 0 && currentMeasurementRequestTime != previousMeasurementRequestTime)
+            if (currentMeasurementRequestTime != previousMeasurementRequestTime)
             {
               if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
               {
@@ -225,17 +225,6 @@ namespace AirlyAnalyzer.Models
       };
     }
 
-    private ErrorSum InitDailyErrorSum()
-    {
-      var firstFromDateTime = _newArchiveMeasurements.Count > 0 ?
-        _newArchiveMeasurements[0].FromDateTime : DateTime.MinValue;
-
-      var firstRequestDateTime = _newArchiveMeasurements.Count > 0 ?
-        _newArchiveMeasurements[0].RequestDateTime : DateTime.MinValue;
-
-      return new ErrorSum(firstFromDateTime, firstRequestDateTime);
-    }
-
     private void RemoveOldTotalErrorsFromDatabase()
     {
       var oldTotalForecastErrors = _context.ForecastErrors
@@ -284,6 +273,10 @@ namespace AirlyAnalyzer.Models
       private DateTime _fromDateTime;
       private DateTime _tillDateTime;
       private DateTime _requestDateTime;
+
+      public ErrorSum()
+      {
+      }
 
       public ErrorSum(DateTime fromDateTime, DateTime requestDateTime)
       {

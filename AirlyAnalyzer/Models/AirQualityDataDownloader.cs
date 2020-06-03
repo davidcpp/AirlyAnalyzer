@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using AirlyAnalyzer.Data;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -16,19 +14,14 @@ namespace AirlyAnalyzer.Models
     private readonly string _measurementsUri;
     private readonly string _uri;
 
-    private readonly AirlyContext _context;
+    private readonly DatabaseHelper _databaseHelper;
 
-    private readonly List<short> _installationIdsList;
     private readonly short _minNumberOfMeasurements;
 
     public AirQualityDataDownloader(
-      AirlyContext context,
-      IConfiguration config,
-      List<short> installationIdsList,
-      short minNumberOfMeasurements)
+      DatabaseHelper databaseHelper, IConfiguration config, short minNumberOfMeasurements)
     {
-      _context = context;
-      _installationIdsList = installationIdsList;
+      _databaseHelper = databaseHelper;
       _minNumberOfMeasurements = minNumberOfMeasurements;
 
       _airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
@@ -38,38 +31,29 @@ namespace AirlyAnalyzer.Models
       _uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
-    public void DownloadAllAirQualityData()
+    public (List<AirQualityMeasurement>, List<AirQualityForecast>)
+      DownloadAllAirQualityData(short installationId)
     {
-      foreach (short installationId in _installationIdsList)
+      var requestDateTime = DateTime.UtcNow;
+      var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);
+
+      var requestDateTimeDiff = requestDateTime - lastMeasurementDate;
+
+      var newMeasurements = new List<AirQualityMeasurement>();
+      var newForecasts = new List<AirQualityForecast>();
+
+      if (requestDateTimeDiff.TotalHours >= _minNumberOfMeasurements)
       {
-        var requestDateTime = DateTime.UtcNow;
-        var lastMeasurementDate = DateTime.MinValue;
+        var responseMeasurements = DownloadInstallationData(installationId);
 
-        if (_context.ArchiveMeasurements.Any())
-        {
-          lastMeasurementDate = _context.ArchiveMeasurements
-            .Where(e => e.InstallationId == installationId)
-            .OrderByDescending(e => e.FromDateTime)
-            .Select(e => e.TillDateTime)
-            .First();
-        }
+        newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
+          installationId, requestDateTime);
 
-        var requestDateTimeDiff = requestDateTime - lastMeasurementDate;
-
-        if (requestDateTimeDiff.TotalHours >= _minNumberOfMeasurements)
-        {
-          var responseMeasurements = DownloadInstallationData(installationId);
-
-          var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
-            installationId, requestDateTime);
-
-          var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-            installationId, requestDateTime);
-
-          SaveNewMeasurements(newMeasurements, installationId);
-          SaveNewForecasts(newForecasts, installationId);
-        }
+        newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
+          installationId, requestDateTime);
       }
+
+      return (newMeasurements, newForecasts);
     }
 
     private Measurements DownloadInstallationData(short installationId)
@@ -83,60 +67,6 @@ namespace AirlyAnalyzer.Models
         string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
 
         return JsonConvert.DeserializeObject<Measurements>(response);
-      }
-    }
-
-    private void SaveNewMeasurements(List<AirQualityMeasurement> newMeasurements, short installationId)
-    {
-      var lastMeasurementDate = DateTime.MinValue;
-
-      // Check if some of measurements there already are in Database
-      if (_context.ArchiveMeasurements.Any())
-      {
-        lastMeasurementDate = _context.ArchiveMeasurements
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.FromDateTime)
-          .Select(e => e.FromDateTime)
-          .First()
-          .ToLocalTime();
-      }
-
-      while (newMeasurements.Count > 0 && newMeasurements[0].FromDateTime <= lastMeasurementDate)
-      {
-        newMeasurements.RemoveAt(0);
-      }
-
-      if (newMeasurements.Count >= _minNumberOfMeasurements)
-      {
-        _context.ArchiveMeasurements.AddRange(newMeasurements);
-        _context.SaveChanges();
-      }
-    }
-
-    private void SaveNewForecasts(List<AirQualityForecast> newForecasts, short installationId)
-    {
-      var lastForecastDate = DateTime.MinValue;
-
-      // Check if some of forecasts there already are in Database
-      if (_context.ArchiveForecasts.Any())
-      {
-        lastForecastDate = _context.ArchiveForecasts
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.FromDateTime)
-          .Select(e => e.FromDateTime)
-          .First()
-          .ToLocalTime();
-      }
-
-      while (newForecasts.Count > 0 && newForecasts[0].FromDateTime <= lastForecastDate)
-      {
-        newForecasts.RemoveAt(0);
-      }
-
-      if (newForecasts.Count >= _minNumberOfMeasurements)
-      {
-        _context.ArchiveForecasts.AddRange(newForecasts);
-        _context.SaveChanges();
       }
     }
   }

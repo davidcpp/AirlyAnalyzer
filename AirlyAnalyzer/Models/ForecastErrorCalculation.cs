@@ -1,9 +1,7 @@
-﻿using AirlyAnalyzer.Data;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AirlyAnalyzer.Models
 {
@@ -14,7 +12,8 @@ namespace AirlyAnalyzer.Models
     private readonly List<AirQualityForecastError> _calculatedForecastErrors
       = new List<AirQualityForecastError>();
 
-    private readonly AirlyContext _context;
+    private readonly DatabaseHelper _databaseHelper;
+
     private readonly List<short> _installationIdsList;
     private readonly short _idForAllInstallations;
 
@@ -24,33 +23,31 @@ namespace AirlyAnalyzer.Models
     private readonly short _minNumberOfMeasurements;
 
     public ForecastErrorsCalculation(
-      AirlyContext context, IConfiguration config, List<short> installationIdsList, short minNumberOfMeasurements)
+      DatabaseHelper databaseHelper,
+      IConfiguration config,
+      List<short> installationIdsList,
+      short minNumberOfMeasurements)
     {
-      _context = context;
+      _databaseHelper = databaseHelper;
+
       _installationIdsList = installationIdsList;
       _minNumberOfMeasurements = minNumberOfMeasurements;
 
       _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
     }
 
-    public async Task CalculateAll()
+    public List<AirQualityForecastError> CalculateAllNewForecastErrors()
     {
-      if (CalculateAllNewForecastErrors() > 0)
-      {
-        await SaveResultsInDatabase();
-        CalculateAllTotalForecastErrors();
-        await SaveResultsInDatabase();
-      }
-    }
+      // Clear forecast error list to ensure that data previously added to database will not be added again
+      _calculatedForecastErrors.Clear();
 
-    public int CalculateAllNewForecastErrors()
-    {
       foreach (short installationId in _installationIdsList)
       {
         var dailyForecastErrorsSum = new ErrorSum();
         int i = 0, j = 0;
 
-        SelectDataToProcessing(installationId);
+        _databaseHelper.SelectDataToProcessing(
+          installationId, out _newArchiveMeasurements, out _newArchiveForecasts);
 
         for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
         {
@@ -103,16 +100,17 @@ namespace AirlyAnalyzer.Models
           _calculatedForecastErrors.Add(lastDailyError);
         }
       }
-      return _calculatedForecastErrors.Count;
+      return _calculatedForecastErrors;
     }
 
-    public void CalculateAllTotalForecastErrors()
+    public List<AirQualityForecastError> CalculateAllTotalForecastErrors()
     {
+      // Clear forecast error list to ensure that data previously added to database will not be added again
+      _calculatedForecastErrors.Clear();
+
       foreach (short installationId in _installationIdsList)
       {
-        var dailyForecastErrors = _context.ForecastErrors
-          .Where(e => e.InstallationId == installationId && e.ErrorType == ForecastErrorType.Daily)
-          .ToList();
+        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
 
         if (dailyForecastErrors.Count > 0)
         {
@@ -123,20 +121,16 @@ namespace AirlyAnalyzer.Models
 
       if (_calculatedForecastErrors.Count > 0)
       {
-        RemoveOldTotalErrorsFromDatabase();
+        // Remove old total forecast errors before adding updated ones
+        _databaseHelper.RemoveTotalForecastErrors();
 
         // Assumption of the latest TillDateTime in last totalForecastErrors element
         _calculatedForecastErrors.OrderBy(e => e.FromDateTime);
         var totalForecastError = CalculateTotalForecastError(_calculatedForecastErrors, _idForAllInstallations);
         _calculatedForecastErrors.Add(totalForecastError);
       }
-    }
 
-    public async Task<int> SaveResultsInDatabase()
-    {
-      _context.ForecastErrors.AddRange(_calculatedForecastErrors);
-      _calculatedForecastErrors.Clear();
-      return await _context.SaveChangesAsync();
+      return _calculatedForecastErrors;
     }
 
     private AirQualityForecastError CalculateHourlyForecastError(
@@ -223,49 +217,6 @@ namespace AirlyAnalyzer.Models
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
         ErrorType = ForecastErrorType.Total,
       };
-    }
-
-    private void RemoveOldTotalErrorsFromDatabase()
-    {
-      var oldTotalForecastErrors = _context.ForecastErrors
-        .Where(e => e.ErrorType == ForecastErrorType.Total)
-        .ToList();
-
-      _context.ForecastErrors.RemoveRange(oldTotalForecastErrors);
-    }
-
-    private void SelectDataToProcessing(short installationId)
-    {
-      var lastForecastErrorDate = DateTime.MinValue;
-
-      if (_context.ForecastErrors.Any())
-      {
-        lastForecastErrorDate = _context.ForecastErrors
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime)
-          .First();
-      }
-
-      _newArchiveMeasurements = _context.ArchiveMeasurements
-        .Where(m => m.InstallationId == installationId
-                 && m.TillDateTime > lastForecastErrorDate)
-        .ToList();
-
-      if (_newArchiveMeasurements.Count == 0)
-      {
-        _newArchiveForecasts = new List<AirQualityForecast>();
-      }
-      else
-      {
-        var lastMeasurementDate = _newArchiveMeasurements.Last().TillDateTime.ToUniversalTime();
-
-        _newArchiveForecasts = _context.ArchiveForecasts
-          .Where(f => f.InstallationId == installationId
-                   && f.TillDateTime > lastForecastErrorDate
-                   && f.TillDateTime <= lastMeasurementDate)
-          .ToList();
-      }
     }
 
     private class ErrorSum

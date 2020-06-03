@@ -15,6 +15,7 @@ namespace AirlyAnalyzer.Controllers
     private readonly IConfiguration _config;
     private readonly List<short> _installationIDsList;
     private readonly short _minNumberOfMeasurements;
+    private readonly DatabaseHelper _databaseHelper;
 
     public ForecastController(AirlyContext context, IConfiguration config)
     {
@@ -22,20 +23,36 @@ namespace AirlyAnalyzer.Controllers
       _config = config;
       _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
       _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
+
+      _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
     }
 
     // GET: Forecast
     public async Task<IActionResult> Index()
     {
-      var airQualityDataDownloader = new AirQualityDataDownloader(
-        _context, _config, _installationIDsList, _minNumberOfMeasurements);
+      var airQualityDataDownloader
+        = new AirQualityDataDownloader(_databaseHelper, _config, _minNumberOfMeasurements);
 
-      airQualityDataDownloader.DownloadAllAirQualityData();
+      foreach (short installationId in _installationIDsList)
+      {
+        var (newMeasurements, newForecasts)
+          = airQualityDataDownloader.DownloadAllAirQualityData(installationId);
+
+        await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
+        await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
+      }
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(
-        _context, _config, _installationIDsList, _minNumberOfMeasurements);
+        _databaseHelper, _config, _installationIDsList, _minNumberOfMeasurements);
 
-      await forecastErrorsCalculation.CalculateAll();
+      var newForecastErrors = forecastErrorsCalculation.CalculateAllNewForecastErrors();
+
+      if (newForecastErrors.Count > 0)
+      {
+        await _databaseHelper.SaveForecastErrors(newForecastErrors);
+        var newTotalForecastErrors = forecastErrorsCalculation.CalculateAllTotalForecastErrors();
+        await _databaseHelper.SaveForecastErrors(newTotalForecastErrors);
+      }
 
       return View(_context.ForecastErrors.ToList());
     }

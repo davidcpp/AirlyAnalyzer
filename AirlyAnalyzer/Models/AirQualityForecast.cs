@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using System;
+
   public class AirQualityForecast
   {
     private DateTime fromDateTime;

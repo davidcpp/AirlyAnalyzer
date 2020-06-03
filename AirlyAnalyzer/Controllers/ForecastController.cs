@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AirlyAnalyzer.Data;
-using AirlyAnalyzer.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-
-namespace AirlyAnalyzer.Controllers
+﻿namespace AirlyAnalyzer.Controllers
 {
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Threading.Tasks;
+  using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.Extensions.Configuration;
+
   public class ForecastController : Controller
   {
     private readonly AirlyContext _context;

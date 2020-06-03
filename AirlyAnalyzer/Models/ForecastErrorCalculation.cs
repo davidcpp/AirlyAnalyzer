@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using Microsoft.Extensions.Configuration;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+
   public class ForecastErrorsCalculation
   {
     private List<AirQualityMeasurement> _newArchiveMeasurements;

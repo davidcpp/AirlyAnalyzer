@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using System.Collections.Generic;
+
   public class Measurements
   {
     public AveragedValues Current { get; set; }

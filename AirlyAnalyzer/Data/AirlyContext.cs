@@ -1,10 +1,10 @@
-﻿using AirlyAnalyzer.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
-
-namespace AirlyAnalyzer.Data
+﻿namespace AirlyAnalyzer.Data
 {
+  using AirlyAnalyzer.Models;
+  using Microsoft.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore.Metadata;
+  using Microsoft.Extensions.Configuration;
+
   public class AirlyContext : DbContext
   {
     private readonly byte _maxErrorTypeLength;

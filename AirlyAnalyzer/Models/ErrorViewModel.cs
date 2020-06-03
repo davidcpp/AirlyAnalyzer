@@ -1,5 +1,3 @@
-using System;
-
 namespace AirlyAnalyzer.Models
 {
   public class ErrorViewModel

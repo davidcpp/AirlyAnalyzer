@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using System;
+  using System.Collections.Generic;
+
   public static class AirQualityDataConverter
   {
     public static List<AirQualityMeasurement> ConvertToAirQualityMeasurements(

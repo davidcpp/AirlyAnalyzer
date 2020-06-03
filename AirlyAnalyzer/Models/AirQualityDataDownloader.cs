@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Net;
+  using Microsoft.Extensions.Configuration;
+  using Newtonsoft.Json;
+
   public class AirQualityDataDownloader
   {
     private readonly string _airlyApiKeyHeaderName;

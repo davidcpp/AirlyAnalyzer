@@ -57,5 +57,15 @@
 
       return View(_context.ForecastErrors.ToList());
     }
+
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        _context.Dispose();
+      }
+
+      base.Dispose(disposing);
+    }
   }
 }

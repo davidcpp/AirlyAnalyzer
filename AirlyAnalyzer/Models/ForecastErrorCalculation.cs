@@ -77,6 +77,7 @@
           _calculatedForecastErrors.Add(lastDailyError);
         }
       }
+
       return _calculatedForecastErrors;
     }
 

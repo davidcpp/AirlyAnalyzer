@@ -15,6 +15,7 @@
         var measurement = (AirQualityMeasurement)averagedValue;
         measurement.InstallationId = installationId;
         measurement.RequestDateTime = requestTime;
+
         airQualityMeasurements.Add(measurement);
       }
 
@@ -31,6 +32,7 @@
         var forecast = (AirQualityForecast)averagedValue;
         forecast.InstallationId = installationId;
         forecast.RequestDateTime = requestTime;
+
         airQualityForecasts.Add(forecast);
       }
 

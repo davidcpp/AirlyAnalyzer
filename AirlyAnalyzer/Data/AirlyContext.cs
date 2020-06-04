@@ -22,7 +22,7 @@
     {
       modelBuilder.Entity<AirQualityForecast>()
         .ToTable("ArchiveForecasts")
-        .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime});
+        .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
 
       modelBuilder.Entity<AirQualityMeasurement>()
         .ToTable("ArchiveMeasurements")

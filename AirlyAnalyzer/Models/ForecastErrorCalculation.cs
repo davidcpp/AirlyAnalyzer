@@ -11,6 +11,7 @@
     private List<AirQualityForecast> _newArchiveForecasts;
     private readonly List<AirQualityForecastError> _calculatedForecastErrors
       = new List<AirQualityForecastError>();
+    private readonly ErrorSum _dailyForecastErrorsSum = new ErrorSum();
 
     private readonly DatabaseHelper _databaseHelper;
 
@@ -43,7 +44,6 @@
 
       foreach (short installationId in _installationIdsList)
       {
-        var dailyForecastErrorsSum = new ErrorSum();
         int i = 0, j = 0;
 
         _databaseHelper.SelectDataToProcessing(
@@ -56,7 +56,7 @@
 
           if (currentForecastDateTime == currentMeasurementDateTime)
           {
-            CalculateNextForecastErrors(dailyForecastErrorsSum, installationId, i, j);
+            CalculateNextForecastErrors(installationId, i, j);
             i++; j++;
           }
           else if (currentForecastDateTime > currentMeasurementDateTime)
@@ -69,11 +69,9 @@
           }
         }
 
-        if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+        if (_dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
         {
-          var lastDailyError = CalculateMeanForecastError(
-            dailyForecastErrorsSum, ForecastErrorType.Daily, installationId, i - 1);
-
+          var lastDailyError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
           _calculatedForecastErrors.Add(lastDailyError);
         }
       }
@@ -149,31 +147,8 @@
       return forecastError;
     }
 
-    private AirQualityForecastError CalculateMeanForecastError(
-      ErrorSum errorSum,
-      ForecastErrorType errorType,
-      short installationId,
-      int lastMeasurementIndex)
-    {
-      errorSum.TillDateTime = _newArchiveMeasurements[lastMeasurementIndex].TillDateTime;
-      return new AirQualityForecastError
-      {
-        InstallationId = installationId,
-        FromDateTime = errorSum.FromDateTime,
-        TillDateTime = errorSum.TillDateTime,
-        AirlyCaqiPctError = (short)(errorSum.CaqiPct / errorSum.Counter),
-        Pm25PctError = (short)(errorSum.Pm25Pct / errorSum.Counter),
-        Pm10PctError = (short)(errorSum.Pm10Pct / errorSum.Counter),
-        AirlyCaqiError = (short)(errorSum.Caqi / errorSum.Counter),
-        Pm25Error = (short)(errorSum.Pm25 / errorSum.Counter),
-        Pm10Error = (short)(errorSum.Pm10 / errorSum.Counter),
-        RequestDateTime = errorSum.RequestDateTime,
-        ErrorType = errorType,
-      };
-    }
-
     private void CalculateNextForecastErrors(
-      ErrorSum dailyForecastErrorsSum, short installationId, int i, int j)
+      short installationId, int i, int j)
     {
       var currentMeasurementRequestTime = _newArchiveMeasurements[i].RequestDateTime;
       var previousMeasurementRequestTime = i != 0 ?
@@ -182,47 +157,41 @@
       // Calculate MAPE of daily forecast
       if (currentMeasurementRequestTime != previousMeasurementRequestTime)
       {
-        if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+        if (i > 0 && _dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
         {
-          var dailyForecastError = CalculateMeanForecastError(
-            dailyForecastErrorsSum, ForecastErrorType.Daily, installationId, i - 1);
-
+          var dailyForecastError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
           _calculatedForecastErrors.Add(dailyForecastError);
         }
 
-        dailyForecastErrorsSum.Reset(
-          _newArchiveMeasurements[i].FromDateTime, _newArchiveMeasurements[i].RequestDateTime);
+        _dailyForecastErrorsSum.Reset(
+          installationId, _newArchiveMeasurements[i].FromDateTime, _newArchiveMeasurements[i].RequestDateTime);
       }
 
       var forecastHourlyError = CalculateHourlyForecastError(installationId, i, j);
       _calculatedForecastErrors.Add(forecastHourlyError);
 
-      dailyForecastErrorsSum.AddAbs(forecastHourlyError);
+      _dailyForecastErrorsSum.AddAbs(forecastHourlyError);
     }
 
     private AirQualityForecastError CalculateTotalForecastError(
       List<AirQualityForecastError> allForecastErrors, short installationId)
     {
-      return new AirQualityForecastError
+      var errorSum = new ErrorSum
       {
         InstallationId = installationId,
         FromDateTime = allForecastErrors[0].FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,
-        AirlyCaqiPctError =
-          (short)(allForecastErrors.Sum(e => e.AirlyCaqiPctError) / allForecastErrors.Count),
-        Pm25PctError =
-          (short)(allForecastErrors.Sum(e => e.Pm25PctError) / allForecastErrors.Count),
-        Pm10PctError =
-          (short)(allForecastErrors.Sum(e => e.Pm10PctError) / allForecastErrors.Count),
-        AirlyCaqiError =
-          (short)(allForecastErrors.Sum(e => e.AirlyCaqiError) / allForecastErrors.Count),
-        Pm25Error =
-          (short)(allForecastErrors.Sum(e => e.Pm25Error) / allForecastErrors.Count),
-        Pm10Error =
-          (short)(allForecastErrors.Sum(e => e.Pm10Error) / allForecastErrors.Count),
+        CaqiPct = allForecastErrors.Sum(e => e.AirlyCaqiPctError),
+        Pm25Pct = allForecastErrors.Sum(e => e.Pm25PctError),
+        Pm10Pct = allForecastErrors.Sum(e => e.Pm10PctError),
+        Caqi = allForecastErrors.Sum(e => e.AirlyCaqiError),
+        Pm25 = allForecastErrors.Sum(e => e.Pm25Error),
+        Pm10 = allForecastErrors.Sum(e => e.Pm10Error),
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
-        ErrorType = ForecastErrorType.Total,
+        Counter = allForecastErrors.Count,
       };
+
+      return errorSum.CalculateMeanForecastError(ForecastErrorType.Total);
     }
 
     private class ErrorSum
@@ -249,6 +218,7 @@
       public int Pm25 { get; set; } = 0;
       public int Pm10 { get; set; } = 0;
 
+      public short InstallationId { get; set; } = 0;
       public int Counter { get; set; } = 0;
 
       public DateTime FromDateTime
@@ -279,11 +249,14 @@
         Pm25 += Math.Abs(error.Pm25Error);
         Pm10 += Math.Abs(error.Pm10Error);
 
+        TillDateTime = error.TillDateTime;
         Counter++;
       }
 
-      public void Reset(DateTime fromDateTime, DateTime requestDateTime)
+      public void Reset(short installationId, DateTime fromDateTime, DateTime requestDateTime)
       {
+        InstallationId = installationId;
+
         FromDateTime = fromDateTime;
         TillDateTime = DateTime.MinValue;
         RequestDateTime = requestDateTime;
@@ -297,6 +270,24 @@
         Pm10 = 0;
 
         Counter = 0;
+      }
+
+      public AirQualityForecastError CalculateMeanForecastError(ForecastErrorType errorType)
+      {
+        return new AirQualityForecastError
+        {
+          InstallationId = this.InstallationId,
+          FromDateTime = this.FromDateTime,
+          TillDateTime = this.TillDateTime,
+          AirlyCaqiPctError = (short)(CaqiPct / Counter),
+          Pm25PctError = (short)(Pm25Pct / Counter),
+          Pm10PctError = (short)(Pm10Pct / Counter),
+          AirlyCaqiError = (short)(Caqi / Counter),
+          Pm25Error = (short)(Pm25 / Counter),
+          Pm10Error = (short)(Pm10 / Counter),
+          RequestDateTime = this.RequestDateTime,
+          ErrorType = errorType,
+        };
       }
     }
   }

@@ -129,7 +129,7 @@
       double pm10RelativeError = (double)pm10Error / pm10Measurement;
       double airlyCaqiRelativeError = (double)airlyCaqiError / airlyCaqiMeasurement;
 
-      var forecastError = new AirQualityForecastError
+      return new AirQualityForecastError
       {
         InstallationId = installationId,
         FromDateTime = _newArchiveMeasurements[i].FromDateTime,
@@ -143,8 +143,6 @@
         RequestDateTime = _newArchiveMeasurements[i].RequestDateTime,
         ErrorType = ForecastErrorType.Hourly,
       };
-
-      return forecastError;
     }
 
     private void CalculateNextForecastErrors(

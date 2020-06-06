@@ -19,11 +19,8 @@
 
     public void RemoveTotalForecastErrors()
     {
-      var oldTotalForecastErrors = _context.ForecastErrors
-        .Where(e => e.ErrorType == ForecastErrorType.Total)
-        .ToList();
-
-      _context.ForecastErrors.RemoveRange(oldTotalForecastErrors);
+      _context.ForecastErrors.RemoveRange(
+        _context.ForecastErrors.Where(e => e.ErrorType == ForecastErrorType.Total));
     }
 
     public async Task<int> SaveForecastErrors(List<AirQualityForecastError> forecastErrors)

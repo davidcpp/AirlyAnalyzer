@@ -200,16 +200,6 @@
       private DateTime _tillDateTime;
       private DateTime _requestDateTime;
 
-      public ErrorSum()
-      {
-      }
-
-      public ErrorSum(DateTime fromDateTime, DateTime requestDateTime)
-      {
-        FromDateTime = fromDateTime;
-        RequestDateTime = requestDateTime;
-      }
-
       public int CaqiPct { get; set; } = 0;
       public int Pm25Pct { get; set; } = 0;
       public int Pm10Pct { get; set; } = 0;

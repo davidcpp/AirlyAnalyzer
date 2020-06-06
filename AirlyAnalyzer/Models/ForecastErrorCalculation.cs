@@ -79,36 +79,6 @@
       return _calculatedForecastErrors;
     }
 
-    public List<AirQualityForecastError> CalculateAllTotalForecastErrors()
-    {
-      // Clear forecast error list to ensure that data previously added to database will not be added again
-      _calculatedForecastErrors.Clear();
-
-      foreach (short installationId in _installationIdsList)
-      {
-        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
-
-        if (dailyForecastErrors.Count > 0)
-        {
-          var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
-          _calculatedForecastErrors.Add(installationForecastError);
-        }
-      }
-
-      if (_calculatedForecastErrors.Count > 0)
-      {
-        // Remove old total forecast errors before adding updated ones
-        _databaseHelper.RemoveTotalForecastErrors();
-
-        // Assumption of the latest TillDateTime in last totalForecastErrors element
-        _calculatedForecastErrors.OrderBy(e => e.FromDateTime);
-        var totalForecastError = CalculateTotalForecastError(_calculatedForecastErrors, _idForAllInstallations);
-        _calculatedForecastErrors.Add(totalForecastError);
-      }
-
-      return _calculatedForecastErrors;
-    }
-
     private AirQualityForecastError CalculateHourlyForecastError(
       short installationId, int i, int j)
     {
@@ -169,6 +139,36 @@
       _calculatedForecastErrors.Add(forecastHourlyError);
 
       _dailyForecastErrorsSum.AddAbs(forecastHourlyError);
+    }
+
+    public List<AirQualityForecastError> CalculateAllTotalForecastErrors()
+    {
+      // Clear forecast error list to ensure that data previously added to database will not be added again
+      _calculatedForecastErrors.Clear();
+
+      foreach (short installationId in _installationIdsList)
+      {
+        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
+
+        if (dailyForecastErrors.Count > 0)
+        {
+          var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
+          _calculatedForecastErrors.Add(installationForecastError);
+        }
+      }
+
+      if (_calculatedForecastErrors.Count > 0)
+      {
+        // Remove old total forecast errors before adding updated ones
+        _databaseHelper.RemoveTotalForecastErrors();
+
+        // Assumption of the latest TillDateTime in last totalForecastErrors element
+        _calculatedForecastErrors.OrderBy(e => e.FromDateTime);
+        var totalForecastError = CalculateTotalForecastError(_calculatedForecastErrors, _idForAllInstallations);
+        _calculatedForecastErrors.Add(totalForecastError);
+      }
+
+      return _calculatedForecastErrors;
     }
 
     private AirQualityForecastError CalculateTotalForecastError(

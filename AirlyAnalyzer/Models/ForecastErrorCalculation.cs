@@ -39,9 +39,6 @@
 
     public List<AirQualityForecastError> CalculateAllNewForecastErrors()
     {
-      // Clear forecast error list to ensure that data previously added to database will not be added again
-      _calculatedForecastErrors.Clear();
-
       foreach (short installationId in _installationIdsList)
       {
         int i = 0, j = 0;
@@ -143,8 +140,7 @@
 
     public List<AirQualityForecastError> CalculateAllTotalForecastErrors()
     {
-      // Clear forecast error list to ensure that data previously added to database will not be added again
-      _calculatedForecastErrors.Clear();
+      var calculatedForecastErrors = new List<AirQualityForecastError>();
 
       foreach (short installationId in _installationIdsList)
       {
@@ -153,22 +149,22 @@
         if (dailyForecastErrors.Count > 0)
         {
           var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
-          _calculatedForecastErrors.Add(installationForecastError);
+          calculatedForecastErrors.Add(installationForecastError);
         }
       }
 
-      if (_calculatedForecastErrors.Count > 0)
+      if (calculatedForecastErrors.Count > 0)
       {
         // Remove old total forecast errors before adding updated ones
         _databaseHelper.RemoveTotalForecastErrors();
 
         // Assumption of the latest TillDateTime in last totalForecastErrors element
-        _calculatedForecastErrors.OrderBy(e => e.FromDateTime);
-        var totalForecastError = CalculateTotalForecastError(_calculatedForecastErrors, _idForAllInstallations);
-        _calculatedForecastErrors.Add(totalForecastError);
+        calculatedForecastErrors.OrderBy(e => e.FromDateTime);
+        var totalForecastError = CalculateTotalForecastError(calculatedForecastErrors, _idForAllInstallations);
+        calculatedForecastErrors.Add(totalForecastError);
       }
 
-      return _calculatedForecastErrors;
+      return calculatedForecastErrors;
     }
 
     private AirQualityForecastError CalculateTotalForecastError(

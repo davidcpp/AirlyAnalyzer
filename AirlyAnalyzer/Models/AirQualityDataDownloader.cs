@@ -66,7 +66,14 @@
         webClient.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
         string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
 
-        return JsonConvert.DeserializeObject<Measurements>(response);
+        try
+        {
+          return JsonConvert.DeserializeObject<Measurements>(response);
+        }
+        catch (Exception)
+        {
+          return new Measurements();
+        }
       }
     }
   }

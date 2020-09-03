@@ -1,6 +1,5 @@
 ﻿namespace AirlyAnalyzer.Models
 {
-  using Microsoft.Extensions.Configuration;
   using System;
   using System.Collections.Generic;
   using System.Linq;
@@ -13,64 +12,51 @@
       = new List<AirQualityForecastError>();
     private readonly ErrorSum _dailyForecastErrorsSum = new ErrorSum();
 
-    private readonly DatabaseHelper _databaseHelper;
-
-    private readonly List<short> _installationIdsList;
-    private readonly short _idForAllInstallations;
-
     /// <summary>
     /// Minimal number of measurements to calculate daily forecast error
     /// </summary>
     private readonly short _minNumberOfMeasurements;
 
-    public ForecastErrorsCalculation(
-      DatabaseHelper databaseHelper,
-      IConfiguration config,
-      List<short> installationIdsList,
-      short minNumberOfMeasurements)
+    public ForecastErrorsCalculation(short minNumberOfMeasurements)
     {
-      _databaseHelper = databaseHelper;
-
-      _installationIdsList = installationIdsList;
       _minNumberOfMeasurements = minNumberOfMeasurements;
-
-      _idForAllInstallations = config.GetValue<sbyte>("AppSettings:AirlyApi:IdForAllInstallations");
     }
 
-    public List<AirQualityForecastError> CalculateAllNewForecastErrors()
+    public List<AirQualityForecastError> CalculateNewForecastErrors(
+      short installationId,
+      List<AirQualityMeasurement> newArchiveMeasurements,
+      List<AirQualityForecast> newArchiveForecasts)
     {
-      foreach (short installationId in _installationIdsList)
+      int i = 0, j = 0;
+      _newArchiveMeasurements = newArchiveMeasurements;
+      _newArchiveForecasts = newArchiveForecasts;
+
+      _calculatedForecastErrors.Clear();
+
+      for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
       {
-        int i = 0, j = 0;
+        var currentMeasurementDateTime = _newArchiveMeasurements[i].TillDateTime;
+        var currentForecastDateTime = _newArchiveForecasts[j].TillDateTime;
 
-        _databaseHelper.SelectDataToProcessing(
-          installationId, out _newArchiveMeasurements, out _newArchiveForecasts);
-
-        for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
+        if (currentForecastDateTime == currentMeasurementDateTime)
         {
-          var currentMeasurementDateTime = _newArchiveMeasurements[i].TillDateTime;
-          var currentForecastDateTime = _newArchiveForecasts[j].TillDateTime;
-
-          if (currentForecastDateTime == currentMeasurementDateTime)
-          {
-            CalculateNextForecastErrors(installationId, i, j);
-            i++; j++;
-          }
-          else if (currentForecastDateTime > currentMeasurementDateTime)
-          {
-            _newArchiveMeasurements.RemoveAt(i);
-          }
-          else
-          {
-            _newArchiveForecasts.RemoveAt(j);
-          }
+          CalculateNextForecastErrors(installationId, i, j);
+          i++; j++;
         }
-
-        if (_dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+        else if (currentForecastDateTime > currentMeasurementDateTime)
         {
-          var lastDailyError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
-          _calculatedForecastErrors.Add(lastDailyError);
+          _newArchiveMeasurements.RemoveAt(i);
         }
+        else
+        {
+          _newArchiveForecasts.RemoveAt(j);
+        }
+      }
+
+      if (_dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+      {
+        var lastDailyError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
+        _calculatedForecastErrors.Add(lastDailyError);
       }
 
       return _calculatedForecastErrors;
@@ -138,36 +124,7 @@
       _dailyForecastErrorsSum.AddAbs(forecastHourlyError);
     }
 
-    public List<AirQualityForecastError> CalculateAllTotalForecastErrors()
-    {
-      var calculatedForecastErrors = new List<AirQualityForecastError>();
-
-      foreach (short installationId in _installationIdsList)
-      {
-        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
-
-        if (dailyForecastErrors.Count > 0)
-        {
-          var installationForecastError = CalculateTotalForecastError(dailyForecastErrors, installationId);
-          calculatedForecastErrors.Add(installationForecastError);
-        }
-      }
-
-      if (calculatedForecastErrors.Count > 0)
-      {
-        // Remove old total forecast errors before adding updated ones
-        _databaseHelper.RemoveTotalForecastErrors();
-
-        // Assumption of the latest TillDateTime in last totalForecastErrors element
-        calculatedForecastErrors.OrderBy(e => e.FromDateTime);
-        var totalForecastError = CalculateTotalForecastError(calculatedForecastErrors, _idForAllInstallations);
-        calculatedForecastErrors.Add(totalForecastError);
-      }
-
-      return calculatedForecastErrors;
-    }
-
-    private AirQualityForecastError CalculateTotalForecastError(
+    public AirQualityForecastError CalculateTotalForecastError(
       List<AirQualityForecastError> allForecastErrors, short installationId)
     {
       var errorSum = new ErrorSum

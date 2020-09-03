@@ -14,6 +14,7 @@
     private readonly IConfiguration _config;
 
     private readonly List<short> _installationIDsList;
+    private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
     private readonly DatabaseHelper _databaseHelper;
@@ -24,6 +25,7 @@
       _config = config;
 
       _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+      _idForAllInstallations = _config.GetValue<short>("AppSettings:AirlyApi:IdForAllInstallations");
       _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
 
       _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
@@ -35,6 +37,7 @@
       var airQualityDataDownloader
         = new AirQualityDataDownloader(_databaseHelper, _config, _minNumberOfMeasurements);
 
+      // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
         var (newMeasurements, newForecasts)
@@ -44,14 +47,46 @@
         await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
       }
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculation(
-        _databaseHelper, _config, _installationIDsList, _minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculation(_minNumberOfMeasurements);
 
-      var newForecastErrors = forecastErrorsCalculation.CalculateAllNewForecastErrors();
-      if (newForecastErrors.Count > 0)
+      // Calculating and saving new daily and hourly forecast errors in database
+      foreach (short installationId in _installationIDsList)
       {
+        _databaseHelper.SelectDataToProcessing(
+          installationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+
+        var newForecastErrors = forecastErrorsCalculation.CalculateNewForecastErrors(
+          installationId, newArchiveMeasurements, newArchiveForecasts);
+
         await _databaseHelper.SaveForecastErrors(newForecastErrors);
-        var newTotalForecastErrors = forecastErrorsCalculation.CalculateAllTotalForecastErrors();
+      }
+
+      var newTotalForecastErrors = new List<AirQualityForecastError>();
+
+      // Calculating total forecast errors for each installation
+      foreach (short installationId in _installationIDsList)
+      {
+        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
+
+        if (dailyForecastErrors.Count > 0)
+        {
+          var installationForecastError
+            = forecastErrorsCalculation.CalculateTotalForecastError(dailyForecastErrors, installationId);
+
+          newTotalForecastErrors.Add(installationForecastError);
+        }
+      }
+
+      if (newTotalForecastErrors.Count > 0)
+      {
+        // Calculating total forecast error from all installations
+        var totalForecastError = forecastErrorsCalculation
+          .CalculateTotalForecastError(newTotalForecastErrors, _idForAllInstallations);
+
+        newTotalForecastErrors.Add(totalForecastError);
+
+        // Update total forecast errors
+        _databaseHelper.RemoveTotalForecastErrors();
         await _databaseHelper.SaveForecastErrors(newTotalForecastErrors);
       }
 

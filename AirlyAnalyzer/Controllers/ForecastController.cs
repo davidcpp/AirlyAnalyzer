@@ -41,7 +41,7 @@
       foreach (short installationId in _installationIDsList)
       {
         var (newMeasurements, newForecasts)
-          = airQualityDataDownloader.DownloadAllAirQualityData(installationId);
+          = airQualityDataDownloader.DownloadAirQualityData(installationId);
 
         await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
         await _databaseHelper.SaveNewForecasts(newForecasts, installationId);

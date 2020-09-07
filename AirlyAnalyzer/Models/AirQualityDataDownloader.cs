@@ -32,7 +32,7 @@
     }
 
     public (List<AirQualityMeasurement>, List<AirQualityForecast>)
-      DownloadAllAirQualityData(short installationId)
+      DownloadAirQualityData(short installationId)
     {
       var requestDateTime = DateTime.UtcNow;
       var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);

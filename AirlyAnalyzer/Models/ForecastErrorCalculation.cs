@@ -32,6 +32,7 @@
       _newArchiveForecasts = newArchiveForecasts;
 
       _calculatedForecastErrors.Clear();
+      _dailyForecastErrorsSum.Reset(installationId, DateTime.MinValue, DateTime.MinValue);
 
       for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
       {

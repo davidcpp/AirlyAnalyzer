@@ -1,5 +1,6 @@
 ﻿namespace AirlyAnalyzer.Controllers
 {
+  using System;
   using System.Collections.Generic;
   using System.Linq;
   using System.Threading.Tasks;
@@ -35,16 +36,21 @@
     public async Task<IActionResult> Index()
     {
       var airQualityDataDownloader
-        = new AirQualityDataDownloader(_databaseHelper, _config, _minNumberOfMeasurements);
+        = new AirQualityDataDownloader(_config);
 
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
-        var (newMeasurements, newForecasts)
+        var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);
+
+        if ((DateTime.UtcNow - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
+        {
+          var (newMeasurements, newForecasts)
           = airQualityDataDownloader.DownloadAirQualityData(installationId);
 
-        await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
-        await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
+          await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
+          await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
+        }
       }
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(_minNumberOfMeasurements);

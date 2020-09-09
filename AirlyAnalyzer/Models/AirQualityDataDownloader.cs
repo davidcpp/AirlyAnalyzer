@@ -14,16 +14,8 @@
     private readonly string _measurementsUri;
     private readonly string _uri;
 
-    private readonly DatabaseHelper _databaseHelper;
-
-    private readonly short _minNumberOfMeasurements;
-
-    public AirQualityDataDownloader(
-      DatabaseHelper databaseHelper, IConfiguration config, short minNumberOfMeasurements)
+    public AirQualityDataDownloader(IConfiguration config)
     {
-      _databaseHelper = databaseHelper;
-      _minNumberOfMeasurements = minNumberOfMeasurements;
-
       _airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
       _airlyApiKey = config.GetValue<string>("AppSettings:AirlyApi:Key");
       _contentType = config.GetValue<string>("AppSettings:AirlyApi:ContentType");
@@ -35,23 +27,13 @@
       DownloadAirQualityData(short installationId)
     {
       var requestDateTime = DateTime.UtcNow;
-      var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);
+      var responseMeasurements = DownloadInstallationData(installationId);
 
-      var requestDateTimeDiff = requestDateTime - lastMeasurementDate;
+      var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
+        installationId, requestDateTime);
 
-      var newMeasurements = new List<AirQualityMeasurement>();
-      var newForecasts = new List<AirQualityForecast>();
-
-      if (requestDateTimeDiff.TotalHours >= _minNumberOfMeasurements)
-      {
-        var responseMeasurements = DownloadInstallationData(installationId);
-
-        newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
-          installationId, requestDateTime);
-
-        newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-          installationId, requestDateTime);
-      }
+      var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
+        installationId, requestDateTime);
 
       return (newMeasurements, newForecasts);
     }

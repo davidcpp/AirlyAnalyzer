@@ -25,18 +25,17 @@
       _context = context;
       _config = config;
 
+      _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
+
       _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
       _idForAllInstallations = _config.GetValue<short>("AppSettings:AirlyApi:IdForAllInstallations");
       _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
-
-      _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
     }
 
     // GET: Forecast
     public async Task<IActionResult> Index()
     {
-      var airQualityDataDownloader
-        = new AirQualityDataDownloader(_config);
+      var airQualityDataDownloader = new AirQualityDataDownloader(_config);
 
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
@@ -46,7 +45,7 @@
         if ((DateTime.UtcNow - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
         {
           var (newMeasurements, newForecasts)
-          = airQualityDataDownloader.DownloadAirQualityData(installationId);
+            = airQualityDataDownloader.DownloadAirQualityData(installationId);
 
           await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
           await _databaseHelper.SaveNewForecasts(newForecasts, installationId);

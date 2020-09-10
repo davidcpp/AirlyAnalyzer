@@ -4,14 +4,16 @@ using AirlyAnalyzer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirlyAnalyzer.Migrations
 {
     [DbContext(typeof(AirlyContext))]
-    partial class AirlyContextModelSnapshot : ModelSnapshot
+    [Migration("20200910131451_ReduceSizeOfDateTimeProperties")]
+    partial class ReduceSizeOfDateTimeProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,16 +21,16 @@ namespace AirlyAnalyzer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
-            modelBuilder.Entity("AirlyAnalyzer.Models.AirQualityForecast", b =>
+modelBuilder.Entity("AirlyAnalyzer.Models.AirQualityForecast", b =>
                 {
                     b.Property<short>("InstallationId")
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("FromDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("TillDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<byte>("AirlyCaqi")
                         .HasColumnType("tinyint");
@@ -53,13 +55,13 @@ namespace AirlyAnalyzer.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("FromDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("TillDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<short>("AirlyCaqiError")
-                        .HasColumnType("smallint");
+                          .HasColumnType("smallint");
 
                     b.Property<short>("AirlyCaqiPctError")
                         .HasColumnType("smallint");
@@ -96,10 +98,10 @@ namespace AirlyAnalyzer.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("FromDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("TillDateTime")
-                        .HasColumnType("smalldatetime");
+                          .HasColumnType("smalldatetime");
 
                     b.Property<byte>("AirlyCaqi")
                         .HasColumnType("tinyint");

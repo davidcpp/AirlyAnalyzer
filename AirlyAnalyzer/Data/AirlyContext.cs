@@ -38,6 +38,42 @@
         .IsUnicode(false)
         .HasMaxLength(_maxErrorTypeLength);
 
+      modelBuilder.Entity<AirQualityForecast>()
+        .Property(x => x.FromDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityForecast>()
+        .Property(x => x.TillDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityForecast>()
+        .Property(x => x.RequestDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityMeasurement>()
+        .Property(x => x.FromDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityMeasurement>()
+        .Property(x => x.TillDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityMeasurement>()
+        .Property(x => x.RequestDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityForecastError>()
+        .Property(x => x.FromDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityForecastError>()
+        .Property(x => x.TillDateTime)
+        .HasColumnType("smalldatetime");
+
+      modelBuilder.Entity<AirQualityForecastError>()
+        .Property(x => x.RequestDateTime)
+        .HasColumnType("smalldatetime");
+
       modelBuilder
         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
     }

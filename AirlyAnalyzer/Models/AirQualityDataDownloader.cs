@@ -46,10 +46,10 @@
         webClient.Headers.Remove(HttpRequestHeader.Accept);
         webClient.Headers.Add(HttpRequestHeader.Accept, _contentType);
         webClient.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
-        string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
 
         try
         {
+          string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
           return JsonConvert.DeserializeObject<Measurements>(response);
         }
         catch (Exception)

@@ -8,6 +8,13 @@
     private DateTime fromDateTime;
     private DateTime tillDateTime;
 
+    public AveragedValues()
+    {
+      Values = new List<Measurement>();
+      Indexes = new List<Index>();
+      Standards = new List<Standard>();
+    }
+
     public DateTime FromDateTime
     {
       get => fromDateTime.ToLocalTime();

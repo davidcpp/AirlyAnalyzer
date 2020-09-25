@@ -1,7 +1,6 @@
 ﻿namespace AirlyAnalyzer.Models
 {
   using System;
-  using System.Collections.Generic;
   using System.Net;
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
@@ -23,22 +22,7 @@
       _uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
-    public (List<AirQualityMeasurement>, List<AirQualityForecast>)
-      DownloadAirQualityData(short installationId)
-    {
-      var requestDateTime = DateTime.UtcNow;
-      var responseMeasurements = DownloadInstallationData(installationId);
-
-      var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
-        installationId, requestDateTime);
-
-      var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-        installationId, requestDateTime);
-
-      return (newMeasurements, newForecasts);
-    }
-
-    private Measurements DownloadInstallationData(short installationId)
+    public Measurements DownloadAirQualityData(short installationId)
     {
       using (var webClient = new WebClient())
       {

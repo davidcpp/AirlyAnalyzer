@@ -52,11 +52,18 @@
       foreach (short installationId in _installationIDsList)
       {
         var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);
+        var requestDateTime = DateTime.UtcNow;
 
-        if ((DateTime.UtcNow - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
+        if ((requestDateTime - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
         {
-          var (newMeasurements, newForecasts)
+          var responseMeasurements
             = _airQualityDataDownloader.DownloadAirQualityData(installationId);
+
+          var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
+            installationId, requestDateTime);
+
+          var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
+            installationId, requestDateTime);
 
           await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
           await _databaseHelper.SaveNewForecasts(newForecasts, installationId);

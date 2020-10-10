@@ -19,8 +19,4 @@
     <ProjectReference Include="..\AirlyAnalyzer\AirlyAnalyzer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AuxiliaryTests\" />
-  </ItemGroup>
-
 </Project>

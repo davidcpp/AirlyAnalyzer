@@ -9,20 +9,17 @@ namespace AirlyAnalyzer.Tests
   {
     private readonly DateTime _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Local);
     private const byte _requestMinutesOffset = 30;
-    private byte _numberOfMeasurements;
-    private short _numberOfDays = 25;
-    private short _numberOfMeasurementsInDay = 23;
 
     [Fact]
     public void Return_valid_last_DateTime_when_one_day_measurements()
     {
       // Arrange
       var endDate = _startDate.AddDays(1);
-      _numberOfMeasurements = 24;
+      const int numberOfMeasurements = 24;
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, _numberOfMeasurements, _requestMinutesOffset)
+        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -33,44 +30,44 @@ namespace AirlyAnalyzer.Tests
     public void Return_list_of_measurements_from_one_day()
     {
       // Arrange
-      _numberOfMeasurements = 20;
+      const int numberOfMeasurements = 20;
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, _numberOfMeasurements, _requestMinutesOffset)
+        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(_numberOfMeasurements, measurements.Count);
+      Assert.Equal(numberOfMeasurements, measurements.Count);
     }
 
     [Fact]
     public void Return_list_of_measurements_from_many_days()
     {
       // Arrange 
-      _numberOfDays = 25;
-      _numberOfMeasurementsInDay = 23;
+      const short numberOfDays = 25;
+      const short numberOfMeasurementsInDay = 23;
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, _numberOfDays, _numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(_numberOfDays * _numberOfMeasurementsInDay, measurements.Count);
+      Assert.Equal(numberOfDays * numberOfMeasurementsInDay, measurements.Count);
     }
 
     [Fact]
     public void Return_valid_last_measurement_date_when_many_days_measurements()
     {
       // Arrange 
-      _numberOfDays = 25;
-      _numberOfMeasurementsInDay = 23;
-      var endDate = _startDate.AddHours(_numberOfDays * _numberOfMeasurementsInDay);
+      const short numberOfDays = 25;
+      const short numberOfMeasurementsInDay = 23;
+      var endDate = _startDate.AddHours(numberOfDays * numberOfMeasurementsInDay);
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, _numberOfDays, _numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -81,14 +78,14 @@ namespace AirlyAnalyzer.Tests
     public void Return_valid_last_request_date_when_many_days_measurements()
     {
       // Arrange 
-      _numberOfDays = 25;
-      _numberOfMeasurementsInDay = 23;
-      var endRequestDate = _startDate.AddHours(_numberOfDays * _numberOfMeasurementsInDay)
+      const short numberOfDays = 25;
+      const short numberOfMeasurementsInDay = 23;
+      var endRequestDate = _startDate.AddHours(numberOfDays * numberOfMeasurementsInDay)
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, _numberOfDays, _numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert

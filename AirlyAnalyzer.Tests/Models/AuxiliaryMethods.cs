@@ -76,13 +76,13 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    private static AirQualityForecast CreateForecast(DateTime forecastDate, DateTime startDate)
+    private static AirQualityForecast CreateForecast(DateTime forecastDate, DateTime requestDate)
     {
       return new AirQualityForecast
       {
         FromDateTime = forecastDate,
         TillDateTime = forecastDate.AddHours(1),
-        RequestDateTime = startDate,
+        RequestDateTime = requestDate,
         InstallationId = 1001,
         AirlyCaqi = 100,
         Pm25 = 20,

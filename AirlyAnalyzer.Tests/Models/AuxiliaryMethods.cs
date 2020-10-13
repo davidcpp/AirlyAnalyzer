@@ -6,7 +6,7 @@ namespace AirlyAnalyzer.Tests.Models
 {
   public static class AuxiliaryMethods
   {
-    internal static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
+    public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
       DateTime startDate, int numberOfMeasurements, byte requestMinutesOffset)
     {
       for (int i = 0; i < numberOfMeasurements; i++)
@@ -17,7 +17,7 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    internal static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
+    public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
       DateTime startDate, short numberOfDays, short numberOfMeasurementsInDay, byte requestMinutesOffset)
     {
       for (int i = 0; i < numberOfDays; i++)
@@ -32,7 +32,7 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    private static AirQualityMeasurement CreateMeasurement(DateTime measurementDate, DateTime requestDate)
+    public static AirQualityMeasurement CreateMeasurement(DateTime measurementDate, DateTime requestDate)
     {
       return new AirQualityMeasurement
       {
@@ -50,7 +50,7 @@ namespace AirlyAnalyzer.Tests.Models
       };
     }
 
-    internal static IEnumerable<AirQualityForecast> GenerateForecasts(
+    public static IEnumerable<AirQualityForecast> GenerateForecasts(
       DateTime startDate, int numberOfForecasts, short requestMinutesOffset)
     {
       for (int i = 0; i < numberOfForecasts; i++)
@@ -61,7 +61,7 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    internal static IEnumerable<AirQualityForecast> GenerateForecasts(
+    public static IEnumerable<AirQualityForecast> GenerateForecasts(
       DateTime startDate, short numberOfDays, short numberOfForecastsInDay, byte requestMinutesOffset)
     {
       for (int i = 0; i < numberOfDays; i++)

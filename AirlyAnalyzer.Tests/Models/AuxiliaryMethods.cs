@@ -32,7 +32,8 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    public static AirQualityMeasurement CreateMeasurement(DateTime measurementDate, DateTime requestDate)
+    public static AirQualityMeasurement CreateMeasurement(DateTime measurementDate, DateTime requestDate,
+      byte airlyCaqi = 1, short pm25 = 1, short pm10 = 1)
     {
       return new AirQualityMeasurement
       {
@@ -40,13 +41,13 @@ namespace AirlyAnalyzer.Tests.Models
         TillDateTime = measurementDate.AddHours(1),
         RequestDateTime = requestDate,
         InstallationId = 1001,
-        AirlyCaqi = 100,
-        Pm1 = 10,
-        Pm25 = 20,
-        Pm10 = 30,
-        Humidity = 50,
-        Pressure = 1013,
-        Temperature = 15,
+        AirlyCaqi = airlyCaqi,
+        Pm1 = 1,
+        Pm25 = pm25,
+        Pm10 = pm10,
+        Humidity = 1,
+        Pressure = 1,
+        Temperature = 1,
       };
     }
 
@@ -76,7 +77,8 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    private static AirQualityForecast CreateForecast(DateTime forecastDate, DateTime requestDate)
+    public static AirQualityForecast CreateForecast(DateTime forecastDate, DateTime requestDate,
+      byte airlyCaqi = 1, short pm25 = 1, short pm10 = 1)
     {
       return new AirQualityForecast
       {
@@ -84,9 +86,9 @@ namespace AirlyAnalyzer.Tests.Models
         TillDateTime = forecastDate.AddHours(1),
         RequestDateTime = requestDate,
         InstallationId = 1001,
-        AirlyCaqi = 100,
-        Pm25 = 20,
-        Pm10 = 30,
+        AirlyCaqi = airlyCaqi,
+        Pm25 = pm25,
+        Pm10 = pm10,
       };
     }
   }

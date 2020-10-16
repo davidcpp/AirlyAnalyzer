@@ -27,14 +27,14 @@ namespace AirlyAnalyzer.Tests
       const short numberOfForecastsInDay = 24;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
-      var forecastStartDate = _startDate.AddDays(1);
-      var measurementsEndDate = forecastStartDate.AddDays(1);
+      var forecastsStartDate = _startDate.AddDays(1);
+      var measurementsEndDate = forecastsStartDate.AddDays(1);
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
         measurementsStartDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
 
       var newForecasts = AuxiliaryMethods.GenerateForecasts(
-        forecastStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
+        forecastsStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 
@@ -48,7 +48,7 @@ namespace AirlyAnalyzer.Tests
       Assert.Single(dailyForecastErrors);
       // _minNumberOfMeasurements hourly forecast errors + 1 dayly forecast error
       Assert.Equal(numberOfMeasurementsInDay + 1, forecastErrors.Count);
-      Assert.Equal(forecastStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(measurementsEndDate, forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
 
@@ -64,13 +64,13 @@ namespace AirlyAnalyzer.Tests
       // These start date values simulate a case of a two-day break in requests 
       // - future measurements begin where previous forecasts end
       var measurementsStartDate = _startDate.AddHours(numberOfMeasurements);
-      var forecastStartDate = _startDate;
+      var forecastsStartDate = _startDate;
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
         measurementsStartDate, numberOfMeasurements, _requestMinutesOffset).ToList();
 
       var newForecasts = AuxiliaryMethods.GenerateForecasts(
-        forecastStartDate, numberOfForecasts, _requestMinutesOffset).ToList();
+        forecastsStartDate, numberOfForecasts, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 
@@ -96,13 +96,13 @@ namespace AirlyAnalyzer.Tests
       const short minNumberOfMeasurements = 23;
 
       var measurementsStartDate = _startDate;
-      var forecastStartDate = _startDate;
+      var forecastsStartDate = _startDate;
       var requestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
 
       var measurement = AuxiliaryMethods.CreateMeasurement(
         measurementsStartDate, requestDate, airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
       var forecast = AuxiliaryMethods.CreateForecast(
-        forecastStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
+        forecastsStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
 
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
@@ -143,13 +143,13 @@ namespace AirlyAnalyzer.Tests
       const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
-      var forecastStartDate = _startDate;
+      var forecastsStartDate = _startDate;
       var requestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
 
       var measurement = AuxiliaryMethods.CreateMeasurement(
         measurementsStartDate, requestDate, airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
       var forecast = AuxiliaryMethods.CreateForecast(
-        forecastStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
+        forecastsStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
 
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
@@ -176,13 +176,13 @@ namespace AirlyAnalyzer.Tests
       const short numberOfForecasts = 19;
       const short minNumberOfMeasurements = 20;
       var measurementsStartDate = _startDate;
-      var forecastStartDate = _startDate;
+      var forecastsStartDate = _startDate;
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
         measurementsStartDate, numberOfMeasurements, _requestMinutesOffset).ToList();
 
       var newForecasts = AuxiliaryMethods.GenerateForecasts(
-        forecastStartDate, numberOfForecasts, _requestMinutesOffset).ToList();
+        forecastsStartDate, numberOfForecasts, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 
@@ -204,7 +204,7 @@ namespace AirlyAnalyzer.Tests
       const short numberOfForecasts = 20;
       const short minNumberOfMeasurements = 20;
       var measurementsStartDate = _startDate;
-      var forecastStartDate = _startDate;
+      var forecastsStartDate = _startDate;
       var endDate = _startDate.AddHours(numberOfMeasurements);
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(

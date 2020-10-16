@@ -46,12 +46,11 @@ namespace AirlyAnalyzer.Tests
 
       // Assert
       Assert.Single(dailyForecastErrors);
-      // _minNumberOfMeasurements hourly forecast errors + 1 dayly forecast error
+      // _minNumberOfMeasurements hourly forecast errors + 1 daily forecast error
       Assert.Equal(numberOfMeasurementsInDay + 1, forecastErrors.Count);
       Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(measurementsEndDate, forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
-
 
     [Fact]
     public void Return_empty_forecast_error_list_when_non_overlapping_elements()
@@ -94,7 +93,6 @@ namespace AirlyAnalyzer.Tests
       // Arrange
       const short installationId = 1;
       const short minNumberOfMeasurements = 23;
-
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate;
       var requestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
@@ -221,7 +219,7 @@ namespace AirlyAnalyzer.Tests
         .Where(e => e.ErrorType == ForecastErrorType.Daily);
 
       // Assert
-      Assert.Equal(_startDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(endDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
       Assert.Single(dailyForecastErrors);
     }
@@ -235,12 +233,12 @@ namespace AirlyAnalyzer.Tests
     [InlineData(13, 22, 22, 22, 299, 13)]
     [InlineData(13, 21, 21, 22, 273, 0)]
     public void Return_correct_number_of_forecast_errors(
-        short numberOfDays,
-        short numberOfMeasurementsInDay,
-        short numberOfForecastsInDay,
-        short minNumberOfMeasurements,
-        int numberOfForecastsErrors,
-        short numberOfDailyForecastsErrors)
+      short numberOfDays,
+      short numberOfMeasurementsInDay,
+      short numberOfForecastsInDay,
+      short minNumberOfMeasurements,
+      int numberOfForecastsErrors,
+      short numberOfDailyForecastsErrors)
     {
       // Arrange
       const short installationId = 1;

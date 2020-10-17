@@ -11,7 +11,7 @@ namespace AirlyAnalyzer.Tests
     private const byte _requestMinutesOffset = 30;
 
     [Fact]
-    public void Return_valid_last_DateTime_when_one_day_measurements()
+    public void Return_correct_last_DateTime_of_measurements_from_one_day()
     {
       // Arrange
       var endDate = _startDate.AddDays(1);
@@ -58,7 +58,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_valid_last_measurement_date_when_many_days_measurements()
+    public void Return_correct_last_measurement_date_when_many_days_measurements()
     {
       // Arrange 
       const short numberOfDays = 25;
@@ -75,7 +75,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_valid_last_request_date_when_many_days_measurements()
+    public void Return_correct_last_request_date_when_many_days_measurements()
     {
       // Arrange 
       const short numberOfDays = 25;

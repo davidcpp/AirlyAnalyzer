@@ -28,7 +28,7 @@ namespace AirlyAnalyzer.Tests
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate.AddDays(1);
-      var measurementsEndDate = forecastsStartDate.AddDays(1);
+      var measurementsEndDate = _startDate.AddDays(2);
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
         measurementsStartDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
@@ -94,13 +94,14 @@ namespace AirlyAnalyzer.Tests
       const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
+      var measurementsRequestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
       var forecastsStartDate = _startDate;
-      var requestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
+      var forecastsRequestDate = _startDate;
 
-      var measurement = AuxiliaryMethods.CreateMeasurement(
-        measurementsStartDate, requestDate, airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
-      var forecast = AuxiliaryMethods.CreateForecast(
-        forecastsStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
+      var measurement = AuxiliaryMethods.CreateMeasurement(measurementsStartDate, measurementsRequestDate,
+        airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
+      var forecast = AuxiliaryMethods.CreateForecast(forecastsStartDate, forecastsRequestDate,
+        airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
 
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
@@ -141,13 +142,14 @@ namespace AirlyAnalyzer.Tests
       const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
+      var measurementsRequestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
       var forecastsStartDate = _startDate;
-      var requestDate = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
+      var forecastsRequestDate = _startDate;
 
-      var measurement = AuxiliaryMethods.CreateMeasurement(
-        measurementsStartDate, requestDate, airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
-      var forecast = AuxiliaryMethods.CreateForecast(
-        forecastsStartDate, requestDate, airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
+      var measurement = AuxiliaryMethods.CreateMeasurement(measurementsStartDate, measurementsRequestDate,
+        airlyCaqi_Measurement, airlyPm25_Measurement, airlyPm10_Measurement);
+      var forecast = AuxiliaryMethods.CreateForecast(forecastsStartDate, forecastsRequestDate,
+        airlyCaqi_Forecast, airlyPm25_Forecast, airlyPm10_Forecast);
 
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
@@ -206,10 +208,10 @@ namespace AirlyAnalyzer.Tests
       var endDate = _startDate.AddHours(numberOfMeasurements);
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
-        _startDate, numberOfMeasurements, _requestMinutesOffset).ToList();
+        measurementsStartDate, numberOfMeasurements, _requestMinutesOffset).ToList();
 
       var newForecasts = AuxiliaryMethods.GenerateForecasts(
-        _startDate, numberOfForecasts, _requestMinutesOffset).ToList();
+        forecastsStartDate, numberOfForecasts, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 
@@ -242,12 +244,14 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const short installationId = 1;
+      var measurementsStartDate = _startDate;
+      var forecastsStartDate = _startDate;
 
       var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
-        _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
+        measurementsStartDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
 
       var newForecasts = AuxiliaryMethods.GenerateForecasts(
-        _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
+        forecastsStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 

@@ -46,6 +46,8 @@ namespace AirlyAnalyzer.Tests
 
       // Assert
       Assert.Single(dailyForecastErrors);
+      Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(measurementsEndDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
       // _minNumberOfMeasurements hourly forecast errors + 1 daily forecast error
       Assert.Equal(numberOfMeasurementsInDay + 1, forecastErrors.Count);
       Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));

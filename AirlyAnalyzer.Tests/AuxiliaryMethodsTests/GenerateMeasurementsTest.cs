@@ -11,6 +11,21 @@ namespace AirlyAnalyzer.Tests
     private const byte _requestMinutesOffset = 30;
 
     [Fact]
+    public void Return_list_of_measurements_from_one_day()
+    {
+      // Arrange
+      const int numberOfMeasurements = 20;
+
+      // Act
+      var measurements = AuxiliaryMethods
+        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
+        .ToList();
+
+      // Assert
+      Assert.Equal(numberOfMeasurements, measurements.Count);
+    }
+
+    [Fact]
     public void Return_correct_last_DateTime_of_measurements_from_one_day()
     {
       // Arrange
@@ -24,21 +39,6 @@ namespace AirlyAnalyzer.Tests
 
       // Assert
       Assert.Equal(endDate, measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
-    }
-
-    [Fact]
-    public void Return_list_of_measurements_from_one_day()
-    {
-      // Arrange
-      const int numberOfMeasurements = 20;
-
-      // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
-        .ToList();
-
-      // Assert
-      Assert.Equal(numberOfMeasurements, measurements.Count);
     }
 
     [Fact]

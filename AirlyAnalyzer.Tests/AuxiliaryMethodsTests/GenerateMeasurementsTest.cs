@@ -9,6 +9,7 @@ namespace AirlyAnalyzer.Tests
   {
     private readonly DateTime _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Local);
     private const byte _requestMinutesOffset = 30;
+    private const short _installationId = 1;
 
     [Fact]
     public void Return_list_of_measurements_from_one_day()
@@ -18,7 +19,7 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
+        .GenerateMeasurements(_installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -34,7 +35,7 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfMeasurements, _requestMinutesOffset)
+        .GenerateMeasurements(_installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -50,7 +51,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(
+          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -67,7 +69,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(
+          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -85,7 +88,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+        .GenerateMeasurements(
+          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert

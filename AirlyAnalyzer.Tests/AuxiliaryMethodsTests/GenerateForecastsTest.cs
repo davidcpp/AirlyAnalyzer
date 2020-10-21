@@ -9,6 +9,7 @@ namespace AirlyAnalyzer.Tests
   {
     private readonly DateTime _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Local);
     private const byte _requestMinutesOffset = 30;
+    private const short _installationId = 1;
 
     [Fact]
     public void Return_list_of_forecasts_from_one_day()
@@ -18,7 +19,7 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_startDate, numberOfForecasts, _requestMinutesOffset).ToList();
+        .GenerateForecasts(_installationId, _startDate, numberOfForecasts, _requestMinutesOffset).ToList();
 
       // Assert
       Assert.Equal(numberOfForecasts, forecasts.Count);
@@ -33,7 +34,7 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_startDate, numberOfForecasts, _requestMinutesOffset).ToList();
+        .GenerateForecasts(_installationId, _startDate, numberOfForecasts, _requestMinutesOffset).ToList();
 
       // Assert
       Assert.Equal(endDate, forecasts.Last().TillDateTime, new TimeSpan(0, 0, 0));
@@ -48,7 +49,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+        .GenerateForecasts(
+          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -65,7 +67,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+        .GenerateForecasts(
+          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -83,7 +86,8 @@ namespace AirlyAnalyzer.Tests
 
       // Act
       var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+        .GenerateForecasts(
+          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 
       // Assert

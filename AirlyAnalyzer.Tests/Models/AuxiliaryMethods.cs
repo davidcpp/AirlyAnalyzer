@@ -28,9 +28,9 @@ namespace AirlyAnalyzer.Tests.Models
           yield return CreateMeasurement(
             installationId,
             startDate.AddHours(j),
-            startDate.AddHours(numberOfMeasurementsInDay).AddMinutes(requestMinutesOffset));
+            startDate.AddDays(1).AddMinutes(requestMinutesOffset));
         }
-        startDate = startDate.AddHours(numberOfMeasurementsInDay);
+        startDate = startDate.AddDays(1);
       }
     }
 
@@ -75,9 +75,9 @@ namespace AirlyAnalyzer.Tests.Models
           yield return CreateForecast(
             installationId,
             startDate.AddHours(j),
-            startDate.AddHours(numberOfForecastsInDay).AddMinutes(requestMinutesOffset));
+            startDate.AddDays(1).AddMinutes(requestMinutesOffset));
         }
-        startDate = startDate.AddHours(numberOfForecastsInDay);
+        startDate = startDate.AddDays(1);
       }
     }
 

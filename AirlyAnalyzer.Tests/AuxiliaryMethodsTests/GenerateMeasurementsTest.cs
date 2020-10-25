@@ -30,8 +30,8 @@ namespace AirlyAnalyzer.Tests
     public void Return_correct_last_DateTime_of_measurements_from_one_day()
     {
       // Arrange
-      var endDate = _startDate.AddDays(1);
       const int numberOfMeasurements = 24;
+      var endDate = _startDate.AddDays(1);
 
       // Act
       var measurements = AuxiliaryMethods

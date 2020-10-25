@@ -1,6 +1,6 @@
-﻿using AirlyAnalyzer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using AirlyAnalyzer.Models;
 
 namespace AirlyAnalyzer.Tests.Models
 {

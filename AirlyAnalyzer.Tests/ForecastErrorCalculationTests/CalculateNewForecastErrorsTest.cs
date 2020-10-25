@@ -22,10 +22,10 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const short installationId = 1;
+      const short minNumberOfMeasurements = 23;
       const short numberOfDays = 2;
       const short numberOfMeasurementsInDay = 24;
       const short numberOfForecastsInDay = 24;
-      const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate.AddDays(1);
       var measurementsEndDate = _startDate.AddDays(2);
@@ -61,9 +61,9 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const short installationId = 1;
+      const short minNumberOfMeasurements = 23;
       const short numberOfMeasurements = 24;
       const short numberOfForecasts = 24;
-      const short minNumberOfMeasurements = 23;
       // These start date values simulate a case of a two-day break in requests 
       // - future measurements begin where previous forecasts end
       var measurementsStartDate = _startDate.AddHours(numberOfMeasurements);
@@ -176,9 +176,9 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const short installationId = 1;
+      const short minNumberOfMeasurements = 20;
       const short numberOfMeasurements = 19;
       const short numberOfForecasts = 19;
-      const short minNumberOfMeasurements = 20;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate;
 
@@ -204,9 +204,9 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const short installationId = 1;
+      const short minNumberOfMeasurements = 20;
       const short numberOfMeasurements = 20;
       const short numberOfForecasts = 20;
-      const short minNumberOfMeasurements = 20;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate;
       var endDate = _startDate.AddHours(numberOfMeasurements);

@@ -29,8 +29,8 @@ namespace AirlyAnalyzer.Tests
     public void Return_correct_last_DateTime_of_forecasts_from_one_day()
     {
       // Arrange
-      var endDate = _startDate.AddDays(1);
       const int numberOfForecasts = 24;
+      var endDate = _startDate.AddDays(1);
 
       // Act
       var forecasts = AuxiliaryMethods

@@ -99,13 +99,48 @@ namespace AirlyAnalyzer.Tests.Models
     public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
       DateTime startDate, int numberOfForecastErrors, short requestMinutesOffset)
     {
-      return new List<AirQualityForecastError>();
+      for (int i = 0; i < numberOfForecastErrors; i++)
+      {
+        yield return CreateForecastError(
+          installationId,
+          startDate.AddHours(i),
+          startDate.AddHours(numberOfForecastErrors).AddMinutes(requestMinutesOffset));
+      }
     }
 
     public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
       DateTime startDate, short numberOfDays, short numberOfForecastErrorsInDay, byte requestMinutesOffset)
     {
-      return new List<AirQualityForecastError>();
+      for (int i = 0; i < numberOfDays; i++)
+      {
+        for (int j = 0; j < numberOfForecastErrorsInDay; j++)
+        {
+          yield return CreateForecastError(
+            installationId,
+            startDate.AddHours(j),
+            startDate.AddDays(1).AddMinutes(requestMinutesOffset));
+        }
+        startDate = startDate.AddDays(1);
+      }
+    }
+
+    public static AirQualityForecastError CreateForecastError(short installationId, DateTime forecastErrorDate,
+      DateTime requestDate)
+    {
+      return new AirQualityForecastError
+      {
+        InstallationId = installationId,
+        FromDateTime = forecastErrorDate,
+        TillDateTime = forecastErrorDate.AddHours(1),
+        AirlyCaqiError = 1,
+        AirlyCaqiPctError = 1,
+        Pm25Error = 1,
+        Pm25PctError = 1,
+        Pm10Error = 1,
+        Pm10PctError = 1,
+        RequestDateTime = requestDate,
+        ErrorType = ForecastErrorType.Hourly,
+      };
     }
   }
 }

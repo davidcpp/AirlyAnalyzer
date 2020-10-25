@@ -7,7 +7,7 @@ namespace AirlyAnalyzer.Tests
 {
   public class GenerateMeasurementsTest
   {
-    private readonly DateTime _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Local);
+    private readonly DateTime _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
     private const byte _requestMinutesOffset = 30;
     private const short _installationId = 1;
 
@@ -39,7 +39,7 @@ namespace AirlyAnalyzer.Tests
         .ToList();
 
       // Assert
-      Assert.Equal(endDate, measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -75,7 +75,7 @@ namespace AirlyAnalyzer.Tests
         .ToList();
 
       // Assert
-      Assert.Equal(endDate, measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -94,7 +94,7 @@ namespace AirlyAnalyzer.Tests
         .ToList();
 
       // Assert
-      Assert.Equal(endRequestDate, measurements.Last().RequestDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(endRequestDate.ToLocalTime(), measurements.Last().RequestDateTime, new TimeSpan(0, 0, 0));
     }
   }
 }

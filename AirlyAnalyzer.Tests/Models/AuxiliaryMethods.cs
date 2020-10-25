@@ -95,5 +95,17 @@ namespace AirlyAnalyzer.Tests.Models
         Pm10 = pm10,
       };
     }
+
+    public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
+      DateTime startDate, int numberOfForecastErrors, short requestMinutesOffset)
+    {
+      return new List<AirQualityForecastError>();
+    }
+
+    public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
+      DateTime startDate, short numberOfDays, short numberOfForecastErrorsInDay, byte requestMinutesOffset)
+    {
+      return new List<AirQualityForecastError>();
+    }
   }
 }

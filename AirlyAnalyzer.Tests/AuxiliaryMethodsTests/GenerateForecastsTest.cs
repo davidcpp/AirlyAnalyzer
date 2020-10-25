@@ -63,7 +63,8 @@ namespace AirlyAnalyzer.Tests
       // Arrange 
       const short numberOfDays = 25;
       const short numberOfForecastsInDay = 23;
-      var endDate = _startDate.AddHours(numberOfDays * numberOfForecastsInDay);
+      var endDate = _startDate.AddDays(numberOfDays)
+                              .AddHours(numberOfForecastsInDay - 24);
 
       // Act
       var forecasts = AuxiliaryMethods
@@ -81,7 +82,7 @@ namespace AirlyAnalyzer.Tests
       // Arrange 
       const short numberOfDays = 25;
       const short numberOfForecastsInDay = 23;
-      var endRequestDate = _startDate.AddHours(numberOfDays * numberOfForecastsInDay)
+      var endRequestDate = _startDate.AddDays(numberOfDays)
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act

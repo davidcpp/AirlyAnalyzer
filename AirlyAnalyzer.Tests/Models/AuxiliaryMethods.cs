@@ -54,7 +54,7 @@ namespace AirlyAnalyzer.Tests.Models
     }
 
     public static IEnumerable<AirQualityForecast> GenerateForecasts(
-      short installationId, DateTime startDate, int numberOfForecasts, short requestMinutesOffset)
+      short installationId, DateTime startDate, int numberOfForecasts, byte requestMinutesOffset)
     {
       for (int i = 0; i < numberOfForecasts; i++)
       {
@@ -97,7 +97,7 @@ namespace AirlyAnalyzer.Tests.Models
     }
 
     public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
-      DateTime startDate, int numberOfForecastErrors, short requestMinutesOffset)
+      DateTime startDate, int numberOfForecastErrors, byte requestMinutesOffset)
     {
       for (int i = 0; i < numberOfForecastErrors; i++)
       {

@@ -97,14 +97,31 @@ namespace AirlyAnalyzer.Tests.Models
     }
 
     public static IEnumerable<AirQualityForecastError> GenerateForecastErrors(short installationId,
-      DateTime startDate, int numberOfForecastErrors, byte requestMinutesOffset)
+      ForecastErrorType errorType, DateTime startDate, int numberOfForecastErrors, byte requestMinutesOffset,
+      short durationInHours = 1)
     {
       for (int i = 0; i < numberOfForecastErrors; i++)
       {
-        yield return CreateForecastError(
-          installationId,
-          startDate.AddHours(i),
-          startDate.AddHours(numberOfForecastErrors).AddMinutes(requestMinutesOffset));
+        if (errorType == ForecastErrorType.Hourly)
+        {
+          yield return CreateForecastError(
+            installationId,
+            errorType,
+            startDate.AddHours(i),
+            startDate.AddHours(numberOfForecastErrors).AddMinutes(requestMinutesOffset),
+            durationInHours);
+        }
+        else if (errorType == ForecastErrorType.Daily)
+        {
+          short requestInterval = i % 2 == 0 ? durationInHours : (short)24;
+
+          yield return CreateForecastError(
+            installationId,
+            errorType,
+            startDate.AddDays(i),
+            startDate.AddDays(i).AddHours(requestInterval).AddMinutes(requestMinutesOffset),
+            durationInHours);
+        }
       }
     }
 
@@ -117,6 +134,7 @@ namespace AirlyAnalyzer.Tests.Models
         {
           yield return CreateForecastError(
             installationId,
+            ForecastErrorType.Hourly,
             startDate.AddHours(j),
             startDate.AddDays(1).AddMinutes(requestMinutesOffset));
         }
@@ -124,14 +142,14 @@ namespace AirlyAnalyzer.Tests.Models
       }
     }
 
-    public static AirQualityForecastError CreateForecastError(short installationId, DateTime forecastErrorDate,
-      DateTime requestDate)
+    public static AirQualityForecastError CreateForecastError(short installationId, ForecastErrorType errorType,
+      DateTime forecastErrorDate, DateTime requestDate, short durationInHours = 1)
     {
       return new AirQualityForecastError
       {
         InstallationId = installationId,
         FromDateTime = forecastErrorDate,
-        TillDateTime = forecastErrorDate.AddHours(1),
+        TillDateTime = forecastErrorDate.AddHours(durationInHours),
         AirlyCaqiError = 1,
         AirlyCaqiPctError = 1,
         Pm25Error = 1,
@@ -139,7 +157,7 @@ namespace AirlyAnalyzer.Tests.Models
         Pm10Error = 1,
         Pm10PctError = 1,
         RequestDateTime = requestDate,
-        ErrorType = ForecastErrorType.Hourly,
+        ErrorType = errorType,
       };
     }
   }

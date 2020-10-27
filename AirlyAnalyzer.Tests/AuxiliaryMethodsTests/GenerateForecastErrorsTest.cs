@@ -17,10 +17,12 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const int numberOfForecastErrors = 20;
+      const ForecastErrorType errorType = ForecastErrorType.Hourly;
 
       // Act
       var forecastErrors = AuxiliaryMethods
-        .GenerateForecastErrors(_installationId, _startDate, numberOfForecastErrors, _requestMinutesOffset)
+        .GenerateForecastErrors(
+          _installationId, errorType, _startDate, numberOfForecastErrors, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -32,11 +34,13 @@ namespace AirlyAnalyzer.Tests
     {
       // Arrange
       const int numberOfForecastErrors = 24;
+      const ForecastErrorType errorType = ForecastErrorType.Hourly;
       var endDate = _startDate.AddDays(1);
 
       // Act
       var forecastErrors = AuxiliaryMethods
-        .GenerateForecastErrors(_installationId, _startDate, numberOfForecastErrors, _requestMinutesOffset)
+        .GenerateForecastErrors(
+          _installationId, errorType, _startDate, numberOfForecastErrors, _requestMinutesOffset)
         .ToList();
 
       // Assert

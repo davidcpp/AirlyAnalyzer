@@ -27,7 +27,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_last_forecast_error_when_one_day()
+    public void Return_correct_last_forecast_error_date_when_one_day()
     {
       // Arrange
       const int numberOfForecastErrors = 24;

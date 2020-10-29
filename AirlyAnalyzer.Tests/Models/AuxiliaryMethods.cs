@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using AirlyAnalyzer.Models;
-
-namespace AirlyAnalyzer.Tests.Models
+﻿namespace AirlyAnalyzer.Tests.Models
 {
+  using System;
+  using System.Collections.Generic;
+  using AirlyAnalyzer.Models;
+
   public static class AuxiliaryMethods
   {
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using AirlyAnalyzer.Tests.Models;
-using Xunit;
-
+﻿
 namespace AirlyAnalyzer.Tests
 {
+  using System;
+  using System.Linq;
+  using AirlyAnalyzer.Tests.Models;
+  using Xunit;
+
   public class GenerateMeasurementsTest
   {
     private readonly DateTime _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);

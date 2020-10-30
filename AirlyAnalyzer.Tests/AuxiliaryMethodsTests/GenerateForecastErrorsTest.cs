@@ -105,7 +105,6 @@
 
     [Theory]
     [InlineData(22)]
-    [InlineData(23)]
     [InlineData(24)]
     public void Return_correct_list_of_daily_forecast_errors(short numberOfHourlyErrorsInDay)
     {
@@ -127,7 +126,6 @@
 
     [Theory]
     [InlineData(22)]
-    [InlineData(23)]
     [InlineData(24)]
     public void Return_correct_last_daily_forecast_error_date(short numberOfHourlyErrorsInDay)
     {
@@ -147,12 +145,9 @@
     }
 
     [Theory]
-    [InlineData(15, 23, 23)]
-    [InlineData(16, 23, 24)]
     [InlineData(15, 22, 22)]
     [InlineData(16, 22, 24)]
     [InlineData(15, 24, 24)]
-    [InlineData(16, 24, 24)]
     public void Return_correct_last_daily_forecast_error_request_date(
       short numberOfDailyErrors, short numberOfHourlyErrorsInDay, short numberOfHourlyErrorsInLastDay)
     {

@@ -29,13 +29,15 @@
       Assert.Equal(numberOfForecastErrors, forecastErrors.Count);
     }
 
-    [Fact]
-    public void Return_correct_last_forecast_error_date_when_one_day()
+    [Theory]
+    [InlineData(22)]
+    [InlineData(24)]
+    public void Return_correct_last_forecast_error_date_when_one_day(
+      int numberOfForecastErrors)
     {
       // Arrange
-      const int numberOfForecastErrors = 24;
       const ForecastErrorType errorType = ForecastErrorType.Hourly;
-      var endDate = _startDate.AddDays(1);
+      var endDate = _startDate.AddHours(numberOfForecastErrors);
 
       // Act
       var forecastErrors = AuxiliaryMethods
@@ -125,12 +127,13 @@
     }
 
     [Theory]
-    [InlineData(22)]
-    [InlineData(24)]
-    public void Return_correct_last_daily_forecast_error_date(short numberOfHourlyErrorsInDay)
+    [InlineData(15, 22)]
+    [InlineData(16, 22)]
+    [InlineData(15, 24)]
+    public void Return_correct_last_daily_forecast_error_date(
+      short numberOfDailyErrors, short numberOfHourlyErrorsInDay)
     {
       // Arrange
-      const short numberOfDailyErrors = 15;
       const ForecastErrorType errorType = ForecastErrorType.Daily;
       var endDate = _startDate.AddDays(numberOfDailyErrors)
                               .AddHours(numberOfHourlyErrorsInDay - 24);

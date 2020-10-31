@@ -13,7 +13,7 @@ namespace AirlyAnalyzer.Tests
     private const short _installationId = 1;
 
     [Fact]
-    public void Return_list_of_forecasts_from_one_day()
+    public void list_of_forecasts_from_one_day()
     {
       // Arrange
       const int numberOfForecasts = 20;
@@ -27,7 +27,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_last_forecast_date_when_one_day_of_forecasts()
+    public void correct_last_forecast_date_when_one_day_of_forecasts()
     {
       // Arrange
       const int numberOfForecasts = 24;
@@ -42,7 +42,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_list_of_forecasts_from_many_days()
+    public void list_of_forecasts_from_many_days()
     {
       // Arrange 
       const short numberOfDays = 25;
@@ -59,7 +59,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_last_forecast_date_when_many_days_of_forecasts()
+    public void correct_last_forecast_date_when_many_days_of_forecasts()
     {
       // Arrange 
       const short numberOfDays = 25;
@@ -78,7 +78,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_last_request_date_when_many_days_of_forecasts()
+    public void correct_last_request_date_when_many_days_of_forecasts()
     {
       // Arrange 
       const short numberOfDays = 25;

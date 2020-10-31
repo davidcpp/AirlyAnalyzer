@@ -18,7 +18,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_forecast_error_list_when_overlapping_elements()
+    public void correct_forecast_error_list_when_overlapping_elements()
     {
       // Arrange
       const short installationId = 1;
@@ -57,7 +57,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_empty_forecast_error_list_when_non_overlapping_elements()
+    public void empty_forecast_error_list_when_non_overlapping_elements()
     {
       // Arrange
       const short installationId = 1;
@@ -89,7 +89,7 @@ namespace AirlyAnalyzer.Tests
     [InlineData(0, 0, 0, 0, 0, 0, 0, 0, 0)]
     [InlineData(0, 0, 0, 2, 2, 2, -200, -200, -200)]
     [InlineData(0, 0, 0, 255, 240, 320, -25500, -24000, -32000)]
-    public void Return_negative_forecast_errors_when_measurements_are_zero(
+    public void negative_forecast_errors_when_measurements_are_zero(
       byte airlyCaqi_Measurement, short airlyPm25_Measurement, short airlyPm10_Measurement,
       byte airlyCaqi_Forecast, short airlyPm25_Forecast, short airlyPm10_Forecast,
       short airlyCaqi_ForecastError, short airlyPm25_ForecastError, short airlyPm10_ForecastError)
@@ -137,7 +137,7 @@ namespace AirlyAnalyzer.Tests
     [InlineData(40, 40, 40, 41, 41, 41, -2, -2, -2)] // test rounding negative errors to even numbers (2.5->2)
     [InlineData(200, 180, 240, 197, 175, 235, 2, 3, 2)] // test round positive errors to even numbers (1.5->2)
     [InlineData(200, 180, 240, 203, 185, 245, -2, -3, -2)] // test round negative errors to even numbers (1.5->2)
-    public void Return_correctly_calculated_forecast_errors(
+    public void correctly_calculated_forecast_errors(
       byte airlyCaqi_Measurement, short airlyPm25_Measurement, short airlyPm10_Measurement,
       byte airlyCaqi_Forecast, short airlyPm25_Forecast, short airlyPm10_Forecast,
       short airlyCaqi_ForecastError, short airlyPm25_ForecastError, short airlyPm10_ForecastError)
@@ -172,7 +172,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_no_daily_forecast_error_when_number_of_elements_less_than_min()
+    public void no_daily_forecast_error_when_number_of_elements_less_than_min()
     {
       // Arrange
       const short installationId = 1;
@@ -200,7 +200,7 @@ namespace AirlyAnalyzer.Tests
     }
 
     [Fact]
-    public void Return_correct_daily_forecast_error_when_number_of_elements_is_equal_min()
+    public void correct_daily_forecast_error_when_number_of_elements_is_equal_min()
     {
       // Arrange
       const short installationId = 1;
@@ -238,7 +238,7 @@ namespace AirlyAnalyzer.Tests
     [InlineData(2, 21, 21, 22, 42, 0)]
     [InlineData(13, 22, 22, 22, 299, 13)]
     [InlineData(13, 21, 21, 22, 273, 0)]
-    public void Return_correct_number_of_forecast_errors(
+    public void correct_number_of_forecast_errors(
       short numberOfDays,
       short numberOfMeasurementsInDay,
       short numberOfForecastsInDay,

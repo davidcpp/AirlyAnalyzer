@@ -130,13 +130,15 @@
     {
       for (int i = 0; i < numberOfDays; i++)
       {
+        short requestInterval = i % 2 == 0 ? numberOfForecastErrorsInDay : (short)24;
+
         for (int j = 0; j < numberOfForecastErrorsInDay; j++)
         {
           yield return CreateForecastError(
             installationId,
             ForecastErrorType.Hourly,
             startDate.AddHours(j),
-            startDate.AddDays(1).AddMinutes(requestMinutesOffset));
+            startDate.AddHours(requestInterval).AddMinutes(requestMinutesOffset));
         }
         startDate = startDate.AddDays(1);
       }

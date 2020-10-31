@@ -53,7 +53,7 @@
     public void Return_list_of_forecast_errors_from_many_days()
     {
       // Arrange 
-      const short numberOfDays = 25;
+      const short numberOfDays = 15;
       const short numberOfForecastErrorsInDay = 23;
 
       // Act
@@ -66,12 +66,14 @@
       Assert.Equal(numberOfDays * numberOfForecastErrorsInDay, forecastErrors.Count);
     }
 
-    [Fact]
-    public void Return_correct_last_forecast_error_date_when_many_days()
+    [Theory]
+    [InlineData(15, 22)]
+    [InlineData(16, 22)]
+    [InlineData(15, 24)]
+    public void Return_correct_last_forecast_error_date_when_many_days(
+      short numberOfDays, short numberOfForecastErrorsInDay)
     {
       // Arrange 
-      const short numberOfDays = 25;
-      const short numberOfForecastErrorsInDay = 23;
       var endDate = _startDate.AddDays(numberOfDays)
                               .AddHours(numberOfForecastErrorsInDay - 24);
       // Act
@@ -84,13 +86,16 @@
       Assert.Equal(endDate.ToLocalTime(), forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
 
-    [Fact]
-    public void Return_correct_last_request_date_when_many_days()
+    [Theory]
+    [InlineData(15, 22, 22)]
+    [InlineData(16, 22, 24)]
+    [InlineData(15, 24, 24)]
+    public void Return_correct_last_request_date_when_many_days(
+      short numberOfDays, short numberOfForecastErrorsInDay, short lastDayRequestInterval)
     {
       // Arrange 
-      const short numberOfDays = 25;
-      const short numberOfForecastErrorsInDay = 23;
       var endRequestDate = _startDate.AddDays(numberOfDays)
+                                     .AddHours(lastDayRequestInterval - 24)
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act

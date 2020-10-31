@@ -152,12 +152,12 @@
     [InlineData(16, 22, 24)]
     [InlineData(15, 24, 24)]
     public void Return_correct_last_daily_forecast_error_request_date(
-      short numberOfDailyErrors, short numberOfHourlyErrorsInDay, short numberOfHourlyErrorsInLastDay)
+      short numberOfDailyErrors, short numberOfHourlyErrorsInDay, short lastDayRequestInterval)
     {
       // Arrange
       const ForecastErrorType errorType = ForecastErrorType.Daily;
       var endRequestDate = _startDate.AddDays(numberOfDailyErrors)
-                              .AddHours(numberOfHourlyErrorsInLastDay - 24)
+                              .AddHours(lastDayRequestInterval - 24)
                               .AddMinutes(_requestMinutesOffset);
 
       // Act

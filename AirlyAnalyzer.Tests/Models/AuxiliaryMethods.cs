@@ -145,7 +145,7 @@
     }
 
     public static AirQualityForecastError CreateForecastError(short installationId, ForecastErrorType errorType,
-      DateTime forecastErrorDate, DateTime requestDate, short durationInHours = 1)
+      DateTime forecastErrorDate, DateTime requestDate, int durationInHours = 1)
     {
       return new AirQualityForecastError
       {

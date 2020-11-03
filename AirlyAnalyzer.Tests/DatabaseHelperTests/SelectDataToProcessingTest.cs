@@ -17,10 +17,10 @@
     private const byte _requestMinutesOffset = 30;
     private const short _minNumberOfMeasurements = 23;
 
-    private List<short> _installationIds;
+    private readonly List<short> _installationIds;
 
-    private DatabaseHelper _databaseHelper;
-    private AirlyContext _testAirlyContext;
+    private readonly DatabaseHelper _databaseHelper;
+    private readonly AirlyContext _testAirlyContext;
     private readonly DateTime _startDate;
 
     public static readonly LoggerFactory _loggerFactory =

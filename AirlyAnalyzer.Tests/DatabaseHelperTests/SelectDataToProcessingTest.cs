@@ -110,11 +110,13 @@
       AddElementsToDatabase(numberOfDays, numberOfMeasurementsInDay, numberOfForecastsInDay, numberOfErrorsInDay,
         measurementsStartDate, forecastsStartDate, errorsStartDate);
 
-      _testAirlyContext.ArchiveMeasurements.AddRange(GenerateMeasurements(selectedInstallationId,
-        measurementsStartDate.AddDays(numberOfDays), numberOfNotProcessedDays, numberOfMeasurementsInDay, _requestMinutesOffset));
+      _testAirlyContext.ArchiveMeasurements.AddRange(
+        GenerateMeasurements(selectedInstallationId, measurementsStartDate.AddDays(numberOfDays),
+          numberOfNotProcessedDays, numberOfMeasurementsInDay, _requestMinutesOffset));
 
-      _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(selectedInstallationId,
-        forecastsStartDate.AddDays(numberOfDays), numberOfNotProcessedDays, numberOfForecastsInDay, _requestMinutesOffset));
+      _testAirlyContext.ArchiveForecasts.AddRange(
+        GenerateForecasts(selectedInstallationId, forecastsStartDate.AddDays(numberOfDays),
+          numberOfNotProcessedDays, numberOfForecastsInDay, _requestMinutesOffset));
 
       _testAirlyContext.SaveChanges();
 
@@ -129,8 +131,9 @@
 
     /* Private auxiliary methods */
 
-    private void AddElementsToDatabase(short numberOfDays, short numberOfMeasurementsInDay, short numberOfForecastsInDay,
-      short numberOfErrorsInDay, DateTime measurementsStartDate, DateTime forecastsStartDate, DateTime errorsStartDate)
+    private void AddElementsToDatabase(short numberOfDays, short numberOfMeasurementsInDay,
+      short numberOfForecastsInDay, short numberOfErrorsInDay, DateTime measurementsStartDate,
+      DateTime forecastsStartDate, DateTime errorsStartDate)
     {
       var requestDate = errorsStartDate.AddDays(numberOfDays)
                                        .AddMinutes(_requestMinutesOffset);

@@ -45,8 +45,8 @@
       _installationIds = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
       _testAirlyContext = new AirlyContext(inMemoryDatabaseOptions, config);
-      Seed();
       _databaseHelper = new DatabaseHelper(_testAirlyContext, _minNumberOfMeasurements);
+      Seed();
     }
 
     [Fact]

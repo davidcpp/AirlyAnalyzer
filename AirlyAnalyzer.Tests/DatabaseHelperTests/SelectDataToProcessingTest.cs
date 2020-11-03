@@ -138,8 +138,6 @@
       var requestDate = errorsStartDate.AddDays(numberOfDays)
                                        .AddMinutes(_requestMinutesOffset);
 
-      var forecastErrors = new List<AirQualityForecastError>();
-
       for (int i = 0; i < _installationIds.Count; i++)
       {
         short installationId = _installationIds[i];
@@ -150,19 +148,18 @@
         _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(
           installationId, forecastsStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset));
 
-        forecastErrors.AddRange(GenerateForecastErrors(installationId, errorsStartDate,
-          numberOfDays, numberOfErrorsInDay, _requestMinutesOffset));
+        _testAirlyContext.ForecastErrors.AddRange(GenerateForecastErrors(installationId,
+          errorsStartDate, numberOfDays, numberOfErrorsInDay, _requestMinutesOffset));
 
-        forecastErrors.AddRange(GenerateForecastErrors(installationId, ForecastErrorType.Daily, errorsStartDate,
-          numberOfDays, _requestMinutesOffset, numberOfErrorsInDay));
+        _testAirlyContext.ForecastErrors.AddRange(GenerateForecastErrors(installationId, ForecastErrorType.Daily,
+          errorsStartDate, numberOfDays, _requestMinutesOffset, numberOfErrorsInDay));
 
         int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfErrorsInDay;
 
-        forecastErrors.Add(CreateForecastError(installationId, ForecastErrorType.Total, errorsStartDate,
-          requestDate, totalErrorDuration));
+        _testAirlyContext.ForecastErrors.Add(CreateForecastError(installationId, ForecastErrorType.Total,
+          errorsStartDate, requestDate, totalErrorDuration));
       }
 
-      _testAirlyContext.ForecastErrors.AddRange(forecastErrors);
       _testAirlyContext.SaveChanges();
     }
 

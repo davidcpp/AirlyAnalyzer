@@ -50,8 +50,6 @@
       _databaseHelper = new DatabaseHelper(_testAirlyContext, _minNumberOfMeasurements);
     }
 
-    //public void Dispose
-
     [Fact]
     public void empty_new_data_when_all_previous_data_has_been_processed()
     {
@@ -167,7 +165,6 @@
     {
       _testAirlyContext.Database.EnsureDeleted();
       _testAirlyContext.Database.EnsureCreated();
-      _testAirlyContext.SaveChanges();
     }
 
     public void Dispose()

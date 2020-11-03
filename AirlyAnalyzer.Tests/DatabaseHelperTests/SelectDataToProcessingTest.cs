@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.IO;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
@@ -10,7 +11,6 @@
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.Logging.Debug;
   using Xunit;
-  using System.IO;
 
   public class SelectDataToProcessingTest : IDisposable
   {

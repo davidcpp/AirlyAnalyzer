@@ -9,7 +9,6 @@
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
-  using Microsoft.Extensions.Logging.Debug;
   using Xunit;
 
   public class SelectDataToProcessingTest : IDisposable
@@ -23,8 +22,8 @@
     private readonly AirlyContext _testAirlyContext;
     private readonly DateTime _startDate;
 
-    public static readonly LoggerFactory _loggerFactory =
-       new LoggerFactory(new[] { new DebugLoggerProvider() });
+    public static readonly ILoggerFactory _loggerFactory =
+      LoggerFactory.Create(builder => builder.AddDebug());
 
     public SelectDataToProcessingTest()
     {

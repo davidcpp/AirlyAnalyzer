@@ -91,9 +91,7 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-
       const short numberOfProcessedDays = 5;
-
       const short numberOfElementsInDay = 23;
 
       AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, _startDate);

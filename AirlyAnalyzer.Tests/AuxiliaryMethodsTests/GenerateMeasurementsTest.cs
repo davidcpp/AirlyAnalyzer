@@ -1,5 +1,4 @@
-﻿
-namespace AirlyAnalyzer.Tests
+﻿namespace AirlyAnalyzer.Tests
 {
   using System;
   using System.Linq;

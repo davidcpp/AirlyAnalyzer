@@ -107,15 +107,11 @@
       AddElementsToDatabase(
         numberOfProcessedDays, numberOfElementsInDay, measurementsStartDate, forecastsStartDate, errorsStartDate);
 
-      _testAirlyContext.ArchiveMeasurements.AddRange(
-        GenerateMeasurements(selectedInstallationId, measurementsStartDate.AddDays(numberOfProcessedDays),
-          numberOfNotProcessedDays, numberOfNewElementsInDay, _requestMinutesOffset));
+      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
+        _startDate.AddDays(numberOfProcessedDays));
 
-      _testAirlyContext.ArchiveForecasts.AddRange(
-        GenerateForecasts(selectedInstallationId, forecastsStartDate.AddDays(numberOfProcessedDays),
-          numberOfNotProcessedDays, numberOfNewElementsInDay, _requestMinutesOffset));
-
-      _testAirlyContext.SaveChanges();
+      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
+        _startDate.AddDays(numberOfProcessedDays));
 
       // Act
       _databaseHelper.SelectDataToProcessing(
@@ -124,6 +120,24 @@
       // Assert
       Assert.Equal(numberOfNewElementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
       Assert.Equal(numberOfNewElementsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
+    }
+
+    private void AddNewMeasurementsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,
+      short numberOfElementsInDay, DateTime startDate)
+    {
+      _testAirlyContext.ArchiveMeasurements.AddRange(GenerateMeasurements(selectedInstallationId,
+        startDate, numberOfNotProcessedDays, numberOfElementsInDay, _requestMinutesOffset));
+
+      _testAirlyContext.SaveChanges();
+    }
+
+    private void AddNewForecastsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,
+      short numberOfElementsInDay, DateTime startDate)
+    {
+      _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(selectedInstallationId,
+        startDate, numberOfNotProcessedDays, numberOfElementsInDay, _requestMinutesOffset));
+
+      _testAirlyContext.SaveChanges();
     }
 
     /* Private auxiliary methods */

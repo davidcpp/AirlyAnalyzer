@@ -111,20 +111,10 @@
                  && m.TillDateTime > lastForecastErrorDate)
         .ToList();
 
-      if (_newArchiveMeasurements.Count == 0)
-      {
-        _newArchiveForecasts = new List<AirQualityForecast>();
-      }
-      else
-      {
-        var lastMeasurementDate = _newArchiveMeasurements.Last().TillDateTime.ToUniversalTime();
-
-        _newArchiveForecasts = _context.ArchiveForecasts
-          .Where(f => f.InstallationId == installationId
-                   && f.TillDateTime > lastForecastErrorDate
-                   && f.TillDateTime <= lastMeasurementDate)
-          .ToList();
-      }
+      _newArchiveForecasts = _context.ArchiveForecasts
+        .Where(f => f.InstallationId == installationId
+                 && f.TillDateTime > lastForecastErrorDate)
+        .ToList();
     }
 
     public DateTime SelectLastMeasurementDate(short installationId)

@@ -93,14 +93,17 @@
       short selectedInstallationId = _installationIds[0];
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 23;
+      var processedDataStartDate = _startDate;
+      var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
+      var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
 
-      AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, _startDate);
+      AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, processedDataStartDate);
 
       AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
-        _startDate.AddDays(numberOfProcessedDays));
+        newMeasurementsStartDate);
 
       AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
-        _startDate.AddDays(numberOfProcessedDays));
+        newForecastsStartDate);
 
       // Act
       _databaseHelper.SelectDataToProcessing(

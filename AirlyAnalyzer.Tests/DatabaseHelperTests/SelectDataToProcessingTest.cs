@@ -84,10 +84,11 @@
     }
 
     [Theory]
-    [InlineData(1, 24)]
-    [InlineData(2, 24)]
-    [InlineData(2, 23)]
-    public void new_data_when_there_is_data_to_process(short numberOfNotProcessedDays, short numberOfNewElementsInDay)
+    [InlineData(1, 2, 4)]
+    [InlineData(2, 23, 24)]
+    [InlineData(2, 24, 23)]
+    public void new_data_when_there_is_data_to_process(
+      short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -99,10 +100,10 @@
 
       AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, processedDataStartDate);
 
-      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
+      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewMeasurementsInDay,
         newMeasurementsStartDate);
 
-      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewElementsInDay,
+      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewForecastsInDay,
         newForecastsStartDate);
 
       // Act
@@ -110,8 +111,8 @@
         selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
 
       // Assert
-      Assert.Equal(numberOfNewElementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
-      Assert.Equal(numberOfNewElementsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
+      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
+      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
     }
 
     private void AddNewMeasurementsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,

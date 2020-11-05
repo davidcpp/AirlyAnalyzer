@@ -12,6 +12,8 @@
     private const byte _requestMinutesOffset = 30;
     private const short _installationId = 1;
 
+    /* Tests for hourly forecast errors */
+
     [Fact]
     public void list_of_forecast_errors_from_one_day()
     {

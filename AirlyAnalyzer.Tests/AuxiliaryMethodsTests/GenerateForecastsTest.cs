@@ -18,8 +18,9 @@
       const int numberOfForecasts = 20;
 
       // Act
-      var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_installationId, _startDate, numberOfForecasts, _requestMinutesOffset).ToList();
+      var forecasts = AuxiliaryMethods.GenerateForecasts(
+          _installationId, _startDate, numberOfForecasts, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(numberOfForecasts, forecasts.Count);
@@ -33,8 +34,9 @@
       var endDate = _startDate.AddDays(1);
 
       // Act
-      var forecasts = AuxiliaryMethods
-        .GenerateForecasts(_installationId, _startDate, numberOfForecasts, _requestMinutesOffset).ToList();
+      var forecasts = AuxiliaryMethods.GenerateForecasts(
+          _installationId, _startDate, numberOfForecasts, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(endDate.ToLocalTime(), forecasts.Last().TillDateTime, new TimeSpan(0, 0, 0));
@@ -48,8 +50,7 @@
       const short numberOfForecastsInDay = 23;
 
       // Act
-      var forecasts = AuxiliaryMethods
-        .GenerateForecasts(
+      var forecasts = AuxiliaryMethods.GenerateForecasts(
           _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 
@@ -67,8 +68,7 @@
                               .AddHours(numberOfForecastsInDay - 24);
 
       // Act
-      var forecasts = AuxiliaryMethods
-        .GenerateForecasts(
+      var forecasts = AuxiliaryMethods.GenerateForecasts(
           _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 
@@ -86,8 +86,7 @@
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act
-      var forecasts = AuxiliaryMethods
-        .GenerateForecasts(
+      var forecasts = AuxiliaryMethods.GenerateForecasts(
           _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
         .ToList();
 

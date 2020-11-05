@@ -21,8 +21,8 @@
 
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(
-        _installationId, errorType, _startDate, numberOfForecastErrors, _requestMinutesOffset)
-      .ToList();
+          _installationId, errorType, _startDate, numberOfForecastErrors, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(numberOfForecastErrors, forecastErrors.Count);
@@ -40,8 +40,8 @@
 
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType, _startDate,
-        numberOfForecastErrors, _requestMinutesOffset)
-      .ToList();
+          numberOfForecastErrors, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(endDate.ToLocalTime(), forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
@@ -56,8 +56,8 @@
 
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, _startDate, numberOfDays,
-        numberOfForecastErrorsInDay, _requestMinutesOffset)
-      .ToList();
+          numberOfForecastErrorsInDay, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(numberOfDays * numberOfForecastErrorsInDay, forecastErrors.Count);
@@ -75,8 +75,8 @@
                               .AddHours(numberOfForecastErrorsInDay - 24);
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, _startDate, numberOfDays,
-        numberOfForecastErrorsInDay, _requestMinutesOffset)
-      .ToList();
+          numberOfForecastErrorsInDay, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(endDate.ToLocalTime(), forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
@@ -96,8 +96,8 @@
 
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, _startDate, numberOfDays,
-        numberOfForecastErrorsInDay, _requestMinutesOffset)
-      .ToList();
+          numberOfForecastErrorsInDay, _requestMinutesOffset)
+        .ToList();
 
       // Assert
       Assert.Equal(endRequestDate.ToLocalTime(), forecastErrors.Last().RequestDateTime, new TimeSpan(0, 0, 0));
@@ -116,8 +116,8 @@
 
       // Act
       var dailyErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType,
-        _startDate, numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
-      .ToList();
+          _startDate, numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+        .ToList();
 
       // Assert
       Assert.Equal(numberOfDailyErrors, dailyErrors.Count);
@@ -140,8 +140,8 @@
 
       // Act
       var dailyErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType, _startDate,
-        numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
-      .ToList();
+          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+        .ToList();
 
       // Assert
       Assert.Equal(endDate.ToLocalTime(), dailyErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
@@ -162,8 +162,8 @@
 
       // Act
       var dailyErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType, _startDate,
-        numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
-      .ToList();
+          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+        .ToList();
 
       // Assert
       Assert.Equal(endRequestDate.ToLocalTime(), dailyErrors.Last().RequestDateTime, new TimeSpan(0, 0, 0));

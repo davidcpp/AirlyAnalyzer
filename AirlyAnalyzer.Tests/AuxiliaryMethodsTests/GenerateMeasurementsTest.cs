@@ -18,8 +18,8 @@
       const int numberOfMeasurements = 20;
 
       // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
+      var measurements = AuxiliaryMethods.GenerateMeasurements(
+          _installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -34,8 +34,8 @@
       var endDate = _startDate.AddDays(1);
 
       // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(_installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
+      var measurements = AuxiliaryMethods.GenerateMeasurements(
+          _installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -50,8 +50,7 @@
       const short numberOfMeasurementsInDay = 23;
 
       // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(
+      var measurements = AuxiliaryMethods.GenerateMeasurements(
           _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
@@ -69,8 +68,7 @@
                               .AddHours(numberOfMeasurementsInDay - 24);
 
       // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(
+      var measurements = AuxiliaryMethods.GenerateMeasurements(
           _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 
@@ -88,8 +86,7 @@
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act
-      var measurements = AuxiliaryMethods
-        .GenerateMeasurements(
+      var measurements = AuxiliaryMethods.GenerateMeasurements(
           _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
         .ToList();
 

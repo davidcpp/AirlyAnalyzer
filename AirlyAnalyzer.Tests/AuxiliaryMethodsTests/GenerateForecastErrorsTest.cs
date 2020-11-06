@@ -15,7 +15,7 @@
     /* Tests for hourly forecast errors */
 
     [Fact]
-    public void list_of_forecast_errors_from_one_day()
+    public void correct_number_of_forecast_errors_from_one_day()
     {
       // Arrange
       const int numberOfForecastErrors = 20;
@@ -33,8 +33,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
-    public void correct_last_forecast_error_date_when_one_day(
-      int numberOfForecastErrors)
+    public void correct_end_date_of_forecast_errors_from_one_day(int numberOfForecastErrors)
     {
       // Arrange
       const ForecastErrorType errorType = ForecastErrorType.Hourly;
@@ -50,7 +49,7 @@
     }
 
     [Fact]
-    public void list_of_forecast_errors_from_many_days()
+    public void correct_number_of_forecast_errors_from_many_days()
     {
       // Arrange 
       const short numberOfDays = 15;
@@ -69,7 +68,7 @@
     [InlineData(15, 22)]
     [InlineData(16, 22)]
     [InlineData(15, 24)]
-    public void correct_last_forecast_error_date_when_many_days(
+    public void correct_end_date_of_forecast_errors_from_many_days(
       short numberOfDays, short numberOfForecastErrorsInDay)
     {
       // Arrange 
@@ -88,7 +87,7 @@
     [InlineData(15, 22, 22)]
     [InlineData(16, 22, 24)]
     [InlineData(15, 24, 24)]
-    public void correct_last_request_date_when_many_days(
+    public void correct_last_request_date_of_forecast_errors_from_many_days(
       short numberOfDays, short numberOfForecastErrorsInDay, short lastDayRequestInterval)
     {
       // Arrange 
@@ -132,7 +131,7 @@
     [InlineData(15, 22)]
     [InlineData(16, 22)]
     [InlineData(15, 24)]
-    public void correct_last_daily_forecast_error_date(
+    public void correct_end_date_of_daily_forecast_errors(
       short numberOfDailyErrors, short numberOfHourlyErrorsInDay)
     {
       // Arrange
@@ -153,7 +152,7 @@
     [InlineData(15, 22, 22)]
     [InlineData(16, 22, 24)]
     [InlineData(15, 24, 24)]
-    public void correct_last_daily_forecast_error_request_date(
+    public void correct_last_request_date_of_daily_forecast_errors(
       short numberOfDailyErrors, short numberOfHourlyErrorsInDay, short lastDayRequestInterval)
     {
       // Arrange

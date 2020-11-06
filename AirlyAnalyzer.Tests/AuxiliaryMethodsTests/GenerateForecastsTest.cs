@@ -27,7 +27,7 @@
     }
 
     [Fact]
-    public void correct_last_forecast_date_when_one_day_of_forecasts()
+    public void correct_end_date_of_forecasts_from_one_day()
     {
       // Arrange
       const int numberOfForecasts = 24;
@@ -59,7 +59,7 @@
     }
 
     [Fact]
-    public void correct_last_forecast_date_when_many_days_of_forecasts()
+    public void correct_end_date_of_forecasts_from_many_days()
     {
       // Arrange 
       const short numberOfDays = 25;
@@ -77,7 +77,7 @@
     }
 
     [Fact]
-    public void correct_last_request_date_when_many_days_of_forecasts()
+    public void correct_last_request_date_of_forecasts_from_many_days()
     {
       // Arrange 
       const short numberOfDays = 25;

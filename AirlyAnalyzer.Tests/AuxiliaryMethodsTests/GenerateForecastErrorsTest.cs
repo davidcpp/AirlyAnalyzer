@@ -67,7 +67,7 @@
     [Fact]
     public void correct_number_of_forecast_errors_from_many_days()
     {
-      // Arrange 
+      // Arrange
       const short numberOfDays = 15;
       const short numberOfForecastErrorsInDay = 23;
 
@@ -104,7 +104,7 @@
     public void correct_end_date_of_forecast_errors_from_many_days(
       short numberOfDays, short numberOfForecastErrorsInDay)
     {
-      // Arrange 
+      // Arrange
       var endDate = _startDate.AddDays(numberOfDays)
                               .AddHours(numberOfForecastErrorsInDay - 24);
       // Act
@@ -123,7 +123,7 @@
     public void correct_last_request_date_of_forecast_errors_from_many_days(
       short numberOfDays, short numberOfForecastErrorsInDay, short lastDayRequestInterval)
     {
-      // Arrange 
+      // Arrange
       var endRequestDate = _startDate.AddDays(numberOfDays)
                                      .AddHours(lastDayRequestInterval - 24)
                                      .AddMinutes(_requestMinutesOffset);

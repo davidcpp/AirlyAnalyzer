@@ -30,6 +30,22 @@
       Assert.Equal(numberOfForecastErrors, forecastErrors.Count);
     }
 
+    [Fact]
+    public void correct_error_type_of_forecast_errors_from_one_day()
+    {
+      // Arrange
+      const int numberOfForecastErrors = 20;
+      const ForecastErrorType errorType = ForecastErrorType.Hourly;
+
+      // Act
+      var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(
+          _installationId, errorType, _startDate, numberOfForecastErrors, _requestMinutesOffset)
+        .ToList();
+
+      // Assert
+      Assert.Equal(errorType, forecastErrors[0].ErrorType);
+    }
+
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
@@ -62,6 +78,23 @@
 
       // Assert
       Assert.Equal(numberOfDays * numberOfForecastErrorsInDay, forecastErrors.Count);
+    }
+
+    [Fact]
+    public void correct_error_type_of_forecast_errors_from_many_days()
+    {
+      // Arrange
+      const short numberOfDays = 15;
+      const short numberOfForecastErrorsInDay = 23;
+      const ForecastErrorType errorType = ForecastErrorType.Hourly;
+
+      // Act
+      var forecastErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, _startDate, numberOfDays,
+        numberOfForecastErrorsInDay, _requestMinutesOffset)
+      .ToList();
+
+      // Assert
+      Assert.Equal(errorType, forecastErrors[0].ErrorType);
     }
 
     [Theory]
@@ -106,10 +139,27 @@
 
     /* Tests for daily forecast errors */
 
+    [Fact]
+    public void correct_number_of_daily_forecast_errors()
+    {
+      // Arrange
+      const int numberOfDailyErrors = 15;
+      const short numberOfHourlyErrorsInDay = 24;
+      const ForecastErrorType errorType = ForecastErrorType.Daily;
+
+      // Act
+      var dailyErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType,
+          _startDate, numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+        .ToList();
+
+      // Assert
+      Assert.Equal(numberOfDailyErrors, dailyErrors.Count);
+    }
+
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
-    public void correct_list_of_daily_forecast_errors(short numberOfHourlyErrorsInDay)
+    public void correct_duration_time_of_daily_forecast_errors(short numberOfHourlyErrorsInDay)
     {
       // Arrange
       const int numberOfDailyErrors = 15;
@@ -121,9 +171,24 @@
         .ToList();
 
       // Assert
-      Assert.Equal(numberOfDailyErrors, dailyErrors.Count);
       Assert.Equal(_startDate.ToLocalTime(), dailyErrors[0].FromDateTime);
       Assert.Equal(_startDate.AddHours(numberOfHourlyErrorsInDay).ToLocalTime(), dailyErrors[0].TillDateTime);
+    }
+
+    [Fact]
+    public void correct_error_type_of_daily_forecast_errors()
+    {
+      // Arrange
+      const int numberOfDailyErrors = 15;
+      const short numberOfHourlyErrorsInDay = 24;
+      const ForecastErrorType errorType = ForecastErrorType.Daily;
+
+      // Act
+      var dailyErrors = AuxiliaryMethods.GenerateForecastErrors(_installationId, errorType,
+          _startDate, numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+        .ToList();
+
+      // Assert
       Assert.Equal(errorType, dailyErrors[0].ErrorType);
     }
 

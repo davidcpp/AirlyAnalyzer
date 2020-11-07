@@ -110,22 +110,6 @@
       }
     }
 
-    public static IEnumerable<AirQualityForecastError> GenerateDailyForecastErrors(short installationId,
-      DateTime startDate, int numberOfForecastErrors, byte requestMinutesOffset, short durationInHours = 1)
-    {
-      for (int i = 0; i < numberOfForecastErrors; i++)
-      {
-        short requestInterval = i % 2 == 0 ? durationInHours : (short)24;
-
-        yield return CreateForecastError(
-          installationId,
-          ForecastErrorType.Daily,
-          startDate.AddDays(i),
-          startDate.AddDays(i).AddHours(requestInterval).AddMinutes(requestMinutesOffset),
-          durationInHours);
-      }
-    }
-
     public static IEnumerable<AirQualityForecastError> GenerateHourlyForecastErrors(short installationId,
       DateTime startDate, short numberOfDays, short numberOfForecastErrorsInDay, byte requestMinutesOffset)
     {
@@ -142,6 +126,22 @@
             startDate.AddHours(requestInterval).AddMinutes(requestMinutesOffset));
         }
         startDate = startDate.AddDays(1);
+      }
+    }
+
+    public static IEnumerable<AirQualityForecastError> GenerateDailyForecastErrors(short installationId,
+      DateTime startDate, int numberOfForecastErrors, byte requestMinutesOffset, short durationInHours = 1)
+    {
+      for (int i = 0; i < numberOfForecastErrors; i++)
+      {
+        short requestInterval = i % 2 == 0 ? durationInHours : (short)24;
+
+        yield return CreateForecastError(
+          installationId,
+          ForecastErrorType.Daily,
+          startDate.AddDays(i),
+          startDate.AddDays(i).AddHours(requestInterval).AddMinutes(requestMinutesOffset),
+          durationInHours);
       }
     }
 

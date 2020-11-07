@@ -46,7 +46,7 @@
     public void list_of_measurements_from_many_days()
     {
       // Arrange
-      const short numberOfDays = 25;
+      const short numberOfDays = 15;
       const short numberOfMeasurementsInDay = 23;
 
       // Act
@@ -62,7 +62,7 @@
     public void correct_end_date_of_measurements_from_many_days()
     {
       // Arrange
-      const short numberOfDays = 25;
+      const short numberOfDays = 15;
       const short numberOfMeasurementsInDay = 23;
       var endDate = _startDate.AddDays(numberOfDays)
                               .AddHours(numberOfMeasurementsInDay - 24);
@@ -80,7 +80,7 @@
     public void correct_last_request_date_of_measurements_from_many_days()
     {
       // Arrange
-      const short numberOfDays = 25;
+      const short numberOfDays = 15;
       const short numberOfMeasurementsInDay = 23;
       var endRequestDate = _startDate.AddDays(numberOfDays)
                                      .AddMinutes(_requestMinutesOffset);

@@ -150,16 +150,16 @@
         _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(
           installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
 
-        _testAirlyContext.ForecastErrors.AddRange(GenerateForecastErrors(installationId,
-          startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
+        _testAirlyContext.ForecastErrors.AddRange(GenerateHourlyForecastErrors(
+          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
 
-        _testAirlyContext.ForecastErrors.AddRange(GenerateForecastErrors(installationId, ForecastErrorType.Daily,
-          startDate, numberOfDays, _requestMinutesOffset, numberOfElementsInDay));
+        _testAirlyContext.ForecastErrors.AddRange(GenerateDailyForecastErrors(
+          installationId, startDate, numberOfDays, _requestMinutesOffset, numberOfElementsInDay));
 
         int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
 
-        _testAirlyContext.ForecastErrors.Add(CreateForecastError(installationId, ForecastErrorType.Total,
-          startDate, requestDate, totalErrorDuration));
+        _testAirlyContext.ForecastErrors.Add(CreateForecastError(
+          installationId, ForecastErrorType.Total, startDate, requestDate, totalErrorDuration));
       }
 
       _testAirlyContext.SaveChanges();

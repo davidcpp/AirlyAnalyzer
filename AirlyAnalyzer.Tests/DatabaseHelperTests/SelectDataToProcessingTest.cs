@@ -115,6 +115,8 @@
       Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
     }
 
+    /* Private auxiliary methods */
+
     private void AddNewMeasurementsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,
       short numberOfElementsInDay, DateTime startDate)
     {
@@ -132,8 +134,6 @@
 
       _testAirlyContext.SaveChanges();
     }
-
-    /* Private auxiliary methods */
 
     private void AddElementsToDatabase(short numberOfDays, short numberOfElementsInDay, DateTime startDate)
     {

@@ -8,7 +8,6 @@
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
-  using Microsoft.Extensions.Logging;
   using Xunit;
 
   public class SelectDataToProcessingTest : IDisposable
@@ -22,18 +21,12 @@
     private readonly AirlyContext _testAirlyContext;
     private readonly DateTime _startDate;
 
-    public static readonly ILoggerFactory _loggerFactory =
-      LoggerFactory.Create(builder => builder.AddDebug());
-
     public SelectDataToProcessingTest()
     {
       _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Utc);
 
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
         .UseInMemoryDatabase("AirlyDatabase")
-        .EnableDetailedErrors()
-        .EnableSensitiveDataLogging()
-        .UseLoggerFactory(_loggerFactory)
         .Options;
 
       string configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
@@ -174,7 +167,6 @@
     public void Dispose()
     {
       _testAirlyContext.Dispose();
-      _loggerFactory.Dispose();
     }
   }
 }

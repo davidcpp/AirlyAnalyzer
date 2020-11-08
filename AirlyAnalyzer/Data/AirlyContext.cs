@@ -4,10 +4,13 @@
   using Microsoft.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore.Metadata;
   using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.Logging;
 
   public class AirlyContext : DbContext
   {
     private readonly byte _maxErrorTypeLength;
+    public static readonly ILoggerFactory _loggerFactory =
+      LoggerFactory.Create(builder => builder.AddDebug());
 
     public AirlyContext(DbContextOptions<AirlyContext> options, IConfiguration config) : base(options)
     {
@@ -17,6 +20,15 @@
     public DbSet<AirQualityForecast> ArchiveForecasts { get; set; }
     public DbSet<AirQualityMeasurement> ArchiveMeasurements { get; set; }
     public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      base.OnConfiguring(optionsBuilder);
+
+      optionsBuilder.EnableSensitiveDataLogging()
+                    .EnableDetailedErrors()
+                    .UseLoggerFactory(_loggerFactory);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

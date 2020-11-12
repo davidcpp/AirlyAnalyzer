@@ -140,6 +140,35 @@
     }
 
     /* Private auxiliary methods */
+    private void AddElementsToDatabase(short numberOfDays, short numberOfElementsInDay, DateTime startDate)
+    {
+      var requestDate = startDate.AddDays(numberOfDays)
+                                 .AddMinutes(_requestMinutesOffset);
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        short installationId = _installationIds[i];
+
+        _testAirlyContext.ArchiveMeasurements.AddRange(GenerateMeasurements(
+          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
+
+        _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(
+          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
+
+        _testAirlyContext.ForecastErrors.AddRange(GenerateHourlyForecastErrors(
+          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
+
+        _testAirlyContext.ForecastErrors.AddRange(GenerateDailyForecastErrors(
+          installationId, startDate, numberOfDays, _requestMinutesOffset, numberOfElementsInDay));
+
+        int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
+
+        _testAirlyContext.ForecastErrors.Add(CreateForecastError(
+          installationId, ForecastErrorType.Total, startDate, requestDate, totalErrorDuration));
+      }
+
+      _testAirlyContext.SaveChanges();
+    }
 
     private void AddNewMeasurementsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,
       short numberOfElementsInDay, DateTime startDate)
@@ -172,36 +201,6 @@
         AddNewForecastsToDatabase(installationId, numberOfNotProcessedDays, numberOfForecastsInDay,
           forecastsStartDate);
       }
-    }
-
-    private void AddElementsToDatabase(short numberOfDays, short numberOfElementsInDay, DateTime startDate)
-    {
-      var requestDate = startDate.AddDays(numberOfDays)
-                                 .AddMinutes(_requestMinutesOffset);
-
-      for (int i = 0; i < _installationIds.Count; i++)
-      {
-        short installationId = _installationIds[i];
-
-        _testAirlyContext.ArchiveMeasurements.AddRange(GenerateMeasurements(
-          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
-
-        _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(
-          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
-
-        _testAirlyContext.ForecastErrors.AddRange(GenerateHourlyForecastErrors(
-          installationId, startDate, numberOfDays, numberOfElementsInDay, _requestMinutesOffset));
-
-        _testAirlyContext.ForecastErrors.AddRange(GenerateDailyForecastErrors(
-          installationId, startDate, numberOfDays, _requestMinutesOffset, numberOfElementsInDay));
-
-        int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
-
-        _testAirlyContext.ForecastErrors.Add(CreateForecastError(
-          installationId, ForecastErrorType.Total, startDate, requestDate, totalErrorDuration));
-      }
-
-      _testAirlyContext.SaveChanges();
     }
 
     private void Seed()

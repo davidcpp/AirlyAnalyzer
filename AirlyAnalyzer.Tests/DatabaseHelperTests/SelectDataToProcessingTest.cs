@@ -108,6 +108,37 @@
       Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
     }
 
+    [Theory]
+    [InlineData(1, 2, 4)]
+    [InlineData(2, 23, 24)]
+    [InlineData(2, 24, 23)]
+    public void new_data_from_selected_installation(
+      short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
+    {
+      // Arrange
+      short selectedInstallationId = _installationIds[0];
+      const short numberOfProcessedDays = 5;
+      const short numberOfElementsInDay = 23;
+      var processedDataStartDate = _startDate;
+      var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
+      var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
+
+      AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, processedDataStartDate);
+
+      AddNotProcessedDataToDatabase(numberOfNotProcessedDays, numberOfNewMeasurementsInDay,
+        numberOfNewForecastsInDay, newMeasurementsStartDate, newForecastsStartDate);
+
+      // Act
+      _databaseHelper.SelectDataToProcessing(
+        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+
+      // Assert
+      Assert.Equal(selectedInstallationId, newArchiveMeasurements[0].InstallationId);
+      Assert.Equal(selectedInstallationId, newArchiveForecasts[0].InstallationId);
+      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
+      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
+    }
+
     /* Private auxiliary methods */
 
     private void AddNewMeasurementsToDatabase(short selectedInstallationId, short numberOfNotProcessedDays,
@@ -126,6 +157,21 @@
         startDate, numberOfNotProcessedDays, numberOfElementsInDay, _requestMinutesOffset));
 
       _testAirlyContext.SaveChanges();
+    }
+
+    private void AddNotProcessedDataToDatabase(short numberOfNotProcessedDays, short numberOfMeasurementsInDay,
+      short numberOfForecastsInDay, DateTime measurementsStartDate, DateTime forecastsStartDate)
+    {
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        short installationId = _installationIds[i];
+
+        AddNewMeasurementsToDatabase(installationId, numberOfNotProcessedDays, numberOfMeasurementsInDay,
+          measurementsStartDate);
+
+        AddNewForecastsToDatabase(installationId, numberOfNotProcessedDays, numberOfForecastsInDay,
+          forecastsStartDate);
+      }
     }
 
     private void AddElementsToDatabase(short numberOfDays, short numberOfElementsInDay, DateTime startDate)

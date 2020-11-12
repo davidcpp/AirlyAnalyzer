@@ -15,7 +15,6 @@
   public class SaveNewMeasurementsTest : IDisposable
   {
     private const byte _requestMinutesOffset = 30;
-    private const short _minNumberOfMeasurements = 23;
 
     private readonly List<short> _installationIds;
 

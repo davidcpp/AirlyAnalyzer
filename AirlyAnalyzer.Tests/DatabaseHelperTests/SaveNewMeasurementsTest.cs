@@ -63,6 +63,9 @@
 
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
+      // Act
+      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
     }
@@ -87,6 +90,9 @@
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+
+      // Act
+      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
@@ -113,6 +119,9 @@
 
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
+      // Act
+      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
     }
@@ -133,6 +142,9 @@
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+
+      // Act
+      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
@@ -164,6 +176,9 @@
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+
+      // Act
+      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());

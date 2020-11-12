@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests
+﻿namespace AirlyAnalyzer.Tests.DatabaseHelperTests
 {
   using System;
   using System.Collections.Generic;

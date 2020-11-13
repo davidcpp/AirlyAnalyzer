@@ -18,7 +18,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Fact]
-    public void correct_forecast_error_list_when_overlapping_elements()
+    public void correct_forecast_error_lists_when_overlapping_elements()
     {
       // Arrange
       const short installationId = 1;

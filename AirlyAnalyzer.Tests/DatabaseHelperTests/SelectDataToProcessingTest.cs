@@ -44,7 +44,7 @@
     }
 
     [Fact]
-    public void empty_new_data_when_all_previous_data_has_been_processed()
+    public void empty_new_data_when_no_data_to_process_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -63,7 +63,7 @@
     }
 
     [Fact]
-    public void empty_new_data_when_there_is_no_data()
+    public void empty_new_data_when_no_data_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -81,7 +81,7 @@
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]
     [InlineData(2, 24, 23)]
-    public void new_data_when_there_is_data_to_process(
+    public void new_data_when_data_to_process_in_database(
       short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
     {
       // Arrange
@@ -113,7 +113,7 @@
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]
     [InlineData(2, 24, 23)]
-    public void new_data_from_selected_installation(
+    public void new_data_when_data_to_process_from_several_installations_in_database(
       short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
     {
       // Arrange

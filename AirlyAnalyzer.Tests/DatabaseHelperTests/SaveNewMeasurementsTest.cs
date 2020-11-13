@@ -43,7 +43,7 @@
     }
 
     [Fact]
-    public async Task do_not_save_too_few_measurements()
+    public async Task do_not_save_measurements_without_min_required_number()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -99,7 +99,7 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_measurements()
+    public async Task save_all_downloaded_measurements_when_some_measurements_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -127,7 +127,7 @@
     }
 
     [Fact]
-    public async Task save_all_measurements_when_no_measurements_in_database()
+    public async Task save_all_downloaded_measurements_when_no_measurements_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -151,7 +151,7 @@
     }
 
     [Fact]
-    public async Task save_measurements_when_there_are_measurements_for_other_installations_in_period()
+    public async Task save_measurements_after_measurements_from_several_installations()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];

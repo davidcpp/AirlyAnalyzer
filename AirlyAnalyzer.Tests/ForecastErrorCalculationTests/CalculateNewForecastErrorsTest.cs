@@ -14,7 +14,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
     public CalculateNewForecastErrorsTest()
     {
-      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Local);
+      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
     }
 
     [Fact]
@@ -47,6 +47,9 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var dailyForecastErrors = forecastErrors.Where(e => e.ErrorType == ForecastErrorType.Daily);
 
       // Assert
+      forecastsStartDate = forecastsStartDate.ToLocalTime();
+      measurementsEndDate = measurementsEndDate.ToLocalTime();
+
       Assert.Single(dailyForecastErrors);
       Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(measurementsEndDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
@@ -225,6 +228,9 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .Where(e => e.ErrorType == ForecastErrorType.Daily);
 
       // Assert
+      forecastsStartDate = forecastsStartDate.ToLocalTime();
+      endDate = endDate.ToLocalTime();
+
       Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(endDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
       Assert.Single(dailyForecastErrors);

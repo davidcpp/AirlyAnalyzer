@@ -24,7 +24,7 @@
 
     public SaveNewMeasurementsTest()
     {
-      _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Utc);
+      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
         .UseInMemoryDatabase("AirlyDatabase")

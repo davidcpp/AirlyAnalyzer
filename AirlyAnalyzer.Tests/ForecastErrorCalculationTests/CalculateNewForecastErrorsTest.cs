@@ -14,7 +14,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
     public CalculateNewForecastErrorsTest()
     {
-      _startDate = new DateTime(2001, 3, 15, 22, 0, 0, DateTimeKind.Local);
+      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Local);
     }
 
     [Fact]

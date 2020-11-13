@@ -140,6 +140,57 @@
       Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
     }
 
+    [Fact]
+    public void new_data_when_only_data_to_process_in_database()
+    {
+      // Arrange
+      short selectedInstallationId = _installationIds[0];
+      short numberOfNotProcessedDays = 1;
+      short numberOfNewMeasurementsInDay = 24;
+      short numberOfNewForecastsInDay = 24;
+
+      var newMeasurementsStartDate = _startDate;
+      var newForecastsStartDate = _startDate;
+
+      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays,
+        numberOfNewMeasurementsInDay, newMeasurementsStartDate);
+
+      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays,
+        numberOfNewForecastsInDay, newForecastsStartDate);
+
+      // Act
+      _databaseHelper.SelectDataToProcessing(
+        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+
+      // Assert
+      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
+      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
+    }
+
+    [Fact]
+    public void new_data_when_only_data_to_process_from_several_installations_in_database()
+    {
+      // Arrange
+      short selectedInstallationId = _installationIds[0];
+      short numberOfNotProcessedDays = 1;
+      short numberOfNewMeasurementsInDay = 24;
+      short numberOfNewForecastsInDay = 24;
+
+      var newMeasurementsStartDate = _startDate;
+      var newForecastsStartDate = _startDate;
+
+      AddNotProcessedDataToDatabase(numberOfNotProcessedDays, numberOfNewMeasurementsInDay,
+        numberOfNewForecastsInDay, newMeasurementsStartDate, newForecastsStartDate);
+
+      // Act
+      _databaseHelper.SelectDataToProcessing(
+        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+
+      // Assert
+      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
+      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
+    }
+
     /* Private auxiliary methods */
     private void AddElementsToDatabase(short numberOfDays, short numberOfElementsInDay, DateTime startDate)
     {
@@ -189,6 +240,7 @@
       _testAirlyContext.SaveChanges();
     }
 
+    // Method to adding new, not processed data for all installations 
     private void AddNotProcessedDataToDatabase(short numberOfNotProcessedDays, short numberOfMeasurementsInDay,
       short numberOfForecastsInDay, DateTime measurementsStartDate, DateTime forecastsStartDate)
     {

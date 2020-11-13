@@ -12,6 +12,7 @@
   using System.Threading.Tasks;
   using System.Linq;
 
+  [Collection("DatabaseHelperTests")]
   public class SaveNewMeasurementsTest : IDisposable
   {
     private const byte _requestMinutesOffset = 30;

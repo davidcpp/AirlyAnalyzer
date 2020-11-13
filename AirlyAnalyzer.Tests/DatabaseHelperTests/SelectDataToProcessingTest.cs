@@ -10,6 +10,7 @@
   using Microsoft.Extensions.Configuration;
   using Xunit;
 
+  [Collection("DatabaseHelperTests")]
   public class SelectDataToProcessingTest : IDisposable
   {
     private const byte _requestMinutesOffset = 30;

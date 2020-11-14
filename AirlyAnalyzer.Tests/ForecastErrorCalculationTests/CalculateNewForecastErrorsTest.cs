@@ -17,26 +17,32 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
     }
 
-    [Fact]
-    public void correct_forecast_error_lists_when_overlapping_elements()
+    [Theory]
+    [InlineData(1, 22, 22, 22, 23, 1)]
+    [InlineData(1, 21, 21, 22, 21, 0)]
+    [InlineData(1, 21, 21, 18, 22, 1)]
+    [InlineData(2, 22, 22, 22, 46, 2)]
+    [InlineData(2, 21, 21, 22, 42, 0)]
+    [InlineData(13, 22, 22, 22, 299, 13)]
+    [InlineData(13, 21, 21, 22, 273, 0)]
+    public void correct_number_of_forecast_errors(
+      short numberOfDays,
+      short numberOfMeasurementsInDay,
+      short numberOfForecastsInDay,
+      short minNumberOfMeasurements,
+      int numberOfForecastsErrors,
+      short numberOfDailyForecastsErrors)
     {
       // Arrange
       const short installationId = 1;
-      const short minNumberOfMeasurements = 23;
-      const short numberOfDays = 2;
-      const short numberOfMeasurementsInDay = 24;
-      const short numberOfForecastsInDay = 24;
       var measurementsStartDate = _startDate;
-      var forecastsStartDate = _startDate.AddDays(1);
-      var measurementsEndDate = _startDate.AddDays(2);
+      var forecastsStartDate = _startDate;
 
-      var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
-          installationId, measurementsStartDate,numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
-        .ToList();
+      var newMeasurements = AuxiliaryMethods.GenerateMeasurements(installationId, measurementsStartDate,
+        numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
 
-      var newForecasts = AuxiliaryMethods.GenerateForecasts(
-          installationId, forecastsStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
-        .ToList();
+      var newForecasts = AuxiliaryMethods.GenerateForecasts(installationId, forecastsStartDate,
+        numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
 
       var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
 
@@ -47,16 +53,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var dailyForecastErrors = forecastErrors.Where(e => e.ErrorType == ForecastErrorType.Daily);
 
       // Assert
-      forecastsStartDate = forecastsStartDate.ToLocalTime();
-      measurementsEndDate = measurementsEndDate.ToLocalTime();
-
-      Assert.Single(dailyForecastErrors);
-      Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
-      Assert.Equal(measurementsEndDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
-      // _minNumberOfMeasurements hourly forecast errors + 1 daily forecast error
-      Assert.Equal(numberOfMeasurementsInDay + 1, forecastErrors.Count);
-      Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
-      Assert.Equal(measurementsEndDate, forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(numberOfForecastsErrors, forecastErrors.Count);
+      Assert.Equal(numberOfDailyForecastsErrors, dailyForecastErrors.Count());
     }
 
     [Fact]
@@ -86,6 +84,48 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Assert
       Assert.Empty(forecastErrors);
+    }
+
+    [Fact]
+    public void correct_forecast_error_lists_when_overlapping_elements()
+    {
+      // Arrange
+      const short installationId = 1;
+      const short minNumberOfMeasurements = 23;
+      const short numberOfDays = 2;
+      const short numberOfMeasurementsInDay = 24;
+      const short numberOfForecastsInDay = 24;
+      var measurementsStartDate = _startDate;
+      var forecastsStartDate = _startDate.AddDays(1);
+      var measurementsEndDate = _startDate.AddDays(2);
+
+      var newMeasurements = AuxiliaryMethods.GenerateMeasurements(
+          installationId, measurementsStartDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+        .ToList();
+
+      var newForecasts = AuxiliaryMethods.GenerateForecasts(
+          installationId, forecastsStartDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+        .ToList();
+
+      var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
+
+      // Act
+      var forecastErrors = forecastErrorsCalculation
+        .CalculateNewForecastErrors(installationId, newMeasurements, newForecasts);
+
+      var dailyForecastErrors = forecastErrors.Where(e => e.ErrorType == ForecastErrorType.Daily);
+
+      // Assert
+      forecastsStartDate = forecastsStartDate.ToLocalTime();
+      measurementsEndDate = measurementsEndDate.ToLocalTime();
+
+      Assert.Single(dailyForecastErrors);
+      Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(measurementsEndDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
+      // _minNumberOfMeasurements hourly forecast errors + 1 daily forecast error
+      Assert.Equal(numberOfMeasurementsInDay + 1, forecastErrors.Count);
+      Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(measurementsEndDate, forecastErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
     }
 
     [Theory]
@@ -234,46 +274,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       Assert.Equal(forecastsStartDate, dailyForecastErrors.First().FromDateTime, new TimeSpan(0, 0, 0));
       Assert.Equal(endDate, dailyForecastErrors.First().TillDateTime, new TimeSpan(0, 0, 0));
       Assert.Single(dailyForecastErrors);
-    }
-
-    [Theory]
-    [InlineData(1, 22, 22, 22, 23, 1)]
-    [InlineData(1, 21, 21, 22, 21, 0)]
-    [InlineData(1, 21, 21, 18, 22, 1)]
-    [InlineData(2, 22, 22, 22, 46, 2)]
-    [InlineData(2, 21, 21, 22, 42, 0)]
-    [InlineData(13, 22, 22, 22, 299, 13)]
-    [InlineData(13, 21, 21, 22, 273, 0)]
-    public void correct_number_of_forecast_errors(
-      short numberOfDays,
-      short numberOfMeasurementsInDay,
-      short numberOfForecastsInDay,
-      short minNumberOfMeasurements,
-      int numberOfForecastsErrors,
-      short numberOfDailyForecastsErrors)
-    {
-      // Arrange
-      const short installationId = 1;
-      var measurementsStartDate = _startDate;
-      var forecastsStartDate = _startDate;
-
-      var newMeasurements = AuxiliaryMethods.GenerateMeasurements(installationId, measurementsStartDate,
-        numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset).ToList();
-
-      var newForecasts = AuxiliaryMethods.GenerateForecasts(installationId, forecastsStartDate,
-        numberOfDays, numberOfForecastsInDay, _requestMinutesOffset).ToList();
-
-      var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
-
-      // Act
-      var forecastErrors = forecastErrorsCalculation
-        .CalculateNewForecastErrors(installationId, newMeasurements, newForecasts);
-
-      var dailyForecastErrors = forecastErrors.Where(e => e.ErrorType == ForecastErrorType.Daily);
-
-      // Assert
-      Assert.Equal(numberOfForecastsErrors, forecastErrors.Count);
-      Assert.Equal(numberOfDailyForecastsErrors, dailyForecastErrors.Count());
     }
   }
 }

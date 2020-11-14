@@ -99,19 +99,15 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_measurements_when_some_measurements_in_database()
+    public async Task save_all_downloaded_measurements_when_no_measurements_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
       short minNumberOfMeasurements = 22;
       short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = 2 * numberOfMeasurements;
-      short hoursRequestInterval = numberOfMeasurements;
+      int finalNumberOfMeasurements = numberOfMeasurements;
 
-      var measurementsStartDate = _startDate;
-      var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+      var newMeasurementsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
@@ -127,15 +123,19 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_measurements_when_no_measurements_in_database()
+    public async Task save_all_downloaded_measurements_when_some_measurements_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
       short minNumberOfMeasurements = 22;
       short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = numberOfMeasurements;
+      int finalNumberOfMeasurements = 2 * numberOfMeasurements;
+      short hoursRequestInterval = numberOfMeasurements;
 
-      var newMeasurementsStartDate = _startDate;
+      var measurementsStartDate = _startDate;
+      var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
+
+      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
 
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)

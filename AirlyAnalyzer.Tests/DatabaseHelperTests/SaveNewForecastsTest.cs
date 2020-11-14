@@ -123,34 +123,6 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_forecasts_when_some_forecasts_in_database()
-    {
-      // Arrange
-      short selectedInstallationId = _installationIds[0];
-      short minNumberOfForecasts = 22;
-      short numberOfForecasts = 24;
-      int finalNumberOfForecasts = 2 * numberOfForecasts;
-      short hoursRequestInterval = numberOfForecasts;
-
-      var forecastsStartDate = _startDate;
-      var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
-
-      var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
-        .ToList();
-
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
-
-      // Act
-      await databaseHelper.SaveNewForecasts(newForecasts, selectedInstallationId);
-
-      // Assert
-      Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
-    }
-
-    [Fact]
     public async Task save_forecasts_after_forecasts_from_several_installations()
     {
       // Arrange

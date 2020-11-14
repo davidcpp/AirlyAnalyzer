@@ -78,33 +78,6 @@
     }
 
     [Fact]
-    public void new_data_when_only_data_to_process_in_database()
-    {
-      // Arrange
-      short selectedInstallationId = _installationIds[0];
-      short numberOfNotProcessedDays = 1;
-      short numberOfNewMeasurementsInDay = 24;
-      short numberOfNewForecastsInDay = 24;
-
-      var newMeasurementsStartDate = _startDate;
-      var newForecastsStartDate = _startDate;
-
-      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays,
-        numberOfNewMeasurementsInDay, newMeasurementsStartDate);
-
-      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays,
-        numberOfNewForecastsInDay, newForecastsStartDate);
-
-      // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
-
-      // Assert
-      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
-      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
-    }
-
-    [Fact]
     public void new_data_when_only_data_to_process_from_several_installations_in_database()
     {
       // Arrange
@@ -118,38 +91,6 @@
 
       AddNotProcessedDataToDatabase(numberOfNotProcessedDays, numberOfNewMeasurementsInDay,
         numberOfNewForecastsInDay, newMeasurementsStartDate, newForecastsStartDate);
-
-      // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
-
-      // Assert
-      Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
-      Assert.Equal(numberOfNewForecastsInDay * numberOfNotProcessedDays, newArchiveForecasts.Count);
-    }
-
-    [Theory]
-    [InlineData(1, 2, 4)]
-    [InlineData(2, 23, 24)]
-    [InlineData(2, 24, 23)]
-    public void new_data_when_data_to_process_in_database(
-      short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
-    {
-      // Arrange
-      short selectedInstallationId = _installationIds[0];
-      const short numberOfProcessedDays = 5;
-      const short numberOfElementsInDay = 23;
-      var processedDataStartDate = _startDate;
-      var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
-      var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
-
-      AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, processedDataStartDate);
-
-      AddNewMeasurementsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewMeasurementsInDay,
-        newMeasurementsStartDate);
-
-      AddNewForecastsToDatabase(selectedInstallationId, numberOfNotProcessedDays, numberOfNewForecastsInDay,
-        newForecastsStartDate);
 
       // Act
       _databaseHelper.SelectDataToProcessing(

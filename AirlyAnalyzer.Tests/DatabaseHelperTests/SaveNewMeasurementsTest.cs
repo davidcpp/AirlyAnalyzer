@@ -123,34 +123,6 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_measurements_when_some_measurements_in_database()
-    {
-      // Arrange
-      short selectedInstallationId = _installationIds[0];
-      short minNumberOfMeasurements = 22;
-      short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = 2 * numberOfMeasurements;
-      short hoursRequestInterval = numberOfMeasurements;
-
-      var measurementsStartDate = _startDate;
-      var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
-
-      var newMeasurements = GenerateMeasurements(
-          selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
-        .ToList();
-
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
-
-      // Act
-      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
-
-      // Assert
-      Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
-    }
-
-    [Fact]
     public async Task save_measurements_after_measurements_from_several_installations()
     {
       // Arrange

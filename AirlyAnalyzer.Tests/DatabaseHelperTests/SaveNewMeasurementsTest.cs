@@ -137,7 +137,7 @@
 
       AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
 
-      // all installations except the seleced
+      // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
         AddMeasurementsToDatabase(_installationIds[i], 2 * numberOfMeasurements, measurementsStartDate);

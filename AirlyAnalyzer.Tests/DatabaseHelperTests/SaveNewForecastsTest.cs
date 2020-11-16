@@ -137,7 +137,7 @@
 
       AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
-      // all installations except the seleced
+      // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
         AddForecastsToDatabase(_installationIds[i], 2 * numberOfForecasts, forecastsStartDate);

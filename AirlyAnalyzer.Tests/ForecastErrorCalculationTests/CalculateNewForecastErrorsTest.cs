@@ -18,13 +18,11 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Theory]
-    [InlineData(1, 22, 22, 22, 23, 1)]
     [InlineData(1, 21, 21, 22, 21, 0)]
-    [InlineData(1, 21, 21, 18, 22, 1)]
-    [InlineData(2, 22, 22, 22, 46, 2)]
-    [InlineData(2, 21, 21, 22, 42, 0)]
-    [InlineData(13, 22, 22, 22, 299, 13)]
-    [InlineData(13, 21, 21, 22, 273, 0)]
+    [InlineData(1, 22, 22, 22, 23, 1)]
+    [InlineData(1, 23, 23, 22, 24, 1)]
+    [InlineData(5, 21, 21, 22, 105, 0)]
+    [InlineData(5, 22, 22, 22, 115, 5)]
     public void correct_number_of_forecast_errors(
       short numberOfDays,
       short numberOfMeasurementsInDay,

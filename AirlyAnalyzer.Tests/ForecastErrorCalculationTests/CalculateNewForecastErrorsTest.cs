@@ -18,6 +18,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Theory]
+    [InlineData(0, 0, 0, 22, 0, 0)]
     [InlineData(1, 21, 21, 22, 21, 0)]
     [InlineData(1, 22, 22, 22, 23, 1)]
     [InlineData(1, 23, 23, 22, 24, 1)]

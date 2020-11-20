@@ -8,9 +8,6 @@
   {
     private List<AirQualityMeasurement> _newArchiveMeasurements;
     private List<AirQualityForecast> _newArchiveForecasts;
-    private readonly List<AirQualityForecastError> _calculatedForecastErrors
-      = new List<AirQualityForecastError>();
-    private readonly ErrorSum _dailyForecastErrorsSum = new ErrorSum();
 
     /// <summary>
     /// Minimal number of measurements to calculate daily forecast error
@@ -22,7 +19,7 @@
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 
-    public List<AirQualityForecastError> CalculateNewForecastErrors(
+    public List<AirQualityForecastError> CalculateHourlyForecastErrors(
       short installationId,
       List<AirQualityMeasurement> newArchiveMeasurements,
       List<AirQualityForecast> newArchiveForecasts)
@@ -31,7 +28,7 @@
       _newArchiveMeasurements = newArchiveMeasurements;
       _newArchiveForecasts = newArchiveForecasts;
 
-      _calculatedForecastErrors.Clear();
+      var calculatedForecastErrors = new List<AirQualityForecastError>();
 
       for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
       {
@@ -40,7 +37,8 @@
 
         if (currentForecastDateTime == currentMeasurementDateTime)
         {
-          CalculateNextForecastErrors(installationId, i, j);
+          var forecastHourlyError = CalculateHourlyForecastError(installationId, i, j);
+          calculatedForecastErrors.Add(forecastHourlyError);
           i++; j++;
         }
         else if (currentForecastDateTime > currentMeasurementDateTime)
@@ -53,13 +51,43 @@
         }
       }
 
-      if (_dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+      return calculatedForecastErrors;
+    }
+
+    public List<AirQualityForecastError> CalculateDailyForecastErrors(
+      short installationId, List<AirQualityForecastError> newHourlyForecastErrors)
+    {
+      var dailyForecastErrorsSum = new ErrorSum();
+      var dailyForecastErrors = new List<AirQualityForecastError>();
+
+      for (int i = 0; i < newHourlyForecastErrors.Count; i++)
       {
-        var lastDailyError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
-        _calculatedForecastErrors.Add(lastDailyError);
+        var currentMeasurementRequestTime = newHourlyForecastErrors[i].RequestDateTime;
+        var previousMeasurementRequestTime = i != 0 ?
+          newHourlyForecastErrors[i - 1].RequestDateTime : DateTime.MinValue;
+
+        // Calculate MAPE of daily forecast
+        if (currentMeasurementRequestTime != previousMeasurementRequestTime)
+        {
+          if (i > 0 && dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+          {
+            var dailyError = dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
+            dailyForecastErrors.Add(dailyError);
+          }
+
+          dailyForecastErrorsSum.Reset(
+            installationId, newHourlyForecastErrors[i].FromDateTime, newHourlyForecastErrors[i].RequestDateTime);
+        }
+        dailyForecastErrorsSum.AddAbs(newHourlyForecastErrors[i]);
       }
 
-      return _calculatedForecastErrors;
+      if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+      {
+        var lastDailyError = dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
+        dailyForecastErrors.Add(lastDailyError);
+      }
+
+      return dailyForecastErrors;
     }
 
     private AirQualityForecastError CalculateHourlyForecastError(
@@ -96,32 +124,6 @@
         RequestDateTime = _newArchiveMeasurements[i].RequestDateTime,
         ErrorType = ForecastErrorType.Hourly,
       };
-    }
-
-    private void CalculateNextForecastErrors(
-      short installationId, int i, int j)
-    {
-      var currentMeasurementRequestTime = _newArchiveMeasurements[i].RequestDateTime;
-      var previousMeasurementRequestTime = i != 0 ?
-        _newArchiveMeasurements[i - 1].RequestDateTime : DateTime.MinValue;
-
-      // Calculate MAPE of daily forecast
-      if (currentMeasurementRequestTime != previousMeasurementRequestTime)
-      {
-        if (i > 0 && _dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
-        {
-          var dailyForecastError = _dailyForecastErrorsSum.CalculateMeanForecastError(ForecastErrorType.Daily);
-          _calculatedForecastErrors.Add(dailyForecastError);
-        }
-
-        _dailyForecastErrorsSum.Reset(
-          installationId, _newArchiveMeasurements[i].FromDateTime, _newArchiveMeasurements[i].RequestDateTime);
-      }
-
-      var forecastHourlyError = CalculateHourlyForecastError(installationId, i, j);
-      _calculatedForecastErrors.Add(forecastHourlyError);
-
-      _dailyForecastErrorsSum.AddAbs(forecastHourlyError);
     }
 
     public AirQualityForecastError CalculateTotalForecastError(

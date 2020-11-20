@@ -79,10 +79,15 @@
         _databaseHelper.SelectDataToProcessing(
           installationId, out var newArchiveMeasurements, out var newArchiveForecasts);
 
-        var newForecastErrors = _forecastErrorsCalculation.CalculateNewForecastErrors(
+        var hourlyForecastErrors = _forecastErrorsCalculation.CalculateHourlyForecastErrors(
           installationId, newArchiveMeasurements, newArchiveForecasts);
 
-        await _databaseHelper.SaveForecastErrors(newForecastErrors);
+        await _databaseHelper.SaveForecastErrors(hourlyForecastErrors);
+
+        var dailyForecastErrors = _forecastErrorsCalculation.CalculateDailyForecastErrors(
+          installationId, hourlyForecastErrors);
+
+        await _databaseHelper.SaveForecastErrors(dailyForecastErrors);
       }
     }
 

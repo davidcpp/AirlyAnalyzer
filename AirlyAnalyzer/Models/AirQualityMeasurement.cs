@@ -69,7 +69,7 @@
             measurement.Pressure = Convert.ToInt16(Math.Ceiling(measure.Value));
             break;
           case "TEMPERATURE":
-            measurement.Temperature = Convert.ToByte(Math.Ceiling(measure.Value));
+            measurement.Temperature = Convert.ToInt16(Math.Ceiling(measure.Value));
             break;
         }
       }

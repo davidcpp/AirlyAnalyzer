@@ -1,6 +1,7 @@
 ﻿namespace AirlyAnalyzer.Models
 {
   using System;
+  using System.Diagnostics;
   using System.Net;
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
@@ -40,8 +41,14 @@
             NullValueHandling = NullValueHandling.Ignore
           });
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          string stackTrace = e.StackTrace;
+          Debug.WriteLine(stackTrace);
+          Debug.WriteLine(e.Message);
+          Debug.WriteLine(e.Source);
+          Debug.WriteLine("\n");
+
           return new Measurements();
         }
       }

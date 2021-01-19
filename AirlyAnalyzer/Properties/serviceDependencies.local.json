@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql2": {
+      "type": "mssql.azure",
+      "connectionId": "AirlyDbConnection",
+      "secretStore": "LocalSecretsFile"
+    }
+  }
+}

@@ -17,6 +17,40 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
     }
 
+    [Fact]
+    public void correct_forecast_error()
+    {
+      // Arrange
+      const short installationId = 1;
+      const short minNumberOfMeasurements = 22;
+      const short numberOfDays = 1;
+      const short numberOfElementsInDay = 1;
+      var measurementsStartDate = _startDate;
+      var forecastsStartDate = _startDate;
+
+      var newMeasurements = AuxiliaryMethods.GenerateMeasurements(installationId, measurementsStartDate,
+        numberOfDays, numberOfElementsInDay, _requestMinutesOffset).ToList();
+
+      var newForecasts = AuxiliaryMethods.GenerateForecasts(installationId, forecastsStartDate,
+        numberOfDays, numberOfElementsInDay, _requestMinutesOffset).ToList();
+
+      var forecastErrorsCalculation = new ForecastErrorsCalculation(minNumberOfMeasurements);
+
+      // Act
+      var forecastErrors = forecastErrorsCalculation
+        .CalculateHourlyForecastErrors(installationId, newMeasurements, newForecasts);
+
+      // Assert
+      var startDate = measurementsStartDate.ToLocalTime();
+      var endDate = measurementsStartDate.AddHours(1).ToLocalTime();
+
+      Assert.Single(forecastErrors);
+      Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
+      Assert.Equal(installationId, forecastErrors[0].InstallationId);
+      Assert.Equal(startDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate, forecastErrors[0].TillDateTime, new TimeSpan(0, 0, 0));
+    }
+
     [Theory]
     [InlineData(0, 0, 0)]
     [InlineData(1, 21, 21)]
@@ -145,7 +179,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .CalculateHourlyForecastErrors(installationId, newMeasurements, newForecasts);
 
       // Assert
-      Assert.Single(forecastErrors);
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPctError);
       Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25PctError);
       Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10PctError);
@@ -193,7 +226,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .CalculateHourlyForecastErrors(installationId, newMeasurements, newForecasts);
 
       // Assert
-      Assert.Single(forecastErrors);
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPctError);
       Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25PctError);
       Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10PctError);

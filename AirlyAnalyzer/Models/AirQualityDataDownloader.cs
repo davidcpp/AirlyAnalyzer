@@ -34,7 +34,11 @@
         try
         {
           string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
-          return JsonConvert.DeserializeObject<Measurements>(response);
+
+          return JsonConvert.DeserializeObject<Measurements>(response, new JsonSerializerSettings()
+          {
+            NullValueHandling = NullValueHandling.Ignore
+          });
         }
         catch (Exception)
         {

@@ -9,12 +9,14 @@
   public class DatabaseHelper
   {
     private readonly AirlyContext _context;
+    private readonly DateTime dateTimeMinValue;
     private readonly short _minNumberOfMeasurements;
 
     public DatabaseHelper(AirlyContext context, short minNumberOfMeasurements)
     {
       _context = context;
       _minNumberOfMeasurements = minNumberOfMeasurements;
+      dateTimeMinValue = new DateTime(2000, 1, 1);
     }
 
     public void RemoveTotalForecastErrors()
@@ -31,15 +33,17 @@
 
     public async Task SaveNewMeasurements(List<AirQualityMeasurement> newMeasurements, short installationId)
     {
-      var lastMeasurementDate = DateTime.MinValue;
+      var lastMeasurementDate = dateTimeMinValue;
+
+      var selectedDates = _context.ArchiveMeasurements
+        .Where(e => e.InstallationId == installationId)
+        .OrderByDescending(e => e.FromDateTime)
+        .Select(e => e.FromDateTime);
 
       // Check if some of measurements there already are in Database
-      if (_context.ArchiveMeasurements.Any())
+      if (selectedDates.Any())
       {
-        lastMeasurementDate = _context.ArchiveMeasurements
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.FromDateTime)
-          .Select(e => e.FromDateTime)
+        lastMeasurementDate = selectedDates
           .First()
           .ToLocalTime();
       }
@@ -58,15 +62,17 @@
 
     public async Task SaveNewForecasts(List<AirQualityForecast> newForecasts, short installationId)
     {
-      var lastForecastDate = DateTime.MinValue;
+      var lastForecastDate = dateTimeMinValue;
+
+      var selectedDates = _context.ArchiveForecasts
+        .Where(e => e.InstallationId == installationId)
+        .OrderByDescending(e => e.FromDateTime)
+        .Select(e => e.FromDateTime);
 
       // Check if some of forecasts there already are in Database
-      if (_context.ArchiveForecasts.Any())
+      if (selectedDates.Any())
       {
-        lastForecastDate = _context.ArchiveForecasts
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.FromDateTime)
-          .Select(e => e.FromDateTime)
+        lastForecastDate = selectedDates
           .First()
           .ToLocalTime();
       }
@@ -95,14 +101,16 @@
       out List<AirQualityMeasurement> _newArchiveMeasurements,
       out List<AirQualityForecast> _newArchiveForecasts)
     {
-      var lastForecastErrorDate = DateTime.MinValue;
+      var lastForecastErrorDate = dateTimeMinValue;
 
-      if (_context.ForecastErrors.Any())
+      var selectedDates = _context.ForecastErrors
+        .Where(e => e.InstallationId == installationId)
+        .OrderByDescending(e => e.TillDateTime)
+        .Select(e => e.TillDateTime);
+
+      if (selectedDates.Any())
       {
-        lastForecastErrorDate = _context.ForecastErrors
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime)
+        lastForecastErrorDate = selectedDates
           .First();
       }
 
@@ -119,15 +127,16 @@
 
     public DateTime SelectLastMeasurementDate(short installationId)
     {
-      var lastMeasurementDate = DateTime.MinValue;
+      var lastMeasurementDate = dateTimeMinValue;
 
-      if (_context.ArchiveMeasurements.Any())
-      {
-        lastMeasurementDate = _context.ArchiveMeasurements
+      var selectedDates = _context.ArchiveMeasurements
           .Where(e => e.InstallationId == installationId)
           .OrderByDescending(e => e.FromDateTime)
-          .Select(e => e.TillDateTime)
-          .First();
+          .Select(e => e.TillDateTime);
+
+      if (selectedDates.Any())
+      {
+        lastMeasurementDate = selectedDates.First();
       }
 
       return lastMeasurementDate;

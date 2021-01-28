@@ -55,14 +55,19 @@
       {
         var context = scope.ServiceProvider.GetRequiredService<AirlyContext>();
         _databaseHelper = new DatabaseHelper(context, _minNumberOfMeasurements);
-        await DownloadAndSaveAirQualityData();
-        await CalculateAndSaveForecastErrors();
-        await CalculateAndSaveTotalForecastErrors();
+        if (await DownloadAndSaveAirQualityData() > 0)
+        {
+          await CalculateAndSaveForecastErrors();
+          await CalculateAndSaveTotalForecastErrors();
+        }
       }
     }
 
-    private async Task DownloadAndSaveAirQualityData()
+    private async Task<int> DownloadAndSaveAirQualityData()
     {
+      int newMeasurementsCount = 0;
+      int newForecastsCount = 0;
+
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
@@ -80,10 +85,15 @@
           var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
             installationId, requestDateTime);
 
+          newMeasurementsCount += newMeasurements.Count;
+          newForecastsCount += newForecasts.Count;
+
           await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
           await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
         }
       }
+
+      return Math.Min(newMeasurementsCount, newForecastsCount);
     }
 
     private async Task CalculateAndSaveForecastErrors()

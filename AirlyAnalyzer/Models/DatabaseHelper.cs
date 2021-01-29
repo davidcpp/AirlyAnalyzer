@@ -37,18 +37,17 @@
 
       var selectedDates = _context.ArchiveMeasurements
         .Where(e => e.InstallationId == installationId)
-        .OrderByDescending(e => e.FromDateTime)
-        .Select(e => e.FromDateTime);
+        .OrderByDescending(e => e.TillDateTime)
+        .Select(e => e.TillDateTime);
 
       // Check if some of measurements there already are in Database
       if (selectedDates.Any())
       {
         lastMeasurementDate = selectedDates
-          .First()
-          .ToLocalTime();
+          .First();
       }
 
-      while (newMeasurements.Count > 0 && newMeasurements[0].FromDateTime <= lastMeasurementDate)
+      while (newMeasurements.Count > 0 && newMeasurements[0].TillDateTime <= lastMeasurementDate.ToLocalTime())
       {
         newMeasurements.RemoveAt(0);
       }
@@ -66,18 +65,17 @@
 
       var selectedDates = _context.ArchiveForecasts
         .Where(e => e.InstallationId == installationId)
-        .OrderByDescending(e => e.FromDateTime)
-        .Select(e => e.FromDateTime);
+        .OrderByDescending(e => e.TillDateTime)
+        .Select(e => e.TillDateTime);
 
       // Check if some of forecasts there already are in Database
       if (selectedDates.Any())
       {
         lastForecastDate = selectedDates
-          .First()
-          .ToLocalTime();
+          .First();
       }
 
-      while (newForecasts.Count > 0 && newForecasts[0].FromDateTime <= lastForecastDate)
+      while (newForecasts.Count > 0 && newForecasts[0].TillDateTime <= lastForecastDate.ToLocalTime())
       {
         newForecasts.RemoveAt(0);
       }
@@ -131,12 +129,13 @@
 
       var selectedDates = _context.ArchiveMeasurements
           .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.FromDateTime)
+          .OrderByDescending(e => e.TillDateTime)
           .Select(e => e.TillDateTime);
 
       if (selectedDates.Any())
       {
-        lastMeasurementDate = selectedDates.First();
+        lastMeasurementDate = selectedDates
+          .First();
       }
 
       return lastMeasurementDate;

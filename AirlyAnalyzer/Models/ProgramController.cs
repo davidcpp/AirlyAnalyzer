@@ -13,7 +13,6 @@
   public class DownloadController : IHostedService, IDisposable
   {
     private readonly ILogger<DownloadController> _logger;
-    private readonly IConfiguration _config;
     private readonly IServiceScopeFactory _scopeFactory;
 
     private readonly List<short> _installationIDsList;
@@ -31,14 +30,13 @@
       ILogger<DownloadController> logger)
     {
       _scopeFactory = scopeFactory;
-      _config = config;
       _logger = logger;
 
       _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
       _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
-      _idForAllInstallations = _config.GetValue<short>("AppSettings:AirlyApi:IdForAllInstallations");
+      _idForAllInstallations = config.GetValue<short>("AppSettings:AirlyApi:IdForAllInstallations");
 
-      _airQualityDataDownloader = new AirQualityDataDownloader(_config);
+      _airQualityDataDownloader = new AirQualityDataDownloader(config);
       _forecastErrorsCalculation = new ForecastErrorsCalculation(_minNumberOfMeasurements);
     }
 

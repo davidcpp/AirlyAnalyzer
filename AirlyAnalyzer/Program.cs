@@ -35,6 +35,6 @@ namespace AirlyAnalyzer
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-            .ConfigureServices(services => services.AddHostedService<DownloadController>());
+            .ConfigureServices(services => services.AddHostedService<ProgramController>());
   }
 }

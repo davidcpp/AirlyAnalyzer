@@ -10,9 +10,9 @@
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
 
-  public class DownloadController : IHostedService, IDisposable
+  public class ProgramController : IHostedService, IDisposable
   {
-    private readonly ILogger<DownloadController> _logger;
+    private readonly ILogger<ProgramController> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
 
     private readonly List<short> _installationIDsList;
@@ -25,9 +25,9 @@
     private DatabaseHelper _databaseHelper;
     private Timer _timer;
 
-    public DownloadController(IServiceScopeFactory scopeFactory,
+    public ProgramController(IServiceScopeFactory scopeFactory,
       IConfiguration config,
-      ILogger<DownloadController> logger)
+      ILogger<ProgramController> logger)
     {
       _scopeFactory = scopeFactory;
       _logger = logger;

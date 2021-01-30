@@ -42,6 +42,8 @@
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
+      _logger.LogInformation("ProgramController is starting");
+
       _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
 
       return Task.CompletedTask;
@@ -63,6 +65,8 @@
 
     private async Task<int> DownloadAndSaveAirQualityData()
     {
+      _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
+
       int newMeasurementsCount = 0;
       int newForecastsCount = 0;
 
@@ -96,6 +100,8 @@
 
     private async Task CalculateAndSaveForecastErrors()
     {
+      _logger.LogInformation("CalculateAndSaveForecastErrors() is starting");
+
       // Calculating and saving new daily and hourly forecast errors in database
       foreach (short installationId in _installationIDsList)
       {
@@ -116,6 +122,8 @@
 
     private async Task CalculateAndSaveTotalForecastErrors()
     {
+      _logger.LogInformation("CalculateAndSaveTotalForecastErrors() is starting");
+
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
       // Calculating total forecast errors for each installation
@@ -148,6 +156,8 @@
 
     public Task StopAsync(CancellationToken stoppingToken)
     {
+      _logger.LogInformation("ProgramController is stopping");
+
       _timer?.Change(Timeout.Infinite, 0);
 
       return Task.CompletedTask;

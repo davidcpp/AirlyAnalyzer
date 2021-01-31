@@ -73,13 +73,15 @@
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
-        var lastMeasurementDate = _databaseHelper.SelectLastMeasurementDate(installationId);
+        var lastMeasurementDate =
+            await _databaseHelper.SelectLastMeasurementDate(installationId);
+
         var requestDateTime = DateTime.UtcNow;
 
         if ((requestDateTime - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
         {
-          var responseMeasurements
-            = _airQualityDataDownloader.DownloadAirQualityData(installationId);
+          var responseMeasurements =
+              await _airQualityDataDownloader.DownloadAirQualityData(installationId);
 
           var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
             installationId, requestDateTime);
@@ -105,8 +107,8 @@
       // Calculating and saving new daily and hourly forecast errors in database
       foreach (short installationId in _installationIDsList)
       {
-        _databaseHelper.SelectDataToProcessing(
-          installationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+        var (newArchiveMeasurements, newArchiveForecasts) =
+            await _databaseHelper.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors = _forecastErrorsCalculation.CalculateHourlyForecastErrors(
           installationId, newArchiveMeasurements, newArchiveForecasts);
@@ -129,7 +131,8 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors = _databaseHelper.SelectDailyForecastErrors(installationId);
+        var dailyForecastErrors =
+            await _databaseHelper.SelectDailyForecastErrors(installationId);
 
         if (dailyForecastErrors.Count > 0)
         {

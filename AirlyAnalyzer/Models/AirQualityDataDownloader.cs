@@ -3,6 +3,7 @@
   using System;
   using System.Diagnostics;
   using System.Net;
+  using System.Threading.Tasks;
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
 
@@ -23,7 +24,7 @@
       _uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
     }
 
-    public Measurements DownloadAirQualityData(short installationId)
+    public async Task<Measurements> DownloadAirQualityData(short installationId)
     {
       using (var webClient = new WebClient())
       {
@@ -34,12 +35,15 @@
 
         try
         {
-          string response = webClient.DownloadString(_measurementsUri + installationId.ToString());
+          string response = await webClient.DownloadStringTaskAsync(
+              _measurementsUri + installationId.ToString());
 
-          return JsonConvert.DeserializeObject<Measurements>(response, new JsonSerializerSettings()
-          {
-            NullValueHandling = NullValueHandling.Ignore
-          });
+          return JsonConvert.DeserializeObject<Measurements>(
+              response,
+              new JsonSerializerSettings()
+              {
+                NullValueHandling = NullValueHandling.Ignore
+              });
         }
         catch (Exception e)
         {

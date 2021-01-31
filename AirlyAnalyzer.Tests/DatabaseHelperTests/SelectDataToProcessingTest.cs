@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
@@ -44,14 +45,14 @@
     }
 
     [Fact]
-    public void empty_new_data_when_no_data_in_database()
+    public async Task empty_new_data_when_no_data_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
 
       // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+      var (newArchiveMeasurements, newArchiveForecasts) =
+          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -59,7 +60,7 @@
     }
 
     [Fact]
-    public void empty_new_data_when_no_data_to_process_in_database()
+    public async Task empty_new_data_when_no_data_to_process_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -69,8 +70,8 @@
       AddElementsToDatabase(numberOfProcessedDays, numberOfElementsInDay, _startDate);
 
       // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+      var (newArchiveMeasurements, newArchiveForecasts) =
+          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -78,7 +79,7 @@
     }
 
     [Fact]
-    public void new_data_when_only_data_to_process_from_several_installations_in_database()
+    public async Task new_data_when_only_data_to_process_from_several_installations_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
@@ -93,8 +94,8 @@
         numberOfNewForecastsInDay, newMeasurementsStartDate, newForecastsStartDate);
 
       // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+      var (newArchiveMeasurements, newArchiveForecasts) =
+          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
 
       // Assert
       Assert.Equal(numberOfNewMeasurementsInDay * numberOfNotProcessedDays, newArchiveMeasurements.Count);
@@ -105,7 +106,7 @@
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]
     [InlineData(2, 24, 23)]
-    public void new_data_when_data_to_process_from_several_installations_in_database(
+    public async Task new_data_when_data_to_process_from_several_installations_in_database(
       short numberOfNotProcessedDays, short numberOfNewMeasurementsInDay, short numberOfNewForecastsInDay)
     {
       // Arrange
@@ -122,8 +123,8 @@
         numberOfNewForecastsInDay, newMeasurementsStartDate, newForecastsStartDate);
 
       // Act
-      _databaseHelper.SelectDataToProcessing(
-        selectedInstallationId, out var newArchiveMeasurements, out var newArchiveForecasts);
+      var (newArchiveMeasurements, newArchiveForecasts) =
+          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
 
       // Assert
       Assert.Equal(selectedInstallationId, newArchiveMeasurements[0].InstallationId);

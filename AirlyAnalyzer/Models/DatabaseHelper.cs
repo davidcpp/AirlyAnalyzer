@@ -5,6 +5,7 @@
   using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
+  using Microsoft.EntityFrameworkCore;
 
   public class DatabaseHelper
   {
@@ -43,8 +44,8 @@
       // Check if some of measurements there already are in Database
       if (selectedDates.Any())
       {
-        lastMeasurementDate = selectedDates
-          .First();
+        lastMeasurementDate = await selectedDates
+            .FirstAsync();
       }
 
       while (newMeasurements.Count > 0 && newMeasurements[0].TillDateTime <= lastMeasurementDate.ToLocalTime())
@@ -71,8 +72,8 @@
       // Check if some of forecasts there already are in Database
       if (selectedDates.Any())
       {
-        lastForecastDate = selectedDates
-          .First();
+        lastForecastDate = await selectedDates
+            .FirstAsync();
       }
 
       while (newForecasts.Count > 0 && newForecasts[0].TillDateTime <= lastForecastDate.ToLocalTime())
@@ -87,17 +88,17 @@
       }
     }
 
-    public List<AirQualityForecastError> SelectDailyForecastErrors(short installationId)
+    public Task<List<AirQualityForecastError>>
+        SelectDailyForecastErrors(short installationId)
     {
       return _context.ForecastErrors
-        .Where(e => e.InstallationId == installationId && e.ErrorType == ForecastErrorType.Daily)
-        .ToList();
+          .Where(e => e.InstallationId == installationId
+                   && e.ErrorType == ForecastErrorType.Daily)
+          .ToListAsync();
     }
 
-    public void SelectDataToProcessing(
-      short installationId,
-      out List<AirQualityMeasurement> _newArchiveMeasurements,
-      out List<AirQualityForecast> _newArchiveForecasts)
+    public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
+        SelectDataToProcessing(short installationId)
     {
       var lastForecastErrorDate = dateTimeMinValue;
 
@@ -108,22 +109,24 @@
 
       if (selectedDates.Any())
       {
-        lastForecastErrorDate = selectedDates
-          .First();
+        lastForecastErrorDate = await selectedDates
+            .FirstAsync();
       }
 
-      _newArchiveMeasurements = _context.ArchiveMeasurements
-        .Where(m => m.InstallationId == installationId
-                 && m.TillDateTime > lastForecastErrorDate)
-        .ToList();
+      var _newArchiveMeasurements = await _context.ArchiveMeasurements
+          .Where(m => m.InstallationId == installationId
+                   && m.TillDateTime > lastForecastErrorDate)
+          .ToListAsync();
 
-      _newArchiveForecasts = _context.ArchiveForecasts
-        .Where(f => f.InstallationId == installationId
-                 && f.TillDateTime > lastForecastErrorDate)
-        .ToList();
+      var _newArchiveForecasts = await _context.ArchiveForecasts
+          .Where(f => f.InstallationId == installationId
+                   && f.TillDateTime > lastForecastErrorDate)
+          .ToListAsync();
+
+      return (_newArchiveMeasurements, _newArchiveForecasts);
     }
 
-    public DateTime SelectLastMeasurementDate(short installationId)
+    public async Task<DateTime> SelectLastMeasurementDate(short installationId)
     {
       var lastMeasurementDate = dateTimeMinValue;
 
@@ -134,8 +137,8 @@
 
       if (selectedDates.Any())
       {
-        lastMeasurementDate = selectedDates
-          .First();
+        lastMeasurementDate = await selectedDates
+            .FirstAsync();
       }
 
       return lastMeasurementDate;

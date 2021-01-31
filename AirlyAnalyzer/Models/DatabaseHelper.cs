@@ -23,23 +23,27 @@
     public void RemoveTotalForecastErrors()
     {
       _context.ForecastErrors.RemoveRange(
-        _context.ForecastErrors.Where(e => e.ErrorType == ForecastErrorType.Total));
+          _context.ForecastErrors.Where(
+              e => e.ErrorType == ForecastErrorType.Total));
     }
 
-    public async Task<int> SaveForecastErrors(List<AirQualityForecastError> forecastErrors)
+    public async Task<int> SaveForecastErrors(
+        List<AirQualityForecastError> forecastErrors)
     {
       _context.ForecastErrors.AddRange(forecastErrors);
       return await _context.SaveChangesAsync();
     }
 
-    public async Task SaveNewMeasurements(List<AirQualityMeasurement> newMeasurements, short installationId)
+    public async Task SaveNewMeasurements(
+        List<AirQualityMeasurement> newMeasurements,
+        short installationId)
     {
       var lastMeasurementDate = dateTimeMinValue;
 
       var selectedDates = _context.ArchiveMeasurements
-        .Where(e => e.InstallationId == installationId)
-        .OrderByDescending(e => e.TillDateTime)
-        .Select(e => e.TillDateTime);
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.TillDateTime)
+          .Select(e => e.TillDateTime);
 
       // Check if some of measurements there already are in Database
       if (selectedDates.Any())
@@ -48,7 +52,8 @@
             .FirstAsync();
       }
 
-      while (newMeasurements.Count > 0 && newMeasurements[0].TillDateTime <= lastMeasurementDate.ToLocalTime())
+      while (newMeasurements.Count > 0
+          && newMeasurements[0].TillDateTime <= lastMeasurementDate.ToLocalTime())
       {
         newMeasurements.RemoveAt(0);
       }
@@ -60,14 +65,16 @@
       }
     }
 
-    public async Task SaveNewForecasts(List<AirQualityForecast> newForecasts, short installationId)
+    public async Task SaveNewForecasts(
+        List<AirQualityForecast> newForecasts,
+        short installationId)
     {
       var lastForecastDate = dateTimeMinValue;
 
       var selectedDates = _context.ArchiveForecasts
-        .Where(e => e.InstallationId == installationId)
-        .OrderByDescending(e => e.TillDateTime)
-        .Select(e => e.TillDateTime);
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.TillDateTime)
+          .Select(e => e.TillDateTime);
 
       // Check if some of forecasts there already are in Database
       if (selectedDates.Any())
@@ -76,7 +83,8 @@
             .FirstAsync();
       }
 
-      while (newForecasts.Count > 0 && newForecasts[0].TillDateTime <= lastForecastDate.ToLocalTime())
+      while (newForecasts.Count > 0
+          && newForecasts[0].TillDateTime <= lastForecastDate.ToLocalTime())
       {
         newForecasts.RemoveAt(0);
       }
@@ -103,9 +111,9 @@
       var lastForecastErrorDate = dateTimeMinValue;
 
       var selectedDates = _context.ForecastErrors
-        .Where(e => e.InstallationId == installationId)
-        .OrderByDescending(e => e.TillDateTime)
-        .Select(e => e.TillDateTime);
+          .Where(e => e.InstallationId == installationId)
+          .OrderByDescending(e => e.TillDateTime)
+          .Select(e => e.TillDateTime);
 
       if (selectedDates.Any())
       {

@@ -35,7 +35,8 @@
       set => requestDateTime = value.ToUniversalTime();
     }
 
-    public static explicit operator AirQualityMeasurement(AveragedValues averagedValue)
+    public static explicit operator AirQualityMeasurement(
+        AveragedValues averagedValue)
     {
       var measurement = new AirQualityMeasurement
       {

@@ -17,7 +17,9 @@ namespace AirlyAnalyzer.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                .HasAnnotation(
+                    "SqlServer:ValueGenerationStrategy",
+                    SqlServerValueGenerationStrategy.None);
 
             modelBuilder.Entity("AirlyAnalyzer.Models.AirQualityForecast", b =>
                 {

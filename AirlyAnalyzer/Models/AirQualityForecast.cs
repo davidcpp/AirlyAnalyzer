@@ -31,7 +31,8 @@
       set => requestDateTime = value.ToUniversalTime();
     }
 
-    public static explicit operator AirQualityForecast(AveragedValues averagedValue)
+    public static explicit operator AirQualityForecast(
+        AveragedValues averagedValue)
     {
       var forecast = new AirQualityForecast
       {

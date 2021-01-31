@@ -10,11 +10,14 @@
   {
     private readonly byte _maxErrorTypeLength;
     public static readonly ILoggerFactory _loggerFactory =
-      LoggerFactory.Create(builder => builder.AddDebug());
+        LoggerFactory.Create(builder => builder.AddDebug());
 
-    public AirlyContext(DbContextOptions<AirlyContext> options, IConfiguration config) : base(options)
+    public AirlyContext(
+        DbContextOptions<AirlyContext> options, IConfiguration config)
+        : base(options)
     {
-      _maxErrorTypeLength = config.GetValue<byte>("AppSettings:Databases:MaxErrorTypeLength");
+      _maxErrorTypeLength =
+          config.GetValue<byte>("AppSettings:Databases:MaxErrorTypeLength");
     }
 
     public DbSet<AirQualityForecast> ArchiveForecasts { get; set; }
@@ -86,8 +89,9 @@
         .Property(x => x.RequestDateTime)
         .HasColumnType("smalldatetime");
 
-      modelBuilder
-        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+      modelBuilder.HasAnnotation(
+          "SqlServer:ValueGenerationStrategy",
+          SqlServerValueGenerationStrategy.None);
     }
   }
 }

@@ -17,11 +17,20 @@
 
     public AirQualityDataDownloader(IConfiguration config)
     {
-      _airlyApiKeyHeaderName = config.GetValue<string>("AppSettings:AirlyApi:KeyHeaderName");
-      _airlyApiKey = config.GetValue<string>("AppSettings:AirlyApi:Key");
-      _contentType = config.GetValue<string>("AppSettings:AirlyApi:ContentType");
-      _measurementsUri = config.GetValue<string>("AppSettings:AirlyApi:MeasurementsUri");
-      _uri = config.GetValue<string>("AppSettings:AirlyApi:Uri");
+      _airlyApiKeyHeaderName = config.GetValue<string>(
+          "AppSettings:AirlyApi:KeyHeaderName");
+
+      _airlyApiKey = config.GetValue<string>(
+          "AppSettings:AirlyApi:Key");
+
+      _contentType =config.GetValue<string>(
+          "AppSettings:AirlyApi:ContentType");
+
+      _measurementsUri = config.GetValue<string>(
+          "AppSettings:AirlyApi:MeasurementsUri");
+
+      _uri = config.GetValue<string>(
+          "AppSettings:AirlyApi:Uri");
     }
 
     public async Task<Measurements> DownloadAirQualityData(short installationId)

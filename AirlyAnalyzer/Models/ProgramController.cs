@@ -25,19 +25,28 @@
     private DatabaseHelper _databaseHelper;
     private Timer _timer;
 
-    public ProgramController(IServiceScopeFactory scopeFactory,
-      IConfiguration config,
-      ILogger<ProgramController> logger)
+    public ProgramController(
+        IServiceScopeFactory scopeFactory,
+        IConfiguration config,
+        ILogger<ProgramController> logger)
     {
       _scopeFactory = scopeFactory;
       _logger = logger;
 
-      _minNumberOfMeasurements = config.GetValue<short>("AppSettings:AirlyApi:MinNumberOfMeasurements");
-      _installationIDsList = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
-      _idForAllInstallations = config.GetValue<short>("AppSettings:AirlyApi:IdForAllInstallations");
+      _minNumberOfMeasurements = config.GetValue<short>(
+          "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      _airQualityDataDownloader = new AirQualityDataDownloader(config);
-      _forecastErrorsCalculation = new ForecastErrorsCalculation(_minNumberOfMeasurements);
+      _installationIDsList = config.GetSection(
+          "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+
+      _idForAllInstallations = config.GetValue<short>(
+          "AppSettings:AirlyApi:IdForAllInstallations");
+
+      _airQualityDataDownloader =
+          new AirQualityDataDownloader(config);
+
+      _forecastErrorsCalculation =
+          new ForecastErrorsCalculation(_minNumberOfMeasurements);
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
@@ -55,6 +64,7 @@
       {
         var context = scope.ServiceProvider.GetRequiredService<AirlyContext>();
         _databaseHelper = new DatabaseHelper(context, _minNumberOfMeasurements);
+
         if (await DownloadAndSaveAirQualityData() > 0)
         {
           await CalculateAndSaveForecastErrors();
@@ -78,22 +88,26 @@
 
         var requestDateTime = DateTime.UtcNow;
 
-        if ((requestDateTime - lastMeasurementDate).TotalHours >= _minNumberOfMeasurements)
+        if ((requestDateTime - lastMeasurementDate).TotalHours
+            >= _minNumberOfMeasurements)
         {
-          var responseMeasurements =
-              await _airQualityDataDownloader.DownloadAirQualityData(installationId);
+          var responseMeasurements = await _airQualityDataDownloader
+              .DownloadAirQualityData(installationId);
 
-          var newMeasurements = responseMeasurements.History.ConvertToAirQualityMeasurements(
-            installationId, requestDateTime);
+          var newMeasurements = responseMeasurements.History
+              .ConvertToAirQualityMeasurements(installationId, requestDateTime);
 
-          var newForecasts = responseMeasurements.Forecast.ConvertToAirQualityForecasts(
-            installationId, requestDateTime);
+          var newForecasts = responseMeasurements.Forecast
+              .ConvertToAirQualityForecasts(installationId, requestDateTime);
 
           newMeasurementsCount += newMeasurements.Count;
           newForecastsCount += newForecasts.Count;
 
-          await _databaseHelper.SaveNewMeasurements(newMeasurements, installationId);
-          await _databaseHelper.SaveNewForecasts(newForecasts, installationId);
+          await _databaseHelper
+              .SaveNewMeasurements(newMeasurements, installationId);
+
+          await _databaseHelper
+              .SaveNewForecasts(newForecasts, installationId);
         }
       }
 
@@ -110,13 +124,15 @@
         var (newArchiveMeasurements, newArchiveForecasts) =
             await _databaseHelper.SelectDataToProcessing(installationId);
 
-        var hourlyForecastErrors = _forecastErrorsCalculation.CalculateHourlyForecastErrors(
-          installationId, newArchiveMeasurements, newArchiveForecasts);
+        var hourlyForecastErrors = 
+            _forecastErrorsCalculation.CalculateHourlyForecastErrors(
+                installationId, newArchiveMeasurements, newArchiveForecasts);
 
         await _databaseHelper.SaveForecastErrors(hourlyForecastErrors);
 
-        var dailyForecastErrors = _forecastErrorsCalculation.CalculateDailyForecastErrors(
-          installationId, hourlyForecastErrors);
+        var dailyForecastErrors =
+            _forecastErrorsCalculation.CalculateDailyForecastErrors(
+                installationId, hourlyForecastErrors);
 
         await _databaseHelper.SaveForecastErrors(dailyForecastErrors);
       }
@@ -124,7 +140,8 @@
 
     private async Task CalculateAndSaveTotalForecastErrors()
     {
-      _logger.LogInformation("CalculateAndSaveTotalForecastErrors() is starting");
+      _logger.LogInformation(
+          "CalculateAndSaveTotalForecastErrors() is starting");
 
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
@@ -136,8 +153,9 @@
 
         if (dailyForecastErrors.Count > 0)
         {
-          var installationForecastError
-            = _forecastErrorsCalculation.CalculateTotalForecastError(dailyForecastErrors, installationId);
+          var installationForecastError =
+              _forecastErrorsCalculation.CalculateTotalForecastError(
+                  dailyForecastErrors, installationId);
 
           newTotalForecastErrors.Add(installationForecastError);
         }
@@ -146,8 +164,9 @@
       if (newTotalForecastErrors.Count > 0)
       {
         // Calculating total forecast error from all installations
-        var totalForecastError = _forecastErrorsCalculation
-          .CalculateTotalForecastError(newTotalForecastErrors, _idForAllInstallations);
+        var totalForecastError =
+            _forecastErrorsCalculation.CalculateTotalForecastError(
+                newTotalForecastErrors, _idForAllInstallations);
 
         newTotalForecastErrors.Add(totalForecastError);
 

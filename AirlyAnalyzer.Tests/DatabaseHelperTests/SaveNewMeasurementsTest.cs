@@ -64,7 +64,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
@@ -92,7 +92,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
@@ -116,7 +116,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
@@ -150,7 +150,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(newMeasurements, selectedInstallationId);
+      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
       Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());

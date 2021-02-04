@@ -104,10 +104,10 @@
           newForecastsCount += newForecasts.Count;
 
           await _databaseHelper
-              .SaveNewMeasurements(newMeasurements, installationId);
+              .SaveNewMeasurements(installationId, newMeasurements);
 
           await _databaseHelper
-              .SaveNewForecasts(newForecasts, installationId);
+              .SaveNewForecasts(installationId, newForecasts);
         }
       }
 
@@ -155,7 +155,7 @@
         {
           var installationForecastError =
               _forecastErrorsCalculation.CalculateTotalForecastError(
-                  dailyForecastErrors, installationId);
+                  installationId, dailyForecastErrors);
 
           newTotalForecastErrors.Add(installationForecastError);
         }
@@ -166,7 +166,7 @@
         // Calculating total forecast error from all installations
         var totalForecastError =
             _forecastErrorsCalculation.CalculateTotalForecastError(
-                newTotalForecastErrors, _idForAllInstallations);
+                _idForAllInstallations, newTotalForecastErrors);
 
         newTotalForecastErrors.Add(totalForecastError);
 
@@ -191,3 +191,4 @@
     }
   }
 }
+ 

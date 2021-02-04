@@ -144,7 +144,7 @@
     }
 
     public AirQualityForecastError CalculateTotalForecastError(
-        List<AirQualityForecastError> allForecastErrors, short installationId)
+        short installationId, List<AirQualityForecastError> allForecastErrors)
     {
       var errorSum = new ErrorSum
       {

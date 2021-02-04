@@ -35,8 +35,8 @@
     }
 
     public async Task SaveNewMeasurements(
-        List<AirQualityMeasurement> newMeasurements,
-        short installationId)
+        short installationId,
+        List<AirQualityMeasurement> newMeasurements)
     {
       var lastMeasurementDate = dateTimeMinValue;
 
@@ -66,8 +66,8 @@
     }
 
     public async Task SaveNewForecasts(
-        List<AirQualityForecast> newForecasts,
-        short installationId)
+        short installationId,
+        List<AirQualityForecast> newForecasts)
     {
       var lastForecastDate = dateTimeMinValue;
 

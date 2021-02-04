@@ -64,7 +64,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(newForecasts, selectedInstallationId);
+      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
@@ -92,7 +92,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(newForecasts, selectedInstallationId);
+      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
@@ -116,7 +116,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(newForecasts, selectedInstallationId);
+      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
@@ -150,7 +150,7 @@
       var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(newForecasts, selectedInstallationId);
+      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());

@@ -16,7 +16,16 @@
     // GET: ForecastErrors
     public IActionResult Index()
     {
-      return View(_context.ForecastErrors.ToList());
+      var selectedRequestDateTime
+          = _context.ForecastErrors
+              .Select(e => e.RequestDateTime)
+              .OrderByDescending(dateTime => dateTime)
+              .First();
+
+      var selectedDay = _context.ForecastErrors
+          .Where(e => e.RequestDateTime == selectedRequestDateTime);
+
+      return View(selectedDay);
     }
 
     protected override void Dispose(bool disposing)

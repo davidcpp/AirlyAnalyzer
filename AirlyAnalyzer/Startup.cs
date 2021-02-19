@@ -60,7 +60,7 @@ namespace AirlyAnalyzer
       {
         endpoints.MapControllerRoute(
                   name: "default",
-                  pattern: "{controller=Forecast}/{action=Index}/{id?}");
+                  pattern: "{controller=ForecastErrors}/{action=Index}/{id?}");
       });
     }
   }

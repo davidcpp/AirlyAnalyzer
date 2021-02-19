@@ -7,26 +7,14 @@
 
 <h1>Index</h1>
 
-<table class="table">
+<table class="table" id="forecasts">
   <thead>
     <tr>
       <th>
         @Html.DisplayNameFor(model => model.AirlyCaqiPctError)
       </th>
       <th>
-        @Html.DisplayNameFor(model => model.Pm25PctError)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.Pm10PctError)
-      </th>
-      <th>
         @Html.DisplayNameFor(model => model.AirlyCaqiError)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.Pm25Error)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.Pm10Error)
       </th>
       <th>
         @Html.DisplayNameFor(model => model.InstallationId)
@@ -53,19 +41,7 @@
         @Html.DisplayFor(modelItem => item.AirlyCaqiPctError)%
       </td>
       <td>
-        @Html.DisplayFor(modelItem => item.Pm25PctError)%
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.Pm10PctError)%
-      </td>
-      <td>
         @Html.DisplayFor(modelItem => item.AirlyCaqiError)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.Pm25Error)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.Pm10Error)
       </td>
       <td>
         @Html.DisplayFor(modelItem => item.InstallationId)

@@ -4,16 +4,16 @@
   using AirlyAnalyzer.Data;
   using Microsoft.AspNetCore.Mvc;
 
-  public class ForecastController : Controller
+  public class ForecastErrorsController : Controller
   {
     private readonly AirlyContext _context;
 
-    public ForecastController(AirlyContext context)
+    public ForecastErrorsController(AirlyContext context)
     {
       _context = context;
     }
 
-    // GET: Forecast
+    // GET: ForecastErrors
     public IActionResult Index()
     {
       return View(_context.ForecastErrors.ToList());

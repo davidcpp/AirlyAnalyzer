@@ -19,8 +19,8 @@
     public DatabaseHelper(AirlyContext context, short minNumberOfMeasurements)
     {
       _context = context;
-      _minNumberOfMeasurements = minNumberOfMeasurements;
       dateTimeMinValue = new DateTime(2000, 1, 1);
+      _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 
     public IEnumerable<TEntity> Get<TEntity>(

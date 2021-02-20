@@ -11,7 +11,7 @@
   public class DatabaseHelper : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly DateTime dateTimeMinValue;
+    private readonly DateTime _dateTimeMinValue;
     private readonly short _minNumberOfMeasurements;
 
     private bool disposedValue;
@@ -19,7 +19,7 @@
     public DatabaseHelper(AirlyContext context, short minNumberOfMeasurements)
     {
       _context = context;
-      dateTimeMinValue = new DateTime(2000, 1, 1);
+      _dateTimeMinValue = new DateTime(2000, 1, 1);
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 
@@ -92,7 +92,7 @@
         short installationId,
         List<AirQualityMeasurement> newMeasurements)
     {
-      var lastMeasurementDate = dateTimeMinValue;
+      var lastMeasurementDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveMeasurements
           .Where(e => e.InstallationId == installationId)
@@ -123,7 +123,7 @@
         short installationId,
         List<AirQualityForecast> newForecasts)
     {
-      var lastForecastDate = dateTimeMinValue;
+      var lastForecastDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveForecasts
           .Where(e => e.InstallationId == installationId)
@@ -162,7 +162,7 @@
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         SelectDataToProcessing(short installationId)
     {
-      var lastForecastErrorDate = dateTimeMinValue;
+      var lastForecastErrorDate = _dateTimeMinValue;
 
       var selectedDates = _context.ForecastErrors
           .Where(e => e.InstallationId == installationId)
@@ -190,7 +190,7 @@
 
     public async Task<DateTime> SelectLastMeasurementDate(short installationId)
     {
-      var lastMeasurementDate = dateTimeMinValue;
+      var lastMeasurementDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveMeasurements
           .Where(e => e.InstallationId == installationId)

@@ -22,18 +22,18 @@
     // GET: ForecastErrors
     public IActionResult Index()
     {
-      var requestDateTimes = _databaseHelper
+      var requestDates = _databaseHelper
           .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: e => e.RequestDateTime,
+              selectPredicate: e => e.RequestDateTime.Date,
               orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
               isDistinct: true);
 
-      var selectedRequestDate = requestDateTimes.First().Date;
+      var selectedRequestDate = requestDates.First();
 
-      var selectedDay = _databaseHelper.Get<AirQualityForecastError>(
+      var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
           wherePredicate: e => e.RequestDateTime.Date == selectedRequestDate);
 
-      return View(selectedDay);
+      return View(errorsInDay);
     }
 
     protected override void Dispose(bool disposing)

@@ -16,14 +16,15 @@
     // GET: ForecastErrors
     public IActionResult Index()
     {
-      var selectedRequestDateTime
+      var selectedRequestDate
           = _context.ForecastErrors
               .Select(e => e.RequestDateTime)
               .OrderByDescending(dateTime => dateTime)
-              .First();
+              .First()
+              .Date;
 
       var selectedDay = _context.ForecastErrors
-          .Where(e => e.RequestDateTime == selectedRequestDateTime);
+          .Where(e => e.RequestDateTime.Date == selectedRequestDate);
 
       return View(selectedDay);
     }

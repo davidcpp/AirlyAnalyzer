@@ -33,6 +33,7 @@ namespace AirlyAnalyzer
       services.AddDbContext<AirlyContext>(options
         => options.UseSqlServer(
           Configuration.GetConnectionString("AirlyDbConnection").Replace("[DataDirectory]", dataDirectoryPath)));
+
       services.AddControllersWithViews();
     }
 

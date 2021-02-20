@@ -80,13 +80,13 @@
       int newMeasurementsCount = 0;
       int newForecastsCount = 0;
 
+      var requestDateTime = DateTime.UtcNow;
+
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
         var lastMeasurementDate =
             await _databaseHelper.SelectLastMeasurementDate(installationId);
-
-        var requestDateTime = DateTime.UtcNow;
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)

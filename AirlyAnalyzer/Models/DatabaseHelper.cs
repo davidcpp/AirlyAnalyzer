@@ -23,6 +23,57 @@
       dateTimeMinValue = new DateTime(2000, 1, 1);
     }
 
+    public IEnumerable<TEntity> Get<TEntity>(
+        Expression<Func<TEntity, bool>> wherePredicate = null)
+            where TEntity : class
+    {
+      IQueryable<TEntity> query = _context.Set<TEntity>();
+
+      if (wherePredicate != null)
+      {
+        query = query.Where(wherePredicate);
+      }
+
+      return query.ToList();
+    }
+
+    public IEnumerable<T> GetParameters<TEntity, T>(
+        Expression<Func<TEntity, T>> selectPredicate,
+        Expression<Func<TEntity, bool>> wherePredicate = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,
+        bool isDistinct = false)
+            where TEntity : class
+    {
+      IQueryable<TEntity> query = _context.Set<TEntity>();
+
+      if (wherePredicate != null)
+      {
+        query = query.Where(wherePredicate);
+      }
+
+      IQueryable<T> resultQuery;
+      if (selectPredicate != null)
+      {
+        resultQuery = query.Select(selectPredicate);
+
+        if (isDistinct)
+        {
+          resultQuery = resultQuery.Distinct();
+        }
+
+        if (orderByMethod != null)
+        {
+          resultQuery = orderByMethod(resultQuery);
+        }
+
+        return resultQuery.ToList();
+      }
+      else
+      {
+        return new List<T>();
+      }
+    }
+
     public void RemoveTotalForecastErrors()
     {
       _context.ForecastErrors.RemoveRange(
@@ -135,57 +186,6 @@
           .ToListAsync();
 
       return (_newArchiveMeasurements, _newArchiveForecasts);
-    }
-
-    public IEnumerable<TEntity> Get<TEntity>(
-        Expression<Func<TEntity, bool>> wherePredicate = null)
-            where TEntity : class
-    {
-      IQueryable<TEntity> query = _context.Set<TEntity>();
-
-      if (wherePredicate != null)
-      {
-        query = query.Where(wherePredicate);
-      }
-
-      return query.ToList();
-    }
-
-    public IEnumerable<T> GetParameters<TEntity, T>(
-        Expression<Func<TEntity, T>> selectPredicate,
-        Expression<Func<TEntity, bool>> wherePredicate = null,
-        Func<IQueryable<T>,IOrderedQueryable<T>> orderByMethod = null,
-        bool isDistinct = false)
-            where TEntity : class
-    {
-      IQueryable<TEntity> query = _context.Set<TEntity>();
-
-      if (wherePredicate != null)
-      {
-        query = query.Where(wherePredicate);
-      }
-
-      IQueryable<T> resultQuery;
-      if (selectPredicate != null)
-      {
-        resultQuery = query.Select(selectPredicate);
-
-        if (isDistinct)
-        {
-          resultQuery = resultQuery.Distinct();
-        }
-
-        if (orderByMethod != null)
-        {
-          resultQuery = orderByMethod(resultQuery);
-        }
-
-        return resultQuery.ToList();
-      }
-      else
-      {
-        return new List<T>();
-      }
     }
 
     public async Task<DateTime> SelectLastMeasurementDate(short installationId)

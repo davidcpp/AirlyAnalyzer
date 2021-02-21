@@ -78,7 +78,7 @@
     {
       _context.ForecastErrors.RemoveRange(
           _context.ForecastErrors.Where(
-              e => e.ErrorType == ForecastErrorType.Total));
+              fe => fe.ErrorType == ForecastErrorType.Total));
     }
 
     public async Task<int> SaveForecastErrors(
@@ -95,9 +95,9 @@
       var lastMeasurementDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveMeasurements
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime);
+          .Where(m => m.InstallationId == installationId)
+          .OrderByDescending(m => m.TillDateTime)
+          .Select(m => m.TillDateTime);
 
       // Check if some of measurements there already are in Database
       if (selectedDates.Any())
@@ -126,9 +126,9 @@
       var lastForecastDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveForecasts
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime);
+          .Where(f => f.InstallationId == installationId)
+          .OrderByDescending(f => f.TillDateTime)
+          .Select(f => f.TillDateTime);
 
       // Check if some of forecasts there already are in Database
       if (selectedDates.Any())
@@ -154,8 +154,8 @@
         SelectDailyForecastErrors(short installationId)
     {
       return _context.ForecastErrors
-          .Where(e => e.InstallationId == installationId
-                   && e.ErrorType == ForecastErrorType.Daily)
+          .Where(fe => fe.InstallationId == installationId
+                   && fe.ErrorType == ForecastErrorType.Daily)
           .ToListAsync();
     }
 
@@ -165,9 +165,9 @@
       var lastForecastErrorDate = _dateTimeMinValue;
 
       var selectedDates = _context.ForecastErrors
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime);
+          .Where(fe => fe.InstallationId == installationId)
+          .OrderByDescending(fe => fe.TillDateTime)
+          .Select(fe => fe.TillDateTime);
 
       if (selectedDates.Any())
       {
@@ -193,9 +193,9 @@
       var lastMeasurementDate = _dateTimeMinValue;
 
       var selectedDates = _context.ArchiveMeasurements
-          .Where(e => e.InstallationId == installationId)
-          .OrderByDescending(e => e.TillDateTime)
-          .Select(e => e.TillDateTime);
+          .Where(m => m.InstallationId == installationId)
+          .OrderByDescending(m => m.TillDateTime)
+          .Select(m => m.TillDateTime);
 
       if (selectedDates.Any())
       {

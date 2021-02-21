@@ -24,14 +24,14 @@
     {
       var requestDates = _databaseHelper
           .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: e => e.RequestDateTime.Date,
+              selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
               isDistinct: true);
 
       var selectedRequestDate = requestDates.First();
 
       var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
-          wherePredicate: e => e.RequestDateTime.Date == selectedRequestDate);
+          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
       return View(errorsInDay);
     }

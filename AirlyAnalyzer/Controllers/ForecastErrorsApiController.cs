@@ -32,7 +32,7 @@
     {
       var requestDates = _databaseHelper
           .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: e => e.RequestDateTime.Date,
+              selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderBy(dateTime => dateTime),
               isDistinct: true);
 
@@ -44,7 +44,7 @@
       var selectedRequestDate = requestDates.ElementAt(day - 1);
 
       var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
-          wherePredicate: e => e.RequestDateTime.Date == selectedRequestDate);
+          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
       return new ActionResult<IEnumerable<AirQualityForecastError>>(errorsInDay);
     }
@@ -55,7 +55,7 @@
     {
       var requestDates = _databaseHelper
           .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: e => e.RequestDateTime.Date,
+              selectPredicate: fe => fe.RequestDateTime.Date,
               isDistinct: true);
 
       return requestDates.Count();
@@ -69,7 +69,7 @@
     {
       return _databaseHelper
           .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: e => e.RequestDateTime.Date,
+              selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderBy(dateTime => dateTime),
               isDistinct: true);
     }

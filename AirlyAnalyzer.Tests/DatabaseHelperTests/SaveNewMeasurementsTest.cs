@@ -19,7 +19,7 @@
 
     private readonly List<short> _installationIds;
 
-    private readonly AirlyContext _testAirlyContext;
+    private readonly AirlyContext _context;
     private readonly DateTime _startDate;
 
     public SaveNewMeasurementsTest()
@@ -38,7 +38,7 @@
 
       _installationIds = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
-      _testAirlyContext = new AirlyContext(inMemoryDatabaseOptions, config);
+      _context = new AirlyContext(inMemoryDatabaseOptions, config);
       Seed();
     }
 
@@ -61,13 +61,13 @@
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
       await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -89,13 +89,13 @@
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
       await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -113,13 +113,13 @@
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
       await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -147,13 +147,13 @@
           selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfMeasurements);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
       await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _testAirlyContext.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
     }
 
     /* Private auxiliary methods */
@@ -161,21 +161,21 @@
     private void AddMeasurementsToDatabase(short selectedInstallationId, int numberOfMeasurements,
       DateTime startDate)
     {
-      _testAirlyContext.ArchiveMeasurements.AddRange(GenerateMeasurements(
+      _context.ArchiveMeasurements.AddRange(GenerateMeasurements(
         selectedInstallationId, startDate, numberOfMeasurements, _requestMinutesOffset));
 
-      _testAirlyContext.SaveChanges();
+      _context.SaveChanges();
     }
 
     private void Seed()
     {
-      _testAirlyContext.Database.EnsureDeleted();
-      _testAirlyContext.Database.EnsureCreated();
+      _context.Database.EnsureDeleted();
+      _context.Database.EnsureCreated();
     }
 
     public void Dispose()
     {
-      _testAirlyContext.Dispose();
+      _context.Dispose();
     }
   }
 }

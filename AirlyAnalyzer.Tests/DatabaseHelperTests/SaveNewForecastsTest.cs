@@ -19,7 +19,7 @@
 
     private readonly List<short> _installationIds;
 
-    private readonly AirlyContext _testAirlyContext;
+    private readonly AirlyContext _context;
     private readonly DateTime _startDate;
 
     public SaveNewForecastsTest()
@@ -38,7 +38,7 @@
 
       _installationIds = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
-      _testAirlyContext = new AirlyContext(inMemoryDatabaseOptions, config);
+      _context = new AirlyContext(inMemoryDatabaseOptions, config);
       Seed();
     }
 
@@ -61,13 +61,13 @@
           selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
       await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     [Fact]
@@ -89,13 +89,13 @@
           selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
       await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     [Fact]
@@ -113,13 +113,13 @@
           selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
       await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     [Fact]
@@ -147,13 +147,13 @@
           selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_testAirlyContext, minNumberOfForecasts);
+      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
       await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _testAirlyContext.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     /* Private auxiliary methods */
@@ -161,21 +161,21 @@
     private void AddForecastsToDatabase(short selectedInstallationId, int numberOfForecasts,
       DateTime startDate)
     {
-      _testAirlyContext.ArchiveForecasts.AddRange(GenerateForecasts(
+      _context.ArchiveForecasts.AddRange(GenerateForecasts(
         selectedInstallationId, startDate, numberOfForecasts, _requestMinutesOffset));
 
-      _testAirlyContext.SaveChanges();
+      _context.SaveChanges();
     }
 
     private void Seed()
     {
-      _testAirlyContext.Database.EnsureDeleted();
-      _testAirlyContext.Database.EnsureCreated();
+      _context.Database.EnsureDeleted();
+      _context.Database.EnsureCreated();
     }
 
     public void Dispose()
     {
-      _testAirlyContext.Dispose();
+      _context.Dispose();
     }
   }
 }

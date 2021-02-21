@@ -96,8 +96,8 @@
 
       var selectedDates = _context.ArchiveMeasurements
           .Where(m => m.InstallationId == installationId)
-          .OrderByDescending(m => m.TillDateTime)
-          .Select(m => m.TillDateTime);
+          .Select(m => m.TillDateTime)
+          .OrderByDescending(dateTime => dateTime);
 
       // Check if some of measurements there already are in Database
       if (selectedDates.Any())
@@ -127,8 +127,8 @@
 
       var selectedDates = _context.ArchiveForecasts
           .Where(f => f.InstallationId == installationId)
-          .OrderByDescending(f => f.TillDateTime)
-          .Select(f => f.TillDateTime);
+          .Select(f => f.TillDateTime)
+          .OrderByDescending(dateTime => dateTime);
 
       // Check if some of forecasts there already are in Database
       if (selectedDates.Any())
@@ -166,8 +166,8 @@
 
       var selectedDates = _context.ForecastErrors
           .Where(fe => fe.InstallationId == installationId)
-          .OrderByDescending(fe => fe.TillDateTime)
-          .Select(fe => fe.TillDateTime);
+          .Select(fe => fe.TillDateTime)
+          .OrderByDescending(dateTime => dateTime);
 
       if (selectedDates.Any())
       {
@@ -194,8 +194,8 @@
 
       var selectedDates = _context.ArchiveMeasurements
           .Where(m => m.InstallationId == installationId)
-          .OrderByDescending(m => m.TillDateTime)
-          .Select(m => m.TillDateTime);
+          .Select(m => m.TillDateTime)
+          .OrderByDescending(dateTime => dateTime);
 
       if (selectedDates.Any())
       {

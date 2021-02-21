@@ -34,7 +34,7 @@
         query = query.Where(wherePredicate);
       }
 
-      return query.ToList();
+      return query;
     }
 
     public IEnumerable<T> GetParameters<TEntity, T>(
@@ -66,7 +66,7 @@
           resultQuery = orderByMethod(resultQuery);
         }
 
-        return resultQuery.ToList();
+        return resultQuery;
       }
       else
       {

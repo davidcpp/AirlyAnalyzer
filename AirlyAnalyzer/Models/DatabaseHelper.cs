@@ -94,15 +94,15 @@
     {
       var lastMeasurementDate = _dateTimeMinValue;
 
-      var selectedDates = _context.ArchiveMeasurements
-          .Where(m => m.InstallationId == installationId)
-          .Select(m => m.TillDateTime)
-          .OrderByDescending(dateTime => dateTime);
+      var selectedDates = GetParameters<AirQualityMeasurement, DateTime>(
+          wherePredicate: m => m.InstallationId == installationId,
+          selectPredicate: f => f.TillDateTime,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
       // Check if some of measurements there already are in Database
-      if (selectedDates.Any())
+      if (selectedDates.AsQueryable().Any())
       {
-        lastMeasurementDate = await selectedDates
+        lastMeasurementDate = await selectedDates.AsQueryable()
             .FirstAsync();
       }
 
@@ -125,15 +125,15 @@
     {
       var lastForecastDate = _dateTimeMinValue;
 
-      var selectedDates = _context.ArchiveForecasts
-          .Where(f => f.InstallationId == installationId)
-          .Select(f => f.TillDateTime)
-          .OrderByDescending(dateTime => dateTime);
+      var selectedDates = GetParameters<AirQualityForecast, DateTime>(
+          wherePredicate: f => f.InstallationId == installationId,
+          selectPredicate: f => f.TillDateTime,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
       // Check if some of forecasts there already are in Database
-      if (selectedDates.Any())
+      if (selectedDates.AsQueryable().Any())
       {
-        lastForecastDate = await selectedDates
+        lastForecastDate = await selectedDates.AsQueryable()
             .FirstAsync();
       }
 
@@ -164,14 +164,14 @@
     {
       var lastForecastErrorDate = _dateTimeMinValue;
 
-      var selectedDates = _context.ForecastErrors
-          .Where(fe => fe.InstallationId == installationId)
-          .Select(fe => fe.TillDateTime)
-          .OrderByDescending(dateTime => dateTime);
+      var selectedDates = GetParameters<AirQualityForecastError, DateTime>(
+          wherePredicate: fe => fe.InstallationId == installationId,
+          selectPredicate: fe => fe.TillDateTime,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
-      if (selectedDates.Any())
+      if (selectedDates.AsQueryable().Any())
       {
-        lastForecastErrorDate = await selectedDates
+        lastForecastErrorDate = await selectedDates.AsQueryable()
             .FirstAsync();
       }
 
@@ -192,14 +192,14 @@
     {
       var lastMeasurementDate = _dateTimeMinValue;
 
-      var selectedDates = _context.ArchiveMeasurements
-          .Where(m => m.InstallationId == installationId)
-          .Select(m => m.TillDateTime)
-          .OrderByDescending(dateTime => dateTime);
+      var selectedDates = GetParameters<AirQualityMeasurement, DateTime>(
+          wherePredicate: m => m.InstallationId == installationId,
+          selectPredicate: m => m.TillDateTime,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
-      if (selectedDates.Any())
+      if (selectedDates.AsQueryable().Any())
       {
-        lastMeasurementDate = await selectedDates
+        lastMeasurementDate = await selectedDates.AsQueryable()
             .FirstAsync();
       }
 

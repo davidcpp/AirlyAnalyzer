@@ -12,15 +12,15 @@
 
   public class ProgramController : IHostedService, IDisposable
   {
+    private readonly ForecastErrorsCalculation _forecastErrorsCalculation;
+    private readonly AirQualityDataDownloader _airQualityDataDownloader;
+
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
 
     private readonly List<short> _installationIDsList;
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
-
-    private readonly ForecastErrorsCalculation _forecastErrorsCalculation;
-    private readonly AirQualityDataDownloader _airQualityDataDownloader;
 
     private DatabaseHelper _databaseHelper;
     private Timer _timer;

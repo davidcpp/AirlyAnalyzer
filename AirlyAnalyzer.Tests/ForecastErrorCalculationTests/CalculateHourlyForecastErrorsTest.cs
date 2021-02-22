@@ -9,8 +9,9 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
   public class CalculateHourlyForecastErrorsTest
   {
-    private readonly DateTime _startDate;
     private const byte _requestMinutesOffset = 30;
+
+    private readonly DateTime _startDate;
 
     public CalculateHourlyForecastErrorsTest()
     {

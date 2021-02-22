@@ -17,10 +17,10 @@
   {
     private const byte _requestMinutesOffset = 30;
 
-    private readonly List<short> _installationIds;
-
     private readonly AirlyContext _context;
     private readonly DateTime _startDate;
+
+    private readonly List<short> _installationIds;
 
     public SaveNewMeasurementsTest()
     {

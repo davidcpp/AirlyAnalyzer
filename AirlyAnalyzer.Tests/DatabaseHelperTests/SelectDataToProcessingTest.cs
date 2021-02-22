@@ -17,11 +17,12 @@
     private const byte _requestMinutesOffset = 30;
     private const short _minNumberOfMeasurements = 23;
 
-    private readonly List<short> _installationIds;
-
     private readonly DatabaseHelper _databaseHelper;
     private readonly AirlyContext _context;
+
     private readonly DateTime _startDate;
+
+    private readonly List<short> _installationIds;
 
     public SelectDataToProcessingTest()
     {

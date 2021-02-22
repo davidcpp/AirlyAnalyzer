@@ -8,8 +8,9 @@
 
   public class CalculateDailyForecastErrorsTest
   {
-    private readonly DateTime _startDate;
     private const byte _requestMinutesOffset = 30;
+
+    private readonly DateTime _startDate;
 
     public CalculateDailyForecastErrorsTest()
     {

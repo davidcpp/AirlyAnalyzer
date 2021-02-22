@@ -144,12 +144,12 @@
     }
 
     public AirQualityForecastError CalculateTotalForecastError(
-        short installationId, List<AirQualityForecastError> allForecastErrors)
+        short installationId, IEnumerable<AirQualityForecastError> allForecastErrors)
     {
       var errorSum = new ErrorSum
       {
         InstallationId = installationId,
-        FromDateTime = allForecastErrors[0].FromDateTime,
+        FromDateTime = allForecastErrors.First().FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,
         CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPctError),
         Pm25Pct = allForecastErrors.Sum(fe => fe.Pm25PctError),
@@ -158,7 +158,7 @@
         Pm25 = allForecastErrors.Sum(fe => fe.Pm25Error),
         Pm10 = allForecastErrors.Sum(fe => fe.Pm10Error),
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
-        Counter = allForecastErrors.Count,
+        Counter = allForecastErrors.Count(),
       };
 
       return errorSum.CalculateMeanForecastError(ForecastErrorType.Total);

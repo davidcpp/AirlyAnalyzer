@@ -4,8 +4,8 @@
   using System.Collections.Generic;
   using System.IO;
   using System.Threading.Tasks;
-  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -79,7 +79,7 @@
     }
 
     [Fact]
-    public async Task new_data_when_only_data_to_process_from_several_installations_in_database()
+    public async Task new_data_when_only_data_to_process_in_database()
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];

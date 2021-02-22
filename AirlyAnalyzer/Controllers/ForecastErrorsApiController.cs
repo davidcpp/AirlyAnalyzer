@@ -3,10 +3,10 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
-  using Microsoft.AspNetCore.Mvc;
+  using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Http;
+  using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Configuration;
 
   [Route("api/[controller]/[action]")]

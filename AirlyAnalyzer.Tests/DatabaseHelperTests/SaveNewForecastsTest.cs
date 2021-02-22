@@ -3,8 +3,8 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
-  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;

@@ -34,14 +34,15 @@
           .GetParameters<AirQualityForecastError, DateTime>(
               selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderBy(dateTime => dateTime),
-              isDistinct: true);
+              isDistinct: true)
+          .ToList();
 
-      if (day < 1 || day > requestDates.Count())
+      if (day < 1 || day > requestDates.Count)
       {
         return BadRequest();
       }
 
-      var selectedRequestDate = requestDates.ElementAt(day - 1);
+      var selectedRequestDate = requestDates[day - 1];
 
       var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
           wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);

@@ -36,29 +36,29 @@
   <tbody>
     @foreach (var item in Model)
     {
-    <tr>
-      <td>
-        @Html.DisplayFor(modelItem => item.AirlyCaqiPctError)%
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.AirlyCaqiError)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.InstallationId)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.FromDateTime)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.TillDateTime)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.RequestDateTime)
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.ErrorType)
-      </td>
-    </tr>
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqiPctError)%
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqiError)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.InstallationId)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.FromDateTime)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.TillDateTime)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.RequestDateTime)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.ErrorType)
+        </td>
+      </tr>
     }
   </tbody>
 </table>

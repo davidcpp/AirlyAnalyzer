@@ -7,58 +7,60 @@
 
 <h1>Index</h1>
 
-<table class="table" id="forecastErrors">
-  <thead>
-    <tr>
-      <th>
-        @Html.DisplayNameFor(model => model.InstallationId)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.FromDateTime)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.TillDateTime)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.AirlyCaqiPctError)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.AirlyCaqiError)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.RequestDateTime)
-      </th>
-      <th>
-        @Html.DisplayNameFor(model => model.ErrorType)
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach (var item in Model)
-    {
+<div class="table-responsive-lg w-100">
+  <table class="table" id="forecastErrors">
+    <thead>
       <tr>
-        <td>
-          @Html.DisplayFor(modelItem => item.InstallationId)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.FromDateTime)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.TillDateTime)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.AirlyCaqiPctError)%
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.AirlyCaqiError)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.RequestDateTime)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.ErrorType)
-        </td>
+        <th>
+          @Html.DisplayNameFor(model => model.InstallationId)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.FromDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.TillDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqiPctError)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqiError)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.RequestDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.ErrorType)
+        </th>
       </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.InstallationId)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.FromDateTime)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.TillDateTime)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AirlyCaqiPctError)%
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AirlyCaqiError)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.RequestDateTime)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.ErrorType)
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

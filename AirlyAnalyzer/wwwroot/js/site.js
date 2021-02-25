@@ -5,7 +5,10 @@ const numberOfDaysUri = webApiUri + 'GetNumberOfDays';
 let forecastErrorsTable = {};
 
 $(document).ready(function () {
-  forecastErrorsTable = $('#forecastErrors').DataTable();
+  forecastErrorsTable = $('#forecastErrors').DataTable({
+    scrollY: 400,
+    paging: false,
+  });
   updateDaysSelect();
 });
 

@@ -26,7 +26,7 @@
     // GET: api/<ForecastErrorsApiController>/GetErrorsInDay/{day}
     [HttpGet("{day}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<IEnumerable<AirQualityForecastError>>
         GetErrorsInDay(int day)
     {
@@ -39,7 +39,7 @@
 
       if (day < 1 || day > requestDates.Count)
       {
-        return BadRequest();
+        return NotFound();
       }
 
       var selectedRequestDate = requestDates[day - 1];

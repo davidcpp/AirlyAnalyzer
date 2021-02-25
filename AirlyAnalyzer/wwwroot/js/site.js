@@ -12,6 +12,11 @@ $(document).ready(function () {
   updateDaysSelect();
 });
 
+$('#forecastErrorDays').change(function () {
+  let choosedDate = $(this).val();
+  updateForecastErrorsTable(choosedDate);
+});
+
 function updateDaysSelect() {
   $.get(requestDatesUri, null, 'json')
     .done((requestDates) => {
@@ -69,8 +74,3 @@ function trimTime(dateTime) {
   let tCharacter = dateTime.indexOf('T');
   return dateTime.slice(0, tCharacter);
 }
-
-$('#forecastErrorDays').change(function () {
-  let choosedDate = $(this).val();
-  updateForecastErrorsTable(choosedDate);
-});

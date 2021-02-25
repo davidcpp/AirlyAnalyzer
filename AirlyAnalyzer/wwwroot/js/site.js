@@ -44,7 +44,7 @@ function updateForecastErrorsTable(day) {
         forecastErrorsTable.row.add(forecastError);
       }
 
-      forecastErrorsTable.draw(false);
+      forecastErrorsTable.draw('full-reset');
     })
     .fail((jqXHR, textStatus, err) => {
       console.log('Error: ' + err);

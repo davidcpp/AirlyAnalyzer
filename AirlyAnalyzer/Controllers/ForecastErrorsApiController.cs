@@ -39,7 +39,7 @@
         return NotFound();
       }
 
-      return new ActionResult<IEnumerable<AirQualityForecastError>>(errorsInDay);
+      return errorsInDay;
     }
 
     // GET: api/<ForecastErrorsApiController>/GetNumberOfDays

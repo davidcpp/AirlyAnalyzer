@@ -29,6 +29,10 @@ function updateDaysSelect() {
 }
 
 function updateForecastErrorsTable(day) {
+  if (day <= 0) {
+    return;
+  }
+
   $.get(errorsInDayUri + day.toString(), null, 'json')
     .done((forecastErrors) => {
       forecastErrorsTable.clear();

@@ -30,11 +30,7 @@
     public ActionResult<IEnumerable<AirQualityForecastError>>
         GetErrorsInDay(int day)
     {
-      var requestDates = _databaseHelper
-          .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: fe => fe.RequestDateTime.Date,
-              orderByMethod: q => q.OrderBy(dateTime => dateTime),
-              isDistinct: true)
+      var requestDates = GetRequestDates()
           .ToList();
 
       if (day < 1 || day > requestDates.Count)

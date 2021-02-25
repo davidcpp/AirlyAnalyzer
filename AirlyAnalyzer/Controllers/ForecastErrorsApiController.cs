@@ -64,8 +64,6 @@
 
     // GET: api/<ForecastErrorsApiController>/GetRequestDates
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IEnumerable<DateTime> GetRequestDates()
     {
       return _databaseHelper

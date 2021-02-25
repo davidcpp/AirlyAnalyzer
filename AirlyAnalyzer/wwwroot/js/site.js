@@ -1,6 +1,6 @@
 ﻿const webApiUri = 'api/ForecastErrorsApi/';
 const errorsInDayUri = webApiUri + 'GetErrorsInDay/';
-const numberOfDaysUri = webApiUri + 'GetNumberOfDays';
+const requestDatesUri = webApiUri + 'GetRequestDates';
 
 let forecastErrorsTable = {};
 
@@ -13,12 +13,12 @@ $(document).ready(function () {
 });
 
 function updateDaysSelect() {
-  $.get(numberOfDaysUri, null, 'json')
-    .done((numberOfDays) => {
+  $.get(requestDatesUri, null, 'json')
+    .done((requestDates) => {
       var select = document.getElementById('forecastErrorDays');
-      for (let i = 1; i <= numberOfDays; i++) {
+      for (let i = 1; i <= requestDates.length; i++) {
         let option = document.createElement("option");
-        option.text = i.toString();
+        option.text = requestDates[i - 1];
         option.value = i.toString();
         select.add(option);
       }

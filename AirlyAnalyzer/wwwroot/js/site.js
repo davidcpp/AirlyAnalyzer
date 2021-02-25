@@ -6,7 +6,7 @@ let forecastErrorsTable = {};
 
 $(document).ready(function () {
   forecastErrorsTable = $('#forecastErrors').DataTable({
-    scrollY: 400,
+    scrollY: '45vh',
     paging: false,
   });
   updateDaysSelect();

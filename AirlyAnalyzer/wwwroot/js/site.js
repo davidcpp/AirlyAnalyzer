@@ -18,8 +18,9 @@ function updateDaysSelect() {
       var select = document.getElementById('forecastErrorDays');
       for (let i = 1; i <= requestDates.length; i++) {
         let option = document.createElement("option");
-        option.text = trimTime(requestDates[i - 1]);
-        option.value = i.toString();
+        let requestDate = trimTime(requestDates[i - 1]);
+        option.text = requestDate;
+        option.value = requestDate;
         select.add(option);
       }
     })
@@ -28,12 +29,12 @@ function updateDaysSelect() {
     });
 }
 
-function updateForecastErrorsTable(day) {
-  if (day <= 0) {
+function updateForecastErrorsTable(requestDate) {
+  if (requestDate <= 0) {
     return;
   }
 
-  $.get(errorsInDayUri + day.toString(), null, 'json')
+  $.get(errorsInDayUri + requestDate, null, 'json')
     .done((forecastErrors) => {
       forecastErrorsTable.clear();
 
@@ -70,6 +71,6 @@ function trimTime(dateTime) {
 }
 
 $('#forecastErrorDays').change(function () {
-  let choosedDay = parseInt($(this).val());
-  updateForecastErrorsTable(choosedDay);
+  let choosedDate = $(this).val();
+  updateForecastErrorsTable(choosedDate);
 });

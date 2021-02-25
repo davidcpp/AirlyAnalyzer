@@ -24,24 +24,20 @@
     }
 
     // GET: api/<ForecastErrorsApiController>/GetErrorsInDay/{day}
-    [HttpGet("{day}")]
+    [HttpGet("{selectedRequestDate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<IEnumerable<AirQualityForecastError>>
-        GetErrorsInDay(int day)
+        GetErrorsInDay(DateTime selectedRequestDate)
     {
-      var requestDates = GetRequestDates()
-          .ToList();
+      var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
+          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate)
+              .ToList();
 
-      if (day < 1 || day > requestDates.Count)
+      if (errorsInDay.Count == 0)
       {
         return NotFound();
       }
-
-      var selectedRequestDate = requestDates[day - 1];
-
-      var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
-          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
       return new ActionResult<IEnumerable<AirQualityForecastError>>(errorsInDay);
     }

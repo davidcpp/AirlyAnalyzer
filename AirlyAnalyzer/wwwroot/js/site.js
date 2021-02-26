@@ -20,7 +20,7 @@ $('#forecastErrorDays').change(function () {
 function updateDaysSelect() {
   $.get(requestDatesUri, null, 'json')
     .done((requestDates) => {
-      var select = document.getElementById('forecastErrorDays');
+      let select = document.getElementById('forecastErrorDays');
       for (let i = 1; i <= requestDates.length; i++) {
         let option = document.createElement("option");
         let requestDate = trimTime(requestDates[i - 1]);

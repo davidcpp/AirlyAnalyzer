@@ -23,9 +23,9 @@ function updateDaysSelect() {
       let select = document.getElementById('forecastErrorDays');
       for (let i = 1; i <= requestDates.length; i++) {
         let option = document.createElement("option");
-        let requestDate = trimTime(requestDates[i - 1]);
-        option.text = requestDate;
-        option.value = requestDate;
+        let requestDate = new Date(requestDates[i - 1]);
+        option.text = requestDate.toLocaleDateString();
+        option.value = requestDates[i - 1];
         select.add(option);
       }
     })
@@ -46,11 +46,11 @@ function updateForecastErrorsTable(requestDate) {
       for (let i = 0; i < forecastErrors.length; i++) {
         let forecastError = [
           forecastErrors[i].installationId,
-          trimLocalTimeOffset(forecastErrors[i].fromDateTime),
-          trimLocalTimeOffset(forecastErrors[i].tillDateTime),
+          (new Date(forecastErrors[i].fromDateTime)).toLocaleString('tr-TR'),
+          (new Date(forecastErrors[i].tillDateTime)).toLocaleString('tr-TR'),
           forecastErrors[i].airlyCaqiPctError,
           forecastErrors[i].airlyCaqiError,
-          trimLocalTimeOffset(forecastErrors[i].requestDateTime),
+          (new Date(forecastErrors[i].requestDateTime)).toLocaleString('tr-TR'),
           forecastErrors[i].errorType,
         ]
 

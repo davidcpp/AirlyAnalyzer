@@ -1,6 +1,7 @@
 namespace AirlyAnalyzer
 {
   using System.IO;
+  using System.Text.Json.Serialization;
   using AirlyAnalyzer.Data;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,11 @@ namespace AirlyAnalyzer
         => options.UseSqlServer(
           Configuration.GetConnectionString("AirlyDbConnection").Replace("[DataDirectory]", dataDirectoryPath)));
 
-      services.AddControllersWithViews();
+      services
+          .AddControllersWithViews()
+          .AddJsonOptions(options =>
+              options.JsonSerializerOptions.Converters.Add(
+                  new JsonStringEnumConverter()));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

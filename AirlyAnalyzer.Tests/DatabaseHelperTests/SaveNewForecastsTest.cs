@@ -27,16 +27,19 @@
       _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
-        .UseInMemoryDatabase("AirlyDatabase")
-        .Options;
+          .UseInMemoryDatabase("AirlyDatabase")
+          .Options;
 
-      string configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+      string configFilePath = Path.Combine(
+          AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
 
       var config = new ConfigurationBuilder()
-        .AddJsonFile(configFilePath)
-        .Build();
+          .AddJsonFile(configFilePath)
+          .Build();
 
-      _installationIds = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+      _installationIds = config
+          .GetSection("AppSettings:AirlyApi:InstallationIds")
+          .Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
       Seed();
@@ -58,7 +61,10 @@
       AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
+          selectedInstallationId,
+          newForecastsStartDate,
+          numberOfForecasts,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -83,10 +89,14 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
+      AddForecastsToDatabase(
+          selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
+          selectedInstallationId,
+          newForecastsStartDate,
+          numberOfForecasts,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -110,7 +120,10 @@
       var newForecastsStartDate = _startDate;
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
+          selectedInstallationId,
+          newForecastsStartDate,
+          numberOfForecasts,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -135,16 +148,21 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
+      AddForecastsToDatabase(
+          selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
-        AddForecastsToDatabase(_installationIds[i], 2 * numberOfForecasts, forecastsStartDate);
+        AddForecastsToDatabase(
+            _installationIds[i], 2 * numberOfForecasts, forecastsStartDate);
       }
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts, _requestMinutesOffset)
+          selectedInstallationId,
+          newForecastsStartDate,
+          numberOfForecasts,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -158,11 +176,15 @@
 
     /* Private auxiliary methods */
 
-    private void AddForecastsToDatabase(short selectedInstallationId, int numberOfForecasts,
-      DateTime startDate)
+    private void AddForecastsToDatabase(
+        short selectedInstallationId, int numberOfForecasts, DateTime startDate)
     {
-      _context.ArchiveForecasts.AddRange(GenerateForecasts(
-        selectedInstallationId, startDate, numberOfForecasts, _requestMinutesOffset));
+      _context.ArchiveForecasts.AddRange(
+          GenerateForecasts(
+              selectedInstallationId,
+              startDate,
+              numberOfForecasts,
+              _requestMinutesOffset));
 
       _context.SaveChanges();
     }

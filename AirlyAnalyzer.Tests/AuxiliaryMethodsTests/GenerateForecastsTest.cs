@@ -10,7 +10,8 @@
     private const short _installationId = 1;
     private const byte _requestMinutesOffset = 30;
 
-    private readonly DateTime _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate
+        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
     [Fact]
     public void list_of_forecasts_from_one_day()
@@ -40,7 +41,10 @@
         .ToList();
 
       // Assert
-      Assert.Equal(endDate.ToLocalTime(), forecasts.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endDate.ToLocalTime(),
+          forecasts.Last().TillDateTime,
+          new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -52,7 +56,11 @@
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
-          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfForecastsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
@@ -70,11 +78,18 @@
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
-          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfForecastsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(endDate.ToLocalTime(), forecasts.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endDate.ToLocalTime(),
+          forecasts.Last().TillDateTime,
+          new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -88,11 +103,18 @@
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
-          _installationId, _startDate, numberOfDays, numberOfForecastsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfForecastsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(endRequestDate.ToLocalTime(), forecasts.Last().RequestDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endRequestDate.ToLocalTime(),
+          forecasts.Last().RequestDateTime,
+          new TimeSpan(0, 0, 0));
     }
   }
 }

@@ -10,7 +10,8 @@
     private const short _installationId = 1;
     private const byte _requestMinutesOffset = 30;
 
-    private readonly DateTime _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate
+        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
     [Fact]
     public void list_of_measurements_from_one_day()
@@ -40,7 +41,10 @@
         .ToList();
 
       // Assert
-      Assert.Equal(endDate.ToLocalTime(), measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endDate.ToLocalTime(),
+          measurements.Last().TillDateTime,
+          new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -52,11 +56,17 @@
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
-          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfMeasurementsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(numberOfDays * numberOfMeasurementsInDay, measurements.Count);
+      Assert.Equal(
+          numberOfDays * numberOfMeasurementsInDay,
+          measurements.Count);
     }
 
     [Fact]
@@ -70,11 +80,18 @@
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
-          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfMeasurementsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(endDate.ToLocalTime(), measurements.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endDate.ToLocalTime(),
+          measurements.Last().TillDateTime,
+          new TimeSpan(0, 0, 0));
     }
 
     [Fact]
@@ -88,11 +105,18 @@
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
-          _installationId, _startDate, numberOfDays, numberOfMeasurementsInDay, _requestMinutesOffset)
+          _installationId,
+          _startDate,
+          numberOfDays,
+          numberOfMeasurementsInDay,
+          _requestMinutesOffset)
         .ToList();
 
       // Assert
-      Assert.Equal(endRequestDate.ToLocalTime(), measurements.Last().RequestDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endRequestDate.ToLocalTime(),
+          measurements.Last().RequestDateTime,
+          new TimeSpan(0, 0, 0));
     }
   }
 }

@@ -11,7 +11,8 @@
     private const short _installationId = 1;
     private const byte _requestMinutesOffset = 30;
 
-    private readonly DateTime _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate
+        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
     [Fact]
     public void correct_number_of_daily_forecast_errors()
@@ -21,8 +22,12 @@
       const short numberOfHourlyErrorsInDay = 24;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(_installationId, _startDate,
-          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+          _installationId,
+          _startDate,
+          numberOfDailyErrors,
+          _requestMinutesOffset,
+          numberOfHourlyErrorsInDay)
         .ToList();
 
       // Assert
@@ -32,19 +37,26 @@
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
-    public void correct_duration_time_of_daily_forecast_errors(short numberOfHourlyErrorsInDay)
+    public void correct_duration_time_of_daily_forecast_errors(
+        short numberOfHourlyErrorsInDay)
     {
       // Arrange
       const int numberOfDailyErrors = 15;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(_installationId, _startDate,
-          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+          _installationId,
+          _startDate,
+          numberOfDailyErrors,
+          _requestMinutesOffset,
+          numberOfHourlyErrorsInDay)
         .ToList();
 
       // Assert
       Assert.Equal(_startDate.ToLocalTime(), dailyErrors[0].FromDateTime);
-      Assert.Equal(_startDate.AddHours(numberOfHourlyErrorsInDay).ToLocalTime(), dailyErrors[0].TillDateTime);
+      Assert.Equal(
+          _startDate.AddHours(numberOfHourlyErrorsInDay).ToLocalTime(),
+          dailyErrors[0].TillDateTime);
     }
 
     [Fact]
@@ -55,8 +67,12 @@
       const short numberOfHourlyErrorsInDay = 24;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(_installationId, _startDate,
-          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+          _installationId,
+          _startDate,
+          numberOfDailyErrors,
+          _requestMinutesOffset,
+          numberOfHourlyErrorsInDay)
         .ToList();
 
       // Assert
@@ -68,19 +84,26 @@
     [InlineData(16, 22)]
     [InlineData(15, 24)]
     public void correct_end_date_of_daily_forecast_errors(
-      short numberOfDailyErrors, short numberOfHourlyErrorsInDay)
+        short numberOfDailyErrors, short numberOfHourlyErrorsInDay)
     {
       // Arrange
       var endDate = _startDate.AddDays(numberOfDailyErrors)
                               .AddHours(numberOfHourlyErrorsInDay - 24);
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(_installationId, _startDate,
-          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+          _installationId,
+          _startDate,
+          numberOfDailyErrors,
+          _requestMinutesOffset,
+          numberOfHourlyErrorsInDay)
         .ToList();
 
       // Assert
-      Assert.Equal(endDate.ToLocalTime(), dailyErrors.Last().TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endDate.ToLocalTime(),
+          dailyErrors.Last().TillDateTime,
+          new TimeSpan(0, 0, 0));
     }
 
     [Theory]
@@ -88,7 +111,9 @@
     [InlineData(16, 22, 24)]
     [InlineData(15, 24, 24)]
     public void correct_last_request_date_of_daily_forecast_errors(
-      short numberOfDailyErrors, short numberOfHourlyErrorsInDay, short lastDayRequestInterval)
+        short numberOfDailyErrors,
+        short numberOfHourlyErrorsInDay,
+        short lastDayRequestInterval)
     {
       // Arrange
       var endRequestDate = _startDate.AddDays(numberOfDailyErrors)
@@ -96,12 +121,19 @@
                                      .AddMinutes(_requestMinutesOffset);
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(_installationId, _startDate,
-          numberOfDailyErrors, _requestMinutesOffset, numberOfHourlyErrorsInDay)
+      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+          _installationId,
+          _startDate,
+          numberOfDailyErrors,
+          _requestMinutesOffset,
+          numberOfHourlyErrorsInDay)
         .ToList();
 
       // Assert
-      Assert.Equal(endRequestDate.ToLocalTime(), dailyErrors.Last().RequestDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(
+          endRequestDate.ToLocalTime(),
+          dailyErrors.Last().RequestDateTime,
+          new TimeSpan(0, 0, 0));
     }
   }
 }

@@ -27,16 +27,19 @@
       _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
-        .UseInMemoryDatabase("AirlyDatabase")
-        .Options;
+          .UseInMemoryDatabase("AirlyDatabase")
+          .Options;
 
-      string configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+      string configFilePath
+          = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
 
       var config = new ConfigurationBuilder()
-        .AddJsonFile(configFilePath)
-        .Build();
+          .AddJsonFile(configFilePath)
+          .Build();
 
-      _installationIds = config.GetSection("AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
+      _installationIds = config
+          .GetSection("AppSettings:AirlyApi:InstallationIds")
+          .Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
       Seed();
@@ -55,19 +58,26 @@
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+      AddMeasurementsToDatabase(
+          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
+          selectedInstallationId,
+          newMeasurementsStartDate,
+          numberOfMeasurements,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper
+          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
+      Assert.Equal(
+          finalNumberOfMeasurements,
+          _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -77,25 +87,33 @@
       short selectedInstallationId = _installationIds[0];
       short minNumberOfMeasurements = 22;
       short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = minNumberOfMeasurements + numberOfMeasurements;
+      int finalNumberOfMeasurements
+          = minNumberOfMeasurements + numberOfMeasurements;
       short hoursRequestInterval = minNumberOfMeasurements;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+      AddMeasurementsToDatabase(
+          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
+          selectedInstallationId,
+          newMeasurementsStartDate,
+          numberOfMeasurements,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper
+          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
+      Assert.Equal(
+          finalNumberOfMeasurements,
+          _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -110,16 +128,22 @@
       var newMeasurementsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
+          selectedInstallationId,
+          newMeasurementsStartDate,
+          numberOfMeasurements,
+          _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper
+          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
+      Assert.Equal(
+          finalNumberOfMeasurements,
+          _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -129,40 +153,52 @@
       short selectedInstallationId = _installationIds[0];
       short minNumberOfMeasurements = 22;
       short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = 2 * numberOfMeasurements * _installationIds.Count;
+      int finalNumberOfMeasurements
+          = 2 * numberOfMeasurements * _installationIds.Count;
       short hoursRequestInterval = numberOfMeasurements;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddMeasurementsToDatabase(selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+      AddMeasurementsToDatabase(
+          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
-        AddMeasurementsToDatabase(_installationIds[i], 2 * numberOfMeasurements, measurementsStartDate);
+        AddMeasurementsToDatabase(
+            _installationIds[i], 2 * numberOfMeasurements, measurementsStartDate);
       }
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId, newMeasurementsStartDate, numberOfMeasurements, _requestMinutesOffset)
+            selectedInstallationId,
+            newMeasurementsStartDate,
+            numberOfMeasurements,
+            _requestMinutesOffset)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper.SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper
+          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
 
       // Assert
-      Assert.Equal(finalNumberOfMeasurements, _context.ArchiveMeasurements.Count());
+      Assert.Equal(
+          finalNumberOfMeasurements,
+          _context.ArchiveMeasurements.Count());
     }
 
     /* Private auxiliary methods */
 
-    private void AddMeasurementsToDatabase(short selectedInstallationId, int numberOfMeasurements,
-      DateTime startDate)
+    private void AddMeasurementsToDatabase(
+        short selectedInstallationId, int numberOfMeasurements, DateTime startDate)
     {
-      _context.ArchiveMeasurements.AddRange(GenerateMeasurements(
-        selectedInstallationId, startDate, numberOfMeasurements, _requestMinutesOffset));
+      _context.ArchiveMeasurements.AddRange(
+          GenerateMeasurements(
+              selectedInstallationId,
+              startDate, numberOfMeasurements,
+              _requestMinutesOffset));
 
       _context.SaveChanges();
     }

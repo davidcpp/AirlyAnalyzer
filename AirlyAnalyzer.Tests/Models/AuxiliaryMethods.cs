@@ -152,7 +152,8 @@
     {
       for (int i = 0; i < numberOfDays; i++)
       {
-        short requestInterval = i % 2 == 0 ? numberOfForecastErrorsInDay : (short)24;
+        short requestInterval
+            = i % 2 == 0 ? numberOfForecastErrorsInDay : (short)24;
 
         for (int j = 0; j < numberOfForecastErrorsInDay; j++)
         {

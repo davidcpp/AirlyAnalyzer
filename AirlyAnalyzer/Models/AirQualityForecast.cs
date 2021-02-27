@@ -42,8 +42,10 @@
 
       foreach (var index in averagedValue.Indexes)
       {
-        forecast.AirlyCaqi = (index.Name == "AIRLY_CAQI") ?
-          Convert.ToByte(Math.Ceiling(index.Value)) : (byte)0;
+        if (index.Name == "AIRLY_CAQI")
+        {
+          forecast.AirlyCaqi = Convert.ToByte(Math.Ceiling(index.Value));
+        }
       }
 
       foreach (var measure in averagedValue.Values)

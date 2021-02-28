@@ -20,14 +20,13 @@
     private readonly DatabaseHelper _databaseHelper;
     private readonly AirlyContext _context;
 
-    private readonly DateTime _startDate;
+    private readonly DateTime _startDate
+        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
     private readonly List<short> _installationIds;
 
     public SelectDataToProcessingTest()
     {
-      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
-
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
           .UseInMemoryDatabase("AirlyDatabase")
           .Options;

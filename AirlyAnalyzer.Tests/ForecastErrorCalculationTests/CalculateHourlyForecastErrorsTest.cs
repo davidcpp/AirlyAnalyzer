@@ -11,12 +11,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
   {
     private const byte _requestMinutesOffset = 30;
 
-    private readonly DateTime _startDate;
-
-    public CalculateHourlyForecastErrorsTest()
-    {
-      _startDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
-    }
+    private readonly DateTime _startDate
+        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
     [Fact]
     public void correct_forecast_error()

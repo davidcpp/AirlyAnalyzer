@@ -9,7 +9,6 @@
   public class GenerateHourlyForecastErrorsTest
   {
     private const short _installationId = 1;
-    private const byte _requestMinutesOffset = 30;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -24,8 +23,7 @@
       var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
-          numberOfForecastErrors,
-          _requestMinutesOffset)
+          numberOfForecastErrors)
         .ToList();
 
       // Assert
@@ -42,8 +40,7 @@
       var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
-          numberOfForecastErrors,
-          _requestMinutesOffset)
+          numberOfForecastErrors)
         .ToList();
 
       // Assert
@@ -63,8 +60,7 @@
       var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
-          numberOfForecastErrors,
-          _requestMinutesOffset)
+          numberOfForecastErrors)
         .ToList();
 
       // Assert
@@ -83,8 +79,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastErrorsInDay,
-          _requestMinutesOffset)
+          numberOfForecastErrorsInDay)
         .ToList();
 
       // Assert
@@ -105,8 +100,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastErrorsInDay,
-          _requestMinutesOffset)
+          numberOfForecastErrorsInDay)
         .ToList();
 
       // Assert
@@ -128,8 +122,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastErrorsInDay,
-          _requestMinutesOffset)
+          numberOfForecastErrorsInDay)
         .ToList();
 
       // Assert
@@ -146,17 +139,17 @@
         short lastDayRequestInterval)
     {
       // Arrange
-      var endRequestDate = _startDate.AddDays(numberOfDays)
-                                     .AddHours(lastDayRequestInterval - 24)
-                                     .AddMinutes(_requestMinutesOffset);
+      var endRequestDate = _startDate
+          .AddDays(numberOfDays)
+          .AddHours(lastDayRequestInterval - 24)
+          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
 
       // Act
       var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastErrorsInDay,
-          _requestMinutesOffset)
+          numberOfForecastErrorsInDay)
         .ToList();
 
       // Assert

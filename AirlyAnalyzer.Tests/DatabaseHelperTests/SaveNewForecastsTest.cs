@@ -15,8 +15,6 @@
   [Collection("DatabaseHelperTests")]
   public class SaveNewForecastsTest : IDisposable
   {
-    private const byte _requestMinutesOffset = 30;
-
     private readonly List<short> _installationIds;
 
     private readonly AirlyContext _context;
@@ -62,8 +60,7 @@
       var newForecasts = GenerateForecasts(
           selectedInstallationId,
           newForecastsStartDate,
-          numberOfForecasts,
-          _requestMinutesOffset)
+          numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -94,8 +91,7 @@
       var newForecasts = GenerateForecasts(
           selectedInstallationId,
           newForecastsStartDate,
-          numberOfForecasts,
-          _requestMinutesOffset)
+          numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -121,8 +117,7 @@
       var newForecasts = GenerateForecasts(
           selectedInstallationId,
           newForecastsStartDate,
-          numberOfForecasts,
-          _requestMinutesOffset)
+          numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -160,8 +155,7 @@
       var newForecasts = GenerateForecasts(
           selectedInstallationId,
           newForecastsStartDate,
-          numberOfForecasts,
-          _requestMinutesOffset)
+          numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -182,8 +176,7 @@
           GenerateForecasts(
               selectedInstallationId,
               startDate,
-              numberOfForecasts,
-              _requestMinutesOffset));
+              numberOfForecasts));
 
       _context.SaveChanges();
     }

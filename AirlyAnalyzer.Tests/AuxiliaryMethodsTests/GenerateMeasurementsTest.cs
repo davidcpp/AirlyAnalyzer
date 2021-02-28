@@ -8,7 +8,6 @@
   public class GenerateMeasurementsTest
   {
     private const short _installationId = 1;
-    private const byte _requestMinutesOffset = 30;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -21,7 +20,7 @@
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
-          _installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
+          _installationId, _startDate, numberOfMeasurements)
         .ToList();
 
       // Assert
@@ -37,7 +36,7 @@
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
-          _installationId, _startDate, numberOfMeasurements, _requestMinutesOffset)
+          _installationId, _startDate, numberOfMeasurements)
         .ToList();
 
       // Assert
@@ -56,8 +55,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfMeasurementsInDay,
-          _requestMinutesOffset)
+          numberOfMeasurementsInDay)
         .ToList();
 
       // Assert
@@ -80,8 +78,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfMeasurementsInDay,
-          _requestMinutesOffset)
+          numberOfMeasurementsInDay)
         .ToList();
 
       // Assert
@@ -94,16 +91,16 @@
       // Arrange
       const short numberOfDays = 15;
       const short numberOfMeasurementsInDay = 23;
-      var endRequestDate = _startDate.AddDays(numberOfDays)
-                                     .AddMinutes(_requestMinutesOffset);
+      var endRequestDate = _startDate
+          .AddDays(numberOfDays)
+          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
 
       // Act
       var measurements = AuxiliaryMethods.GenerateMeasurements(
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfMeasurementsInDay,
-          _requestMinutesOffset)
+          numberOfMeasurementsInDay)
         .ToList();
 
       // Assert

@@ -9,7 +9,6 @@
   public class GenerateDailyForecastErrorsTest
   {
     private const short _installationId = 1;
-    private const byte _requestMinutesOffset = 30;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -26,7 +25,6 @@
           _installationId,
           _startDate,
           numberOfDailyErrors,
-          _requestMinutesOffset,
           numberOfHourlyErrorsInDay)
         .ToList();
 
@@ -48,7 +46,6 @@
           _installationId,
           _startDate,
           numberOfDailyErrors,
-          _requestMinutesOffset,
           numberOfHourlyErrorsInDay)
         .ToList();
 
@@ -71,7 +68,6 @@
           _installationId,
           _startDate,
           numberOfDailyErrors,
-          _requestMinutesOffset,
           numberOfHourlyErrorsInDay)
         .ToList();
 
@@ -95,7 +91,6 @@
           _installationId,
           _startDate,
           numberOfDailyErrors,
-          _requestMinutesOffset,
           numberOfHourlyErrorsInDay)
         .ToList();
 
@@ -113,16 +108,16 @@
         short lastDayRequestInterval)
     {
       // Arrange
-      var endRequestDate = _startDate.AddDays(numberOfDailyErrors)
-                                     .AddHours(lastDayRequestInterval - 24)
-                                     .AddMinutes(_requestMinutesOffset);
+      var endRequestDate = _startDate
+          .AddDays(numberOfDailyErrors)
+          .AddHours(lastDayRequestInterval - 24)
+          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
 
       // Act
       var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,
-          _requestMinutesOffset,
           numberOfHourlyErrorsInDay)
         .ToList();
 

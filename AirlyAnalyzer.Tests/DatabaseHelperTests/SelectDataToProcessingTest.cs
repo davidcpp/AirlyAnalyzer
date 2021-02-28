@@ -14,7 +14,6 @@
   [Collection("DatabaseHelperTests")]
   public class SelectDataToProcessingTest : IDisposable
   {
-    private const byte _requestMinutesOffset = 30;
     private const short _minNumberOfMeasurements = 23;
 
     private readonly DatabaseHelper _databaseHelper;
@@ -165,7 +164,7 @@
         short numberOfDays, short numberOfElementsInDay, DateTime startDate)
     {
       var requestDate = startDate.AddDays(numberOfDays)
-                                 .AddMinutes(_requestMinutesOffset);
+                                 .AddMinutes(RequestMinutesOffset);
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
@@ -176,31 +175,27 @@
                 installationId,
                 startDate,
                 numberOfDays,
-                numberOfElementsInDay,
-                _requestMinutesOffset));
+                numberOfElementsInDay));
 
         _context.ArchiveForecasts.AddRange(
             GenerateForecasts(
                 installationId,
                 startDate,
                 numberOfDays,
-                numberOfElementsInDay,
-                _requestMinutesOffset));
+                numberOfElementsInDay));
 
         _context.ForecastErrors.AddRange(
             GenerateHourlyForecastErrors(
                 installationId,
                 startDate,
                 numberOfDays,
-                numberOfElementsInDay,
-                _requestMinutesOffset));
+                numberOfElementsInDay));
 
         _context.ForecastErrors.AddRange(
             GenerateDailyForecastErrors(
                 installationId,
                 startDate,
                 numberOfDays,
-                _requestMinutesOffset,
                 numberOfElementsInDay));
 
         int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
@@ -227,8 +222,7 @@
               selectedInstallationId,
               startDate,
               numberOfNotProcessedDays,
-              numberOfElementsInDay,
-              _requestMinutesOffset));
+              numberOfElementsInDay));
 
       _context.SaveChanges();
     }
@@ -244,8 +238,7 @@
               selectedInstallationId,
               startDate,
               numberOfNotProcessedDays,
-              numberOfElementsInDay,
-              _requestMinutesOffset));
+              numberOfElementsInDay));
 
       _context.SaveChanges();
     }

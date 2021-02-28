@@ -14,7 +14,6 @@
   [Collection("DatabaseHelperTests")]
   public class SelectLastMeasurementDateTest : IDisposable
   {
-    private const byte _requestMinutesOffset = 30;
     private const short _minNumberOfMeasurements = 23;
 
     private readonly DatabaseHelper _databaseHelper;
@@ -127,8 +126,7 @@
           GenerateMeasurements(
               selectedInstallationId,
               startDate,
-              numberOfMeasurements,
-              _requestMinutesOffset));
+              numberOfMeasurements));
 
       _context.SaveChanges();
     }

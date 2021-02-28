@@ -8,7 +8,6 @@
   public class GenerateForecastsTest
   {
     private const short _installationId = 1;
-    private const byte _requestMinutesOffset = 30;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -21,7 +20,7 @@
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
-          _installationId, _startDate, numberOfForecasts, _requestMinutesOffset)
+          _installationId, _startDate, numberOfForecasts)
         .ToList();
 
       // Assert
@@ -37,7 +36,7 @@
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
-          _installationId, _startDate, numberOfForecasts, _requestMinutesOffset)
+          _installationId, _startDate, numberOfForecasts)
         .ToList();
 
       // Assert
@@ -56,8 +55,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastsInDay,
-          _requestMinutesOffset)
+          numberOfForecastsInDay)
         .ToList();
 
       // Assert
@@ -78,8 +76,7 @@
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastsInDay,
-          _requestMinutesOffset)
+          numberOfForecastsInDay)
         .ToList();
 
       // Assert
@@ -92,16 +89,16 @@
       // Arrange
       const short numberOfDays = 15;
       const short numberOfForecastsInDay = 23;
-      var endRequestDate = _startDate.AddDays(numberOfDays)
-                                     .AddMinutes(_requestMinutesOffset);
+      var endRequestDate = _startDate
+          .AddDays(numberOfDays)
+          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
 
       // Act
       var forecasts = AuxiliaryMethods.GenerateForecasts(
           _installationId,
           _startDate,
           numberOfDays,
-          numberOfForecastsInDay,
-          _requestMinutesOffset)
+          numberOfForecastsInDay)
         .ToList();
 
       // Assert

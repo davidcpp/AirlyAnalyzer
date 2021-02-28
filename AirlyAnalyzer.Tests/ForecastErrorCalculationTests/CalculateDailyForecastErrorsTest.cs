@@ -8,8 +8,6 @@
 
   public class CalculateDailyForecastErrorsTest
   {
-    private const byte _requestMinutesOffset = 30;
-
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -34,8 +32,7 @@
           installationId,
           startDate,
           numberOfDays,
-          numberOfForecastErrorsInDay,
-          _requestMinutesOffset)
+          numberOfForecastErrorsInDay)
         .ToList();
 
       var forecastErrorsCalculation
@@ -59,7 +56,7 @@
       var startDate = _startDate;
 
       var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId, startDate, numberOfForecastErrors, _requestMinutesOffset)
+          installationId, startDate, numberOfForecastErrors)
         .ToList();
 
       var forecastErrorsCalculation
@@ -84,7 +81,7 @@
       var endDate = _startDate.AddHours(numberOfForecastErrors);
 
       var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId, startDate, numberOfForecastErrors, _requestMinutesOffset)
+          installationId, startDate, numberOfForecastErrors)
         .ToList();
 
       var forecastErrorsCalculation

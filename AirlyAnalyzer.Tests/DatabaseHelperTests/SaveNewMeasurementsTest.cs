@@ -15,8 +15,6 @@
   [Collection("DatabaseHelperTests")]
   public class SaveNewMeasurementsTest : IDisposable
   {
-    private const byte _requestMinutesOffset = 30;
-
     private readonly AirlyContext _context;
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -63,8 +61,7 @@
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId,
           newMeasurementsStartDate,
-          numberOfMeasurements,
-          _requestMinutesOffset)
+          numberOfMeasurements)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
@@ -99,8 +96,7 @@
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId,
           newMeasurementsStartDate,
-          numberOfMeasurements,
-          _requestMinutesOffset)
+          numberOfMeasurements)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
@@ -129,8 +125,7 @@
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId,
           newMeasurementsStartDate,
-          numberOfMeasurements,
-          _requestMinutesOffset)
+          numberOfMeasurements)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
@@ -172,8 +167,7 @@
       var newMeasurements = GenerateMeasurements(
             selectedInstallationId,
             newMeasurementsStartDate,
-            numberOfMeasurements,
-            _requestMinutesOffset)
+            numberOfMeasurements)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
@@ -196,8 +190,7 @@
       _context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(
               selectedInstallationId,
-              startDate, numberOfMeasurements,
-              _requestMinutesOffset));
+              startDate, numberOfMeasurements));
 
       _context.SaveChanges();
     }

@@ -6,11 +6,12 @@
 
   public static class AuxiliaryMethods
   {
+    public const byte RequestMinutesOffset = 30;
+
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
         short installationId,
         DateTime startDate,
-        int numberOfMeasurements,
-        byte requestMinutesOffset)
+        int numberOfMeasurements)
     {
       for (int i = 0; i < numberOfMeasurements; i++)
       {
@@ -18,7 +19,7 @@
             installationId,
             startDate.AddHours(i),
             startDate.AddHours(numberOfMeasurements)
-                     .AddMinutes(requestMinutesOffset));
+                     .AddMinutes(RequestMinutesOffset));
       }
     }
 
@@ -26,8 +27,7 @@
         short installationId,
         DateTime startDate,
         short numberOfDays,
-        short numberOfMeasurementsInDay,
-        byte requestMinutesOffset)
+        short numberOfMeasurementsInDay)
     {
       for (int i = 0; i < numberOfDays; i++)
       {
@@ -36,7 +36,7 @@
           yield return CreateMeasurement(
               installationId,
               startDate.AddHours(j),
-              startDate.AddDays(1).AddMinutes(requestMinutesOffset));
+              startDate.AddDays(1).AddMinutes(RequestMinutesOffset));
         }
         startDate = startDate.AddDays(1);
       }
@@ -69,8 +69,7 @@
     public static IEnumerable<AirQualityForecast> GenerateForecasts(
         short installationId,
         DateTime startDate,
-        int numberOfForecasts,
-        byte requestMinutesOffset)
+        int numberOfForecasts)
     {
       for (int i = 0; i < numberOfForecasts; i++)
       {
@@ -78,7 +77,7 @@
             installationId,
             startDate.AddHours(i),
             startDate.AddHours(numberOfForecasts)
-                     .AddMinutes(requestMinutesOffset));
+                     .AddMinutes(RequestMinutesOffset));
       }
     }
 
@@ -86,8 +85,7 @@
         short installationId,
         DateTime startDate,
         short numberOfDays,
-        short numberOfForecastsInDay,
-        byte requestMinutesOffset)
+        short numberOfForecastsInDay)
     {
       for (int i = 0; i < numberOfDays; i++)
       {
@@ -96,7 +94,7 @@
           yield return CreateForecast(
               installationId,
               startDate.AddHours(j),
-              startDate.AddDays(1).AddMinutes(requestMinutesOffset));
+              startDate.AddDays(1).AddMinutes(RequestMinutesOffset));
         }
         startDate = startDate.AddDays(1);
       }
@@ -127,7 +125,6 @@
             short installationId,
             DateTime startDate,
             int numberOfForecastErrors,
-            byte requestMinutesOffset,
             short durationInHours = 1)
     {
       for (int i = 0; i < numberOfForecastErrors; i++)
@@ -137,7 +134,7 @@
             ForecastErrorType.Hourly,
             startDate.AddHours(i),
             startDate.AddHours(numberOfForecastErrors)
-                     .AddMinutes(requestMinutesOffset),
+                     .AddMinutes(RequestMinutesOffset),
             durationInHours);
       }
     }
@@ -147,8 +144,7 @@
             short installationId,
             DateTime startDate,
             short numberOfDays,
-            short numberOfForecastErrorsInDay,
-            byte requestMinutesOffset)
+            short numberOfForecastErrorsInDay)
     {
       for (int i = 0; i < numberOfDays; i++)
       {
@@ -162,7 +158,7 @@
               ForecastErrorType.Hourly,
               startDate.AddHours(j),
               startDate.AddHours(requestInterval)
-                       .AddMinutes(requestMinutesOffset));
+                       .AddMinutes(RequestMinutesOffset));
         }
         startDate = startDate.AddDays(1);
       }
@@ -173,7 +169,6 @@
             short installationId,
             DateTime startDate,
             int numberOfForecastErrors,
-            byte requestMinutesOffset,
             short durationInHours = 1)
     {
       for (int i = 0; i < numberOfForecastErrors; i++)
@@ -185,7 +180,7 @@
             ForecastErrorType.Daily,
             startDate.AddDays(i),
             startDate.AddDays(i).AddHours(requestInterval)
-                                .AddMinutes(requestMinutesOffset),
+                                .AddMinutes(RequestMinutesOffset),
             durationInHours);
       }
     }

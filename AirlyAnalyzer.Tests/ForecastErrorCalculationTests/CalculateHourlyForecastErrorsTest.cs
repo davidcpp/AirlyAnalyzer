@@ -9,8 +9,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
   public class CalculateHourlyForecastErrorsTest
   {
-    private const byte _requestMinutesOffset = 30;
-
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -29,16 +27,14 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           installationId,
           measurementsStartDate,
           numberOfDays,
-          numberOfElementsInDay,
-          _requestMinutesOffset)
+          numberOfElementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
           installationId,
           forecastsStartDate,
           numberOfDays,
-          numberOfElementsInDay,
-          _requestMinutesOffset)
+          numberOfElementsInDay)
         .ToList();
 
       var forecastErrorsCalculation
@@ -79,16 +75,14 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           installationId,
           measurementsStartDate,
           numberOfDays,
-          numberOfElementsInDay,
-          _requestMinutesOffset)
+          numberOfElementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
           installationId,
           forecastsStartDate,
           numberOfDays,
-          numberOfElementsInDay,
-          _requestMinutesOffset)
+          numberOfElementsInDay)
         .ToList();
 
       var forecastErrorsCalculation
@@ -119,15 +113,13 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newMeasurements = GenerateMeasurements(
           installationId,
           measurementsStartDate,
-          numberOfMeasurements,
-          _requestMinutesOffset)
+          numberOfMeasurements)
         .ToList();
 
       var newForecasts = GenerateForecasts(
           installationId,
           forecastsStartDate,
-          numberOfForecasts,
-          _requestMinutesOffset)
+          numberOfForecasts)
         .ToList();
 
       var forecastErrorsCalculation
@@ -159,16 +151,14 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           installationId,
           measurementsStartDate,
           numberOfDays,
-          numberOfMeasurementsInDay,
-          _requestMinutesOffset)
+          numberOfMeasurementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
           installationId,
           forecastsStartDate,
           numberOfDays,
-          numberOfForecastsInDay,
-          _requestMinutesOffset)
+          numberOfForecastsInDay)
         .ToList();
 
       var forecastErrorsCalculation
@@ -208,7 +198,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
-          = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
+          = _startDate.AddDays(1).AddMinutes(RequestMinutesOffset);
       var forecastsStartDate = _startDate;
       var forecastsRequestDate = _startDate;
 
@@ -275,7 +265,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
-          = _startDate.AddDays(1).AddMinutes(_requestMinutesOffset);
+          = _startDate.AddDays(1).AddMinutes(RequestMinutesOffset);
       var forecastsStartDate = _startDate;
       var forecastsRequestDate = _startDate;
 

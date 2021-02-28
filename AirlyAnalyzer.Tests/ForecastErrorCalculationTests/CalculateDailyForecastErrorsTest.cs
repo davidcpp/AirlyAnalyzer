@@ -3,7 +3,7 @@
   using System;
   using System.Linq;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Models;
+  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;
 
   public class CalculateDailyForecastErrorsTest
@@ -34,14 +34,13 @@
       const short installationId = 1;
       var startDate = _startDate;
 
-      var newForecastErrors = AuxiliaryMethods
-          .GenerateHourlyForecastErrors(
-              installationId,
-              startDate,
-              numberOfDays,
-              numberOfForecastErrorsInDay,
-              _requestMinutesOffset)
-          .ToList();
+      var newForecastErrors = GenerateHourlyForecastErrors(
+          installationId,
+          startDate,
+          numberOfDays,
+          numberOfForecastErrorsInDay,
+          _requestMinutesOffset)
+        .ToList();
 
       var forecastErrorsCalculation
           = new ForecastErrorsCalculation(minNumberOfMeasurements);
@@ -63,7 +62,7 @@
       const short numberOfForecastErrors = 19;
       var startDate = _startDate;
 
-      var newForecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var newForecastErrors = GenerateHourlyForecastErrors(
           installationId, startDate, numberOfForecastErrors, _requestMinutesOffset)
         .ToList();
 
@@ -88,7 +87,7 @@
       var startDate = _startDate;
       var endDate = _startDate.AddHours(numberOfForecastErrors);
 
-      var newForecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var newForecastErrors = GenerateHourlyForecastErrors(
           installationId, startDate, numberOfForecastErrors, _requestMinutesOffset)
         .ToList();
 

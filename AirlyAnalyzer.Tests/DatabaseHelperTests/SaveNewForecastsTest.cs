@@ -55,12 +55,11 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(selectedInstallationId, numberOfForecasts, forecastsStartDate);
+      AddForecastsToDatabase(
+          selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId,
-          newForecastsStartDate,
-          numberOfForecasts)
+          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -89,9 +88,7 @@
           selectedInstallationId, numberOfForecasts, forecastsStartDate);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId,
-          newForecastsStartDate,
-          numberOfForecasts)
+          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -115,9 +112,7 @@
       var newForecastsStartDate = _startDate;
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId,
-          newForecastsStartDate,
-          numberOfForecasts)
+          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
@@ -153,9 +148,7 @@
       }
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId,
-          newForecastsStartDate,
-          numberOfForecasts)
+          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);

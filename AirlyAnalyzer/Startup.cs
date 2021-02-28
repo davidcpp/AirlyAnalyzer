@@ -29,11 +29,14 @@ namespace AirlyAnalyzer
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
-      string dataDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data");
+      string dataDirectoryPath
+          = Path.Combine(Directory.GetCurrentDirectory(), "App_Data");
 
       services.AddDbContext<AirlyContext>(options
-        => options.UseSqlServer(
-          Configuration.GetConnectionString("AirlyDbConnection").Replace("[DataDirectory]", dataDirectoryPath)));
+          => options.UseSqlServer(
+              Configuration
+                  .GetConnectionString("AirlyDbConnection")
+                  .Replace("[DataDirectory]", dataDirectoryPath)));
 
       services
           .AddControllersWithViews()

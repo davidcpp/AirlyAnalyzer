@@ -119,8 +119,8 @@
 
     /* Private auxiliary methods */
 
-    private void AddMeasurementsToDatabase(short selectedInstallationId, DateTime startDate,
-      int numberOfMeasurements)
+    private void AddMeasurementsToDatabase(
+        short selectedInstallationId, DateTime startDate, int numberOfMeasurements)
     {
       _context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(

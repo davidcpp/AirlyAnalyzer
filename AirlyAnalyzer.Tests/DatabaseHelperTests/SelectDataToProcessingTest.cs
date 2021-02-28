@@ -172,31 +172,19 @@
 
         _context.ArchiveMeasurements.AddRange(
             GenerateMeasurements(
-                installationId,
-                startDate,
-                numberOfDays,
-                numberOfElementsInDay));
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
 
         _context.ArchiveForecasts.AddRange(
             GenerateForecasts(
-                installationId,
-                startDate,
-                numberOfDays,
-                numberOfElementsInDay));
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
 
         _context.ForecastErrors.AddRange(
             GenerateHourlyForecastErrors(
-                installationId,
-                startDate,
-                numberOfDays,
-                numberOfElementsInDay));
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
 
         _context.ForecastErrors.AddRange(
             GenerateDailyForecastErrors(
-                installationId,
-                startDate,
-                numberOfDays,
-                numberOfElementsInDay));
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
 
         int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
 

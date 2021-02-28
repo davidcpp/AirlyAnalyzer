@@ -87,9 +87,9 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short numberOfNotProcessedDays = 1;
-      short numberOfNewMeasurementsInDay = 24;
-      short numberOfNewForecastsInDay = 24;
+      const short numberOfNotProcessedDays = 1;
+      const short numberOfNewMeasurementsInDay = 24;
+      const short numberOfNewForecastsInDay = 24;
 
       var newMeasurementsStartDate = _startDate;
       var newForecastsStartDate = _startDate;

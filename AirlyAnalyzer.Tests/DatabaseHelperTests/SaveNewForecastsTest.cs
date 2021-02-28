@@ -49,10 +49,10 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfForecasts = 22;
-      short numberOfForecasts = 24;
-      int finalNumberOfForecasts = numberOfForecasts;
-      short hoursRequestInterval = 21;
+      const short minNumberOfForecasts = 22;
+      const short numberOfForecasts = 24;
+      const int finalNumberOfForecasts = numberOfForecasts;
+      const short hoursRequestInterval = 21;
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -80,10 +80,10 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfForecasts = 22;
-      short numberOfForecasts = 24;
-      int finalNumberOfForecasts = minNumberOfForecasts + numberOfForecasts;
-      short hoursRequestInterval = minNumberOfForecasts;
+      const short minNumberOfForecasts = 22;
+      const short numberOfForecasts = 24;
+      const int finalNumberOfForecasts = minNumberOfForecasts + numberOfForecasts;
+      const short hoursRequestInterval = minNumberOfForecasts;
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -112,9 +112,9 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfForecasts = 22;
-      short numberOfForecasts = 24;
-      int finalNumberOfForecasts = numberOfForecasts;
+      const short minNumberOfForecasts = 22;
+      const short numberOfForecasts = 24;
+      const int finalNumberOfForecasts = numberOfForecasts;
 
       var newForecastsStartDate = _startDate;
 
@@ -139,10 +139,10 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfForecasts = 22;
-      short numberOfForecasts = 24;
+      const short minNumberOfForecasts = 22;
+      const short numberOfForecasts = 24;
       int finalNumberOfForecasts = 2 * numberOfForecasts * _installationIds.Count;
-      short hoursRequestInterval = numberOfForecasts;
+      const short hoursRequestInterval = numberOfForecasts;
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);

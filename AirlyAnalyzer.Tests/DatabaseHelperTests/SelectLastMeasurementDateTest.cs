@@ -66,7 +66,7 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short numberOfMeasurements = 23;
+      const short numberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
 
       // all installations except the selected
@@ -89,8 +89,8 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short numberOfMeasurements = 22;
-      short numberOfOtherMeasurements = 23;
+      const short numberOfMeasurements = 22;
+      const short numberOfOtherMeasurements = 23;
 
       var measurementsStartDate = _startDate;
       var properDate = _startDate.AddHours(numberOfMeasurements);

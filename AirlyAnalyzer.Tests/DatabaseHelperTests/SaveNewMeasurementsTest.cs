@@ -49,10 +49,10 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfMeasurements = 22;
-      short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = numberOfMeasurements;
-      short hoursRequestInterval = 21;
+      const short minNumberOfMeasurements = 22;
+      const short numberOfMeasurements = 24;
+      const int finalNumberOfMeasurements = numberOfMeasurements;
+      const short hoursRequestInterval = 21;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -84,11 +84,11 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfMeasurements = 22;
-      short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements
+      const short minNumberOfMeasurements = 22;
+      const short numberOfMeasurements = 24;
+      const int finalNumberOfMeasurements
           = minNumberOfMeasurements + numberOfMeasurements;
-      short hoursRequestInterval = minNumberOfMeasurements;
+      const short hoursRequestInterval = minNumberOfMeasurements;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -120,9 +120,9 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfMeasurements = 22;
-      short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements = numberOfMeasurements;
+      const short minNumberOfMeasurements = 22;
+      const short numberOfMeasurements = 24;
+      const int finalNumberOfMeasurements = numberOfMeasurements;
 
       var newMeasurementsStartDate = _startDate;
 
@@ -150,11 +150,11 @@
     {
       // Arrange
       short selectedInstallationId = _installationIds[0];
-      short minNumberOfMeasurements = 22;
-      short numberOfMeasurements = 24;
+      const short minNumberOfMeasurements = 22;
+      const short numberOfMeasurements = 24;
       int finalNumberOfMeasurements
           = 2 * numberOfMeasurements * _installationIds.Count;
-      short hoursRequestInterval = numberOfMeasurements;
+      const short hoursRequestInterval = numberOfMeasurements;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);

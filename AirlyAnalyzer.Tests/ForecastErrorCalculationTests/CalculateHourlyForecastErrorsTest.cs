@@ -62,8 +62,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       Assert.Single(forecastErrors);
       Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
       Assert.Equal(installationId, forecastErrors[0].InstallationId);
-      Assert.Equal(startDate, forecastErrors[0].FromDateTime, new TimeSpan(0, 0, 0));
-      Assert.Equal(endDate, forecastErrors[0].TillDateTime, new TimeSpan(0, 0, 0));
+      Assert.Equal(startDate, forecastErrors[0].FromDateTime);
+      Assert.Equal(endDate, forecastErrors[0].TillDateTime);
     }
 
     [Theory]
@@ -196,14 +196,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       measurementsEndDate = measurementsEndDate.ToLocalTime();
 
       Assert.Equal(numberOfMeasurementsInDay, forecastErrors.Count);
-      Assert.Equal(
-          forecastsStartDate,
-          forecastErrors[0].FromDateTime,
-          new TimeSpan(0, 0, 0));
-      Assert.Equal(
-          measurementsEndDate,
-          forecastErrors.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(forecastsStartDate, forecastErrors[0].FromDateTime);
+      Assert.Equal(measurementsEndDate, forecastErrors.Last().TillDateTime);
     }
 
     [Theory]

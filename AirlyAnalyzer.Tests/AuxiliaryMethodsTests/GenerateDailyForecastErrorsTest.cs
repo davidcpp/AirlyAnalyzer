@@ -100,10 +100,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(
-          endDate.ToLocalTime(),
-          dailyErrors.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), dailyErrors.Last().TillDateTime);
     }
 
     [Theory]
@@ -132,8 +129,7 @@
       // Assert
       Assert.Equal(
           endRequestDate.ToLocalTime(),
-          dailyErrors.Last().RequestDateTime,
-          new TimeSpan(0, 0, 0));
+          dailyErrors.Last().RequestDateTime);
     }
   }
 }

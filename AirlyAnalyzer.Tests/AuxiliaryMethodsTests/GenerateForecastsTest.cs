@@ -41,10 +41,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(
-          endDate.ToLocalTime(),
-          forecasts.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), forecasts.Last().TillDateTime);
     }
 
     [Fact]
@@ -86,10 +83,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(
-          endDate.ToLocalTime(),
-          forecasts.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), forecasts.Last().TillDateTime);
     }
 
     [Fact]
@@ -113,8 +107,7 @@
       // Assert
       Assert.Equal(
           endRequestDate.ToLocalTime(),
-          forecasts.Last().RequestDateTime,
-          new TimeSpan(0, 0, 0));
+          forecasts.Last().RequestDateTime);
     }
   }
 }

@@ -68,10 +68,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(
-          endDate.ToLocalTime(),
-          forecastErrors.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), forecastErrors.Last().TillDateTime);
     }
 
     [Fact]
@@ -136,10 +133,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(
-          endDate.ToLocalTime(),
-          forecastErrors.Last().TillDateTime,
-          new TimeSpan(0, 0, 0));
+      Assert.Equal(endDate.ToLocalTime(), forecastErrors.Last().TillDateTime);
     }
 
     [Theory]
@@ -168,8 +162,7 @@
       // Assert
       Assert.Equal(
           endRequestDate.ToLocalTime(),
-          forecastErrors.Last().RequestDateTime,
-          new TimeSpan(0, 0, 0));
+          forecastErrors.Last().RequestDateTime);
     }
   }
 }

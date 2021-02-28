@@ -1,10 +1,13 @@
-﻿namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Controllers
 {
   using System;
   using System.Collections.Generic;
   using System.Threading;
   using System.Threading.Tasks;
+  using AirlyAnalyzer.Calculation;
+  using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;

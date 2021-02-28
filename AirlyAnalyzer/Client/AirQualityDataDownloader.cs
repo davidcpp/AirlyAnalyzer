@@ -1,9 +1,10 @@
-﻿namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Client
 {
   using System;
   using System.Diagnostics;
   using System.Net;
   using System.Threading.Tasks;
+  using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
 

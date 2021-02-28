@@ -2,6 +2,7 @@
 {
   using System;
   using System.Linq;
+  using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;

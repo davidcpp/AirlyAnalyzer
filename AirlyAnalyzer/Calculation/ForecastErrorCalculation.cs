@@ -1,8 +1,9 @@
-﻿namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Calculation
 {
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using AirlyAnalyzer.Models;
 
   public class ForecastErrorsCalculation
   {

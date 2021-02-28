@@ -1,7 +1,8 @@
-﻿namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Client
 {
   using System;
   using System.Collections.Generic;
+  using AirlyAnalyzer.Models;
 
   public static class AirQualityDataConverter
   {

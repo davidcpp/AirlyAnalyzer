@@ -63,14 +63,3 @@ function updateForecastErrorsTable(requestDate) {
       console.log('Error: ' + err);
     });
 }
-
-function trimLocalTimeOffset(localDateTime) {
-  let plusCharacter = localDateTime.indexOf('+');
-  localDateTime = localDateTime.slice(0, plusCharacter);
-  return localDateTime.replace('T', ' ');
-}
-
-function trimTime(dateTime) {
-  let tCharacter = dateTime.indexOf('T');
-  return dateTime.slice(0, tCharacter);
-}

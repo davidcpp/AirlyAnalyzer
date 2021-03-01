@@ -55,7 +55,7 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(
+      _context.AddForecastsToDatabase(
           selectedInstallationId, forecastsStartDate, numberOfForecasts);
 
       var newForecasts = GenerateForecasts(
@@ -84,7 +84,7 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(
+      _context.AddForecastsToDatabase(
           selectedInstallationId, forecastsStartDate, numberOfForecasts);
 
       var newForecasts = GenerateForecasts(
@@ -137,13 +137,13 @@
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      AddForecastsToDatabase(
+      _context.AddForecastsToDatabase(
           selectedInstallationId, forecastsStartDate, numberOfForecasts);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
-        AddForecastsToDatabase(
+        _context.AddForecastsToDatabase(
             _installationIds[i], forecastsStartDate, 2 * numberOfForecasts);
       }
 
@@ -161,18 +161,6 @@
     }
 
     /* Private auxiliary methods */
-
-    private void AddForecastsToDatabase(
-        short selectedInstallationId, DateTime startDate, int numberOfForecasts)
-    {
-      _context.ArchiveForecasts.AddRange(
-          GenerateForecasts(
-              selectedInstallationId,
-              startDate,
-              numberOfForecasts));
-
-      _context.SaveChanges();
-    }
 
     private void Seed()
     {

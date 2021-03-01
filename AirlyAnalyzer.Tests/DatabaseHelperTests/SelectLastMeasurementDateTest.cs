@@ -71,7 +71,7 @@
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
-        AddMeasurementsToDatabase(
+        _context.AddMeasurementsToDatabase(
             _installationIds[i], measurementsStartDate, numberOfMeasurements);
       }
 
@@ -94,13 +94,13 @@
       var measurementsStartDate = _startDate;
       var properDate = _startDate.AddHours(numberOfMeasurements);
 
-      AddMeasurementsToDatabase(
+      _context.AddMeasurementsToDatabase(
           selectedInstallationId, measurementsStartDate, numberOfMeasurements);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
-        AddMeasurementsToDatabase(
+        _context.AddMeasurementsToDatabase(
             _installationIds[i], measurementsStartDate, numberOfOtherMeasurements);
       }
 
@@ -118,19 +118,6 @@
     }
 
     /* Private auxiliary methods */
-
-    private void AddMeasurementsToDatabase(
-        short selectedInstallationId, DateTime startDate, int numberOfMeasurements)
-    {
-      _context.ArchiveMeasurements.AddRange(
-          GenerateMeasurements(
-              selectedInstallationId,
-              startDate,
-              numberOfMeasurements));
-
-      _context.SaveChanges();
-    }
-
     private void Seed()
     {
       _context.Database.EnsureDeleted();

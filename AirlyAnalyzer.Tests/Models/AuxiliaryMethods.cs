@@ -2,11 +2,72 @@
 {
   using System;
   using System.Collections.Generic;
+  using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
 
   public static class AuxiliaryMethods
   {
     public const byte RequestMinutesOffset = 30;
+
+    public static void AddMeasurementsToDatabase(
+        this AirlyContext context,
+        short selectedInstallationId,
+        DateTime startDate,
+        int numberOfMeasurements)
+    {
+      context.ArchiveMeasurements.AddRange(
+          GenerateMeasurements(
+              selectedInstallationId, startDate, numberOfMeasurements));
+
+      context.SaveChanges();
+    }
+
+    public static void AddMeasurementsToDatabase(
+        this AirlyContext context,
+        short selectedInstallationId,
+        DateTime startDate,
+        short numberOfDays,
+        short numberOfMeasurementsInDay)
+    {
+      context.ArchiveMeasurements.AddRange(
+          GenerateMeasurements(
+              selectedInstallationId,
+              startDate,
+              numberOfDays,
+              numberOfMeasurementsInDay));
+
+      context.SaveChanges();
+    }
+
+    public static void AddForecastsToDatabase(
+        this AirlyContext context,
+        short selectedInstallationId,
+        DateTime startDate,
+        int numberOfForecasts)
+    {
+      context.ArchiveForecasts.AddRange(
+          GenerateForecasts(
+              selectedInstallationId, startDate, numberOfForecasts));
+
+      context.SaveChanges();
+    }
+
+    public static void AddForecastsToDatabase(
+        this AirlyContext context,
+        short selectedInstallationId,
+        DateTime startDate,
+        short numberOfDays,
+        short numberOfForecastsInDay)
+    {
+      context.ArchiveForecasts.AddRange(
+          GenerateForecasts(
+              selectedInstallationId,
+              startDate,
+              numberOfDays,
+              numberOfForecastsInDay));
+
+      context.SaveChanges();
+    }
 
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
         short installationId,

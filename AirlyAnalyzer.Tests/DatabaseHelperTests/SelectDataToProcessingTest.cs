@@ -170,13 +170,11 @@
       {
         short installationId = _installationIds[i];
 
-        _context.ArchiveMeasurements.AddRange(
-            GenerateMeasurements(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
+        _context.AddMeasurementsToDatabase(
+            installationId, startDate, numberOfDays, numberOfElementsInDay);
 
-        _context.ArchiveForecasts.AddRange(
-            GenerateForecasts(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
+        _context.AddForecastsToDatabase(
+            installationId, startDate, numberOfDays, numberOfElementsInDay);
 
         _context.ForecastErrors.AddRange(
             GenerateHourlyForecastErrors(
@@ -200,38 +198,6 @@
       _context.SaveChanges();
     }
 
-    private void AddNewMeasurementsToDatabase(
-        short selectedInstallationId,
-        DateTime startDate,
-        short numberOfNotProcessedDays,
-        short numberOfElementsInDay)
-    {
-      _context.ArchiveMeasurements.AddRange(
-          GenerateMeasurements(
-              selectedInstallationId,
-              startDate,
-              numberOfNotProcessedDays,
-              numberOfElementsInDay));
-
-      _context.SaveChanges();
-    }
-
-    private void AddNewForecastsToDatabase(
-        short selectedInstallationId,
-        DateTime startDate,
-        short numberOfNotProcessedDays,
-        short numberOfElementsInDay)
-    {
-      _context.ArchiveForecasts.AddRange(
-          GenerateForecasts(
-              selectedInstallationId,
-              startDate,
-              numberOfNotProcessedDays,
-              numberOfElementsInDay));
-
-      _context.SaveChanges();
-    }
-
     // Method to adding new, not processed data for all installations 
     private void AddNotProcessedDataToDatabase(
         DateTime measurementsStartDate,
@@ -244,13 +210,13 @@
       {
         short installationId = _installationIds[i];
 
-        AddNewMeasurementsToDatabase(
+        _context.AddMeasurementsToDatabase(
             installationId,
             measurementsStartDate,
             numberOfNotProcessedDays,
             numberOfMeasurementsInDay);
 
-        AddNewForecastsToDatabase(
+        _context.AddForecastsToDatabase(
             installationId,
             forecastsStartDate,
             numberOfNotProcessedDays,

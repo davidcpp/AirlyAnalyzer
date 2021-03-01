@@ -56,7 +56,7 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       AddMeasurementsToDatabase(
-          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
 
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId,
@@ -91,7 +91,7 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       AddMeasurementsToDatabase(
-          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
 
       var newMeasurements = GenerateMeasurements(
           selectedInstallationId,
@@ -155,13 +155,13 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       AddMeasurementsToDatabase(
-          selectedInstallationId, numberOfMeasurements, measurementsStartDate);
+          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
       {
         AddMeasurementsToDatabase(
-            _installationIds[i], 2 * numberOfMeasurements, measurementsStartDate);
+            _installationIds[i], measurementsStartDate, 2 * numberOfMeasurements);
       }
 
       var newMeasurements = GenerateMeasurements(
@@ -185,7 +185,7 @@
     /* Private auxiliary methods */
 
     private void AddMeasurementsToDatabase(
-        short selectedInstallationId, int numberOfMeasurements, DateTime startDate)
+        short selectedInstallationId, DateTime startDate, int numberOfMeasurements)
     {
       _context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(

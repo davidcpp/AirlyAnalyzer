@@ -70,7 +70,7 @@
       const short numberOfElementsInDay = 24;
 
       AddElementsToDatabase(
-          numberOfProcessedDays, numberOfElementsInDay, _startDate);
+          _startDate, numberOfProcessedDays, numberOfElementsInDay);
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
@@ -94,11 +94,11 @@
       var newForecastsStartDate = _startDate;
 
       AddNotProcessedDataToDatabase(
+          newMeasurementsStartDate,
+          newForecastsStartDate,
           numberOfNotProcessedDays,
           numberOfNewMeasurementsInDay,
-          numberOfNewForecastsInDay,
-          newMeasurementsStartDate,
-          newForecastsStartDate);
+          numberOfNewForecastsInDay);
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
@@ -131,14 +131,14 @@
       var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
 
       AddElementsToDatabase(
-          numberOfProcessedDays, numberOfElementsInDay, processedDataStartDate);
+          processedDataStartDate, numberOfProcessedDays, numberOfElementsInDay);
 
       AddNotProcessedDataToDatabase(
+          newMeasurementsStartDate,
+          newForecastsStartDate,
           numberOfNotProcessedDays,
           numberOfNewMeasurementsInDay,
-          numberOfNewForecastsInDay,
-          newMeasurementsStartDate,
-          newForecastsStartDate);
+          numberOfNewForecastsInDay);
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
@@ -161,7 +161,7 @@
 
     /* Private auxiliary methods */
     private void AddElementsToDatabase(
-        short numberOfDays, short numberOfElementsInDay, DateTime startDate)
+        DateTime startDate, short numberOfDays, short numberOfElementsInDay)
     {
       var requestDate = startDate.AddDays(numberOfDays)
                                  .AddMinutes(RequestMinutesOffset);
@@ -202,9 +202,9 @@
 
     private void AddNewMeasurementsToDatabase(
         short selectedInstallationId,
+        DateTime startDate,
         short numberOfNotProcessedDays,
-        short numberOfElementsInDay,
-        DateTime startDate)
+        short numberOfElementsInDay)
     {
       _context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(
@@ -218,9 +218,9 @@
 
     private void AddNewForecastsToDatabase(
         short selectedInstallationId,
+        DateTime startDate,
         short numberOfNotProcessedDays,
-        short numberOfElementsInDay,
-        DateTime startDate)
+        short numberOfElementsInDay)
     {
       _context.ArchiveForecasts.AddRange(
           GenerateForecasts(
@@ -234,11 +234,11 @@
 
     // Method to adding new, not processed data for all installations 
     private void AddNotProcessedDataToDatabase(
+        DateTime measurementsStartDate,
+        DateTime forecastsStartDate,
         short numberOfNotProcessedDays,
         short numberOfMeasurementsInDay,
-        short numberOfForecastsInDay,
-        DateTime measurementsStartDate,
-        DateTime forecastsStartDate)
+        short numberOfForecastsInDay)
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
@@ -246,15 +246,15 @@
 
         AddNewMeasurementsToDatabase(
             installationId,
+            measurementsStartDate,
             numberOfNotProcessedDays,
-            numberOfMeasurementsInDay,
-            measurementsStartDate);
+            numberOfMeasurementsInDay);
 
         AddNewForecastsToDatabase(
             installationId,
+            forecastsStartDate,
             numberOfNotProcessedDays,
-            numberOfForecastsInDay,
-            forecastsStartDate);
+            numberOfForecastsInDay);
       }
     }
 

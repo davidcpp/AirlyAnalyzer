@@ -50,11 +50,11 @@
     public async Task empty_new_data_when_no_data_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
+          await _databaseHelper.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -65,7 +65,7 @@
     public async Task empty_new_data_when_no_data_to_process_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 24;
 
@@ -74,7 +74,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
+          await _databaseHelper.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -85,7 +85,7 @@
     public async Task new_data_when_only_data_to_process_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short numberOfNotProcessedDays = 1;
       const short numberOfNewMeasurementsInDay = 24;
       const short numberOfNewForecastsInDay = 24;
@@ -102,7 +102,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
+          await _databaseHelper.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
@@ -123,7 +123,7 @@
         short numberOfNewForecastsInDay)
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 23;
       var processedDataStartDate = _startDate;
@@ -142,15 +142,11 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(selectedInstallationId);
+          await _databaseHelper.SelectDataToProcessing(installationId);
 
       // Assert
-      Assert.Equal(
-          selectedInstallationId,
-          newArchiveMeasurements[0].InstallationId);
-      Assert.Equal(
-          selectedInstallationId,
-          newArchiveForecasts[0].InstallationId);
+      Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
+      Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
       Assert.Equal(
           numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
           newArchiveMeasurements.Count);

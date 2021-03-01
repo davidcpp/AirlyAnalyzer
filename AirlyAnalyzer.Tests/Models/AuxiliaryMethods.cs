@@ -11,60 +11,54 @@
 
     public static void AddMeasurementsToDatabase(
         this AirlyContext context,
-        short selectedInstallationId,
+        short installationId,
         DateTime startDate,
         int numberOfMeasurements)
     {
       context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(
-              selectedInstallationId, startDate, numberOfMeasurements));
+              installationId, startDate, numberOfMeasurements));
 
       context.SaveChanges();
     }
 
     public static void AddMeasurementsToDatabase(
         this AirlyContext context,
-        short selectedInstallationId,
+        short installationId,
         DateTime startDate,
         short numberOfDays,
         short numberOfMeasurementsInDay)
     {
       context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(
-              selectedInstallationId,
-              startDate,
-              numberOfDays,
-              numberOfMeasurementsInDay));
+              installationId, startDate, numberOfDays, numberOfMeasurementsInDay));
 
       context.SaveChanges();
     }
 
     public static void AddForecastsToDatabase(
         this AirlyContext context,
-        short selectedInstallationId,
+        short installationId,
         DateTime startDate,
         int numberOfForecasts)
     {
       context.ArchiveForecasts.AddRange(
           GenerateForecasts(
-              selectedInstallationId, startDate, numberOfForecasts));
+              installationId, startDate, numberOfForecasts));
 
       context.SaveChanges();
     }
 
     public static void AddForecastsToDatabase(
         this AirlyContext context,
-        short selectedInstallationId,
+        short installationId,
         DateTime startDate,
         short numberOfDays,
         short numberOfForecastsInDay)
     {
       context.ArchiveForecasts.AddRange(
           GenerateForecasts(
-              selectedInstallationId,
-              startDate,
-              numberOfDays,
-              numberOfForecastsInDay));
+              installationId, startDate, numberOfDays, numberOfForecastsInDay));
 
       context.SaveChanges();
     }

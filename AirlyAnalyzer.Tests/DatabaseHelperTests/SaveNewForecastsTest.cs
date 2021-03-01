@@ -46,7 +46,7 @@
     public async Task do_not_save_forecasts_without_min_required_number()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       const int finalNumberOfForecasts = numberOfForecasts;
@@ -56,16 +56,16 @@
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddForecastsToDatabase(
-          selectedInstallationId, forecastsStartDate, numberOfForecasts);
+          installationId, forecastsStartDate, numberOfForecasts);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
+          installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
+      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -75,7 +75,7 @@
     public async Task save_forecasts_with_min_required_number()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       const int finalNumberOfForecasts = minNumberOfForecasts + numberOfForecasts;
@@ -85,16 +85,16 @@
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddForecastsToDatabase(
-          selectedInstallationId, forecastsStartDate, numberOfForecasts);
+          installationId, forecastsStartDate, numberOfForecasts);
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
+          installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
+      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -104,7 +104,7 @@
     public async Task save_all_downloaded_forecasts_when_no_forecasts_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       const int finalNumberOfForecasts = numberOfForecasts;
@@ -112,13 +112,13 @@
       var newForecastsStartDate = _startDate;
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
+          installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
+      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -128,7 +128,7 @@
     public async Task save_forecasts_after_forecasts_from_several_installations()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       int finalNumberOfForecasts = 2 * numberOfForecasts * _installationIds.Count;
@@ -138,7 +138,7 @@
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddForecastsToDatabase(
-          selectedInstallationId, forecastsStartDate, numberOfForecasts);
+          installationId, forecastsStartDate, numberOfForecasts);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
@@ -148,13 +148,13 @@
       }
 
       var newForecasts = GenerateForecasts(
-          selectedInstallationId, newForecastsStartDate, numberOfForecasts)
+          installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
       var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
 
       // Act
-      await databaseHelper.SaveNewForecasts(selectedInstallationId, newForecasts);
+      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());

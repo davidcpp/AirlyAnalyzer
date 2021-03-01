@@ -50,11 +50,11 @@
     public async Task date_time_min_value_when_no_data_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
 
       // Act
       var lastMeasurementDate = await _databaseHelper
-          .SelectLastMeasurementDate(selectedInstallationId);
+          .SelectLastMeasurementDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
@@ -64,7 +64,7 @@
     public async Task date_time_min_value_when_only_data_from_other_installations_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short numberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
 
@@ -77,7 +77,7 @@
 
       // Act
       var lastMeasurementDate = await _databaseHelper
-          .SelectLastMeasurementDate(selectedInstallationId);
+          .SelectLastMeasurementDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
@@ -87,7 +87,7 @@
     public async Task proper_date_when_all_installations_data_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short numberOfMeasurements = 22;
       const short numberOfOtherMeasurements = 23;
 
@@ -95,7 +95,7 @@
       var properDate = _startDate.AddHours(numberOfMeasurements);
 
       _context.AddMeasurementsToDatabase(
-          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
+          installationId, measurementsStartDate, numberOfMeasurements);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
@@ -106,7 +106,7 @@
 
       // Act
       var lastMeasurementDate = await _databaseHelper
-          .SelectLastMeasurementDate(selectedInstallationId);
+          .SelectLastMeasurementDate(installationId);
 
       // Assert
       Assert.Equal(properDate, lastMeasurementDate);

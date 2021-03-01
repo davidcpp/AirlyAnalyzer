@@ -46,7 +46,7 @@
     public async Task do_not_save_measurements_without_min_required_number()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements = numberOfMeasurements;
@@ -56,10 +56,10 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddMeasurementsToDatabase(
-          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
+          installationId, measurementsStartDate, numberOfMeasurements);
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId,
+          installationId,
           newMeasurementsStartDate,
           numberOfMeasurements)
         .ToList();
@@ -67,8 +67,7 @@
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper
-          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -80,7 +79,7 @@
     public async Task save_measurements_with_min_required_number()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements
@@ -91,10 +90,10 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddMeasurementsToDatabase(
-          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
+          installationId, measurementsStartDate, numberOfMeasurements);
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId,
+          installationId,
           newMeasurementsStartDate,
           numberOfMeasurements)
         .ToList();
@@ -102,8 +101,7 @@
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper
-          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -115,7 +113,7 @@
     public async Task save_all_downloaded_measurements_when_no_measurements_in_database()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements = numberOfMeasurements;
@@ -123,7 +121,7 @@
       var newMeasurementsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          selectedInstallationId,
+          installationId,
           newMeasurementsStartDate,
           numberOfMeasurements)
         .ToList();
@@ -131,8 +129,7 @@
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper
-          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -144,7 +141,7 @@
     public async Task save_measurements_after_measurements_from_several_installations()
     {
       // Arrange
-      short selectedInstallationId = _installationIds[0];
+      short installationId = _installationIds[0];
       const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       int finalNumberOfMeasurements
@@ -155,7 +152,7 @@
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddMeasurementsToDatabase(
-          selectedInstallationId, measurementsStartDate, numberOfMeasurements);
+          installationId, measurementsStartDate, numberOfMeasurements);
 
       // all installations except the selected
       for (int i = 1; i < _installationIds.Count; i++)
@@ -165,7 +162,7 @@
       }
 
       var newMeasurements = GenerateMeasurements(
-            selectedInstallationId,
+            installationId,
             newMeasurementsStartDate,
             numberOfMeasurements)
         .ToList();
@@ -173,8 +170,7 @@
       var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
 
       // Act
-      await databaseHelper
-          .SaveNewMeasurements(selectedInstallationId, newMeasurements);
+      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
 
       // Assert
       Assert.Equal(

@@ -42,18 +42,6 @@
       return errorsInDay;
     }
 
-    // GET: api/<ForecastErrorsApiController>/GetNumberOfDays
-    [HttpGet]
-    public int GetNumberOfDays()
-    {
-      var requestDates = _databaseHelper
-          .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: fe => fe.RequestDateTime.Date,
-              isDistinct: true);
-
-      return requestDates.Count();
-    }
-
     // GET: api/<ForecastErrorsApiController>/GetRequestDates
     [HttpGet]
     public IEnumerable<DateTime> GetRequestDates()

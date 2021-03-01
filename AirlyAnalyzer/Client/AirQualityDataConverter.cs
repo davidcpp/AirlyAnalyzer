@@ -7,9 +7,9 @@
   public static class AirQualityDataConverter
   {
     public static List<AirQualityMeasurement> ConvertToAirQualityMeasurements(
-      this List<AveragedValues> averagedValues,
-      short installationId,
-      DateTime requestTime)
+        this List<AveragedValues> averagedValues,
+        short installationId,
+        DateTime requestTime)
     {
       var airQualityMeasurements = new List<AirQualityMeasurement>();
 
@@ -26,9 +26,9 @@
     }
 
     public static List<AirQualityForecast> ConvertToAirQualityForecasts(
-      this List<AveragedValues> averagedValues,
-      short installationId,
-      DateTime requestTime)
+        this List<AveragedValues> averagedValues,
+        short installationId,
+        DateTime requestTime)
     {
       var airQualityForecasts = new List<AirQualityForecast>();
 

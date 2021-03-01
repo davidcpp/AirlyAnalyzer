@@ -192,7 +192,8 @@
             CreateForecastError(
                 installationId,
                 ForecastErrorType.Total,
-                startDate, requestDate,
+                startDate,
+                requestDate,
                 totalErrorDuration));
       }
 

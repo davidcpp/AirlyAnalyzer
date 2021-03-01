@@ -190,7 +190,8 @@
       _context.ArchiveMeasurements.AddRange(
           GenerateMeasurements(
               selectedInstallationId,
-              startDate, numberOfMeasurements));
+              startDate,
+              numberOfMeasurements));
 
       _context.SaveChanges();
     }

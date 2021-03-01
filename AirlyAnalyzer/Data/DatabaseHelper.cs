@@ -147,15 +147,6 @@
       }
     }
 
-    public Task<List<AirQualityForecastError>>
-        SelectDailyForecastErrors(short installationId)
-    {
-      return _context.ForecastErrors
-          .Where(fe => fe.InstallationId == installationId
-                   && fe.ErrorType == ForecastErrorType.Daily)
-          .ToListAsync();
-    }
-
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         SelectDataToProcessing(short installationId)
     {

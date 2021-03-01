@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
@@ -151,8 +152,10 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors =
-            await _databaseHelper.SelectDailyForecastErrors(installationId);
+        var dailyForecastErrors = _databaseHelper
+            .Get<AirQualityForecastError>(
+                fe => fe.InstallationId == installationId
+                   && fe.ErrorType == ForecastErrorType.Daily).ToList();
 
         if (dailyForecastErrors.Count > 0)
         {

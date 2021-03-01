@@ -112,7 +112,7 @@
 
       if (newMeasurements.Count >= _minNumberOfMeasurements)
       {
-        _context.ArchiveMeasurements.AddRange(newMeasurements);
+        await _context.ArchiveMeasurements.AddRangeAsync(newMeasurements);
         await _context.SaveChangesAsync();
       }
     }
@@ -142,7 +142,7 @@
 
       if (newForecasts.Count >= _minNumberOfMeasurements)
       {
-        _context.ArchiveForecasts.AddRange(newForecasts);
+        await _context.ArchiveForecasts.AddRangeAsync(newForecasts);
         await _context.SaveChangesAsync();
       }
     }

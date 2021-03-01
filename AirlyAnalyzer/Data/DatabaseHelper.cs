@@ -11,7 +11,7 @@
   public class DatabaseHelper : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly DateTime _dateTimeMinValue;
+    private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
     private readonly short _minNumberOfMeasurements;
 
     private bool disposedValue;
@@ -19,7 +19,6 @@
     public DatabaseHelper(AirlyContext context, short minNumberOfMeasurements)
     {
       _context = context;
-      _dateTimeMinValue = new DateTime(2000, 1, 1);
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 

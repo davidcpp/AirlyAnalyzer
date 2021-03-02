@@ -7,20 +7,17 @@
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.Extensions.Configuration;
 
   [Route("api/[controller]/[action]")]
   [ApiController]
   public class ForecastErrorsApiController : ControllerBase
   {
-    private DatabaseHelper _databaseHelper;
+    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
 
-    public ForecastErrorsApiController(AirlyContext context, IConfiguration config)
+    public ForecastErrorsApiController(
+        GenericRepository<AirQualityForecastError> forecastErrorRepo)
     {
-      short minNumberOfMeasurements = config.GetValue<short>(
-          "AppSettings:AirlyApi:MinNumberOfMeasurements");
-
-      _databaseHelper = new DatabaseHelper(context, minNumberOfMeasurements);
+      _forecastErrorRepo = forecastErrorRepo;
     }
 
     // GET: api/<ForecastErrorsApiController>/GetErrorsInDay/{day}
@@ -30,7 +27,7 @@
     public ActionResult<IEnumerable<AirQualityForecastError>>
         GetErrorsInDay(DateTime selectedRequestDate)
     {
-      var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
+      var errorsInDay = _forecastErrorRepo.Get(
           wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate)
               .ToList();
 
@@ -46,11 +43,10 @@
     [HttpGet]
     public IEnumerable<DateTime> GetRequestDates()
     {
-      return _databaseHelper
-          .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: fe => fe.RequestDateTime.Date,
-              orderByMethod: q => q.OrderBy(dateTime => dateTime),
-              isDistinct: true);
+      return _forecastErrorRepo.GetParameters<DateTime>(
+          selectPredicate: fe => fe.RequestDateTime.Date,
+          orderByMethod: q => q.OrderBy(dateTime => dateTime),
+          isDistinct: true);
     }
   }
 }

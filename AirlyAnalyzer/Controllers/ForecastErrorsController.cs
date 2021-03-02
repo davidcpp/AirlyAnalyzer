@@ -6,34 +6,30 @@
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Mvc;
-  using Microsoft.Extensions.Configuration;
 
   public class ForecastErrorsController : Controller
   {
-    private DatabaseHelper _databaseHelper;
+    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
 
-    public ForecastErrorsController(AirlyContext context, IConfiguration config)
+    public ForecastErrorsController(
+        GenericRepository<AirQualityForecastError> forecastErrorRepo)
     {
-      short minNumberOfMeasurements = config.GetValue<short>(
-          "AppSettings:AirlyApi:MinNumberOfMeasurements");
-
-      _databaseHelper = new DatabaseHelper(context, minNumberOfMeasurements);
+      _forecastErrorRepo = forecastErrorRepo;
     }
 
     // GET: ForecastErrors
     public IActionResult Index()
     {
-      var requestDates = _databaseHelper
-          .GetParameters<AirQualityForecastError, DateTime>(
-              selectPredicate: fe => fe.RequestDateTime.Date,
-              orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
-              isDistinct: true);
+      var requestDates = _forecastErrorRepo.GetParameters<DateTime>(
+          selectPredicate: fe => fe.RequestDateTime.Date,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
+          isDistinct: true);
 
       if (requestDates.Any())
       {
         var selectedRequestDate = requestDates.First();
 
-        var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
+        var errorsInDay = _forecastErrorRepo.Get(
             wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
         return View(errorsInDay);
@@ -46,7 +42,7 @@
     {
       if (disposing)
       {
-        _databaseHelper.Dispose();
+        _forecastErrorRepo.Dispose();
       }
 
       base.Dispose(disposing);

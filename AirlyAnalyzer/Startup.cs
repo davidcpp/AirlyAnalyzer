@@ -3,6 +3,7 @@ namespace AirlyAnalyzer
   using System.IO;
   using System.Text.Json.Serialization;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
@@ -37,6 +38,12 @@ namespace AirlyAnalyzer
               Configuration
                   .GetConnectionString("AirlyDbConnection")
                   .Replace("[DataDirectory]", dataDirectoryPath)));
+
+      services
+          .AddScoped<AirlyAnalyzerRepository>()
+          .AddScoped<GenericRepository<AirQualityMeasurement>>()
+          .AddScoped<GenericRepository<AirQualityForecast>>()
+          .AddScoped<GenericRepository<AirQualityForecastError>>();
 
       services
           .AddControllersWithViews()

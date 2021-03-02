@@ -26,7 +26,8 @@
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
-    private DatabaseHelper _databaseHelper;
+    private GenericRepository<AirQualityForecastError> _forecastErrorRepo;
+    private AirlyAnalyzerRepository _airlyAnalyzerRepo;
     private Timer _timer;
 
     public ProgramController(
@@ -66,8 +67,11 @@
     {
       using (var scope = _scopeFactory.CreateScope())
       {
-        var context = scope.ServiceProvider.GetRequiredService<AirlyContext>();
-        _databaseHelper = new DatabaseHelper(context, _minNumberOfMeasurements);
+        _forecastErrorRepo = scope.ServiceProvider
+            .GetRequiredService<GenericRepository<AirQualityForecastError>>();
+
+        _airlyAnalyzerRepo = scope.ServiceProvider
+            .GetRequiredService<AirlyAnalyzerRepository>();
 
         if (await DownloadAndSaveAirQualityData() > 0)
         {
@@ -90,7 +94,7 @@
       foreach (short installationId in _installationIDsList)
       {
         var lastMeasurementDate =
-            await _databaseHelper.SelectLastMeasurementDate(installationId);
+            await _airlyAnalyzerRepo.SelectLastMeasurementDate(installationId);
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)
@@ -107,11 +111,11 @@
           newMeasurementsCount += newMeasurements.Count;
           newForecastsCount += newForecasts.Count;
 
-          await _databaseHelper
-              .SaveNewMeasurements(installationId, newMeasurements);
+          await _airlyAnalyzerRepo.SaveNewMeasurements(
+              installationId, _minNumberOfMeasurements, newMeasurements);
 
-          await _databaseHelper
-              .SaveNewForecasts(installationId, newForecasts);
+          await _airlyAnalyzerRepo.SaveNewForecasts(
+              installationId, _minNumberOfMeasurements, newForecasts);
         }
       }
 
@@ -126,19 +130,20 @@
       foreach (short installationId in _installationIDsList)
       {
         var (newArchiveMeasurements, newArchiveForecasts) =
-            await _databaseHelper.SelectDataToProcessing(installationId);
+            await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors = 
             _forecastErrorsCalculation.CalculateHourlyForecastErrors(
                 installationId, newArchiveMeasurements, newArchiveForecasts);
 
-        await _databaseHelper.SaveForecastErrors(hourlyForecastErrors);
+        await _forecastErrorRepo.Add(hourlyForecastErrors);
 
         var dailyForecastErrors =
             _forecastErrorsCalculation.CalculateDailyForecastErrors(
                 installationId, hourlyForecastErrors);
 
-        await _databaseHelper.SaveForecastErrors(dailyForecastErrors);
+        await _forecastErrorRepo.Add(dailyForecastErrors);
+        await _forecastErrorRepo.SaveChangesAsync();
       }
     }
 
@@ -152,10 +157,9 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors = _databaseHelper
-            .Get<AirQualityForecastError>(
-                fe => fe.InstallationId == installationId
-                   && fe.ErrorType == ForecastErrorType.Daily).ToList();
+        var dailyForecastErrors = _forecastErrorRepo.Get(
+            fe => fe.InstallationId == installationId
+               && fe.ErrorType == ForecastErrorType.Daily).ToList();
 
         if (dailyForecastErrors.Count > 0)
         {
@@ -177,8 +181,11 @@
         newTotalForecastErrors.Add(totalForecastError);
 
         // Update total forecast errors
-        _databaseHelper.RemoveTotalForecastErrors();
-        await _databaseHelper.SaveForecastErrors(newTotalForecastErrors);
+        _forecastErrorRepo.Delete(fe => fe.ErrorType == ForecastErrorType.Total);
+        await _forecastErrorRepo.SaveChangesAsync();
+
+        await _forecastErrorRepo.Add(newTotalForecastErrors);
+        await _forecastErrorRepo.SaveChangesAsync();
       }
     }
 

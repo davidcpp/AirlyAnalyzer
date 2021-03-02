@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.DatabaseHelperTests
+﻿namespace AirlyAnalyzer.Tests.RepositoryTests
 {
   using System;
   using System.Collections.Generic;
@@ -12,10 +12,13 @@
   using System.Threading.Tasks;
   using System.Linq;
 
-  [Collection("DatabaseHelperTests")]
+  [Collection("RepositoryTests")]
   public class SaveNewMeasurementsTest : IDisposable
   {
     private readonly AirlyContext _context;
+    private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
+    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
+
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -39,6 +42,11 @@
           .Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
+
+      _measurementRepo = new GenericRepository<AirQualityMeasurement>(_context);
+      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
+          _context, measurementRepo: _measurementRepo);
+
       Seed();
     }
 
@@ -64,10 +72,9 @@
           numberOfMeasurements)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
-
       // Act
-      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
+      await _airlyAnalyzerRepo.SaveNewMeasurements(
+          installationId, minNumberOfMeasurements, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -98,10 +105,9 @@
           numberOfMeasurements)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
-
       // Act
-      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
+      await _airlyAnalyzerRepo.SaveNewMeasurements(
+          installationId, minNumberOfMeasurements, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -126,10 +132,9 @@
           numberOfMeasurements)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
-
       // Act
-      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
+      await _airlyAnalyzerRepo.SaveNewMeasurements(
+          installationId, minNumberOfMeasurements, newMeasurements);
 
       // Assert
       Assert.Equal(
@@ -167,10 +172,9 @@
             numberOfMeasurements)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfMeasurements);
-
       // Act
-      await databaseHelper.SaveNewMeasurements(installationId, newMeasurements);
+      await _airlyAnalyzerRepo.SaveNewMeasurements(
+          installationId, minNumberOfMeasurements, newMeasurements);
 
       // Assert
       Assert.Equal(

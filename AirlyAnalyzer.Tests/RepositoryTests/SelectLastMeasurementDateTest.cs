@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.DatabaseHelperTests
+﻿namespace AirlyAnalyzer.Tests.RepositoryTests
 {
   using System;
   using System.Collections.Generic;
@@ -11,13 +11,12 @@
   using Microsoft.Extensions.Configuration;
   using Xunit;
 
-  [Collection("DatabaseHelperTests")]
+  [Collection("RepositoryTests")]
   public class SelectLastMeasurementDateTest : IDisposable
   {
-    private const short _minNumberOfMeasurements = 23;
-
-    private readonly DatabaseHelper _databaseHelper;
     private readonly AirlyContext _context;
+    private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
+    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
     private readonly DateTime _startDate
@@ -42,7 +41,13 @@
           "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
-      _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
+
+      _measurementRepo
+          = new GenericRepository<AirQualityMeasurement>(_context);
+
+      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
+          _context, measurementRepo: _measurementRepo);
+
       Seed();
     }
 
@@ -53,7 +58,7 @@
       short installationId = _installationIds[0];
 
       // Act
-      var lastMeasurementDate = await _databaseHelper
+      var lastMeasurementDate = await _airlyAnalyzerRepo
           .SelectLastMeasurementDate(installationId);
 
       // Assert
@@ -76,7 +81,7 @@
       }
 
       // Act
-      var lastMeasurementDate = await _databaseHelper
+      var lastMeasurementDate = await _airlyAnalyzerRepo
           .SelectLastMeasurementDate(installationId);
 
       // Assert
@@ -105,7 +110,7 @@
       }
 
       // Act
-      var lastMeasurementDate = await _databaseHelper
+      var lastMeasurementDate = await _airlyAnalyzerRepo
           .SelectLastMeasurementDate(installationId);
 
       // Assert

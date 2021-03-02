@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.DatabaseHelperTests
+﻿namespace AirlyAnalyzer.Tests.RepositoryTests
 {
   using System;
   using System.Collections.Generic;
@@ -11,13 +11,14 @@
   using Microsoft.Extensions.Configuration;
   using Xunit;
 
-  [Collection("DatabaseHelperTests")]
+  [Collection("RepositoryTests")]
   public class SelectDataToProcessingTest : IDisposable
   {
     private const short _minNumberOfMeasurements = 23;
 
-    private readonly DatabaseHelper _databaseHelper;
     private readonly AirlyContext _context;
+    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
+    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -42,7 +43,14 @@
           .Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
-      _databaseHelper = new DatabaseHelper(_context, _minNumberOfMeasurements);
+
+      _forecastErrorRepo
+          = new GenericRepository<AirQualityForecastError>(_context);
+
+      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
+          _context,
+          forecastErrorRepo: _forecastErrorRepo);
+
       Seed();
     }
 
@@ -54,7 +62,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(installationId);
+          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -74,7 +82,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(installationId);
+          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -102,7 +110,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(installationId);
+          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
@@ -142,7 +150,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) =
-          await _databaseHelper.SelectDataToProcessing(installationId);
+          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(

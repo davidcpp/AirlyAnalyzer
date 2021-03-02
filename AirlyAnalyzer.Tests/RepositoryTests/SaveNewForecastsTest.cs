@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.DatabaseHelperTests
+﻿namespace AirlyAnalyzer.Tests.RepositoryTests
 {
   using System;
   using System.Collections.Generic;
@@ -12,12 +12,15 @@
   using System.Threading.Tasks;
   using System.Linq;
 
-  [Collection("DatabaseHelperTests")]
+  [Collection("RepositoryTests")]
   public class SaveNewForecastsTest : IDisposable
   {
     private readonly List<short> _installationIds;
 
     private readonly AirlyContext _context;
+    private readonly GenericRepository<AirQualityForecast> _forecastRepo;
+    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
+
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -39,6 +42,11 @@
           .Get<List<short>>();
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
+
+      _forecastRepo = new GenericRepository<AirQualityForecast>(_context);
+      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
+          _context, forecastRepo: _forecastRepo);
+
       Seed();
     }
 
@@ -62,10 +70,9 @@
           installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
-
       // Act
-      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
+      await _airlyAnalyzerRepo.SaveNewForecasts(
+          installationId, minNumberOfForecasts, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -91,10 +98,9 @@
           installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
-
       // Act
-      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
+      await _airlyAnalyzerRepo.SaveNewForecasts(
+          installationId, minNumberOfForecasts, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -115,10 +121,9 @@
           installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
-
       // Act
-      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
+      await _airlyAnalyzerRepo.SaveNewForecasts(
+          installationId, minNumberOfForecasts, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -151,10 +156,9 @@
           installationId, newForecastsStartDate, numberOfForecasts)
         .ToList();
 
-      var databaseHelper = new DatabaseHelper(_context, minNumberOfForecasts);
-
       // Act
-      await databaseHelper.SaveNewForecasts(installationId, newForecasts);
+      await _airlyAnalyzerRepo.SaveNewForecasts(
+          installationId, minNumberOfForecasts, newForecasts);
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());

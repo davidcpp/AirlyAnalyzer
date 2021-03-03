@@ -5,10 +5,11 @@
   using System.Linq;
   using System.Linq.Expressions;
   using System.Threading.Tasks;
+  using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
 
   public class GenericRepository<TEntity> : IRepository<TEntity>, IDisposable
-      where TEntity : class
+      where TEntity : AirQualityObject
   {
     private readonly DbSet<TEntity> _dbSet;
     private readonly AirlyContext _context;
@@ -21,8 +22,13 @@
       _dbSet = context.Set<TEntity>();
     }
 
-    public async Task Add(IEnumerable<TEntity> entities)
+    public async Task Add(List<TEntity> entities)
     {
+      while (entities.Count > 0 && _dbSet.Contains(entities[0]))
+      {
+        entities.RemoveAt(0);
+      }
+
       await _dbSet.AddRangeAsync(entities);
     }
 

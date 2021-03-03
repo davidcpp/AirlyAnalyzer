@@ -26,6 +26,8 @@
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
+    private GenericRepository<AirQualityMeasurement> _measurementRepo;
+    private GenericRepository<AirQualityForecast> _forecastRepo;
     private GenericRepository<AirQualityForecastError> _forecastErrorRepo;
     private AirlyAnalyzerRepository _airlyAnalyzerRepo;
     private Timer _timer;
@@ -67,6 +69,12 @@
     {
       using (var scope = _scopeFactory.CreateScope())
       {
+        _measurementRepo = scope.ServiceProvider
+            .GetRequiredService<GenericRepository<AirQualityMeasurement>>();
+
+        _forecastRepo = scope.ServiceProvider
+            .GetRequiredService<GenericRepository<AirQualityForecast>>();
+
         _forecastErrorRepo = scope.ServiceProvider
             .GetRequiredService<GenericRepository<AirQualityForecastError>>();
 
@@ -111,11 +119,11 @@
           newMeasurementsCount += newMeasurements.Count;
           newForecastsCount += newForecasts.Count;
 
-          await _airlyAnalyzerRepo.SaveNewMeasurements(
-              installationId, _minNumberOfMeasurements, newMeasurements);
+          await _measurementRepo.Add(newMeasurements);
+          await _measurementRepo.SaveChangesAsync();
 
-          await _airlyAnalyzerRepo.SaveNewForecasts(
-              installationId, _minNumberOfMeasurements, newForecasts);
+          await _forecastRepo.Add(newForecasts);
+          await _forecastRepo.SaveChangesAsync();
         }
       }
 

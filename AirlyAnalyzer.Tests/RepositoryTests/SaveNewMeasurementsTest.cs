@@ -17,7 +17,6 @@
   {
     private readonly AirlyContext _context;
     private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
-    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -44,42 +43,8 @@
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
       _measurementRepo = new GenericRepository<AirQualityMeasurement>(_context);
-      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
-          _context, measurementRepo: _measurementRepo);
 
       Seed();
-    }
-
-    [Fact]
-    public async Task do_not_save_measurements_without_min_required_number()
-    {
-      // Arrange
-      short installationId = _installationIds[0];
-      const short minNumberOfMeasurements = 22;
-      const short numberOfMeasurements = 24;
-      const int finalNumberOfMeasurements = numberOfMeasurements;
-      const short hoursRequestInterval = 21;
-
-      var measurementsStartDate = _startDate;
-      var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      _context.AddMeasurementsToDatabase(
-          installationId, measurementsStartDate, numberOfMeasurements);
-
-      var newMeasurements = GenerateMeasurements(
-          installationId,
-          newMeasurementsStartDate,
-          numberOfMeasurements)
-        .ToList();
-
-      // Act
-      await _airlyAnalyzerRepo.SaveNewMeasurements(
-          installationId, minNumberOfMeasurements, newMeasurements);
-
-      // Assert
-      Assert.Equal(
-          finalNumberOfMeasurements,
-          _context.ArchiveMeasurements.Count());
     }
 
     [Fact]
@@ -106,8 +71,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewMeasurements(
-          installationId, minNumberOfMeasurements, newMeasurements);
+      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(
@@ -120,7 +85,6 @@
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements = numberOfMeasurements;
 
@@ -133,8 +97,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewMeasurements(
-          installationId, minNumberOfMeasurements, newMeasurements);
+      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(
@@ -147,7 +111,6 @@
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       int finalNumberOfMeasurements
           = 2 * numberOfMeasurements * _installationIds.Count;
@@ -173,8 +136,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewMeasurements(
-          installationId, minNumberOfMeasurements, newMeasurements);
+      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(

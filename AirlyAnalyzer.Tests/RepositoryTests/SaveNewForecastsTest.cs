@@ -19,7 +19,6 @@
 
     private readonly AirlyContext _context;
     private readonly GenericRepository<AirQualityForecast> _forecastRepo;
-    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -44,38 +43,8 @@
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
       _forecastRepo = new GenericRepository<AirQualityForecast>(_context);
-      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
-          _context, forecastRepo: _forecastRepo);
 
       Seed();
-    }
-
-    [Fact]
-    public async Task do_not_save_forecasts_without_min_required_number()
-    {
-      // Arrange
-      short installationId = _installationIds[0];
-      const short minNumberOfForecasts = 22;
-      const short numberOfForecasts = 24;
-      const int finalNumberOfForecasts = numberOfForecasts;
-      const short hoursRequestInterval = 21;
-
-      var forecastsStartDate = _startDate;
-      var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      _context.AddForecastsToDatabase(
-          installationId, forecastsStartDate, numberOfForecasts);
-
-      var newForecasts = GenerateForecasts(
-          installationId, newForecastsStartDate, numberOfForecasts)
-        .ToList();
-
-      // Act
-      await _airlyAnalyzerRepo.SaveNewForecasts(
-          installationId, minNumberOfForecasts, newForecasts);
-
-      // Assert
-      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     [Fact]
@@ -99,8 +68,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewForecasts(
-          installationId, minNumberOfForecasts, newForecasts);
+      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -111,7 +80,6 @@
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       const int finalNumberOfForecasts = numberOfForecasts;
 
@@ -122,8 +90,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewForecasts(
-          installationId, minNumberOfForecasts, newForecasts);
+      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -134,7 +102,6 @@
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
       int finalNumberOfForecasts = 2 * numberOfForecasts * _installationIds.Count;
       const short hoursRequestInterval = numberOfForecasts;
@@ -157,8 +124,8 @@
         .ToList();
 
       // Act
-      await _airlyAnalyzerRepo.SaveNewForecasts(
-          installationId, minNumberOfForecasts, newForecasts);
+      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());

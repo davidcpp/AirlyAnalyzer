@@ -2,38 +2,12 @@
 {
   using System;
 
-  public class AirQualityMeasurement
+  public class AirQualityMeasurement : AirQualityObject
   {
-    private DateTime fromDateTime;
-    private DateTime tillDateTime;
-    private DateTime requestDateTime;
-
-    public short InstallationId { get; set; }
-    public byte AirlyCaqi { get; set; }
     public short Pm1 { get; set; }
-    public short Pm25 { get; set; }
-    public short Pm10 { get; set; }
     public byte Humidity { get; set; }
     public short Pressure { get; set; }
     public short Temperature { get; set; }
-
-    public DateTime FromDateTime
-    {
-      get => fromDateTime.ToLocalTime();
-      set => fromDateTime = value.ToUniversalTime();
-    }
-
-    public DateTime TillDateTime
-    {
-      get => tillDateTime.ToLocalTime();
-      set => tillDateTime = value.ToUniversalTime();
-    }
-
-    public DateTime RequestDateTime
-    {
-      get => requestDateTime.ToLocalTime();
-      set => requestDateTime = value.ToUniversalTime();
-    }
 
     public static explicit operator AirQualityMeasurement(
         AveragedValues averagedValue)
@@ -48,7 +22,7 @@
       {
         if (index.Name == "AIRLY_CAQI")
         {
-          measurement.AirlyCaqi = Convert.ToByte(Math.Ceiling(index.Value));
+          measurement.AirlyCaqi = Convert.ToInt16(Math.Ceiling(index.Value));
         }
       }
 

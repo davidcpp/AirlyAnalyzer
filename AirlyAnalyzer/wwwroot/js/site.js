@@ -48,8 +48,8 @@ function updateForecastErrorsTable(requestDate) {
           forecastErrors[i].installationId,
           (new Date(forecastErrors[i].fromDateTime)).toLocaleString('tr-TR'),
           (new Date(forecastErrors[i].tillDateTime)).toLocaleString('tr-TR'),
-          forecastErrors[i].airlyCaqiPctError + '%',
-          forecastErrors[i].airlyCaqiError,
+          forecastErrors[i].airlyCaqiPct + '%',
+          forecastErrors[i].airlyCaqi,
           (new Date(forecastErrors[i].requestDateTime)).toLocaleString('tr-TR'),
           forecastErrors[i].errorType,
         ]

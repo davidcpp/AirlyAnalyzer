@@ -133,12 +133,12 @@
         InstallationId = installationId,
         FromDateTime = _newArchiveMeasurements[i].FromDateTime,
         TillDateTime = _newArchiveMeasurements[i].TillDateTime,
-        AirlyCaqiPctError = Convert.ToInt16(airlyCaqiRelativeError * 100),
-        Pm25PctError = Convert.ToInt16(pm25RelativeError * 100),
-        Pm10PctError = Convert.ToInt16(pm10RelativeError * 100),
-        AirlyCaqiError = airlyCaqiError,
-        Pm25Error = pm25Error,
-        Pm10Error = pm10Error,
+        AirlyCaqiPct = Convert.ToInt16(airlyCaqiRelativeError * 100),
+        Pm25Pct = Convert.ToInt16(pm25RelativeError * 100),
+        Pm10Pct = Convert.ToInt16(pm10RelativeError * 100),
+        AirlyCaqi = airlyCaqiError,
+        Pm25 = pm25Error,
+        Pm10 = pm10Error,
         RequestDateTime = _newArchiveMeasurements[i].RequestDateTime,
         ErrorType = ForecastErrorType.Hourly,
       };
@@ -152,12 +152,12 @@
         InstallationId = installationId,
         FromDateTime = allForecastErrors.First().FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,
-        CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPctError),
-        Pm25Pct = allForecastErrors.Sum(fe => fe.Pm25PctError),
-        Pm10Pct = allForecastErrors.Sum(fe => fe.Pm10PctError),
-        Caqi = allForecastErrors.Sum(fe => fe.AirlyCaqiError),
-        Pm25 = allForecastErrors.Sum(fe => fe.Pm25Error),
-        Pm10 = allForecastErrors.Sum(fe => fe.Pm10Error),
+        CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPct),
+        Pm25Pct = allForecastErrors.Sum(fe => fe.Pm25Pct),
+        Pm10Pct = allForecastErrors.Sum(fe => fe.Pm10Pct),
+        Caqi = allForecastErrors.Sum(fe => fe.AirlyCaqi),
+        Pm25 = allForecastErrors.Sum(fe => fe.Pm25),
+        Pm10 = allForecastErrors.Sum(fe => fe.Pm10),
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
         Counter = allForecastErrors.Count(),
       };
@@ -201,12 +201,12 @@
 
       public void AddAbs(AirQualityForecastError error)
       {
-        CaqiPct += Math.Abs(error.AirlyCaqiPctError);
-        Pm25Pct += Math.Abs(error.Pm25PctError);
-        Pm10Pct += Math.Abs(error.Pm10PctError);
-        Caqi += Math.Abs(error.AirlyCaqiError);
-        Pm25 += Math.Abs(error.Pm25Error);
-        Pm10 += Math.Abs(error.Pm10Error);
+        CaqiPct += Math.Abs(error.AirlyCaqiPct);
+        Pm25Pct += Math.Abs(error.Pm25Pct);
+        Pm10Pct += Math.Abs(error.Pm10Pct);
+        Caqi += Math.Abs(error.AirlyCaqi);
+        Pm25 += Math.Abs(error.Pm25);
+        Pm10 += Math.Abs(error.Pm10);
 
         TillDateTime = error.TillDateTime;
         Counter++;
@@ -239,12 +239,12 @@
           InstallationId = this.InstallationId,
           FromDateTime = this.FromDateTime,
           TillDateTime = this.TillDateTime,
-          AirlyCaqiPctError = (short)(CaqiPct / Counter),
-          Pm25PctError = (short)(Pm25Pct / Counter),
-          Pm10PctError = (short)(Pm10Pct / Counter),
-          AirlyCaqiError = (short)(Caqi / Counter),
-          Pm25Error = (short)(Pm25 / Counter),
-          Pm10Error = (short)(Pm10 / Counter),
+          AirlyCaqiPct = (short)(CaqiPct / Counter),
+          Pm25Pct = (short)(Pm25Pct / Counter),
+          Pm10Pct = (short)(Pm10Pct / Counter),
+          AirlyCaqi = (short)(Caqi / Counter),
+          Pm25 = (short)(Pm25 / Counter),
+          Pm10 = (short)(Pm10 / Counter),
           RequestDateTime = this.RequestDateTime,
           ErrorType = errorType,
         };

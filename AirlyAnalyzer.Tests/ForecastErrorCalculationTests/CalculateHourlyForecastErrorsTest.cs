@@ -231,9 +231,9 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
               installationId, newMeasurements, newForecasts);
 
       // Assert
-      Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPctError);
-      Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25PctError);
-      Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10PctError);
+      Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);
+      Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25Pct);
+      Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10Pct);
     }
 
     [Theory]
@@ -298,9 +298,9 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
               installationId, newMeasurements, newForecasts);
 
       // Assert
-      Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPctError);
-      Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25PctError);
-      Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10PctError);
+      Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);
+      Assert.Equal(airlyPm25_ForecastError, forecastErrors[0].Pm25Pct);
+      Assert.Equal(airlyPm10_ForecastError, forecastErrors[0].Pm10Pct);
     }
   }
 }

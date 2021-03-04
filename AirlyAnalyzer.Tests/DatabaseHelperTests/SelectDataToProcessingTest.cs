@@ -145,14 +145,14 @@
           await _databaseHelper.SelectDataToProcessing(installationId);
 
       // Assert
-      Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
-      Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
       Assert.Equal(
           numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
           newArchiveMeasurements.Count);
       Assert.Equal(
           numberOfNewForecastsInDay * numberOfNotProcessedDays,
           newArchiveForecasts.Count);
+      Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
+      Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
     }
 
     /* Private auxiliary methods */

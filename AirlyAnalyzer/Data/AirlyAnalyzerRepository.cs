@@ -1,39 +1,21 @@
 ﻿namespace AirlyAnalyzer.Data
 {
-  using System;
   using System.Collections.Generic;
   using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
 
-  public class AirlyAnalyzerRepository : IDisposable
+  public class AirlyAnalyzerRepository : GenericRepository<AirQualityForecastError>
   {
-    private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
-
-    private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
-
-    private bool disposedValue;
-
-    public AirlyAnalyzerRepository(
-        AirlyContext context,
-        GenericRepository<AirQualityForecastError> forecastErrorRepo = null)
+    public AirlyAnalyzerRepository(AirlyContext context) : base(context)
     {
-      _context = context;
-      _forecastErrorRepo = forecastErrorRepo;
     }
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         SelectDataToProcessing(short installationId)
     {
-      if (_forecastErrorRepo == null)
-      {
-        return (new List<AirQualityMeasurement>(), new List<AirQualityForecast>());
-      }
-
-      var lastForecastErrorDate
-          = await _forecastErrorRepo.GetLastDate(installationId);
+      var lastForecastErrorDate = await GetLastDate(installationId);
 
       var _newArchiveMeasurements = await _context.ArchiveMeasurements
           .Where(m => m.InstallationId == installationId
@@ -46,24 +28,6 @@
           .ToListAsync();
 
       return (_newArchiveMeasurements, _newArchiveForecasts);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!disposedValue)
-      {
-        if (disposing)
-        {
-          _context.Dispose();
-        }
-        disposedValue = true;
-      }
-    }
-
-    public void Dispose()
-    {
-      Dispose(disposing: true);
-      GC.SuppressFinalize(this);
     }
   }
 }

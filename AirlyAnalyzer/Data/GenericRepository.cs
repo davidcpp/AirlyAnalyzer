@@ -11,8 +11,8 @@
   public class GenericRepository<TEntity> : IRepository<TEntity>, IDisposable
       where TEntity : AirQualityObject
   {
-    private readonly DbSet<TEntity> _dbSet;
-    private readonly AirlyContext _context;
+    protected readonly DbSet<TEntity> _dbSet;
+    protected readonly AirlyContext _context;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
 

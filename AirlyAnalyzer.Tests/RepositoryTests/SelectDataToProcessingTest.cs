@@ -14,10 +14,7 @@
   [Collection("RepositoryTests")]
   public class SelectDataToProcessingTest : IDisposable
   {
-    private const short _minNumberOfMeasurements = 23;
-
     private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
     private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _startDate
@@ -44,12 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _forecastErrorRepo
-          = new GenericRepository<AirQualityForecastError>(_context);
-
-      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
-          _context,
-          forecastErrorRepo: _forecastErrorRepo);
+      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(_context);
 
       Seed();
     }

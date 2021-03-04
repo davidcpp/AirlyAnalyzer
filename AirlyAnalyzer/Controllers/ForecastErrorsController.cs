@@ -1,6 +1,7 @@
 ﻿namespace AirlyAnalyzer.Controllers
 {
   using System;
+  using System.Collections.Generic;
   using System.Linq;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
@@ -28,12 +29,17 @@
               orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
               isDistinct: true);
 
-      var selectedRequestDate = requestDates.First();
+      if (requestDates.Any())
+      {
+        var selectedRequestDate = requestDates.First();
 
-      var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
-          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
+        var errorsInDay = _databaseHelper.Get<AirQualityForecastError>(
+            wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
-      return View(errorsInDay);
+        return View(errorsInDay);
+      }
+
+      return View(new List<AirQualityForecastError>());
     }
 
     protected override void Dispose(bool disposing)

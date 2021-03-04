@@ -32,18 +32,8 @@
         return (new List<AirQualityMeasurement>(), new List<AirQualityForecast>());
       }
 
-      var lastForecastErrorDate = _dateTimeMinValue;
-
-      var selectedDates = _forecastErrorRepo.GetParameters<DateTime>(
-          wherePredicate: fe => fe.InstallationId == installationId,
-          selectPredicate: fe => fe.TillDateTime,
-          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
-
-      if (selectedDates.AsQueryable().Any())
-      {
-        lastForecastErrorDate = await selectedDates.AsQueryable()
-            .FirstAsync();
-      }
+      var lastForecastErrorDate
+          = await _forecastErrorRepo.GetLastDate(installationId);
 
       var _newArchiveMeasurements = await _context.ArchiveMeasurements
           .Where(m => m.InstallationId == installationId

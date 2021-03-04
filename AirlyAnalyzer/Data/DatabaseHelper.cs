@@ -94,7 +94,7 @@
 
       var selectedDates = GetParameters<AirQualityMeasurement, DateTime>(
           wherePredicate: m => m.InstallationId == installationId,
-          selectPredicate: f => f.TillDateTime,
+          selectPredicate: m => m.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
       // Check if some of measurements there already are in Database

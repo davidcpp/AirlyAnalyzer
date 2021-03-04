@@ -101,8 +101,7 @@
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
-        var lastMeasurementDate =
-            await _measurementRepo.GetLastDate(installationId);
+        var lastMeasurementDate = _measurementRepo.GetLastDate(installationId);
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)

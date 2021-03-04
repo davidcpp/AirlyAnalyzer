@@ -3,7 +3,6 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
-  using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
@@ -47,13 +46,13 @@
     }
 
     [Fact]
-    public async Task date_time_min_value_when_no_data_in_database()
+    public void date_time_min_value_when_no_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
 
       // Act
-      var lastMeasurementDate = await _measurementRepo
+      var lastMeasurementDate = _measurementRepo
           .GetLastDate(installationId);
 
       // Assert
@@ -61,7 +60,7 @@
     }
 
     [Fact]
-    public async Task date_time_min_value_when_only_data_from_other_installations_in_database()
+    public void date_time_min_value_when_only_data_from_other_installations_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -76,7 +75,7 @@
       }
 
       // Act
-      var lastMeasurementDate = await _measurementRepo
+      var lastMeasurementDate = _measurementRepo
           .GetLastDate(installationId);
 
       // Assert
@@ -84,7 +83,7 @@
     }
 
     [Fact]
-    public async Task proper_date_when_all_installations_data_in_database()
+    public void proper_date_when_all_installations_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -105,7 +104,7 @@
       }
 
       // Act
-      var lastMeasurementDate = await _measurementRepo
+      var lastMeasurementDate = _measurementRepo
           .GetLastDate(installationId);
 
       // Assert

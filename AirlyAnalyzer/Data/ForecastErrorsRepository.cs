@@ -15,7 +15,7 @@
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         SelectDataToProcessing(short installationId)
     {
-      var lastForecastErrorDate = await GetLastDate(installationId);
+      var lastForecastErrorDate = GetLastDate(installationId);
 
       var _newArchiveMeasurements = await _context.ArchiveMeasurements
           .Where(m => m.InstallationId == installationId

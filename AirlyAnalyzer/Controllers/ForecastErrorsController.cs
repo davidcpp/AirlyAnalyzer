@@ -23,11 +23,12 @@
       var requestDates = _forecastErrorRepo.GetParameters<DateTime>(
           selectPredicate: fe => fe.RequestDateTime.Date,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
-          isDistinct: true);
+          isDistinct: true)
+        .ToList();
 
-      if (requestDates.Any())
+      if (requestDates.Count > 0)
       {
-        var selectedRequestDate = requestDates.First();
+        var selectedRequestDate = requestDates[0];
 
         var errorsInDay = _forecastErrorRepo.Get(
             wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);

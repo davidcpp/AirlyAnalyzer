@@ -49,10 +49,10 @@
         query = query.Where(wherePredicate);
       }
 
-      return query;
+      return query.ToList();
     }
 
-    public async Task<DateTime> GetLastDate(short installationId)
+    public DateTime GetLastDate(short installationId)
     {
       var lastDate = _dateTimeMinValue;
 
@@ -61,10 +61,9 @@
           selectPredicate: m => m.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
-      if (selectedDates.AsQueryable().Any())
+      if (selectedDates.Any())
       {
-        lastDate = await selectedDates.AsQueryable()
-            .FirstAsync();
+        lastDate = selectedDates.First();
       }
 
       return lastDate;
@@ -98,7 +97,7 @@
           resultQuery = orderByMethod(resultQuery);
         }
 
-        return resultQuery;
+        return resultQuery.ToList();
       }
       else
       {

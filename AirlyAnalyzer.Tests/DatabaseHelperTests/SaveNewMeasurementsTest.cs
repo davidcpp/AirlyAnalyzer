@@ -83,7 +83,7 @@
       const short minNumberOfMeasurements = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements
-          = minNumberOfMeasurements + numberOfMeasurements;
+          = numberOfMeasurements + minNumberOfMeasurements;
       const short hoursRequestInterval = minNumberOfMeasurements;
 
       var measurementsStartDate = _startDate;

@@ -78,7 +78,7 @@
       short installationId = _installationIds[0];
       const short minNumberOfForecasts = 22;
       const short numberOfForecasts = 24;
-      const int finalNumberOfForecasts = minNumberOfForecasts + numberOfForecasts;
+      const int finalNumberOfForecasts = numberOfForecasts + minNumberOfForecasts;
       const short hoursRequestInterval = minNumberOfForecasts;
 
       var forecastsStartDate = _startDate;

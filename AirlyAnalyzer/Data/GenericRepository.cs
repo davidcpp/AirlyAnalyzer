@@ -14,6 +14,8 @@
     private readonly DbSet<TEntity> _dbSet;
     private readonly AirlyContext _context;
 
+    private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
+
     private bool disposedValue;
 
     public GenericRepository(AirlyContext context)
@@ -48,6 +50,24 @@
       }
 
       return query;
+    }
+
+    public async Task<DateTime> GetLastDate(short installationId)
+    {
+      var lastDate = _dateTimeMinValue;
+
+      var selectedDates = GetParameters<DateTime>(
+          wherePredicate: m => m.InstallationId == installationId,
+          selectPredicate: m => m.TillDateTime,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
+
+      if (selectedDates.AsQueryable().Any())
+      {
+        lastDate = await selectedDates.AsQueryable()
+            .FirstAsync();
+      }
+
+      return lastDate;
     }
 
     public IEnumerable<T> GetParameters<T>(

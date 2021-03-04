@@ -102,7 +102,7 @@
       foreach (short installationId in _installationIDsList)
       {
         var lastMeasurementDate =
-            await _airlyAnalyzerRepo.SelectLastMeasurementDate(installationId);
+            await _measurementRepo.GetLastDate(installationId);
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)

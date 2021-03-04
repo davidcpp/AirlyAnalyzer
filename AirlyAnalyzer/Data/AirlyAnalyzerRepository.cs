@@ -10,7 +10,6 @@
   public class AirlyAnalyzerRepository : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
     private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
@@ -19,11 +18,9 @@
 
     public AirlyAnalyzerRepository(
         AirlyContext context,
-        GenericRepository<AirQualityMeasurement> measurementRepo = null,
         GenericRepository<AirQualityForecastError> forecastErrorRepo = null)
     {
       _context = context;
-      _measurementRepo = measurementRepo;
       _forecastErrorRepo = forecastErrorRepo;
     }
 
@@ -59,24 +56,6 @@
           .ToListAsync();
 
       return (_newArchiveMeasurements, _newArchiveForecasts);
-    }
-
-    public async Task<DateTime> SelectLastMeasurementDate(short installationId)
-    {
-      var lastMeasurementDate = _dateTimeMinValue;
-
-      var selectedDates = _measurementRepo?.GetParameters<DateTime>(
-          wherePredicate: m => m.InstallationId == installationId,
-          selectPredicate: m => m.TillDateTime,
-          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
-
-      if (selectedDates?.AsQueryable().Any() == true)
-      {
-        lastMeasurementDate = await selectedDates.AsQueryable()
-            .FirstAsync();
-      }
-
-      return lastMeasurementDate;
     }
 
     protected virtual void Dispose(bool disposing)

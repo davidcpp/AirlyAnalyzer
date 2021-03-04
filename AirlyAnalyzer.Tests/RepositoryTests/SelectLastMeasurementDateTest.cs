@@ -16,7 +16,6 @@
   {
     private readonly AirlyContext _context;
     private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
-    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
     private readonly DateTime _startDate
@@ -42,11 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _measurementRepo
-          = new GenericRepository<AirQualityMeasurement>(_context);
-
-      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(
-          _context, measurementRepo: _measurementRepo);
+      _measurementRepo = new GenericRepository<AirQualityMeasurement>(_context);
 
       Seed();
     }
@@ -58,8 +53,8 @@
       short installationId = _installationIds[0];
 
       // Act
-      var lastMeasurementDate = await _airlyAnalyzerRepo
-          .SelectLastMeasurementDate(installationId);
+      var lastMeasurementDate = await _measurementRepo
+          .GetLastDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
@@ -81,8 +76,8 @@
       }
 
       // Act
-      var lastMeasurementDate = await _airlyAnalyzerRepo
-          .SelectLastMeasurementDate(installationId);
+      var lastMeasurementDate = await _measurementRepo
+          .GetLastDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
@@ -110,8 +105,8 @@
       }
 
       // Act
-      var lastMeasurementDate = await _airlyAnalyzerRepo
-          .SelectLastMeasurementDate(installationId);
+      var lastMeasurementDate = await _measurementRepo
+          .GetLastDate(installationId);
 
       // Assert
       Assert.Equal(properDate, lastMeasurementDate);

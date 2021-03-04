@@ -29,7 +29,7 @@
     private GenericRepository<AirQualityMeasurement> _measurementRepo;
     private GenericRepository<AirQualityForecast> _forecastRepo;
     private GenericRepository<AirQualityForecastError> _forecastErrorRepo;
-    private AirlyAnalyzerRepository _airlyAnalyzerRepo;
+    private ForecastErrorsRepository _airlyAnalyzerRepo;
     private Timer _timer;
 
     public ProgramController(
@@ -79,7 +79,7 @@
             .GetRequiredService<GenericRepository<AirQualityForecastError>>();
 
         _airlyAnalyzerRepo = scope.ServiceProvider
-            .GetRequiredService<AirlyAnalyzerRepository>();
+            .GetRequiredService<ForecastErrorsRepository>();
 
         if (await DownloadAndSaveAirQualityData() > 0)
         {

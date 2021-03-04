@@ -15,7 +15,7 @@
   public class SelectDataToProcessingTest : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly AirlyAnalyzerRepository _airlyAnalyzerRepo;
+    private readonly ForecastErrorsRepository _airlyAnalyzerRepo;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -41,7 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _airlyAnalyzerRepo = new AirlyAnalyzerRepository(_context);
+      _airlyAnalyzerRepo = new ForecastErrorsRepository(_context);
 
       Seed();
     }

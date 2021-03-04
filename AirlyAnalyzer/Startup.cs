@@ -40,7 +40,7 @@ namespace AirlyAnalyzer
                   .Replace("[DataDirectory]", dataDirectoryPath)));
 
       services
-          .AddScoped<AirlyAnalyzerRepository>()
+          .AddScoped<ForecastErrorsRepository>()
           .AddScoped<GenericRepository<AirQualityMeasurement>>()
           .AddScoped<GenericRepository<AirQualityForecast>>()
           .AddScoped<GenericRepository<AirQualityForecastError>>();

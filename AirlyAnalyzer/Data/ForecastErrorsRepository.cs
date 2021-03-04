@@ -6,9 +6,9 @@
   using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
 
-  public class AirlyAnalyzerRepository : GenericRepository<AirQualityForecastError>
+  public class ForecastErrorsRepository : GenericRepository<AirQualityForecastError>
   {
-    public AirlyAnalyzerRepository(AirlyContext context) : base(context)
+    public ForecastErrorsRepository(AirlyContext context) : base(context)
     {
     }
 

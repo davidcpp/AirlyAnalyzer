@@ -139,7 +139,7 @@
         var (newArchiveMeasurements, newArchiveForecasts) =
             await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
 
-        var hourlyForecastErrors = 
+        var hourlyForecastErrors =
             _forecastErrorsCalculation.CalculateHourlyForecastErrors(
                 installationId, newArchiveMeasurements, newArchiveForecasts);
 

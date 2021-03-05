@@ -118,10 +118,10 @@
           newMeasurementsCount += newMeasurements.Count;
           newForecastsCount += newForecasts.Count;
 
-          await _measurementRepo.Add(newMeasurements);
+          await _measurementRepo.AddAsync(newMeasurements);
           await _measurementRepo.SaveChangesAsync();
 
-          await _forecastRepo.Add(newForecasts);
+          await _forecastRepo.AddAsync(newForecasts);
           await _forecastRepo.SaveChangesAsync();
         }
       }
@@ -143,13 +143,13 @@
             _forecastErrorsCalculation.CalculateHourlyForecastErrors(
                 installationId, newArchiveMeasurements, newArchiveForecasts);
 
-        await _forecastErrorRepo.Add(hourlyForecastErrors);
+        await _forecastErrorRepo.AddAsync(hourlyForecastErrors);
 
         var dailyForecastErrors =
             _forecastErrorsCalculation.CalculateDailyForecastErrors(
                 installationId, hourlyForecastErrors);
 
-        await _forecastErrorRepo.Add(dailyForecastErrors);
+        await _forecastErrorRepo.AddAsync(dailyForecastErrors);
         await _forecastErrorRepo.SaveChangesAsync();
       }
     }
@@ -191,7 +191,7 @@
         _forecastErrorRepo.Delete(fe => fe.ErrorType == ForecastErrorType.Total);
         await _forecastErrorRepo.SaveChangesAsync();
 
-        await _forecastErrorRepo.Add(newTotalForecastErrors);
+        await _forecastErrorRepo.AddAsync(newTotalForecastErrors);
         await _forecastErrorRepo.SaveChangesAsync();
       }
     }

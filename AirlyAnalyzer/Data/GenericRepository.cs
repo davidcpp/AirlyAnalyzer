@@ -24,7 +24,7 @@
       _dbSet = context.Set<TEntity>();
     }
 
-    public async Task Add(List<TEntity> entities)
+    public async Task AddAsync(List<TEntity> entities)
     {
       while (entities.Count > 0 && _dbSet.Contains(entities[0]))
       {

@@ -71,7 +71,7 @@
         .ToList();
 
       // Act
-      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.AddAsync(newMeasurements);
       await _measurementRepo.SaveChangesAsync();
 
       // Assert
@@ -97,7 +97,7 @@
         .ToList();
 
       // Act
-      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.AddAsync(newMeasurements);
       await _measurementRepo.SaveChangesAsync();
 
       // Assert
@@ -136,7 +136,7 @@
         .ToList();
 
       // Act
-      await _measurementRepo.Add(newMeasurements);
+      await _measurementRepo.AddAsync(newMeasurements);
       await _measurementRepo.SaveChangesAsync();
 
       // Assert

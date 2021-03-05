@@ -68,7 +68,7 @@
         .ToList();
 
       // Act
-      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.AddAsync(newForecasts);
       await _forecastRepo.SaveChangesAsync();
 
       // Assert
@@ -90,7 +90,7 @@
         .ToList();
 
       // Act
-      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.AddAsync(newForecasts);
       await _forecastRepo.SaveChangesAsync();
 
       // Assert
@@ -124,7 +124,7 @@
         .ToList();
 
       // Act
-      await _forecastRepo.Add(newForecasts);
+      await _forecastRepo.AddAsync(newForecasts);
       await _forecastRepo.SaveChangesAsync();
 
       // Assert

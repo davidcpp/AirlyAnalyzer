@@ -14,13 +14,13 @@
   [Collection("RepositoryTests")]
   public class SaveNewForecastsTest : IDisposable
   {
-    private readonly List<short> _installationIds;
-
     private readonly AirlyContext _context;
     private readonly UnitOfWork _unitOfWork;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+
+    private readonly List<short> _installationIds;
 
     public SaveNewForecastsTest()
     {

@@ -105,45 +105,6 @@
     }
 
     [Fact]
-    public async Task add_measurements_after_measurements_from_several_installations()
-    {
-      // Arrange
-      short installationId = _installationIds[0];
-      const short numberOfMeasurements = 24;
-      int finalNumberOfMeasurements
-          = 2 * numberOfMeasurements * _installationIds.Count;
-      const short hoursRequestInterval = numberOfMeasurements;
-
-      var measurementsStartDate = _startDate;
-      var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      _context.AddMeasurementsToDatabase(
-          installationId, measurementsStartDate, numberOfMeasurements);
-
-      // all installations except the selected
-      for (int i = 1; i < _installationIds.Count; i++)
-      {
-        _context.AddMeasurementsToDatabase(
-            _installationIds[i], measurementsStartDate, 2 * numberOfMeasurements);
-      }
-
-      var newMeasurements = GenerateMeasurements(
-            installationId,
-            newMeasurementsStartDate,
-            numberOfMeasurements)
-        .ToList();
-
-      // Act
-      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
-      await _unitOfWork.SaveChangesAsync();
-
-      // Assert
-      Assert.Equal(
-          finalNumberOfMeasurements,
-          _context.ArchiveMeasurements.Count());
-    }
-
-    [Fact]
     public async Task add_repeated_forecasts()
     {
       // Arrange
@@ -179,40 +140,6 @@
       const int finalNumberOfForecasts = numberOfForecasts;
 
       var newForecastsStartDate = _startDate;
-
-      var newForecasts = GenerateForecasts(
-          installationId, newForecastsStartDate, numberOfForecasts)
-        .ToList();
-
-      // Act
-      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
-      await _unitOfWork.SaveChangesAsync();
-
-      // Assert
-      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
-    }
-
-    [Fact]
-    public async Task add_forecasts_after_forecasts_from_several_installations()
-    {
-      // Arrange
-      short installationId = _installationIds[0];
-      const short numberOfForecasts = 24;
-      int finalNumberOfForecasts = 2 * numberOfForecasts * _installationIds.Count;
-      const short hoursRequestInterval = numberOfForecasts;
-
-      var forecastsStartDate = _startDate;
-      var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
-
-      _context.AddForecastsToDatabase(
-          installationId, forecastsStartDate, numberOfForecasts);
-
-      // all installations except the selected
-      for (int i = 1; i < _installationIds.Count; i++)
-      {
-        _context.AddForecastsToDatabase(
-            _installationIds[i], forecastsStartDate, 2 * numberOfForecasts);
-      }
 
       var newForecasts = GenerateForecasts(
           installationId, newForecastsStartDate, numberOfForecasts)

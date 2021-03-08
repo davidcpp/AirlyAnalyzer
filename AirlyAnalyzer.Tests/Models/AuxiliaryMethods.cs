@@ -63,6 +63,32 @@
       context.SaveChanges();
     }
 
+    public static void AddHourlyForecastErrorsToDatabase(
+        this AirlyContext context,
+        short installationId,
+        DateTime startDate,
+        int numberOfForecastErrors)
+    {
+      context.ForecastErrors.AddRange(
+          GenerateHourlyForecastErrors(
+              installationId, startDate, numberOfForecastErrors));
+
+      context.SaveChanges();
+    }
+
+    public static void AddDailyForecastErrorsToDatabase(
+        this AirlyContext context,
+        short installationId,
+        DateTime startDate,
+        short numberOfDays,
+        short durationInHours = 24)
+    {
+      context.ForecastErrors.AddRange(GenerateDailyForecastErrors(
+          installationId, startDate, numberOfDays, durationInHours));
+
+      context.SaveChanges();
+    }
+
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
         short installationId,
         DateTime startDate,

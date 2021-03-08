@@ -153,6 +153,105 @@
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
+    [Fact]
+    public async Task add_repeated_hourly_forecast_errors()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short hoursRequestInterval = 22;
+      const short numberOfForecastErrors = 24;
+      const int finalNumberOfForecastErrors
+          = numberOfForecastErrors + hoursRequestInterval;
+
+      var forecastsStartDate = _startDate;
+      var newForecastErrorsStartDate = _startDate.AddHours(hoursRequestInterval);
+
+      _context.AddHourlyForecastErrorsToDatabase(
+          installationId, forecastsStartDate, numberOfForecastErrors);
+
+      var newForecastErrors = GenerateHourlyForecastErrors(
+          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
+    }
+
+    [Fact]
+    public async Task add_hourly_forecast_errors_when_no_forecast_errors_in_database()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfForecastErrors = 24;
+      const int finalNumberOfForecastErrors = numberOfForecastErrors;
+
+      var newForecastErrorsStartDate = _startDate;
+
+      var newForecastErrors = GenerateHourlyForecastErrors(
+          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
+    }
+
+    [Fact]
+    public async Task add_repeated_daily_forecast_errors()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short daysRequestInterval = 3;
+      const short numberOfForecastErrors = 5;
+      const int finalNumberOfForecastErrors = numberOfForecastErrors + daysRequestInterval;
+
+      var forecastsStartDate = _startDate;
+      var newForecastErrorsStartDate = _startDate.AddDays(daysRequestInterval);
+
+      _context.AddDailyForecastErrorsToDatabase(
+          installationId, forecastsStartDate, numberOfForecastErrors);
+
+      var newForecastErrors = GenerateDailyForecastErrors(
+          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
+    }
+
+    [Fact]
+    public async Task add_daily_forecast_errors_when_no_forecast_errors_in_database()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfForecastErrors = 24;
+      const int finalNumberOfForecastErrors = numberOfForecastErrors;
+
+      var newForecastErrorsStartDate = _startDate;
+
+      var newForecastErrors = GenerateDailyForecastErrors(
+          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
+    }
+
     /* Private auxiliary methods */
 
     private void Seed()

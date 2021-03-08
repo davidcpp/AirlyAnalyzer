@@ -136,7 +136,7 @@
       foreach (short installationId in _installationIDsList)
       {
         var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
-            .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
+            .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
         hourlyForecastErrors.AddRange(_forecastErrorsCalculation
             .CalculateHourlyForecastErrors(

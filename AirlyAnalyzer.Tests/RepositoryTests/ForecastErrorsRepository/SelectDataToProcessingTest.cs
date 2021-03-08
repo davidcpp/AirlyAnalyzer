@@ -54,7 +54,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
-          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -74,7 +74,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
-          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -102,7 +102,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
-          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
@@ -142,7 +142,7 @@
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
-          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(

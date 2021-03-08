@@ -10,8 +10,7 @@
 
     private GenericRepository<AirQualityMeasurement> measurementRepo;
     private GenericRepository<AirQualityForecast> forecastRepo;
-    private GenericRepository<AirQualityForecastError> forecastErrorRepo;
-    private ForecastErrorsRepository airlyAnalyzerRepo;
+    private ForecastErrorsRepository forecastErrorRepo;
 
     private bool disposedValue;
 
@@ -28,12 +27,8 @@
         => forecastRepo
             ??= new GenericRepository<AirQualityForecast>(_context);
 
-    public GenericRepository<AirQualityForecastError> ForecastErrorRepository
+    public ForecastErrorsRepository ForecastErrorRepository
         => forecastErrorRepo
-            ??= new GenericRepository<AirQualityForecastError>(_context);
-
-    public ForecastErrorsRepository AirlyAnalyzerRepository
-        => airlyAnalyzerRepo
             ??= new ForecastErrorsRepository(_context);
 
     public async Task SaveChangesAsync()

@@ -26,10 +26,7 @@
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
-    private GenericRepository<AirQualityMeasurement> _measurementRepo;
-    private GenericRepository<AirQualityForecast> _forecastRepo;
-    private GenericRepository<AirQualityForecastError> _forecastErrorRepo;
-    private ForecastErrorsRepository _airlyAnalyzerRepo;
+    private UnitOfWork _unitOfWork;
     private Timer _timer;
 
     public ProgramController(
@@ -69,17 +66,8 @@
     {
       using (var scope = _scopeFactory.CreateScope())
       {
-        _measurementRepo = scope.ServiceProvider
-            .GetRequiredService<GenericRepository<AirQualityMeasurement>>();
-
-        _forecastRepo = scope.ServiceProvider
-            .GetRequiredService<GenericRepository<AirQualityForecast>>();
-
-        _forecastErrorRepo = scope.ServiceProvider
-            .GetRequiredService<GenericRepository<AirQualityForecastError>>();
-
-        _airlyAnalyzerRepo = scope.ServiceProvider
-            .GetRequiredService<ForecastErrorsRepository>();
+        _unitOfWork = scope.ServiceProvider
+            .GetRequiredService<UnitOfWork>();
 
         if (await DownloadAndSaveAirQualityData() > 0)
         {
@@ -101,7 +89,8 @@
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
-        var lastMeasurementDate = _measurementRepo.GetLastDate(installationId);
+        var lastMeasurementDate
+            = _unitOfWork.MeasurementRepository.GetLastDate(installationId);
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)
@@ -118,11 +107,11 @@
           newMeasurementsCount += newMeasurements.Count;
           newForecastsCount += newForecasts.Count;
 
-          await _measurementRepo.AddAsync(newMeasurements);
-          await _measurementRepo.SaveChangesAsync();
+          await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+          await _unitOfWork.SaveChangesAsync();
 
-          await _forecastRepo.AddAsync(newForecasts);
-          await _forecastRepo.SaveChangesAsync();
+          await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+          await _unitOfWork.SaveChangesAsync();
         }
       }
 
@@ -136,21 +125,21 @@
       // Calculating and saving new daily and hourly forecast errors in database
       foreach (short installationId in _installationIDsList)
       {
-        var (newArchiveMeasurements, newArchiveForecasts) =
-            await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
+        var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+            .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors =
             _forecastErrorsCalculation.CalculateHourlyForecastErrors(
                 installationId, newArchiveMeasurements, newArchiveForecasts);
 
-        await _forecastErrorRepo.AddAsync(hourlyForecastErrors);
+        await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
 
         var dailyForecastErrors =
             _forecastErrorsCalculation.CalculateDailyForecastErrors(
                 installationId, hourlyForecastErrors);
 
-        await _forecastErrorRepo.AddAsync(dailyForecastErrors);
-        await _forecastErrorRepo.SaveChangesAsync();
+        await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
+        await _unitOfWork.SaveChangesAsync();
       }
     }
 
@@ -164,7 +153,7 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors = _forecastErrorRepo.Get(
+        var dailyForecastErrors = _unitOfWork.ForecastErrorRepository.Get(
             fe => fe.InstallationId == installationId
                && fe.ErrorType == ForecastErrorType.Daily).ToList();
 
@@ -188,11 +177,13 @@
         newTotalForecastErrors.Add(totalForecastError);
 
         // Update total forecast errors
-        _forecastErrorRepo.Delete(fe => fe.ErrorType == ForecastErrorType.Total);
-        await _forecastErrorRepo.SaveChangesAsync();
+        _unitOfWork.ForecastErrorRepository.Delete(
+            fe => fe.ErrorType == ForecastErrorType.Total);
 
-        await _forecastErrorRepo.AddAsync(newTotalForecastErrors);
-        await _forecastErrorRepo.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
+
+        await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
+        await _unitOfWork.SaveChangesAsync();
       }
     }
 

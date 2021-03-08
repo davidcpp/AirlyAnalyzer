@@ -9,28 +9,28 @@
 
   public class ForecastErrorsController : Controller
   {
-    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
+    private readonly UnitOfWork _unitOfWork;
 
-    public ForecastErrorsController(
-        GenericRepository<AirQualityForecastError> forecastErrorRepo)
+    public ForecastErrorsController(UnitOfWork unitOfWork)
     {
-      _forecastErrorRepo = forecastErrorRepo;
+      _unitOfWork = unitOfWork;
     }
 
     // GET: ForecastErrors
     public IActionResult Index()
     {
-      var requestDates = _forecastErrorRepo.GetParameters<DateTime>(
-          selectPredicate: fe => fe.RequestDateTime.Date,
-          orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
-          isDistinct: true)
-        .ToList();
+      var requestDates = _unitOfWork
+          .ForecastErrorRepository.GetParameters<DateTime>(
+              selectPredicate: fe => fe.RequestDateTime.Date,
+              orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
+              isDistinct: true)
+          .ToList();
 
       if (requestDates.Count > 0)
       {
         var selectedRequestDate = requestDates[0];
 
-        var errorsInDay = _forecastErrorRepo.Get(
+        var errorsInDay = _unitOfWork.ForecastErrorRepository.Get(
             wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
         return View(errorsInDay);
@@ -43,7 +43,7 @@
     {
       if (disposing)
       {
-        _forecastErrorRepo.Dispose();
+        _unitOfWork.Dispose();
       }
 
       base.Dispose(disposing);

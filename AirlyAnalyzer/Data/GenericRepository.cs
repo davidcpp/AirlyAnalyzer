@@ -8,15 +8,13 @@
   using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
 
-  public class GenericRepository<TEntity> : IRepository<TEntity>, IDisposable
+  public class GenericRepository<TEntity> : IRepository<TEntity>
       where TEntity : AirQualityObject
   {
     protected readonly DbSet<TEntity> _dbSet;
     protected readonly AirlyContext _context;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
-
-    private bool disposedValue;
 
     public GenericRepository(AirlyContext context)
     {
@@ -103,29 +101,6 @@
       {
         return new List<T>();
       }
-    }
-
-    public async Task SaveChangesAsync()
-    {
-      await _context.SaveChangesAsync();
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!disposedValue)
-      {
-        if (disposing)
-        {
-          _context.Dispose();
-        }
-        disposedValue = true;
-      }
-    }
-
-    public void Dispose()
-    {
-      Dispose(disposing: true);
-      GC.SuppressFinalize(this);
     }
   }
 }

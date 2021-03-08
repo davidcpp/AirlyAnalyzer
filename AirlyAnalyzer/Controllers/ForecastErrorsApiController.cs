@@ -12,12 +12,11 @@
   [ApiController]
   public class ForecastErrorsApiController : ControllerBase
   {
-    private readonly GenericRepository<AirQualityForecastError> _forecastErrorRepo;
+    private readonly UnitOfWork _unitOfWork;
 
-    public ForecastErrorsApiController(
-        GenericRepository<AirQualityForecastError> forecastErrorRepo)
+    public ForecastErrorsApiController(UnitOfWork unitOfWork)
     {
-      _forecastErrorRepo = forecastErrorRepo;
+      _unitOfWork = unitOfWork;
     }
 
     // GET: api/<ForecastErrorsApiController>/GetErrorsInDay/{day}
@@ -27,7 +26,7 @@
     public ActionResult<IEnumerable<AirQualityForecastError>>
         GetErrorsInDay(DateTime selectedRequestDate)
     {
-      var errorsInDay = _forecastErrorRepo.Get(
+      var errorsInDay = _unitOfWork.ForecastErrorRepository.Get(
           wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate)
               .ToList();
 
@@ -43,7 +42,7 @@
     [HttpGet]
     public IEnumerable<DateTime> GetRequestDates()
     {
-      return _forecastErrorRepo.GetParameters<DateTime>(
+      return _unitOfWork.ForecastErrorRepository.GetParameters<DateTime>(
           selectPredicate: fe => fe.RequestDateTime.Date,
           orderByMethod: q => q.OrderBy(dateTime => dateTime),
           isDistinct: true);

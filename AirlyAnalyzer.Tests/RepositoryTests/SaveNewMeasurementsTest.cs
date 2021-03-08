@@ -4,7 +4,6 @@
   using System.Collections.Generic;
   using System.IO;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -16,7 +15,7 @@
   public class SaveNewMeasurementsTest : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
+    private readonly UnitOfWork _unitOfWork;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -42,7 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _measurementRepo = new GenericRepository<AirQualityMeasurement>(_context);
+      _unitOfWork = new UnitOfWork(_context);
 
       Seed();
     }
@@ -71,8 +70,8 @@
         .ToList();
 
       // Act
-      await _measurementRepo.AddAsync(newMeasurements);
-      await _measurementRepo.SaveChangesAsync();
+      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(
@@ -97,8 +96,8 @@
         .ToList();
 
       // Act
-      await _measurementRepo.AddAsync(newMeasurements);
-      await _measurementRepo.SaveChangesAsync();
+      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(
@@ -136,8 +135,8 @@
         .ToList();
 
       // Act
-      await _measurementRepo.AddAsync(newMeasurements);
-      await _measurementRepo.SaveChangesAsync();
+      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(

@@ -4,7 +4,6 @@
   using System.Collections.Generic;
   using System.IO;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -18,7 +17,7 @@
     private readonly List<short> _installationIds;
 
     private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityForecast> _forecastRepo;
+    private readonly UnitOfWork _unitOfWork;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -42,7 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _forecastRepo = new GenericRepository<AirQualityForecast>(_context);
+      _unitOfWork = new UnitOfWork(_context);
 
       Seed();
     }
@@ -68,8 +67,8 @@
         .ToList();
 
       // Act
-      await _forecastRepo.AddAsync(newForecasts);
-      await _forecastRepo.SaveChangesAsync();
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -90,8 +89,8 @@
         .ToList();
 
       // Act
-      await _forecastRepo.AddAsync(newForecasts);
-      await _forecastRepo.SaveChangesAsync();
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
@@ -124,8 +123,8 @@
         .ToList();
 
       // Act
-      await _forecastRepo.AddAsync(newForecasts);
-      await _forecastRepo.SaveChangesAsync();
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
 
       // Assert
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());

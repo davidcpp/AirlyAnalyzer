@@ -3,7 +3,6 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
-  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,7 @@
   public class SelectLastMeasurementDateTest : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly GenericRepository<AirQualityMeasurement> _measurementRepo;
+    private readonly UnitOfWork _unitOfWork;
 
     private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
     private readonly DateTime _startDate
@@ -40,7 +39,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _measurementRepo = new GenericRepository<AirQualityMeasurement>(_context);
+      _unitOfWork = new UnitOfWork(_context);
 
       Seed();
     }
@@ -52,7 +51,7 @@
       short installationId = _installationIds[0];
 
       // Act
-      var lastMeasurementDate = _measurementRepo
+      var lastMeasurementDate = _unitOfWork.MeasurementRepository
           .GetLastDate(installationId);
 
       // Assert
@@ -75,7 +74,7 @@
       }
 
       // Act
-      var lastMeasurementDate = _measurementRepo
+      var lastMeasurementDate = _unitOfWork.MeasurementRepository
           .GetLastDate(installationId);
 
       // Assert
@@ -104,7 +103,7 @@
       }
 
       // Act
-      var lastMeasurementDate = _measurementRepo
+      var lastMeasurementDate = _unitOfWork.MeasurementRepository
           .GetLastDate(installationId);
 
       // Assert

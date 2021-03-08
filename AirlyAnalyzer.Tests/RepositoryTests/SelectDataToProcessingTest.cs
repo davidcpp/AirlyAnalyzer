@@ -15,7 +15,7 @@
   public class SelectDataToProcessingTest : IDisposable
   {
     private readonly AirlyContext _context;
-    private readonly ForecastErrorsRepository _airlyAnalyzerRepo;
+    private readonly UnitOfWork _unitOfWork;
 
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
@@ -41,7 +41,7 @@
 
       _context = new AirlyContext(inMemoryDatabaseOptions, config);
 
-      _airlyAnalyzerRepo = new ForecastErrorsRepository(_context);
+      _unitOfWork = new UnitOfWork(_context);
 
       Seed();
     }
@@ -53,8 +53,8 @@
       short installationId = _installationIds[0];
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) =
-          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
+      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -73,8 +73,8 @@
           _startDate, numberOfProcessedDays, numberOfElementsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) =
-          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
+      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Empty(newArchiveMeasurements);
@@ -101,8 +101,8 @@
           numberOfNewForecastsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) =
-          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
+      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
@@ -141,8 +141,8 @@
           numberOfNewForecastsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) =
-          await _airlyAnalyzerRepo.SelectDataToProcessing(installationId);
+      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+          .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(

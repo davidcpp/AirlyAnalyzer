@@ -47,7 +47,7 @@
     }
 
     [Fact]
-    public async Task add_repeated_measurements()
+    public async Task do_not_add_repeated_measurements()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -105,7 +105,7 @@
     }
 
     [Fact]
-    public async Task add_repeated_forecasts()
+    public async Task do_not_add_repeated_forecasts()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -154,7 +154,7 @@
     }
 
     [Fact]
-    public async Task add_repeated_hourly_forecast_errors()
+    public async Task do_not_add_repeated_hourly_forecast_errors()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -204,7 +204,7 @@
     }
 
     [Fact]
-    public async Task add_repeated_daily_forecast_errors()
+    public async Task do_not_add_repeated_daily_forecast_errors()
     {
       // Arrange
       short installationId = _installationIds[0];

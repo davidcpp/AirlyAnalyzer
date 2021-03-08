@@ -224,7 +224,7 @@
             short installationId,
             DateTime startDate,
             int numberOfForecastErrors,
-            short durationInHours = 1)
+            short durationInHours = 24)
     {
       for (int i = 0; i < numberOfForecastErrors; i++)
       {

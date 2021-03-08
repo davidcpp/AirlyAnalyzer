@@ -3,13 +3,13 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Linq;
+  using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Xunit;
-  using System.Threading.Tasks;
-  using System.Linq;
 
   [Collection("RepositoryTests")]
   public class AddAsyncTest : IDisposable

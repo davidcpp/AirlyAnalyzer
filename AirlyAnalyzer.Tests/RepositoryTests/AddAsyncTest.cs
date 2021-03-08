@@ -47,15 +47,14 @@
     }
 
     [Fact]
-    public async Task add_measurements_with_min_required_number()
+    public async Task add_repeated_measurements()
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfMeasurements = 22;
+      const short hoursRequestInterval = 22;
       const short numberOfMeasurements = 24;
       const int finalNumberOfMeasurements
-          = numberOfMeasurements + minNumberOfMeasurements;
-      const short hoursRequestInterval = minNumberOfMeasurements;
+          = numberOfMeasurements + hoursRequestInterval;
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -145,14 +144,13 @@
     }
 
     [Fact]
-    public async Task add_forecasts_with_min_required_number()
+    public async Task add_repeated_forecasts()
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short minNumberOfForecasts = 22;
+      const short hoursRequestInterval = 22;
       const short numberOfForecasts = 24;
-      const int finalNumberOfForecasts = numberOfForecasts + minNumberOfForecasts;
-      const short hoursRequestInterval = minNumberOfForecasts;
+      const int finalNumberOfForecasts = numberOfForecasts + hoursRequestInterval;
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);

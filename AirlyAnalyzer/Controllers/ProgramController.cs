@@ -68,22 +68,31 @@
         _unitOfWork = scope.ServiceProvider
             .GetRequiredService<UnitOfWork>();
 
-        if (await DownloadAndSaveAirQualityData() > 0)
+        var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
+
+        if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)
         {
-          if (await CalculateAndSaveForecastErrors() > 0)
+          var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
+          if (await SaveForecastErrors(hourlyErrors, dailyErrors) > 0)
           {
-            await CalculateAndSaveTotalForecastErrors();
+            var newTotalForecastErrors = await CalculateTotalForecastErrors();
+
+            if (newTotalForecastErrors.Count > 0)
+            {
+              UpdateTotalForecastErrors(newTotalForecastErrors);
+            }
           }
         }
       }
     }
 
-    private async Task<int> DownloadAndSaveAirQualityData()
+    private async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
+        DownloadAllAirQualityData()
     {
       _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
 
-      int newMeasurementsCount = 0;
-      int newForecastsCount = 0;
+      var newMeasurements = new List<AirQualityMeasurement>();
+      var newForecasts = new List<AirQualityForecast>();
 
       var requestDateTime = DateTime.UtcNow;
 
@@ -99,58 +108,68 @@
           var responseMeasurements = await _airQualityDataDownloader
               .DownloadAirQualityData(installationId);
 
-          var newMeasurements = responseMeasurements.History
-              .ConvertToAirQualityMeasurements(installationId, requestDateTime);
+          newMeasurements.AddRange(responseMeasurements.History
+              .ConvertToAirQualityMeasurements(installationId, requestDateTime));
 
-          var newForecasts = responseMeasurements.Forecast
-              .ConvertToAirQualityForecasts(installationId, requestDateTime);
-
-          newMeasurementsCount += newMeasurements.Count;
-          newForecastsCount += newForecasts.Count;
-
-          await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
-          await _unitOfWork.SaveChangesAsync();
-
-          await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
-          await _unitOfWork.SaveChangesAsync();
+          newForecasts.AddRange(responseMeasurements.Forecast
+              .ConvertToAirQualityForecasts(installationId, requestDateTime));
         }
       }
 
-      return Math.Min(newMeasurementsCount, newForecastsCount);
+      return (newMeasurements, newForecasts);
     }
 
-    private async Task<int> CalculateAndSaveForecastErrors()
+    private async Task<int> SaveAllAirQualityData(
+        List<AirQualityMeasurement> newMeasurements,
+        List<AirQualityForecast> newForecasts)
+    {
+      _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
+
+      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.SaveChangesAsync();
+
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
+
+      return Math.Min(newMeasurements.Count, newForecasts.Count);
+    }
+
+    private async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
+        CalculateForecastErrors()
     {
       _logger.LogInformation("CalculateAndSaveForecastErrors() is starting");
 
-      int newDailyForecastErrorsCount = 0;
+      var hourlyForecastErrors = new List<AirQualityForecastError>();
+      var dailyForecastErrors = new List<AirQualityForecastError>();
 
-      // Calculating and saving new daily and hourly forecast errors in database
       foreach (short installationId in _installationIDsList)
       {
         var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
             .AirlyAnalyzerRepository.SelectDataToProcessing(installationId);
 
-        var hourlyForecastErrors =
-            _forecastErrorsCalculation.CalculateHourlyForecastErrors(
-                installationId, newArchiveMeasurements, newArchiveForecasts);
+        hourlyForecastErrors.AddRange(_forecastErrorsCalculation
+            .CalculateHourlyForecastErrors(
+                installationId, newArchiveMeasurements, newArchiveForecasts));
 
-        await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
-
-        var dailyForecastErrors =
-            _forecastErrorsCalculation.CalculateDailyForecastErrors(
-                installationId, hourlyForecastErrors);
-
-        newDailyForecastErrorsCount += dailyForecastErrors.Count;
-
-        await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
-        await _unitOfWork.SaveChangesAsync();
+        dailyForecastErrors.AddRange(_forecastErrorsCalculation
+            .CalculateDailyForecastErrors(installationId, hourlyForecastErrors));
       }
 
-      return newDailyForecastErrorsCount;
+      return (hourlyForecastErrors, dailyForecastErrors);
     }
 
-    private async Task CalculateAndSaveTotalForecastErrors()
+    private async Task<int> SaveForecastErrors(
+        List<AirQualityForecastError> hourlyForecastErrors,
+        List<AirQualityForecastError> dailyForecastErrors)
+    {
+      await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
+      await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
+
+      return dailyForecastErrors.Count;
+    }
+
+    private async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
     {
       _logger.LogInformation(
           "CalculateAndSaveTotalForecastErrors() is starting");
@@ -183,16 +202,21 @@
                 _idForAllInstallations, newTotalForecastErrors);
 
         newTotalForecastErrors.Add(totalForecastError);
-
-        // Update total forecast errors
-        _unitOfWork.ForecastErrorRepository.Delete(
-            fe => fe.ErrorType == ForecastErrorType.Total);
-
-        await _unitOfWork.SaveChangesAsync();
-
-        await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
-        await _unitOfWork.SaveChangesAsync();
       }
+
+      return newTotalForecastErrors;
+    }
+
+    private async void UpdateTotalForecastErrors(
+        List<AirQualityForecastError> newTotalForecastErrors)
+    {
+      _unitOfWork.ForecastErrorRepository.Delete(
+          fe => fe.ErrorType == ForecastErrorType.Total);
+
+      await _unitOfWork.SaveChangesAsync();
+
+      await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
+      await _unitOfWork.SaveChangesAsync();
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

@@ -10,7 +10,7 @@
   using Xunit;
 
   [Collection("RepositoryTests")]
-  public class SelectLastMeasurementDateTest : IDisposable
+  public class GetLastDateTest : IDisposable
   {
     private readonly AirlyContext _context;
     private readonly UnitOfWork _unitOfWork;
@@ -21,7 +21,7 @@
 
     private readonly List<short> _installationIds;
 
-    public SelectLastMeasurementDateTest()
+    public GetLastDateTest()
     {
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
           .UseInMemoryDatabase("AirlyDatabase")

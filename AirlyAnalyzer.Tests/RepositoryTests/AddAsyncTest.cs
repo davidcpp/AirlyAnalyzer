@@ -12,7 +12,7 @@
   using System.Linq;
 
   [Collection("RepositoryTests")]
-  public class SaveNewMeasurementsTest : IDisposable
+  public class AddAsyncTest : IDisposable
   {
     private readonly AirlyContext _context;
     private readonly UnitOfWork _unitOfWork;
@@ -22,14 +22,14 @@
 
     private readonly List<short> _installationIds;
 
-    public SaveNewMeasurementsTest()
+    public AddAsyncTest()
     {
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
           .UseInMemoryDatabase("AirlyDatabase")
           .Options;
 
-      string configFilePath
-          = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+      string configFilePath = Path.Combine(
+          AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
 
       var config = new ConfigurationBuilder()
           .AddJsonFile(configFilePath)
@@ -47,7 +47,7 @@
     }
 
     [Fact]
-    public async Task save_measurements_with_min_required_number()
+    public async Task add_measurements_with_min_required_number()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -80,7 +80,7 @@
     }
 
     [Fact]
-    public async Task save_all_downloaded_measurements_when_no_measurements_in_database()
+    public async Task add_all_downloaded_measurements_when_no_measurements_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -106,7 +106,7 @@
     }
 
     [Fact]
-    public async Task save_measurements_after_measurements_from_several_installations()
+    public async Task add_measurements_after_measurements_from_several_installations()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -142,6 +142,90 @@
       Assert.Equal(
           finalNumberOfMeasurements,
           _context.ArchiveMeasurements.Count());
+    }
+
+    [Fact]
+    public async Task add_forecasts_with_min_required_number()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short minNumberOfForecasts = 22;
+      const short numberOfForecasts = 24;
+      const int finalNumberOfForecasts = numberOfForecasts + minNumberOfForecasts;
+      const short hoursRequestInterval = minNumberOfForecasts;
+
+      var forecastsStartDate = _startDate;
+      var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
+
+      _context.AddForecastsToDatabase(
+          installationId, forecastsStartDate, numberOfForecasts);
+
+      var newForecasts = GenerateForecasts(
+          installationId, newForecastsStartDate, numberOfForecasts)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
+    }
+
+    [Fact]
+    public async Task add_all_downloaded_forecasts_when_no_forecasts_in_database()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfForecasts = 24;
+      const int finalNumberOfForecasts = numberOfForecasts;
+
+      var newForecastsStartDate = _startDate;
+
+      var newForecasts = GenerateForecasts(
+          installationId, newForecastsStartDate, numberOfForecasts)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
+    }
+
+    [Fact]
+    public async Task add_forecasts_after_forecasts_from_several_installations()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfForecasts = 24;
+      int finalNumberOfForecasts = 2 * numberOfForecasts * _installationIds.Count;
+      const short hoursRequestInterval = numberOfForecasts;
+
+      var forecastsStartDate = _startDate;
+      var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
+
+      _context.AddForecastsToDatabase(
+          installationId, forecastsStartDate, numberOfForecasts);
+
+      // all installations except the selected
+      for (int i = 1; i < _installationIds.Count; i++)
+      {
+        _context.AddForecastsToDatabase(
+            _installationIds[i], forecastsStartDate, 2 * numberOfForecasts);
+      }
+
+      var newForecasts = GenerateForecasts(
+          installationId, newForecastsStartDate, numberOfForecasts)
+        .ToList();
+
+      // Act
+      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.SaveChangesAsync();
+
+      // Assert
+      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
     /* Private auxiliary methods */

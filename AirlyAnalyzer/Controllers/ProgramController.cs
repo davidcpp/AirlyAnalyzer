@@ -71,15 +71,10 @@
         if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)
         {
           var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
-          if (await SaveForecastErrors(hourlyErrors, dailyErrors) > 0)
-          {
-            var newTotalForecastErrors = await CalculateTotalForecastErrors();
+          await SaveForecastErrors(hourlyErrors, dailyErrors);
 
-            if (newTotalForecastErrors.Count > 0)
-            {
-              UpdateTotalForecastErrors(newTotalForecastErrors);
-            }
-          }
+          var newTotalForecastErrors = await CalculateTotalForecastErrors();
+          UpdateTotalForecastErrors(newTotalForecastErrors);
         }
       }
     }
@@ -206,13 +201,16 @@
     private async void UpdateTotalForecastErrors(
         List<AirQualityForecastError> newTotalForecastErrors)
     {
-      _unitOfWork.ForecastErrorRepository.Delete(
+      if (newTotalForecastErrors.Count > 0)
+      {
+        _unitOfWork.ForecastErrorRepository.Delete(
           fe => fe.ErrorType == ForecastErrorType.Total);
 
-      await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
 
-      await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
-      await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
+        await _unitOfWork.SaveChangesAsync();
+      }
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

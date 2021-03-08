@@ -46,14 +46,16 @@
       Seed();
     }
 
-    [Fact]
-    public async Task do_not_add_repeated_measurements()
+    [Theory]
+    [InlineData(22)]
+    [InlineData(0)]
+    public async Task do_not_add_repeated_measurements(
+        short hoursRequestInterval)
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short hoursRequestInterval = 22;
       const short numberOfMeasurements = 24;
-      const int finalNumberOfMeasurements
+      int finalNumberOfMeasurements
           = numberOfMeasurements + hoursRequestInterval;
 
       var measurementsStartDate = _startDate;
@@ -104,14 +106,16 @@
           _context.ArchiveMeasurements.Count());
     }
 
-    [Fact]
-    public async Task do_not_add_repeated_forecasts()
+    [Theory]
+    [InlineData(22)]
+    [InlineData(0)]
+    public async Task do_not_add_repeated_forecasts(
+        short hoursRequestInterval)
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short hoursRequestInterval = 22;
       const short numberOfForecasts = 24;
-      const int finalNumberOfForecasts = numberOfForecasts + hoursRequestInterval;
+      int finalNumberOfForecasts = numberOfForecasts + hoursRequestInterval;
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
@@ -153,14 +157,16 @@
       Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
     }
 
-    [Fact]
-    public async Task do_not_add_repeated_hourly_forecast_errors()
+    [Theory]
+    [InlineData(22)]
+    [InlineData(0)]
+    public async Task do_not_add_repeated_hourly_forecast_errors(
+        short hoursRequestInterval)
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short hoursRequestInterval = 22;
       const short numberOfForecastErrors = 24;
-      const int finalNumberOfForecastErrors
+      int finalNumberOfForecastErrors
           = numberOfForecastErrors + hoursRequestInterval;
 
       var forecastsStartDate = _startDate;
@@ -203,14 +209,17 @@
       Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
     }
 
-    [Fact]
-    public async Task do_not_add_repeated_daily_forecast_errors()
+    [Theory]
+    [InlineData(3)]
+    [InlineData(0)]
+    public async Task do_not_add_repeated_daily_forecast_errors(
+        short daysRequestInterval)
     {
       // Arrange
       short installationId = _installationIds[0];
-      const short daysRequestInterval = 3;
       const short numberOfForecastErrors = 5;
-      const int finalNumberOfForecastErrors = numberOfForecastErrors + daysRequestInterval;
+      int finalNumberOfForecastErrors
+          = numberOfForecastErrors + daysRequestInterval;
 
       var forecastsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddDays(daysRequestInterval);

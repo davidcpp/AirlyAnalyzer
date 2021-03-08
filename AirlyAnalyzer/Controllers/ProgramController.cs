@@ -60,7 +60,7 @@
       return Task.CompletedTask;
     }
 
-    private async void DoWork(object state)
+    public async void DoWork(object state)
     {
       using (var scope = _scopeFactory.CreateScope())
       {
@@ -79,7 +79,7 @@
       }
     }
 
-    private async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
+    public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()
     {
       _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
@@ -112,7 +112,7 @@
       return (newMeasurements, newForecasts);
     }
 
-    private async Task<int> SaveAllAirQualityData(
+    public async Task<int> SaveAllAirQualityData(
         List<AirQualityMeasurement> newMeasurements,
         List<AirQualityForecast> newForecasts)
     {
@@ -127,7 +127,7 @@
       return Math.Min(newMeasurements.Count, newForecasts.Count);
     }
 
-    private async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
+    public async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
         CalculateForecastErrors()
     {
       _logger.LogInformation("CalculateAndSaveForecastErrors() is starting");
@@ -151,7 +151,7 @@
       return (hourlyForecastErrors, dailyForecastErrors);
     }
 
-    private async Task<int> SaveForecastErrors(
+    public async Task<int> SaveForecastErrors(
         List<AirQualityForecastError> hourlyForecastErrors,
         List<AirQualityForecastError> dailyForecastErrors)
     {
@@ -162,7 +162,7 @@
       return dailyForecastErrors.Count;
     }
 
-    private async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
+    public async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
     {
       _logger.LogInformation(
           "CalculateAndSaveTotalForecastErrors() is starting");
@@ -198,7 +198,7 @@
       return newTotalForecastErrors;
     }
 
-    private async void UpdateTotalForecastErrors(
+    public async void UpdateTotalForecastErrors(
         List<AirQualityForecastError> newTotalForecastErrors)
     {
       if (newTotalForecastErrors.Count > 0)

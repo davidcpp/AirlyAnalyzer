@@ -37,7 +37,7 @@
       _dbSet.RemoveRange(_dbSet.Where(wherePredicate));
     }
 
-    public IEnumerable<TEntity> Get(
+    public Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null)
     {
       IQueryable<TEntity> query = _dbSet;
@@ -47,27 +47,27 @@
         query = query.Where(wherePredicate);
       }
 
-      return query.ToList();
+      return query.ToListAsync();
     }
 
-    public DateTime GetLastDate(short installationId)
+    public async Task<DateTime> GetLastDate(short installationId)
     {
       var lastDate = _dateTimeMinValue;
 
-      var selectedDates = GetParameters<DateTime>(
+      var selectedDates = await GetParameters<DateTime>(
           wherePredicate: m => m.InstallationId == installationId,
           selectPredicate: m => m.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
-      if (selectedDates.Any())
+      if (selectedDates.Count > 0)
       {
-        lastDate = selectedDates.First();
+        lastDate = selectedDates[0];
       }
 
       return lastDate;
     }
 
-    public IEnumerable<T> GetParameters<T>(
+    public Task<List<T>> GetParameters<T>(
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,
@@ -95,11 +95,11 @@
           resultQuery = orderByMethod(resultQuery);
         }
 
-        return resultQuery.ToList();
+        return resultQuery.ToListAsync();
       }
       else
       {
-        return new List<T>();
+        return new Task<List<T>>(() => new List<T>());
       }
     }
   }

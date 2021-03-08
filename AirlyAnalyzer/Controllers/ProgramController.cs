@@ -2,7 +2,6 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.Linq;
   using System.Threading;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
@@ -89,8 +88,8 @@
       // Downloading and saving new data in database
       foreach (short installationId in _installationIDsList)
       {
-        var lastMeasurementDate
-            = _unitOfWork.MeasurementRepository.GetLastDate(installationId);
+        var lastMeasurementDate = await _unitOfWork
+            .MeasurementRepository.GetLastDate(installationId);
 
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)
@@ -153,9 +152,10 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors = _unitOfWork.ForecastErrorRepository.Get(
-            fe => fe.InstallationId == installationId
-               && fe.ErrorType == ForecastErrorType.Daily).ToList();
+        var dailyForecastErrors = await _unitOfWork
+            .ForecastErrorRepository.Get(
+                fe => fe.InstallationId == installationId
+                   && fe.ErrorType == ForecastErrorType.Daily);
 
         if (dailyForecastErrors.Count > 0)
         {

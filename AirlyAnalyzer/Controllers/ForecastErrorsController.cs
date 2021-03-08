@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Mvc;
@@ -17,20 +18,19 @@
     }
 
     // GET: ForecastErrors
-    public IActionResult Index()
+    public async Task<ActionResult<List<AirQualityForecastError>>> Index()
     {
-      var requestDates = _unitOfWork
+      var requestDates = await _unitOfWork
           .ForecastErrorRepository.GetParameters<DateTime>(
               selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
-              isDistinct: true)
-          .ToList();
+              isDistinct: true);
 
       if (requestDates.Count > 0)
       {
         var selectedRequestDate = requestDates[0];
 
-        var errorsInDay = _unitOfWork.ForecastErrorRepository.Get(
+        var errorsInDay = await _unitOfWork.ForecastErrorRepository.Get(
             wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
         return View(errorsInDay);

@@ -45,21 +45,21 @@
     }
 
     [Fact]
-    public void date_time_min_value_when_no_data_in_database()
+    public async void date_time_min_value_when_no_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
 
       // Act
-      var lastMeasurementDate = _unitOfWork.MeasurementRepository
-          .GetLastDate(installationId);
+      var lastMeasurementDate = await _unitOfWork
+          .MeasurementRepository.GetLastDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
     }
 
     [Fact]
-    public void date_time_min_value_when_only_data_from_other_installations_in_database()
+    public async void date_time_min_value_when_only_data_from_other_installations_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -74,15 +74,15 @@
       }
 
       // Act
-      var lastMeasurementDate = _unitOfWork.MeasurementRepository
-          .GetLastDate(installationId);
+      var lastMeasurementDate = await _unitOfWork
+          .MeasurementRepository.GetLastDate(installationId);
 
       // Assert
       Assert.Equal(_dateTimeMinValue, lastMeasurementDate);
     }
 
     [Fact]
-    public void proper_date_when_all_installations_data_in_database()
+    public async void proper_date_when_all_installations_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -103,8 +103,8 @@
       }
 
       // Act
-      var lastMeasurementDate = _unitOfWork.MeasurementRepository
-          .GetLastDate(installationId);
+      var lastMeasurementDate = await _unitOfWork
+          .MeasurementRepository.GetLastDate(installationId);
 
       // Assert
       Assert.Equal(properDate, lastMeasurementDate);

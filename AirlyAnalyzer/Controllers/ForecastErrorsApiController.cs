@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Http;
@@ -23,12 +24,11 @@
     [HttpGet("{selectedRequestDate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<IEnumerable<AirQualityForecastError>>
+    public async Task<ActionResult<List<AirQualityForecastError>>>
         GetErrorsInDay(DateTime selectedRequestDate)
     {
-      var errorsInDay = _unitOfWork.ForecastErrorRepository.Get(
-          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate)
-              .ToList();
+      var errorsInDay = await _unitOfWork.ForecastErrorRepository.Get(
+          wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
       if (errorsInDay.Count == 0)
       {
@@ -40,7 +40,7 @@
 
     // GET: api/<ForecastErrorsApiController>/GetRequestDates
     [HttpGet]
-    public IEnumerable<DateTime> GetRequestDates()
+    public Task<List<DateTime>> GetRequestDates()
     {
       return _unitOfWork.ForecastErrorRepository.GetParameters<DateTime>(
           selectPredicate: fe => fe.RequestDateTime.Date,

@@ -11,10 +11,10 @@
     public Task AddAsync(List<TEntity> entities);
     public void Delete(Expression<Func<TEntity, bool>> wherePredicate);
 
-    public IEnumerable<TEntity> Get(
+    public Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null);
 
-    public IEnumerable<T> GetParameters<T>(
+    public Task<List<T>> GetParameters<T>(
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,

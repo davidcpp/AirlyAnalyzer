@@ -70,8 +70,10 @@
 
         if (await DownloadAndSaveAirQualityData() > 0)
         {
-          await CalculateAndSaveForecastErrors();
-          await CalculateAndSaveTotalForecastErrors();
+          if (await CalculateAndSaveForecastErrors() > 0)
+          {
+            await CalculateAndSaveTotalForecastErrors();
+          }
         }
       }
     }
@@ -117,9 +119,11 @@
       return Math.Min(newMeasurementsCount, newForecastsCount);
     }
 
-    private async Task CalculateAndSaveForecastErrors()
+    private async Task<int> CalculateAndSaveForecastErrors()
     {
       _logger.LogInformation("CalculateAndSaveForecastErrors() is starting");
+
+      int newDailyForecastErrorsCount = 0;
 
       // Calculating and saving new daily and hourly forecast errors in database
       foreach (short installationId in _installationIDsList)
@@ -137,9 +141,13 @@
             _forecastErrorsCalculation.CalculateDailyForecastErrors(
                 installationId, hourlyForecastErrors);
 
+        newDailyForecastErrorsCount += dailyForecastErrors.Count;
+
         await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
         await _unitOfWork.SaveChangesAsync();
       }
+
+      return newDailyForecastErrorsCount;
     }
 
     private async Task CalculateAndSaveTotalForecastErrors()

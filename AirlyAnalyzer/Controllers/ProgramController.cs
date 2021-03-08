@@ -45,8 +45,7 @@
       _idForAllInstallations = config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _airQualityDataDownloader =
-          new AirQualityDataDownloader(config);
+      _airQualityDataDownloader = new AirQualityDataDownloader(config);
 
       _forecastErrorsCalculation =
           new ForecastErrorsCalculation(_minNumberOfMeasurements);
@@ -65,8 +64,7 @@
     {
       using (var scope = _scopeFactory.CreateScope())
       {
-        _unitOfWork = scope.ServiceProvider
-            .GetRequiredService<UnitOfWork>();
+        _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
         var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
 
@@ -179,16 +177,14 @@
       // Calculating total forecast errors for each installation
       foreach (short installationId in _installationIDsList)
       {
-        var dailyForecastErrors = await _unitOfWork
-            .ForecastErrorRepository.Get(
-                fe => fe.InstallationId == installationId
-                   && fe.ErrorType == ForecastErrorType.Daily);
+        var dailyForecastErrors = await _unitOfWork.ForecastErrorRepository.Get(
+          fe => fe.InstallationId == installationId
+             && fe.ErrorType == ForecastErrorType.Daily);
 
         if (dailyForecastErrors.Count > 0)
         {
-          var installationForecastError =
-              _forecastErrorsCalculation.CalculateTotalForecastError(
-                  installationId, dailyForecastErrors);
+          var installationForecastError = _forecastErrorsCalculation
+              .CalculateTotalForecastError(installationId, dailyForecastErrors);
 
           newTotalForecastErrors.Add(installationForecastError);
         }

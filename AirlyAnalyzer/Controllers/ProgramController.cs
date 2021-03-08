@@ -119,8 +119,6 @@
       _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
 
       await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
-      await _unitOfWork.SaveChangesAsync();
-
       await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
       await _unitOfWork.SaveChangesAsync();
 

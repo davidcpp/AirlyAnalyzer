@@ -82,7 +82,7 @@
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()
     {
-      _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
+      _logger.LogInformation("DownloadAllAirQualityData() is starting");
 
       var newMeasurements = new List<AirQualityMeasurement>();
       var newForecasts = new List<AirQualityForecast>();
@@ -116,7 +116,7 @@
         List<AirQualityMeasurement> newMeasurements,
         List<AirQualityForecast> newForecasts)
     {
-      _logger.LogInformation("DownloadAndSaveAirQualityData() is starting");
+      _logger.LogInformation("SaveAllAirQualityData() is starting");
 
       await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
       await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
@@ -128,7 +128,7 @@
     public async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
         CalculateForecastErrors()
     {
-      _logger.LogInformation("CalculateAndSaveForecastErrors() is starting");
+      _logger.LogInformation("CalculateForecastErrors() is starting");
 
       var hourlyForecastErrors = new List<AirQualityForecastError>();
       var dailyForecastErrors = new List<AirQualityForecastError>();
@@ -153,6 +153,8 @@
         List<AirQualityForecastError> hourlyForecastErrors,
         List<AirQualityForecastError> dailyForecastErrors)
     {
+      _logger.LogInformation("SaveForecastErrors() is starting");
+
       await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
       await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
       await _unitOfWork.SaveChangesAsync();
@@ -162,8 +164,7 @@
 
     public async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
     {
-      _logger.LogInformation(
-          "CalculateAndSaveTotalForecastErrors() is starting");
+      _logger.LogInformation("CalculateTotalForecastErrors() is starting");
 
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
@@ -199,6 +200,8 @@
     public async void UpdateTotalForecastErrors(
         List<AirQualityForecastError> newTotalForecastErrors)
     {
+      _logger.LogInformation("UpdateTotalForecastErrors() is starting");
+
       if (newTotalForecastErrors.Count > 0)
       {
         _unitOfWork.ForecastErrorRepository.Delete(

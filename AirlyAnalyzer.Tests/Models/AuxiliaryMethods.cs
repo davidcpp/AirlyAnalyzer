@@ -60,10 +60,8 @@
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
-        short installationId = _installationIds[i];
-
         context.AddMeasurementsToDatabase(
-            installationId,
+            _installationIds[i],
             measurementsStartDate,
             numberOfNotProcessedDays,
             numberOfMeasurementsInDay);
@@ -79,10 +77,8 @@
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
-        short installationId = _installationIds[i];
-
         context.AddForecastsToDatabase(
-            installationId,
+            _installationIds[i],
             forecastsStartDate,
             numberOfNotProcessedDays,
             numberOfForecastsInDay);

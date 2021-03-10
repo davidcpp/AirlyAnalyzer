@@ -6,6 +6,7 @@
   using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -53,22 +54,23 @@
         short hoursRequestInterval)
     {
       // Arrange
-      short installationId = _installationIds[0];
       const short numberOfMeasurements = 24;
       int finalNumberOfMeasurements
-          = numberOfMeasurements + hoursRequestInterval;
+          = _installationIds.Count * (numberOfMeasurements + hoursRequestInterval);
 
       var measurementsStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      _context.AddMeasurementsToDatabase(
-          installationId, measurementsStartDate, numberOfMeasurements);
+      _context.AddAllMeasurementsToDatabase(
+          _installationIds, measurementsStartDate, 1, numberOfMeasurements);
 
-      var newMeasurements = GenerateMeasurements(
-          installationId,
-          newMeasurementsStartDate,
-          numberOfMeasurements)
-        .ToList();
+      var newMeasurements = new List<AirQualityMeasurement>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        newMeasurements.AddRange(GenerateMeasurements(
+            _installationIds[i], newMeasurementsStartDate, numberOfMeasurements));
+      }
 
       // Act
       await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
@@ -113,19 +115,23 @@
         short hoursRequestInterval)
     {
       // Arrange
-      short installationId = _installationIds[0];
       const short numberOfForecasts = 24;
-      int finalNumberOfForecasts = numberOfForecasts + hoursRequestInterval;
+      int finalNumberOfForecasts
+          = _installationIds.Count * (numberOfForecasts + hoursRequestInterval);
 
       var forecastsStartDate = _startDate;
       var newForecastsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      _context.AddForecastsToDatabase(
-          installationId, forecastsStartDate, numberOfForecasts);
+      _context.AddAllForecastsToDatabase(
+          _installationIds, forecastsStartDate, 1, numberOfForecasts);
 
-      var newForecasts = GenerateForecasts(
-          installationId, newForecastsStartDate, numberOfForecasts)
-        .ToList();
+      var newForecasts = new List<AirQualityForecast>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        newForecasts.AddRange(GenerateForecasts(
+            _installationIds[i], newForecastsStartDate, numberOfForecasts));
+      }
 
       // Act
       await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
@@ -164,20 +170,26 @@
         short hoursRequestInterval)
     {
       // Arrange
-      short installationId = _installationIds[0];
       const short numberOfForecastErrors = 24;
       int finalNumberOfForecastErrors
-          = numberOfForecastErrors + hoursRequestInterval;
+          = _installationIds.Count * (numberOfForecastErrors + hoursRequestInterval);
 
       var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      _context.AddHourlyForecastErrorsToDatabase(
-          installationId, forecastErrorsStartDate, numberOfForecastErrors);
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        _context.AddHourlyForecastErrorsToDatabase(
+            _installationIds[i], forecastErrorsStartDate, numberOfForecastErrors);
+      }
 
-      var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
-        .ToList();
+      var newForecastErrors = new List<AirQualityForecastError>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        newForecastErrors.AddRange(GenerateHourlyForecastErrors(
+            _installationIds[i], newForecastErrorsStartDate, numberOfForecastErrors));
+      }
 
       // Act
       await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
@@ -216,20 +228,26 @@
         short daysRequestInterval)
     {
       // Arrange
-      short installationId = _installationIds[0];
       const short numberOfForecastErrors = 5;
       int finalNumberOfForecastErrors
-          = numberOfForecastErrors + daysRequestInterval;
+          = _installationIds.Count * (numberOfForecastErrors + daysRequestInterval);
 
       var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddDays(daysRequestInterval);
 
-      _context.AddDailyForecastErrorsToDatabase(
-          installationId, forecastErrorsStartDate, numberOfForecastErrors);
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        _context.AddDailyForecastErrorsToDatabase(
+            _installationIds[i], forecastErrorsStartDate, numberOfForecastErrors);
+      }
 
-      var newForecastErrors = GenerateDailyForecastErrors(
-          installationId, newForecastErrorsStartDate, numberOfForecastErrors)
-        .ToList();
+      var newForecastErrors = new List<AirQualityForecastError>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        newForecastErrors.AddRange(GenerateDailyForecastErrors(
+            _installationIds[i], newForecastErrorsStartDate, numberOfForecastErrors));
+      }
 
       // Act
       await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);

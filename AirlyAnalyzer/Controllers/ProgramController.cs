@@ -130,23 +130,25 @@
     {
       _logger.LogInformation("CalculateForecastErrors() is starting");
 
-      var hourlyForecastErrors = new List<AirQualityForecastError>();
-      var dailyForecastErrors = new List<AirQualityForecastError>();
+      var allHourlyForecastErrors = new List<AirQualityForecastError>();
+      var allDailyForecastErrors = new List<AirQualityForecastError>();
 
       foreach (short installationId in _installationIDsList)
       {
         var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
             .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
-        hourlyForecastErrors.AddRange(_forecastErrorsCalculation
+        var hourlyForecastErrors = _forecastErrorsCalculation
             .CalculateHourlyForecastErrors(
-                installationId, newArchiveMeasurements, newArchiveForecasts));
+                installationId, newArchiveMeasurements, newArchiveForecasts);
 
-        dailyForecastErrors.AddRange(_forecastErrorsCalculation
+        allHourlyForecastErrors.AddRange(hourlyForecastErrors);
+
+        allDailyForecastErrors.AddRange(_forecastErrorsCalculation
             .CalculateDailyForecastErrors(installationId, hourlyForecastErrors));
       }
 
-      return (hourlyForecastErrors, dailyForecastErrors);
+      return (allHourlyForecastErrors, allDailyForecastErrors);
     }
 
     public async Task<int> SaveForecastErrors(

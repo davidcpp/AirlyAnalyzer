@@ -51,15 +51,12 @@
       context.SaveChanges();
     }
 
-    // Method to adding new, not processed data for all installations 
-    public static void AddNotProcessedDataToDatabase(
+    public static void AddAllMeasurementsToDatabase(
         this AirlyContext context,
         List<short> _installationIds,
         DateTime measurementsStartDate,
-        DateTime forecastsStartDate,
         short numberOfNotProcessedDays,
-        short numberOfMeasurementsInDay,
-        short numberOfForecastsInDay)
+        short numberOfMeasurementsInDay)
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
@@ -70,6 +67,19 @@
             measurementsStartDate,
             numberOfNotProcessedDays,
             numberOfMeasurementsInDay);
+      }
+    }
+
+    public static void AddAllForecastsToDatabase(
+        this AirlyContext context,
+        List<short> _installationIds,
+        DateTime forecastsStartDate,
+        short numberOfNotProcessedDays,
+        short numberOfForecastsInDay)
+    {
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        short installationId = _installationIds[i];
 
         context.AddForecastsToDatabase(
             installationId,
@@ -78,7 +88,6 @@
             numberOfForecastsInDay);
       }
     }
-
 
     public static void AddMeasurementsToDatabase(
         this AirlyContext context,

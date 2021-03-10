@@ -95,12 +95,16 @@
       var newMeasurementsStartDate = _startDate;
       var newForecastsStartDate = _startDate;
 
-      _context.AddNotProcessedDataToDatabase(
+      _context.AddAllMeasurementsToDatabase(
           _installationIds,
           newMeasurementsStartDate,
+          numberOfNotProcessedDays,
+          numberOfNewMeasurementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
           newForecastsStartDate,
           numberOfNotProcessedDays,
-          numberOfNewMeasurementsInDay,
           numberOfNewForecastsInDay);
 
       // Act
@@ -139,12 +143,16 @@
           numberOfProcessedDays,
           numberOfElementsInDay);
 
-      _context.AddNotProcessedDataToDatabase(
+      _context.AddAllMeasurementsToDatabase(
           _installationIds,
           newMeasurementsStartDate,
+          numberOfNotProcessedDays,
+          numberOfNewMeasurementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
           newForecastsStartDate,
           numberOfNotProcessedDays,
-          numberOfNewMeasurementsInDay,
           numberOfNewForecastsInDay);
 
       // Act

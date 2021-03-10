@@ -54,16 +54,16 @@
     public static void AddAllMeasurementsToDatabase(
         this AirlyContext context,
         List<short> _installationIds,
-        DateTime measurementsStartDate,
-        short numberOfNotProcessedDays,
+        DateTime startDate,
+        short numberOfDays,
         short numberOfMeasurementsInDay)
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
         context.AddMeasurementsToDatabase(
             _installationIds[i],
-            measurementsStartDate,
-            numberOfNotProcessedDays,
+            startDate,
+            numberOfDays,
             numberOfMeasurementsInDay);
       }
     }
@@ -71,16 +71,16 @@
     public static void AddAllForecastsToDatabase(
         this AirlyContext context,
         List<short> _installationIds,
-        DateTime forecastsStartDate,
-        short numberOfNotProcessedDays,
+        DateTime startDate,
+        short numberOfDays,
         short numberOfForecastsInDay)
     {
       for (int i = 0; i < _installationIds.Count; i++)
       {
         context.AddForecastsToDatabase(
             _installationIds[i],
-            forecastsStartDate,
-            numberOfNotProcessedDays,
+            startDate,
+            numberOfDays,
             numberOfForecastsInDay);
       }
     }

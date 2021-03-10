@@ -169,11 +169,11 @@
       int finalNumberOfForecastErrors
           = numberOfForecastErrors + hoursRequestInterval;
 
-      var forecastsStartDate = _startDate;
+      var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddHours(hoursRequestInterval);
 
       _context.AddHourlyForecastErrorsToDatabase(
-          installationId, forecastsStartDate, numberOfForecastErrors);
+          installationId, forecastErrorsStartDate, numberOfForecastErrors);
 
       var newForecastErrors = GenerateHourlyForecastErrors(
           installationId, newForecastErrorsStartDate, numberOfForecastErrors)
@@ -221,11 +221,11 @@
       int finalNumberOfForecastErrors
           = numberOfForecastErrors + daysRequestInterval;
 
-      var forecastsStartDate = _startDate;
+      var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddDays(daysRequestInterval);
 
       _context.AddDailyForecastErrorsToDatabase(
-          installationId, forecastsStartDate, numberOfForecastErrors);
+          installationId, forecastErrorsStartDate, numberOfForecastErrors);
 
       var newForecastErrors = GenerateDailyForecastErrors(
           installationId, newForecastErrorsStartDate, numberOfForecastErrors)

@@ -41,7 +41,7 @@
 
       _unitOfWork = new UnitOfWork(_context);
 
-      Seed();
+      Seed(_context);
     }
 
     [Fact]
@@ -113,13 +113,6 @@
     public void Dispose()
     {
       _context.Dispose();
-    }
-
-    /* Private auxiliary methods */
-    private void Seed()
-    {
-      _context.Database.EnsureDeleted();
-      _context.Database.EnsureCreated();
     }
   }
 }

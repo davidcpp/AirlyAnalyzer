@@ -359,5 +359,11 @@
         ErrorType = errorType,
       };
     }
+
+    public static void Seed(AirlyContext context)
+    {
+      context.Database.EnsureDeleted();
+      context.Database.EnsureCreated();
+    }
   }
 }

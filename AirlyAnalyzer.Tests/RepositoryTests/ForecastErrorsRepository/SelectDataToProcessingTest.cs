@@ -42,7 +42,7 @@
 
       _unitOfWork = new UnitOfWork(_context);
 
-      Seed();
+      Seed(_context);
     }
 
     [Fact]
@@ -160,14 +160,6 @@
           newArchiveForecasts.Count);
       Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
       Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
-    }
-
-    /* Private auxiliary methods */
-
-    private void Seed()
-    {
-      _context.Database.EnsureDeleted();
-      _context.Database.EnsureCreated();
     }
 
     public void Dispose()

@@ -43,7 +43,7 @@
 
       _unitOfWork = new UnitOfWork(_context);
 
-      Seed();
+      Seed(_context);
     }
 
     [Theory]
@@ -259,14 +259,6 @@
 
       // Assert
       Assert.Equal(finalNumberOfForecastErrors, _context.ForecastErrors.Count());
-    }
-
-    /* Private auxiliary methods */
-
-    private void Seed()
-    {
-      _context.Database.EnsureDeleted();
-      _context.Database.EnsureCreated();
     }
 
     public void Dispose()

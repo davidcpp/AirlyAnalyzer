@@ -93,9 +93,7 @@
       var newMeasurementsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          installationId,
-          newMeasurementsStartDate,
-          numberOfMeasurements)
+          installationId, newMeasurementsStartDate, numberOfMeasurements)
         .ToList();
 
       // Act
@@ -187,8 +185,11 @@
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
-        newForecastErrors.AddRange(GenerateHourlyForecastErrors(
-            _installationIds[i], newForecastErrorsStartDate, numberOfForecastErrors));
+        newForecastErrors.AddRange(
+            GenerateHourlyForecastErrors(
+                _installationIds[i],
+                newForecastErrorsStartDate,
+                numberOfForecastErrors));
       }
 
       // Act
@@ -245,8 +246,11 @@
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
-        newForecastErrors.AddRange(GenerateDailyForecastErrors(
-            _installationIds[i], newForecastErrorsStartDate, numberOfForecastErrors));
+        newForecastErrors.AddRange(
+            GenerateDailyForecastErrors(
+                _installationIds[i],
+                newForecastErrorsStartDate,
+                numberOfForecastErrors));
       }
 
       // Act

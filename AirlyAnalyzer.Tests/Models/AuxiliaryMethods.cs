@@ -367,8 +367,10 @@
 
     public static void Seed(AirlyContext context)
     {
-      context.Database.EnsureDeleted();
-      context.Database.EnsureCreated();
+      context.ArchiveMeasurements.RemoveRange(context.ArchiveMeasurements);
+      context.ArchiveForecasts.RemoveRange(context.ArchiveForecasts);
+      context.ForecastErrors.RemoveRange(context.ForecastErrors);
+      context.SaveChanges();
     }
   }
 }

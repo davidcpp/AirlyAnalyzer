@@ -2,45 +2,28 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.IO;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Tests.Fixtures;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
-  using Microsoft.EntityFrameworkCore;
-  using Microsoft.Extensions.Configuration;
   using Xunit;
 
   [Collection("RepositoryTests")]
-  public class SelectDataToProcessingTest : IDisposable
+  public class SelectDataToProcessingTest
   {
     private readonly AirlyContext _context;
     private readonly UnitOfWork _unitOfWork;
 
-    private readonly DateTime _startDate
-        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate;
 
     private readonly List<short> _installationIds;
 
-    public SelectDataToProcessingTest()
+    public SelectDataToProcessingTest(RepositoryFixture fixture)
     {
-      var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
-          .UseInMemoryDatabase("AirlyDatabase")
-          .Options;
-
-      string configFilePath = Path.Combine(
-          AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-
-      var config = new ConfigurationBuilder()
-          .AddJsonFile(configFilePath)
-          .Build();
-
-      _installationIds = config
-          .GetSection("AppSettings:AirlyApi:InstallationIds")
-          .Get<List<short>>();
-
-      _context = new AirlyContext(inMemoryDatabaseOptions, config);
-
-      _unitOfWork = new UnitOfWork(_context);
+      _context = fixture.Context;
+      _unitOfWork = fixture.UnitOfWork;
+      _startDate = fixture.StartDate;
+      _installationIds = fixture.InstallationIds;
 
       Seed(_context);
     }
@@ -168,11 +151,6 @@
           newArchiveForecasts.Count);
       Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
       Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

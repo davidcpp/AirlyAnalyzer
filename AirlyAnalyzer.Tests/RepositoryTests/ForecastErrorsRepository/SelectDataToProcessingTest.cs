@@ -5,7 +5,6 @@
   using System.IO;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -69,8 +68,11 @@
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 24;
 
-      AddElementsToDatabase(
-          _startDate, numberOfProcessedDays, numberOfElementsInDay);
+      _context.AddElementsToDatabase(
+          _installationIds,
+          _startDate,
+          numberOfProcessedDays,
+          numberOfElementsInDay);
 
       // Act
       var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
@@ -93,7 +95,8 @@
       var newMeasurementsStartDate = _startDate;
       var newForecastsStartDate = _startDate;
 
-      AddNotProcessedDataToDatabase(
+      _context.AddNotProcessedDataToDatabase(
+          _installationIds,
           newMeasurementsStartDate,
           newForecastsStartDate,
           numberOfNotProcessedDays,
@@ -130,10 +133,14 @@
       var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
       var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
 
-      AddElementsToDatabase(
-          processedDataStartDate, numberOfProcessedDays, numberOfElementsInDay);
+      _context.AddElementsToDatabase(
+          _installationIds,
+          processedDataStartDate,
+          numberOfProcessedDays,
+          numberOfElementsInDay);
 
-      AddNotProcessedDataToDatabase(
+      _context.AddNotProcessedDataToDatabase(
+          _installationIds,
           newMeasurementsStartDate,
           newForecastsStartDate,
           numberOfNotProcessedDays,
@@ -156,69 +163,6 @@
     }
 
     /* Private auxiliary methods */
-    private void AddElementsToDatabase(
-        DateTime startDate, short numberOfDays, short numberOfElementsInDay)
-    {
-      var requestDate = startDate.AddDays(numberOfDays)
-                                 .AddMinutes(RequestMinutesOffset);
-
-      for (int i = 0; i < _installationIds.Count; i++)
-      {
-        short installationId = _installationIds[i];
-
-        _context.AddMeasurementsToDatabase(
-            installationId, startDate, numberOfDays, numberOfElementsInDay);
-
-        _context.AddForecastsToDatabase(
-            installationId, startDate, numberOfDays, numberOfElementsInDay);
-
-        _context.ForecastErrors.AddRange(
-            GenerateHourlyForecastErrors(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
-
-        _context.ForecastErrors.AddRange(
-            GenerateDailyForecastErrors(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
-
-        int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
-
-        _context.ForecastErrors.Add(
-            CreateForecastError(
-                installationId,
-                ForecastErrorType.Total,
-                startDate,
-                requestDate,
-                totalErrorDuration));
-      }
-
-      _context.SaveChanges();
-    }
-
-    // Method to adding new, not processed data for all installations 
-    private void AddNotProcessedDataToDatabase(
-        DateTime measurementsStartDate,
-        DateTime forecastsStartDate,
-        short numberOfNotProcessedDays,
-        short numberOfMeasurementsInDay,
-        short numberOfForecastsInDay)
-    {
-      for (int i = 0; i < _installationIds.Count; i++)
-      {
-        short installationId = _installationIds[i];
-
-        _context.AddMeasurementsToDatabase(
-            installationId,
-            measurementsStartDate,
-            numberOfNotProcessedDays,
-            numberOfMeasurementsInDay);
-
-        _context.AddForecastsToDatabase(
-            installationId,
-            forecastsStartDate,
-            numberOfNotProcessedDays,
-            numberOfForecastsInDay);
-      }
-    }
 
     private void Seed()
     {

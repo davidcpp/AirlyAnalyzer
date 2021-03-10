@@ -9,6 +9,77 @@
   {
     public const byte RequestMinutesOffset = 30;
 
+    public static void AddElementsToDatabase(
+        this AirlyContext context,
+        List<short> _installationIds,
+        DateTime startDate,
+        short numberOfDays,
+        short numberOfElementsInDay)
+    {
+      var requestDate = startDate.AddDays(numberOfDays)
+                                 .AddMinutes(RequestMinutesOffset);
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        short installationId = _installationIds[i];
+
+        context.AddMeasurementsToDatabase(
+            installationId, startDate, numberOfDays, numberOfElementsInDay);
+
+        context.AddForecastsToDatabase(
+            installationId, startDate, numberOfDays, numberOfElementsInDay);
+
+        context.ForecastErrors.AddRange(
+            GenerateHourlyForecastErrors(
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
+
+        context.ForecastErrors.AddRange(
+            GenerateDailyForecastErrors(
+                installationId, startDate, numberOfDays, numberOfElementsInDay));
+
+        int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
+
+        context.ForecastErrors.Add(
+            CreateForecastError(
+                installationId,
+                ForecastErrorType.Total,
+                startDate,
+                requestDate,
+                totalErrorDuration));
+      }
+
+      context.SaveChanges();
+    }
+
+    // Method to adding new, not processed data for all installations 
+    public static void AddNotProcessedDataToDatabase(
+        this AirlyContext context,
+        List<short> _installationIds,
+        DateTime measurementsStartDate,
+        DateTime forecastsStartDate,
+        short numberOfNotProcessedDays,
+        short numberOfMeasurementsInDay,
+        short numberOfForecastsInDay)
+    {
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        short installationId = _installationIds[i];
+
+        context.AddMeasurementsToDatabase(
+            installationId,
+            measurementsStartDate,
+            numberOfNotProcessedDays,
+            numberOfMeasurementsInDay);
+
+        context.AddForecastsToDatabase(
+            installationId,
+            forecastsStartDate,
+            numberOfNotProcessedDays,
+            numberOfForecastsInDay);
+      }
+    }
+
+
     public static void AddMeasurementsToDatabase(
         this AirlyContext context,
         short installationId,

@@ -74,7 +74,7 @@
           await SaveForecastErrors(hourlyErrors, dailyErrors);
 
           var newTotalForecastErrors = await CalculateTotalForecastErrors();
-          UpdateTotalForecastErrors(newTotalForecastErrors);
+          await UpdateTotalForecastErrors(newTotalForecastErrors);
         }
       }
     }
@@ -197,7 +197,7 @@
       return newTotalForecastErrors;
     }
 
-    public async void UpdateTotalForecastErrors(
+    public async Task UpdateTotalForecastErrors(
         List<AirQualityForecastError> newTotalForecastErrors)
     {
       _logger.LogInformation("UpdateTotalForecastErrors() is starting");

@@ -9,6 +9,8 @@
 
   public class CalculateDailyForecastErrorsTest
   {
+    private const short _installationId = 1;
+
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -26,11 +28,10 @@
         short numberOfDailyForecastsErrors)
     {
       // Arrange
-      const short installationId = 1;
       var startDate = _startDate;
 
       var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId,
+          _installationId,
           startDate,
           numberOfDays,
           numberOfForecastErrorsInDay)
@@ -41,7 +42,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(installationId, newForecastErrors);
+          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
 
       // Assert
       Assert.Equal(numberOfDailyForecastsErrors, dailyForecastErrors.Count);
@@ -51,13 +52,12 @@
     public void no_daily_forecast_error_when_number_of_elements_less_than_min()
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 20;
       const short numberOfForecastErrors = 19;
       var startDate = _startDate;
 
       var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId, startDate, numberOfForecastErrors)
+          _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
       var forecastErrorsCalculation
@@ -65,7 +65,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(installationId, newForecastErrors);
+          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
 
       // Assert
       Assert.Empty(dailyForecastErrors);
@@ -75,14 +75,13 @@
     public void correct_daily_forecast_error_when_number_of_elements_is_equal_min()
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 20;
       const short numberOfForecastErrors = 20;
       var startDate = _startDate;
       var endDate = _startDate.AddHours(numberOfForecastErrors);
 
       var newForecastErrors = GenerateHourlyForecastErrors(
-          installationId, startDate, numberOfForecastErrors)
+          _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
       var forecastErrorsCalculation
@@ -90,7 +89,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(installationId, newForecastErrors);
+          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
 
       // Assert
       startDate = _startDate.ToLocalTime();
@@ -98,7 +97,7 @@
 
       Assert.Single(dailyForecastErrors);
       Assert.Equal(ForecastErrorType.Daily, dailyForecastErrors[0].ErrorType);
-      Assert.Equal(installationId, dailyForecastErrors[0].InstallationId);
+      Assert.Equal(_installationId, dailyForecastErrors[0].InstallationId);
       Assert.Equal(startDate, dailyForecastErrors[0].FromDateTime);
       Assert.Equal(endDate, dailyForecastErrors[0].TillDateTime);
     }

@@ -10,6 +10,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
   public class CalculateHourlyForecastErrorsTest
   {
+    private const short _installationId = 1;
+
     private readonly DateTime _startDate
         = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
@@ -17,7 +19,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     public void correct_forecast_error()
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 22;
       const short numberOfDays = 1;
       const short numberOfElementsInDay = 1;
@@ -25,14 +26,14 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var forecastsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          installationId,
+          _installationId,
           measurementsStartDate,
           numberOfDays,
           numberOfElementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
-          installationId,
+          _installationId,
           forecastsStartDate,
           numberOfDays,
           numberOfElementsInDay)
@@ -44,7 +45,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       var startDate = measurementsStartDate.ToLocalTime();
@@ -52,7 +53,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       Assert.Single(forecastErrors);
       Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
-      Assert.Equal(installationId, forecastErrors[0].InstallationId);
+      Assert.Equal(_installationId, forecastErrors[0].InstallationId);
       Assert.Equal(startDate, forecastErrors[0].FromDateTime);
       Assert.Equal(endDate, forecastErrors[0].TillDateTime);
     }
@@ -67,20 +68,19 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         int numberOfForecastsErrors)
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 22;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          installationId,
+          _installationId,
           measurementsStartDate,
           numberOfDays,
           numberOfElementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
-          installationId,
+          _installationId,
           forecastsStartDate,
           numberOfDays,
           numberOfElementsInDay)
@@ -92,7 +92,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(numberOfForecastsErrors, forecastErrors.Count);
@@ -102,7 +102,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     public void empty_forecast_error_list_when_non_overlapping_elements()
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       const short numberOfMeasurements = 24;
       const short numberOfForecasts = 24;
@@ -112,13 +111,13 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var forecastsStartDate = _startDate;
 
       var newMeasurements = GenerateMeasurements(
-          installationId,
+          _installationId,
           measurementsStartDate,
           numberOfMeasurements)
         .ToList();
 
       var newForecasts = GenerateForecasts(
-          installationId,
+          _installationId,
           forecastsStartDate,
           numberOfForecasts)
         .ToList();
@@ -129,7 +128,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Empty(forecastErrors);
@@ -139,7 +138,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     public void correct_forecast_error_list_when_overlapping_elements()
     {
       // Arrange
-      const short installationId = 1;
       const short numberOfDays = 2;
       const short minNumberOfMeasurements = 23;
       const short numberOfMeasurementsInDay = 24;
@@ -149,14 +147,14 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var measurementsEndDate = _startDate.AddDays(2);
 
       var newMeasurements = GenerateMeasurements(
-          installationId,
+          _installationId,
           measurementsStartDate,
           numberOfDays,
           numberOfMeasurementsInDay)
         .ToList();
 
       var newForecasts = GenerateForecasts(
-          installationId,
+          _installationId,
           forecastsStartDate,
           numberOfDays,
           numberOfForecastsInDay)
@@ -168,7 +166,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       forecastsStartDate = forecastsStartDate.ToLocalTime();
@@ -195,7 +193,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         short airlyPm10_ForecastError)
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
@@ -204,7 +201,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var forecastsRequestDate = _startDate;
 
       var measurement = CreateMeasurement(
-          installationId,
+          _installationId,
           measurementsStartDate,
           measurementsRequestDate,
           airlyCaqi_Measurement,
@@ -212,7 +209,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           airlyPm10_Measurement);
 
       var forecast = CreateForecast(
-          installationId,
+          _installationId,
           forecastsStartDate,
           forecastsRequestDate,
           airlyCaqi_Forecast,
@@ -228,7 +225,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);
@@ -262,7 +259,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         short airlyPm10_ForecastError)
     {
       // Arrange
-      const short installationId = 1;
       const short minNumberOfMeasurements = 23;
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
@@ -271,7 +267,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var forecastsRequestDate = _startDate;
 
       var measurement = CreateMeasurement(
-          installationId,
+          _installationId,
           measurementsStartDate,
           measurementsRequestDate,
           airlyCaqi_Measurement,
@@ -279,7 +275,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           airlyPm10_Measurement);
 
       var forecast = CreateForecast(
-          installationId,
+          _installationId,
           forecastsStartDate,
           forecastsRequestDate,
           airlyCaqi_Forecast,
@@ -295,7 +291,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       // Act
       var forecastErrors = forecastErrorsCalculation
           .CalculateHourlyForecastErrors(
-              installationId, newMeasurements, newForecasts);
+              _installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);

@@ -31,7 +31,7 @@
     public ProgramController(
         IServiceScopeFactory scopeFactory,
         IConfiguration config,
-        ILogger<ProgramController> logger)
+        ILogger<ProgramController> logger = null)
     {
       _scopeFactory = scopeFactory;
       _logger = logger;
@@ -53,7 +53,7 @@
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-      _logger.LogInformation("ProgramController is starting");
+      _logger?.LogInformation("ProgramController is starting");
 
       _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
 
@@ -82,7 +82,7 @@
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()
     {
-      _logger.LogInformation("DownloadAllAirQualityData() is starting");
+      _logger?.LogInformation("DownloadAllAirQualityData() is starting");
 
       var newMeasurements = new List<AirQualityMeasurement>();
       var newForecasts = new List<AirQualityForecast>();
@@ -116,7 +116,7 @@
         List<AirQualityMeasurement> newMeasurements,
         List<AirQualityForecast> newForecasts)
     {
-      _logger.LogInformation("SaveAllAirQualityData() is starting");
+      _logger?.LogInformation("SaveAllAirQualityData() is starting");
 
       await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
       await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
@@ -128,7 +128,7 @@
     public async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
         CalculateForecastErrors()
     {
-      _logger.LogInformation("CalculateForecastErrors() is starting");
+      _logger?.LogInformation("CalculateForecastErrors() is starting");
 
       var allHourlyForecastErrors = new List<AirQualityForecastError>();
       var allDailyForecastErrors = new List<AirQualityForecastError>();
@@ -155,7 +155,7 @@
         List<AirQualityForecastError> hourlyForecastErrors,
         List<AirQualityForecastError> dailyForecastErrors)
     {
-      _logger.LogInformation("SaveForecastErrors() is starting");
+      _logger?.LogInformation("SaveForecastErrors() is starting");
 
       await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
       await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
@@ -166,7 +166,7 @@
 
     public async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
     {
-      _logger.LogInformation("CalculateTotalForecastErrors() is starting");
+      _logger?.LogInformation("CalculateTotalForecastErrors() is starting");
 
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
@@ -202,7 +202,7 @@
     public async Task UpdateTotalForecastErrors(
         List<AirQualityForecastError> newTotalForecastErrors)
     {
-      _logger.LogInformation("UpdateTotalForecastErrors() is starting");
+      _logger?.LogInformation("UpdateTotalForecastErrors() is starting");
 
       if (newTotalForecastErrors.Count > 0)
       {
@@ -218,7 +218,7 @@
 
     public Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger.LogInformation("ProgramController is stopping");
+      _logger?.LogInformation("ProgramController is stopping");
 
       _timer?.Change(Timeout.Infinite, 0);
 

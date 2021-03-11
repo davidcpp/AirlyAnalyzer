@@ -10,14 +10,6 @@
 
   public class RepositoryFixture : IDisposable
   {
-    public AirlyContext Context { get; }
-    public UnitOfWork UnitOfWork { get; }
-
-    public DateTime DateTimeMinValue { get; }
-    public DateTime StartDate { get; }
-
-    public List<short> InstallationIds { get; }
-
     public RepositoryFixture()
     {
       DateTimeMinValue = new DateTime(2000, 1, 1);
@@ -42,6 +34,16 @@
 
       UnitOfWork = new UnitOfWork(Context);
     }
+
+    public AirlyContext Context { get; }
+
+    public UnitOfWork UnitOfWork { get; }
+
+    public DateTime DateTimeMinValue { get; }
+
+    public DateTime StartDate { get; }
+
+    public List<short> InstallationIds { get; }
 
     public void Dispose()
     {

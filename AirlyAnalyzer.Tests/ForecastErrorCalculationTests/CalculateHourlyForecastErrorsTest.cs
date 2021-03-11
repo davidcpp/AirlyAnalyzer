@@ -5,15 +5,21 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
   using System.Linq;
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Tests.Fixtures;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;
 
-  public class CalculateHourlyForecastErrorsTest
+  public class CalculateHourlyForecastErrorsTest : IClassFixture<SimpleFixture>
   {
-    private const short _installationId = 1;
+    private readonly short _installationId;
 
-    private readonly DateTime _startDate
-        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate;
+
+    public CalculateHourlyForecastErrorsTest(SimpleFixture fixture)
+    {
+      _startDate = fixture.StartDate;
+      _installationId = fixture.InstallationId;
+    }
 
     [Fact]
     public void correct_forecast_error()

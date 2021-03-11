@@ -2,15 +2,21 @@
 {
   using System;
   using System.Linq;
+  using AirlyAnalyzer.Tests.Fixtures;
   using AirlyAnalyzer.Tests.Models;
   using Xunit;
 
-  public class GenerateForecastsTest
+  public class GenerateForecastsTest : IClassFixture<SimpleFixture>
   {
-    private const short _installationId = 1;
+    private readonly short _installationId;
 
-    private readonly DateTime _startDate
-        = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
+    private readonly DateTime _startDate;
+
+    public GenerateForecastsTest(SimpleFixture fixture)
+    {
+      _startDate = fixture.StartDate;
+      _installationId = fixture.InstallationId;
+    }
 
     [Fact]
     public void list_of_forecasts_from_one_day()

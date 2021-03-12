@@ -4,6 +4,7 @@ namespace AirlyAnalyzer
   using AirlyAnalyzer.Controllers;
   using AirlyAnalyzer.Data;
   using Microsoft.AspNetCore.Hosting;
+  using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
@@ -37,6 +38,10 @@ namespace AirlyAnalyzer
             .ConfigureWebHostDefaults(webBuilder
                 => webBuilder.UseStartup<Startup>())
             .ConfigureServices(services
-                => services.AddHostedService<ProgramController>());
+                => services.AddHostedService<ProgramController>(x =>
+                    new ProgramController(
+                        x.GetRequiredService<IServiceScopeFactory>(),
+                        x.GetRequiredService<IConfiguration>(),
+                        x.GetRequiredService<ILogger<ProgramController>>())));
   }
 }

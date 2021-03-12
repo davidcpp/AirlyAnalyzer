@@ -28,6 +28,11 @@
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
+    public ProgramController(UnitOfWork unitOfWork)
+    {
+      _unitOfWork = unitOfWork;
+    }
+
     public ProgramController(
         IServiceScopeFactory scopeFactory,
         IConfiguration config,

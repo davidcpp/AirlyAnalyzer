@@ -344,6 +344,12 @@
       }
     }
 
+    public static IEnumerable<AirQualityForecastError> GenerateTotalForecastErrors(
+        List<short> _installationIds, DateTime startDate, short numberOfDays)
+    {
+      return new List<AirQualityForecastError>();
+    }
+
     public static AirQualityForecastError CreateForecastError(
         short installationId,
         ForecastErrorType errorType,

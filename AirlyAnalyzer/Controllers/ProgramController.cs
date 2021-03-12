@@ -28,9 +28,18 @@
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
-    public ProgramController(UnitOfWork unitOfWork)
+    public ProgramController(
+        UnitOfWork unitOfWork,
+        ForecastErrorsCalculation forecastErrorsCalculation = null,
+        List<short> installationIDsList = null,
+        short idForAllInstallations = -1)
     {
       _unitOfWork = unitOfWork;
+      _forecastErrorsCalculation = forecastErrorsCalculation;
+
+      _installationIDsList = installationIDsList;
+
+      _idForAllInstallations = idForAllInstallations;
     }
 
     public ProgramController(

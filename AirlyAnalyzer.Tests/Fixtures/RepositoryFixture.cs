@@ -22,15 +22,15 @@
       string configFilePath = Path.Combine(
           AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
 
-      var config = new ConfigurationBuilder()
+      Config = new ConfigurationBuilder()
           .AddJsonFile(configFilePath)
           .Build();
 
-      InstallationIds = config
+      InstallationIds = Config
           .GetSection("AppSettings:AirlyApi:InstallationIds")
           .Get<List<short>>();
 
-      Context = new AirlyContext(inMemoryDatabaseOptions, config);
+      Context = new AirlyContext(inMemoryDatabaseOptions, Config);
 
       UnitOfWork = new UnitOfWork(Context);
     }
@@ -38,6 +38,8 @@
     public AirlyContext Context { get; }
 
     public UnitOfWork UnitOfWork { get; }
+
+    public IConfiguration Config { get; }
 
     public DateTime DateTimeMinValue { get; }
 

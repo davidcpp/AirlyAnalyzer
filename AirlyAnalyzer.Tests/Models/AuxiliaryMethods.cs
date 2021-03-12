@@ -167,6 +167,16 @@
       context.SaveChanges();
     }
 
+    public static void AddTotalForecastErrorsToDatabase(
+        this AirlyContext context,
+        List<short> _installationIds,
+        DateTime startDate,
+        short numberOfDays)
+    {
+      context.ForecastErrors.AddRange(GenerateTotalForecastErrors(
+          _installationIds, startDate, numberOfDays));
+    }
+
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
         short installationId,
         DateTime startDate,

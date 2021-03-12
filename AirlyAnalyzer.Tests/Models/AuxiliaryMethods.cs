@@ -160,6 +160,8 @@
     {
       context.ForecastErrors.AddRange(GenerateTotalForecastErrors(
           _installationIds, startDate, numberOfDays));
+
+      context.SaveChanges();
     }
 
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(

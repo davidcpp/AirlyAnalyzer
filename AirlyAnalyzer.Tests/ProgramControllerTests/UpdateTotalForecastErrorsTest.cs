@@ -41,8 +41,6 @@
       _context.AddTotalForecastErrorsToDatabase(
           _installationIds, _startDate, numberOfDays);
 
-      _context.SaveChanges();
-
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
       // Act
@@ -61,8 +59,6 @@
 
       _context.AddTotalForecastErrorsToDatabase(
           _installationIds, _startDate, numberOfDays);
-
-      _context.SaveChanges();
 
       var newTotalForecastErrors = GenerateTotalForecastErrors(
           _installationIds, _startDate, newNumberOfDays)

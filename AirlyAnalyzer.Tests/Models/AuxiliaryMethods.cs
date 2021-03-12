@@ -347,7 +347,19 @@
     public static IEnumerable<AirQualityForecastError> GenerateTotalForecastErrors(
         List<short> _installationIds, DateTime startDate, short numberOfDays)
     {
-      return new List<AirQualityForecastError>();
+      var requestDate = startDate.AddDays(numberOfDays)
+                                 .AddMinutes(RequestMinutesOffset);
+
+      int durationInHours = numberOfDays * 24;
+
+      foreach (short installationId in _installationIds)
+      {
+        yield return CreateForecastError(
+            installationId, ET.Total, startDate, requestDate, durationInHours);
+      }
+
+      yield return CreateForecastError(
+          -1, ET.Total, startDate, requestDate, durationInHours);
     }
 
     public static AirQualityForecastError CreateForecastError(

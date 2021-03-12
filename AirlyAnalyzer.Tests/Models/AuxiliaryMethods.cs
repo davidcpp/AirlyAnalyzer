@@ -5,6 +5,8 @@
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
 
+  using ET = AirlyAnalyzer.Models.ForecastErrorType;
+
   public static class AuxiliaryMethods
   {
     public const byte RequestMinutesOffset = 30;
@@ -42,7 +44,7 @@
         context.ForecastErrors.Add(
             CreateForecastError(
                 installationId,
-                ForecastErrorType.Total,
+                ET.Total,
                 startDate,
                 requestDate,
                 totalErrorDuration));
@@ -288,7 +290,7 @@
       {
         yield return CreateForecastError(
             installationId,
-            ForecastErrorType.Hourly,
+            ET.Hourly,
             startDate.AddHours(i),
             startDate.AddHours(numberOfForecastErrors)
                      .AddMinutes(RequestMinutesOffset),
@@ -312,7 +314,7 @@
         {
           yield return CreateForecastError(
               installationId,
-              ForecastErrorType.Hourly,
+              ET.Hourly,
               startDate.AddHours(j),
               startDate.AddHours(requestInterval)
                        .AddMinutes(RequestMinutesOffset));
@@ -334,7 +336,7 @@
 
         yield return CreateForecastError(
             installationId,
-            ForecastErrorType.Daily,
+            ET.Daily,
             startDate.AddDays(i),
             startDate.AddDays(i).AddHours(requestInterval)
                                 .AddMinutes(RequestMinutesOffset),

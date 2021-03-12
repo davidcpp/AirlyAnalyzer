@@ -50,10 +50,10 @@
 
       var newMeasurements = new List<AirQualityMeasurement>();
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         newMeasurements.AddRange(GenerateMeasurements(
-            _installationIds[i], newMeasurementsStartDate, numberOfMeasurements));
+            installationId, newMeasurementsStartDate, numberOfMeasurements));
       }
 
       // Act
@@ -109,10 +109,10 @@
 
       var newForecasts = new List<AirQualityForecast>();
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         newForecasts.AddRange(GenerateForecasts(
-            _installationIds[i], newForecastsStartDate, numberOfForecasts));
+            installationId, newForecastsStartDate, numberOfForecasts));
       }
 
       // Act
@@ -159,21 +159,18 @@
       var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddHours(hoursRequestInterval);
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         _context.AddHourlyForecastErrorsToDatabase(
-            _installationIds[i], forecastErrorsStartDate, numberOfForecastErrors);
+            installationId, forecastErrorsStartDate, numberOfForecastErrors);
       }
 
       var newForecastErrors = new List<AirQualityForecastError>();
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
-        newForecastErrors.AddRange(
-            GenerateHourlyForecastErrors(
-                _installationIds[i],
-                newForecastErrorsStartDate,
-                numberOfForecastErrors));
+        newForecastErrors.AddRange(GenerateHourlyForecastErrors(
+            installationId, newForecastErrorsStartDate,numberOfForecastErrors));
       }
 
       // Act
@@ -220,21 +217,18 @@
       var forecastErrorsStartDate = _startDate;
       var newForecastErrorsStartDate = _startDate.AddDays(daysRequestInterval);
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         _context.AddDailyForecastErrorsToDatabase(
-            _installationIds[i], forecastErrorsStartDate, numberOfForecastErrors);
+            installationId, forecastErrorsStartDate, numberOfForecastErrors);
       }
 
       var newForecastErrors = new List<AirQualityForecastError>();
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
-        newForecastErrors.AddRange(
-            GenerateDailyForecastErrors(
-                _installationIds[i],
-                newForecastErrorsStartDate,
-                numberOfForecastErrors));
+        newForecastErrors.AddRange(GenerateDailyForecastErrors(
+            installationId, newForecastErrorsStartDate, numberOfForecastErrors));
       }
 
       // Act

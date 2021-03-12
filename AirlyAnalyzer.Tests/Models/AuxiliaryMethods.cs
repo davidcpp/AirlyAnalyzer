@@ -21,10 +21,8 @@
       var requestDate = startDate.AddDays(numberOfDays)
                                  .AddMinutes(RequestMinutesOffset);
 
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
-        short installationId = _installationIds[i];
-
         context.AddMeasurementsToDatabase(
             installationId, startDate, numberOfDays, numberOfElementsInDay);
 
@@ -60,13 +58,10 @@
         short numberOfDays,
         short numberOfMeasurementsInDay)
     {
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         context.AddMeasurementsToDatabase(
-            _installationIds[i],
-            startDate,
-            numberOfDays,
-            numberOfMeasurementsInDay);
+            installationId, startDate, numberOfDays, numberOfMeasurementsInDay);
       }
     }
 
@@ -77,13 +72,10 @@
         short numberOfDays,
         short numberOfForecastsInDay)
     {
-      for (int i = 0; i < _installationIds.Count; i++)
+      foreach (short installationId in _installationIds)
       {
         context.AddForecastsToDatabase(
-            _installationIds[i],
-            startDate,
-            numberOfDays,
-            numberOfForecastsInDay);
+            installationId, startDate, numberOfDays, numberOfForecastsInDay);
       }
     }
 

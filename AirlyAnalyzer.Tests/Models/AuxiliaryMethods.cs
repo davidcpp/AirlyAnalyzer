@@ -29,23 +29,16 @@
         context.AddForecastsToDatabase(
             installationId, startDate, numberOfDays, numberOfElementsInDay);
 
-        context.ForecastErrors.AddRange(
-            GenerateHourlyForecastErrors(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
+        context.ForecastErrors.AddRange(GenerateHourlyForecastErrors(
+            installationId, startDate, numberOfDays, numberOfElementsInDay));
 
-        context.ForecastErrors.AddRange(
-            GenerateDailyForecastErrors(
-                installationId, startDate, numberOfDays, numberOfElementsInDay));
+        context.ForecastErrors.AddRange(GenerateDailyForecastErrors(
+            installationId, startDate, numberOfDays, numberOfElementsInDay));
 
         int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
 
-        context.ForecastErrors.Add(
-            CreateForecastError(
-                installationId,
-                ET.Total,
-                startDate,
-                requestDate,
-                totalErrorDuration));
+        context.ForecastErrors.Add(CreateForecastError(
+            installationId, ET.Total, startDate, requestDate, totalErrorDuration));
       }
 
       context.SaveChanges();

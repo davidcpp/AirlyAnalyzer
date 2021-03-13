@@ -8,7 +8,7 @@
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
 
-  public class AirQualityDataDownloader
+  public class AirlyDataDownloader : IAirQualityDataDownloader<Measurements>
   {
     private readonly string _airlyApiKeyHeaderName;
     private readonly string _airlyApiKey;
@@ -16,7 +16,7 @@
     private readonly string _measurementsUri;
     private readonly string _uri;
 
-    public AirQualityDataDownloader(IConfiguration config)
+    public AirlyDataDownloader(IConfiguration config)
     {
       _airlyApiKeyHeaderName = config.GetValue<string>(
           "AppSettings:AirlyApi:KeyHeaderName");

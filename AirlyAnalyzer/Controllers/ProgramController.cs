@@ -16,7 +16,8 @@
   public class ProgramController : IHostedService, IDisposable
   {
     private readonly ForecastErrorsCalculation _forecastErrorsCalculation;
-    private readonly AirQualityDataDownloader _airQualityDataDownloader;
+    private readonly
+        IAirQualityDataDownloader<Measurements> _airQualityDataDownloader;
 
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
@@ -59,7 +60,7 @@
       _idForAllInstallations = config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _airQualityDataDownloader = new AirQualityDataDownloader(config);
+      _airQualityDataDownloader = new AirlyDataDownloader(config);
 
       _forecastErrorsCalculation =
           new ForecastErrorsCalculation(_minNumberOfMeasurements);

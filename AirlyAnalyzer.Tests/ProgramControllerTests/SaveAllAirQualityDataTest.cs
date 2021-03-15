@@ -2,14 +2,14 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
+  using System.Threading.Tasks;
   using AirlyAnalyzer.Controllers;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;
-  using System.Threading.Tasks;
-  using System.Linq;
 
   [Collection("RepositoryTests")]
   public class SaveAllAirQualityDataTest

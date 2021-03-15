@@ -75,7 +75,7 @@
     }
 
     [Fact]
-    public async Task save_no_data_in_database_when_no_new_data()
+    public async Task do_not_save_any_data_in_database_when_get_empty_new_ones()
     {
       // Arrange
       var newMeasurements = new List<AirQualityMeasurement>();
@@ -91,7 +91,7 @@
     }
 
     [Fact]
-    public async Task save_new_data_in_database_when_new_data()
+    public async Task save_new_data_in_database_when_get_new_ones()
     {
       // Arrange
       const short numberOfMeasurementDays = 3;

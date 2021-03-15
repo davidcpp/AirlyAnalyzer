@@ -33,7 +33,8 @@
     [Theory]
     [InlineData(0, 7)]
     [InlineData(7, 0)]
-    [InlineData(7, 7)]
+    [InlineData(3, 7)]
+    [InlineData(7, 3)]
     public async Task return_min_of_collections_count(
         short numberOfMeasurementDays, short numberOfForecastDays)
     {

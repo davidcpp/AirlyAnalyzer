@@ -15,7 +15,7 @@
 
   public class ProgramController : IHostedService, IDisposable
   {
-    private readonly ForecastErrorsCalculator _forecastErrorsCalculation;
+    private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly
         IAirQualityDataDownloader<Measurements> _airQualityDataDownloader;
 
@@ -31,7 +31,7 @@
 
     public ProgramController(
         UnitOfWork unitOfWork,
-        ForecastErrorsCalculator forecastErrorsCalculation = null,
+        IForecastErrorsCalculator forecastErrorsCalculation = null,
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
         IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,

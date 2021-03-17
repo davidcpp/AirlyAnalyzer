@@ -15,7 +15,7 @@
   [Collection("RepositoryTests")]
   public class CalculateTotalForecastErrorsTest
   {
-    private ForecastErrorsCalculator _forecastErrorsCalculation;
+    private IForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
 

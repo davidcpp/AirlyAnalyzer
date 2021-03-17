@@ -22,7 +22,7 @@
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
 
-    private readonly List<short> _installationIDsList;
+    private readonly List<short> _installationIds;
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
@@ -41,7 +41,7 @@
       _forecastErrorsCalculation = forecastErrorsCalculation;
       _airQualityDataDownloader = airQualityDataDownloader;
 
-      _installationIDsList = installationIDsList;
+      _installationIds = installationIDsList;
 
       _minNumberOfMeasurements = minNumberOfMeasurements;
       _idForAllInstallations = idForAllInstallations;
@@ -58,7 +58,7 @@
       _minNumberOfMeasurements = config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      _installationIDsList = config.GetSection(
+      _installationIds = config.GetSection(
           "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
       _idForAllInstallations = config.GetValue<short>(
@@ -109,7 +109,7 @@
       var requestDateTime = DateTime.UtcNow;
 
       // Downloading and saving new data in database
-      foreach (short installationId in _installationIDsList)
+      foreach (short installationId in _installationIds)
       {
         var lastMeasurementDate = await _unitOfWork
             .MeasurementRepository.GetLastDate(installationId);
@@ -152,7 +152,7 @@
       var allHourlyForecastErrors = new List<AirQualityForecastError>();
       var allDailyForecastErrors = new List<AirQualityForecastError>();
 
-      foreach (short installationId in _installationIDsList)
+      foreach (short installationId in _installationIds)
       {
         var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
             .ForecastErrorRepository.SelectDataToProcessing(installationId);
@@ -190,7 +190,7 @@
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
       // Calculating total forecast errors for each installation
-      foreach (short installationId in _installationIDsList)
+      foreach (short installationId in _installationIds)
       {
         var dailyForecastErrors = await _unitOfWork.ForecastErrorRepository.Get(
             fe => fe.InstallationId == installationId

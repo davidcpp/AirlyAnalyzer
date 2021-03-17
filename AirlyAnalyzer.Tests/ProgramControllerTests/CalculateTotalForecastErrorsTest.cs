@@ -48,9 +48,8 @@
     public async Task empty_new_total_errors_when_no_installations()
     {
       // Arrange
-      var installationIds = new List<short>();
-
       const short numberOfDays = 2;
+      var installationIds = new List<short>();
 
       _context.AddElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);

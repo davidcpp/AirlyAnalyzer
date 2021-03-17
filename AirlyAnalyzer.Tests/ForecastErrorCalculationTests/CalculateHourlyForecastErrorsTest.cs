@@ -50,7 +50,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -97,7 +97,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -133,7 +133,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -171,7 +171,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -230,7 +230,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -296,7 +296,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourlyForecastErrors(
+          .CalculateHourly(
               _installationId, newMeasurements, newForecasts);
 
       // Assert

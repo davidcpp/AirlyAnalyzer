@@ -20,7 +20,7 @@
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }
 
-    public List<AirQualityForecastError> CalculateHourlyForecastErrors(
+    public List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newArchiveMeasurements,
         List<AirQualityForecast> newArchiveForecasts)
@@ -57,7 +57,7 @@
       return calculatedForecastErrors;
     }
 
-    public List<AirQualityForecastError> CalculateDailyForecastErrors(
+    public List<AirQualityForecastError> CalculateDaily(
         short installationId,
         List<AirQualityForecastError> newHourlyForecastErrors)
     {
@@ -144,7 +144,7 @@
       };
     }
 
-    public AirQualityForecastError CalculateTotalForecastError(
+    public AirQualityForecastError CalculateTotal(
         short installationId, IEnumerable<AirQualityForecastError> allForecastErrors)
     {
       var errorSum = new ErrorSum

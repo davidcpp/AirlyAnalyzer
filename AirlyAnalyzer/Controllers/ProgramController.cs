@@ -158,13 +158,13 @@
             .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors = _forecastErrorsCalculation
-            .CalculateHourlyForecastErrors(
+            .CalculateHourly(
                 installationId, newArchiveMeasurements, newArchiveForecasts);
 
         allHourlyForecastErrors.AddRange(hourlyForecastErrors);
 
         allDailyForecastErrors.AddRange(_forecastErrorsCalculation
-            .CalculateDailyForecastErrors(installationId, hourlyForecastErrors));
+            .CalculateDaily(installationId, hourlyForecastErrors));
       }
 
       return (allHourlyForecastErrors, allDailyForecastErrors);
@@ -199,7 +199,7 @@
         if (dailyForecastErrors.Count > 0)
         {
           var installationForecastError = _forecastErrorsCalculation
-              .CalculateTotalForecastError(installationId, dailyForecastErrors);
+              .CalculateTotal(installationId, dailyForecastErrors);
 
           newTotalForecastErrors.Add(installationForecastError);
         }
@@ -209,7 +209,7 @@
       {
         // Calculating total forecast error from all installations
         var totalForecastError =
-            _forecastErrorsCalculation.CalculateTotalForecastError(
+            _forecastErrorsCalculation.CalculateTotal(
                 _idForAllInstallations, newTotalForecastErrors);
 
         newTotalForecastErrors.Add(totalForecastError);

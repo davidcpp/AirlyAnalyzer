@@ -48,7 +48,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
+          .CalculateDaily(_installationId, newForecastErrors);
 
       // Assert
       Assert.Equal(numberOfDailyForecastsErrors, dailyForecastErrors.Count);
@@ -71,7 +71,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
+          .CalculateDaily(_installationId, newForecastErrors);
 
       // Assert
       Assert.Empty(dailyForecastErrors);
@@ -95,7 +95,7 @@
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDailyForecastErrors(_installationId, newForecastErrors);
+          .CalculateDaily(_installationId, newForecastErrors);
 
       // Assert
       startDate = _startDate.ToLocalTime();

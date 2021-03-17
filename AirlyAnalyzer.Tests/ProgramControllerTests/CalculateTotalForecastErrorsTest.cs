@@ -15,7 +15,7 @@
   [Collection("RepositoryTests")]
   public class CalculateTotalForecastErrorsTest
   {
-    private ForecastErrorsCalculation _forecastErrorsCalculation;
+    private ForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
 
@@ -39,7 +39,7 @@
           "AppSettings:AirlyApi:IdForAllInstallations");
 
       _forecastErrorsCalculation =
-          new ForecastErrorsCalculation(_minNumberOfMeasurements);
+          new ForecastErrorsCalculator(_minNumberOfMeasurements);
 
       Seed(_context);
     }

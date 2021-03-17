@@ -15,7 +15,7 @@
 
   public class ProgramController : IHostedService, IDisposable
   {
-    private readonly ForecastErrorsCalculation _forecastErrorsCalculation;
+    private readonly ForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly
         IAirQualityDataDownloader<Measurements> _airQualityDataDownloader;
 
@@ -31,7 +31,7 @@
 
     public ProgramController(
         UnitOfWork unitOfWork,
-        ForecastErrorsCalculation forecastErrorsCalculation = null,
+        ForecastErrorsCalculator forecastErrorsCalculation = null,
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
         IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,
@@ -67,7 +67,7 @@
       _airQualityDataDownloader = new AirlyDataDownloader(config);
 
       _forecastErrorsCalculation =
-          new ForecastErrorsCalculation(_minNumberOfMeasurements);
+          new ForecastErrorsCalculator(_minNumberOfMeasurements);
     }
 
     public Task StartAsync(CancellationToken stoppingToken)

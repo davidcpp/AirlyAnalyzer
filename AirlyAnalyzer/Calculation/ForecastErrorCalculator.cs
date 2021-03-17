@@ -5,7 +5,7 @@
   using System.Linq;
   using AirlyAnalyzer.Models;
 
-  public class ForecastErrorsCalculation
+  public class ForecastErrorsCalculator
   {
     private List<AirQualityMeasurement> _newArchiveMeasurements;
     private List<AirQualityForecast> _newArchiveForecasts;
@@ -15,7 +15,7 @@
     /// </summary>
     private readonly short _minNumberOfMeasurements;
 
-    public ForecastErrorsCalculation(short minNumberOfMeasurements)
+    public ForecastErrorsCalculator(short minNumberOfMeasurements)
     {
       _minNumberOfMeasurements = minNumberOfMeasurements;
     }

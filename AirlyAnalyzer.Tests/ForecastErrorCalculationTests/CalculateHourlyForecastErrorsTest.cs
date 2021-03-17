@@ -46,7 +46,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -93,7 +93,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -129,7 +129,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -167,7 +167,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -226,7 +226,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newForecasts = new List<AirQualityForecast> { forecast };
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -292,7 +292,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newForecasts = new List<AirQualityForecast> { forecast };
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var forecastErrors = forecastErrorsCalculation

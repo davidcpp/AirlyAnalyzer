@@ -44,7 +44,7 @@
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
@@ -67,7 +67,7 @@
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation
@@ -91,7 +91,7 @@
         .ToList();
 
       var forecastErrorsCalculation
-          = new ForecastErrorsCalculation(minNumberOfMeasurements);
+          = new ForecastErrorsCalculator(minNumberOfMeasurements);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculation

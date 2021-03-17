@@ -102,10 +102,7 @@
       foreach (short installationId in _installationIds)
       {
         hourlyForecastErrors.AddRange(GenerateHourlyForecastErrors(
-            installationId,
-            _startDate,
-            numberOfHourlyDays,
-            numberOfElementsInDay));
+            installationId, _startDate, numberOfHourlyDays, numberOfElementsInDay));
 
         dailyForecastErrors.AddRange(GenerateDailyForecastErrors(
             installationId,

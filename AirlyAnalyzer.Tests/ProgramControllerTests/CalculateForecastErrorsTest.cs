@@ -99,16 +99,10 @@
       int numberOfHourlyErrors = numberOfDailyErrors * numberOfElementsInDay;
 
       _context.AddAllMeasurementsToDatabase(
-          _installationIds,
-          _startDate,
-          numberOfDays,
-          numberOfElementsInDay);
+          _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       _context.AddAllForecastsToDatabase(
-          _installationIds,
-          _startDate,
-          numberOfDays,
-          numberOfElementsInDay);
+          _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       var programController = new ProgramController(
           _unitOfWork, _forecastErrorsCalculation, _installationIds);

@@ -86,15 +86,15 @@
     public async Task save_new_forecast_errors_in_database_when_get_new_ones()
     {
       // Arrange
-      const short numberOfHourlyDays = 7;
-      const short numberOfDailyDays = 3;
+      const short numberOfHourlyErrorDays = 7;
+      const short numberOfDailyErrorDays = 3;
       const short numberOfElementsInDay = 24;
 
       int numberOfHourlyErrors
-          = numberOfHourlyDays * numberOfElementsInDay * _installationIds.Count;
+          = numberOfHourlyErrorDays * numberOfElementsInDay * _installationIds.Count;
 
       int numberOfDailyErrors
-          = numberOfDailyDays * _installationIds.Count;
+          = numberOfDailyErrorDays * _installationIds.Count;
 
       var hourlyForecastErrors = new List<AirQualityForecastError>();
       var dailyForecastErrors = new List<AirQualityForecastError>();
@@ -102,13 +102,10 @@
       foreach (short installationId in _installationIds)
       {
         hourlyForecastErrors.AddRange(GenerateHourlyForecastErrors(
-            installationId, _startDate, numberOfHourlyDays, numberOfElementsInDay));
+            installationId, _startDate, numberOfHourlyErrorDays, numberOfElementsInDay));
 
         dailyForecastErrors.AddRange(GenerateDailyForecastErrors(
-            installationId,
-            _startDate,
-            numberOfDailyDays,
-            numberOfElementsInDay));
+            installationId, _startDate,numberOfDailyErrorDays, numberOfElementsInDay));
       }
 
       // Act 

@@ -33,9 +33,9 @@
         UnitOfWork unitOfWork,
         ForecastErrorsCalculation forecastErrorsCalculation = null,
         List<short> installationIDsList = null,
+        short idForAllInstallations = -1,
         IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,
-        short minNumberOfMeasurements = 24,
-        short idForAllInstallations = -1)
+        short minNumberOfMeasurements = 24)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculation = forecastErrorsCalculation;

@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Controllers;
@@ -22,6 +23,7 @@
     private List<short> _installationIds;
 
     private readonly short _minNumberOfMeasurements;
+    private readonly short _idForAllInstallations;
 
     public CalculateTotalForecastErrorsTest(RepositoryFixture fixture)
     {
@@ -32,6 +34,9 @@
 
       _minNumberOfMeasurements = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
+
+      _idForAllInstallations = fixture.Config.GetValue<short>(
+          "AppSettings:AirlyApi:IdForAllInstallations");
 
       _forecastErrorsCalculation =
           new ForecastErrorsCalculation(_minNumberOfMeasurements);
@@ -86,7 +91,10 @@
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, _installationIds);
+          _unitOfWork,
+          _forecastErrorsCalculation,
+          _installationIds,
+          _idForAllInstallations);
 
       // Act
       var newTotalForecastErrors
@@ -94,6 +102,9 @@
 
       // Assert
       Assert.Equal(_installationIds.Count + 1, newTotalForecastErrors.Count);
+      Assert.Equal(
+          _idForAllInstallations,
+          newTotalForecastErrors.Last().InstallationId);
     }
   }
 }

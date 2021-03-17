@@ -50,8 +50,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       var startDate = measurementsStartDate.ToLocalTime();
@@ -97,8 +96,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(numberOfForecastsErrors, forecastErrors.Count);
@@ -133,8 +131,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Empty(forecastErrors);
@@ -171,8 +168,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       forecastsStartDate = forecastsStartDate.ToLocalTime();
@@ -230,8 +226,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);
@@ -296,8 +291,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
 
       // Act
       var forecastErrors = forecastErrorsCalculation
-          .CalculateHourly(
-              _installationId, newMeasurements, newForecasts);
+          .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
       Assert.Equal(airlyCaqi_ForecastError, forecastErrors[0].AirlyCaqiPct);

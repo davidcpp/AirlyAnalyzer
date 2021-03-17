@@ -154,12 +154,12 @@
 
       foreach (short installationId in _installationIds)
       {
-        var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+        var (newMeasurements, newForecasts) = await _unitOfWork
             .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors = _forecastErrorsCalculation
             .CalculateHourly(
-                installationId, newArchiveMeasurements, newArchiveForecasts);
+                installationId, newMeasurements, newForecasts);
 
         allHourlyForecastErrors.AddRange(hourlyForecastErrors);
 

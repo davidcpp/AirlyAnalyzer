@@ -33,13 +33,17 @@
         UnitOfWork unitOfWork,
         ForecastErrorsCalculation forecastErrorsCalculation = null,
         List<short> installationIDsList = null,
+        IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,
+        short minNumberOfMeasurements = 24,
         short idForAllInstallations = -1)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculation = forecastErrorsCalculation;
+      _airQualityDataDownloader = airQualityDataDownloader;
 
       _installationIDsList = installationIDsList;
 
+      _minNumberOfMeasurements = minNumberOfMeasurements;
       _idForAllInstallations = idForAllInstallations;
     }
 

@@ -28,7 +28,7 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      Seed(_context);
+      _context.Clear();
     }
 
     [Theory]

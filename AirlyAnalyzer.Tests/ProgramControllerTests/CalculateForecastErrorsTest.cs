@@ -36,7 +36,7 @@
       _forecastErrorsCalculation =
           new ForecastErrorsCalculator(_minNumberOfMeasurements);
 
-      Seed(_context);
+      _context.Clear();
     }
 
     [Fact]

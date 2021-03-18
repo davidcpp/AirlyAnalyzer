@@ -382,7 +382,7 @@
       };
     }
 
-    public static void Seed(AirlyContext context)
+    public static void Clear(this AirlyContext context)
     {
       context.ArchiveMeasurements.RemoveRange(context.ArchiveMeasurements);
       context.ArchiveForecasts.RemoveRange(context.ArchiveForecasts);

@@ -32,7 +32,7 @@
       _minNumberOfMeasurements = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      Seed(_context);
+      _context.Clear();
 
       _downloaderMock = new Mock<IAirQualityDataDownloader<Measurements>>(
           MockBehavior.Strict);

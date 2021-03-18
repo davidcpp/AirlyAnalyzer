@@ -27,7 +27,7 @@
 
       _programController = new ProgramController(fixture.UnitOfWork);
 
-      Seed(_context);
+      _context.Clear();
     }
 
     [Theory]

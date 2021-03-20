@@ -5,7 +5,7 @@
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Tests.Fixtures;
-  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
+  using AirlyAnalyzer.Tests.Models;
   using Xunit;
 
   [Collection("RepositoryTests")]

@@ -4,7 +4,7 @@
   using System.Collections.Generic;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Tests.Fixtures;
-  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
+  using static AirlyAnalyzer.Tests.Models.DbUtilities;
   using Xunit;
 
   [Collection("RepositoryTests")]

@@ -7,7 +7,7 @@
   using AirlyAnalyzer.Controllers;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Tests.Fixtures;
-  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
+  using AirlyAnalyzer.Tests.Models;
   using Microsoft.Extensions.Configuration;
   using Xunit;
 

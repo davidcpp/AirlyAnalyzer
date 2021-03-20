@@ -38,8 +38,7 @@ namespace AirlyAnalyzer
                   .GetConnectionString("AirlyDbConnection")
                   .Replace("[DataDirectory]", dataDirectoryPath)));
 
-      services
-          .AddScoped<UnitOfWork>();
+      services.AddScoped<UnitOfWork>();
 
       services
           .AddControllersWithViews()

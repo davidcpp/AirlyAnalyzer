@@ -22,7 +22,7 @@
 
     public static void AddElementsToDatabase(
         this AirlyContext context,
-        List<short> _installationIds,
+        List<short> installationIds,
         DateTime startDate,
         short numberOfDays,
         short numberOfElementsInDay)
@@ -30,7 +30,7 @@
       var requestDate = startDate.AddDays(numberOfDays)
                                  .AddMinutes(RequestMinutesOffset);
 
-      foreach (short installationId in _installationIds)
+      foreach (short installationId in installationIds)
       {
         context.AddMeasurementsToDatabase(
             installationId, startDate, numberOfDays, numberOfElementsInDay);
@@ -55,12 +55,12 @@
 
     public static void AddAllMeasurementsToDatabase(
         this AirlyContext context,
-        List<short> _installationIds,
+        List<short> installationIds,
         DateTime startDate,
         short numberOfDays,
         short numberOfMeasurementsInDay)
     {
-      foreach (short installationId in _installationIds)
+      foreach (short installationId in installationIds)
       {
         context.AddMeasurementsToDatabase(
             installationId, startDate, numberOfDays, numberOfMeasurementsInDay);
@@ -69,12 +69,12 @@
 
     public static void AddAllForecastsToDatabase(
         this AirlyContext context,
-        List<short> _installationIds,
+        List<short> installationIds,
         DateTime startDate,
         short numberOfDays,
         short numberOfForecastsInDay)
     {
-      foreach (short installationId in _installationIds)
+      foreach (short installationId in installationIds)
       {
         context.AddForecastsToDatabase(
             installationId, startDate, numberOfDays, numberOfForecastsInDay);
@@ -163,12 +163,12 @@
 
     public static void AddTotalForecastErrorsToDatabase(
         this AirlyContext context,
-        List<short> _installationIds,
+        List<short> installationIds,
         DateTime startDate,
         short numberOfDays)
     {
       context.ForecastErrors.AddRange(GenerateTotalForecastErrors(
-          _installationIds, startDate, numberOfDays));
+          installationIds, startDate, numberOfDays));
 
       context.SaveChanges();
     }

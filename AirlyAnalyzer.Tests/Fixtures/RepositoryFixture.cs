@@ -16,7 +16,7 @@
       StartDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
 
       var inMemoryDatabaseOptions = new DbContextOptionsBuilder<AirlyContext>()
-          .UseInMemoryDatabase("AirlyDatabase")
+          .UseInMemoryDatabase("AirlyAnalyzerDbForTesting")
           .Options;
 
       string configFilePath = Path.Combine(

@@ -14,12 +14,12 @@
   [Collection("RepositoryTests")]
   public class CalculateForecastErrorsTest
   {
-    private IForecastErrorsCalculator _forecastErrorsCalculation;
+    private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
 
     private readonly DateTime _startDate;
-    private List<short> _installationIds;
+    private readonly List<short> _installationIds;
 
     private readonly short _minNumberOfMeasurements;
 

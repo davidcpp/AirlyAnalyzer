@@ -51,7 +51,7 @@
       const short numberOfDays = 2;
       var installationIds = new List<short>();
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
       var programController = new ProgramController(
@@ -86,7 +86,7 @@
       // Arrange
       const short numberOfDays = 2;
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
       var programController = new ProgramController(

@@ -51,7 +51,7 @@
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 24;
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds,
           _startDate,
           numberOfProcessedDays,
@@ -120,7 +120,7 @@
       var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
       var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds,
           processedDataStartDate,
           numberOfProcessedDays,

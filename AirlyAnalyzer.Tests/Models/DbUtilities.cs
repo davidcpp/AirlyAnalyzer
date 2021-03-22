@@ -21,7 +21,7 @@
       _installationIds = new List<short> { 6306, 6307, 6308, 6309, 6310, 6311 };
     }
 
-    public static void AddElementsToDatabase(
+    public static void AddAllElementsToDatabase(
         this AirlyContext context,
         List<short> installationIds,
         DateTime startDate,
@@ -194,7 +194,7 @@
     {
       const short numberOfElementsInDay = 24;
 
-      context.AddElementsToDatabase(
+      context.AddAllElementsToDatabase(
           _installationIds,
           _startDate,
           numberOfDays,

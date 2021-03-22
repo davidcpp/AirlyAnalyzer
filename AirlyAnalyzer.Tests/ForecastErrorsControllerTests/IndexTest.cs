@@ -42,7 +42,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsControllerTests
           = (numberOfElementsInDay * _installationIds.Count)
               + (2 * _installationIds.Count) + 1;
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       // Act

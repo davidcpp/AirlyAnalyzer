@@ -35,7 +35,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsApiControllerTests
       const short numberOfDays = 17;
       const short numberOfElementsInDay = 24;
 
-      _context.AddElementsToDatabase(
+      _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       // Act

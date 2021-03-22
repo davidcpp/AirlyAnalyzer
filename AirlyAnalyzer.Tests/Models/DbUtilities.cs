@@ -9,6 +9,7 @@
 
   public static class DbUtilities
   {
+    public const short _idForAllInstallations = -1;
     public const byte RequestMinutesOffset = 30;
 
     public static DateTime _startDate;
@@ -30,6 +31,8 @@
       var requestDate = startDate.AddDays(numberOfDays)
                                  .AddMinutes(RequestMinutesOffset);
 
+      int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
+
       foreach (short installationId in installationIds)
       {
         context.AddMeasurementsToDatabase(
@@ -44,11 +47,16 @@
         context.ForecastErrors.AddRange(GenerateDailyForecastErrors(
             installationId, startDate, numberOfDays, numberOfElementsInDay));
 
-        int totalErrorDuration = ((numberOfDays - 1) * 24) + numberOfElementsInDay;
-
         context.ForecastErrors.Add(CreateForecastError(
             installationId, ET.Total, startDate, requestDate, totalErrorDuration));
       }
+
+      context.ForecastErrors.Add(CreateForecastError(
+          _idForAllInstallations,
+          ET.Total,
+          startDate,
+          requestDate,
+          totalErrorDuration));
 
       context.SaveChanges();
     }

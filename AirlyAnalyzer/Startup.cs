@@ -2,7 +2,9 @@ namespace AirlyAnalyzer
 {
   using System.IO;
   using System.Text.Json.Serialization;
+  using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
@@ -39,6 +41,9 @@ namespace AirlyAnalyzer
                   .Replace("[DataDirectory]", dataDirectoryPath)));
 
       services.AddScoped<UnitOfWork>();
+
+      services.AddScoped<IAirQualityDataDownloader<Measurements>>(
+          x => new AirlyDataDownloader(x.GetRequiredService<IConfiguration>()));
 
       services
           .AddControllersWithViews()

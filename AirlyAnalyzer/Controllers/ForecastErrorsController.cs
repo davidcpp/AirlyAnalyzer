@@ -18,7 +18,7 @@
     }
 
     // GET: ForecastErrors
-    public async Task<ActionResult<List<AirQualityForecastError>>> Index()
+    public async Task<ActionResult> Index()
     {
       var requestDates = await _unitOfWork
           .ForecastErrorRepository.GetParameters<DateTime>(

@@ -24,8 +24,7 @@
     [HttpGet("{selectedRequestDate}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<AirQualityForecastError>>>
-        GetErrorsInDay(DateTime selectedRequestDate)
+    public async Task<ActionResult> GetErrorsInDay(DateTime selectedRequestDate)
     {
       var errorsInDay = await _unitOfWork.ForecastErrorRepository.Get(
           wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
@@ -35,7 +34,7 @@
         return NotFound();
       }
 
-      return errorsInDay;
+      return new ObjectResult(errorsInDay);
     }
 
     // GET: api/<ForecastErrorsApiController>/GetRequestDates

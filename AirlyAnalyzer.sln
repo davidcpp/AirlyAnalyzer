@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlyAnalyzer.UnitTests", "
 		{C7DABFD7-5186-4B7A-997D-370E649E74E3} = {C7DABFD7-5186-4B7A-997D-370E649E74E3}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlyAnalyzer.IntegrationTests", "AirlyAnalyzer.IntegrationTests\AirlyAnalyzer.IntegrationTests.csproj", "{957B0FC9-0E6C-48A8-8231-12C39A4E78A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{3F0A8380-BFCC-44BA-8B77-74D06855D566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F0A8380-BFCC-44BA-8B77-74D06855D566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F0A8380-BFCC-44BA-8B77-74D06855D566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957B0FC9-0E6C-48A8-8231-12C39A4E78A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957B0FC9-0E6C-48A8-8231-12C39A4E78A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957B0FC9-0E6C-48A8-8231-12C39A4E78A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957B0FC9-0E6C-48A8-8231-12C39A4E78A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

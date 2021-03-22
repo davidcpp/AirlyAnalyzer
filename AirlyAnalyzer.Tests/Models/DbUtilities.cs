@@ -188,5 +188,19 @@
       context.ForecastErrors.RemoveRange(context.ForecastErrors);
       context.SaveChanges();
     }
+
+    public static void Seed(
+        this AirlyContext context, short numberOfDays)
+    {
+      const short numberOfElementsInDay = 24;
+
+      context.AddElementsToDatabase(
+          _installationIds,
+          _startDate,
+          numberOfDays,
+          numberOfElementsInDay);
+
+      context.SaveChanges();
+    }
   }
 }

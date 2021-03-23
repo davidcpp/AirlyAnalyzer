@@ -1,22 +1,22 @@
-namespace AirlyAnalyzer.IntegrationTests
+namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsControllerTests
 {
   using System.Net.Http;
   using System.Threading.Tasks;
   using Xunit;
 
-  public class ForecastErrorsControllerTests
+  public class IndexTests
       : IClassFixture<CustomWebApplicationFactory<AirlyAnalyzer.Startup>>
   {
     private readonly HttpClient _client;
 
-    public ForecastErrorsControllerTests(
+    public IndexTests(
         CustomWebApplicationFactory<AirlyAnalyzer.Startup> factory)
     {
       _client = factory.CreateClient();
     }
 
     [Fact]
-    public async Task GetAsync_Index_ReturnsSuccessAndCorrectContentType()
+    public async Task ReturnsSuccessAndCorrectContentType()
     {
       // Arrange
       const string requestUrl = "";

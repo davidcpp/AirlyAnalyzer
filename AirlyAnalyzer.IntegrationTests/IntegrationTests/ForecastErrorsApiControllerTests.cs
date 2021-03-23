@@ -32,7 +32,7 @@ namespace AirlyAnalyzer.IntegrationTests
     }
 
     [Fact]
-    public async Task GetErrorsInDayAsync_WhenIncorrectDate_ReturnsBadRequest()
+    public async Task GetErrorsInDayAsync_ReturnsBadRequest_WhenIncorrectDate()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/2000";

@@ -26,7 +26,7 @@
     }
 
     [Fact]
-    public async Task ReturnsSuccessAndCorrectContentType()
+    public async Task returns_success_and_correct_content_type()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetRequestDates";
@@ -41,7 +41,7 @@
     }
 
     [Fact]
-    public async Task ReturnsSuccessAndCorrectContentType_WhenNoDataInDatabase()
+    public async Task returns_success_and_correct_content_type_when_no_data_in_database()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetRequestDates";

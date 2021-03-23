@@ -16,7 +16,7 @@ namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsControllerTests
     }
 
     [Fact]
-    public async Task ReturnsSuccessAndCorrectContentType()
+    public async Task returns_success_and_correct_content_type()
     {
       // Arrange
       const string requestUrl = "";

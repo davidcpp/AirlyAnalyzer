@@ -17,7 +17,7 @@ namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsApiControllerTests
     }
 
     [Fact]
-    public async Task ReturnsSuccessAndCorrectContentType()
+    public async Task returns_success_and_correct_content_type()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/2000-01-01";
@@ -32,7 +32,7 @@ namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsApiControllerTests
     }
 
     [Fact]
-    public async Task ReturnsBadRequest_WhenIncorrectDate()
+    public async Task returns_bad_request_when_incorrect_date()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/2000";
@@ -45,7 +45,7 @@ namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsApiControllerTests
     }
 
     [Fact]
-    public async Task ReturnsNotFound_WhenNoForecastErrorsInDay()
+    public async Task returns_not_found_when_no_forecast_errors_in_day()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/1000-01-01";

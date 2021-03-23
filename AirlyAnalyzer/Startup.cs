@@ -42,7 +42,7 @@ namespace AirlyAnalyzer
 
       services.AddScoped<UnitOfWork>();
 
-      services.AddScoped<IAirQualityDataDownloader<Measurements>>(
+      services.AddSingleton<IAirQualityDataDownloader<Measurements>>(
           x => new AirlyDataDownloader(x.GetRequiredService<IConfiguration>()));
 
       services

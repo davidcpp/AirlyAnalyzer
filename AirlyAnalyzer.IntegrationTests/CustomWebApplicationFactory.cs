@@ -45,7 +45,7 @@
             .Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
             .ReturnsAsync(new Measurements());
 
-        services.AddScoped(_ => airlyDataDownloaderMock.Object);
+        services.AddSingleton(_ => airlyDataDownloaderMock.Object);
 
         var sp = services.BuildServiceProvider();
 

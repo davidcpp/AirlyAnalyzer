@@ -16,7 +16,7 @@ namespace AirlyAnalyzer.IntegrationTests
     }
 
     [Fact]
-    public async Task GetAsync_ReturnSuccessAndCorrectContentType()
+    public async Task GetAsync_Index_ReturnsSuccessAndCorrectContentType()
     {
       // Arrange
       const string requestUrl = "";

@@ -17,7 +17,7 @@ namespace AirlyAnalyzer.IntegrationTests
     }
 
     [Fact]
-    public async Task GetErrorsInDayAsync_ReturnSuccessAndCorrectContentType()
+    public async Task GetErrorsInDayAsync_ReturnsSuccessAndCorrectContentType()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/2000-01-01";
@@ -32,7 +32,7 @@ namespace AirlyAnalyzer.IntegrationTests
     }
 
     [Fact]
-    public async Task GetErrorsInDayAsync_WhenIncorrectDate_ReturnEmptyList()
+    public async Task GetErrorsInDayAsync_WhenIncorrectDate_ReturnsBadRequest()
     {
       // Arrange
       const string requestUrl = "/api/ForecastErrorsApi/GetErrorsInDay/2000";

@@ -40,7 +40,7 @@ namespace AirlyAnalyzer
             .ConfigureServices(services
                 => services.AddHostedService<ProgramController>(x =>
                     new ProgramController(
-                        x.GetRequiredService<IServiceScopeFactory>(),
+                        x.GetRequiredService<IServiceProvider>(),
                         x.GetRequiredService<IConfiguration>(),
                         x.GetRequiredService<ILogger<ProgramController>>())));
   }

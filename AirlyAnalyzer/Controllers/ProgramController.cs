@@ -17,7 +17,7 @@
   {
     private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly ILogger<ProgramController> _logger;
-    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly IServiceProvider _serviceProvider;
 
     private readonly List<short> _installationIds;
     private readonly short _idForAllInstallations;
@@ -46,11 +46,11 @@
     }
 
     public ProgramController(
-        IServiceScopeFactory scopeFactory,
+        IServiceProvider serviceProvider,
         IConfiguration config,
         ILogger<ProgramController> logger = null)
     {
-      _scopeFactory = scopeFactory;
+      _serviceProvider = serviceProvider;
       _logger = logger;
 
       _minNumberOfMeasurements = config.GetValue<short>(
@@ -77,7 +77,7 @@
 
     public async void DoWork(object state)
     {
-      using (var scope = _scopeFactory.CreateScope())
+      using (var scope = _serviceProvider.CreateScope())
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
         _airQualityDataDownloader = scope.ServiceProvider

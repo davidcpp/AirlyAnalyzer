@@ -66,7 +66,8 @@
       _airQualityDataDownloader = serviceProvider
           .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
 
-      _forecastErrorsCalculation = new ForecastErrorsCalculator();
+      _forecastErrorsCalculation = serviceProvider
+          .GetRequiredService<IForecastErrorsCalculator>();
     }
 
     public Task StartAsync(CancellationToken stoppingToken)

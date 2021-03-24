@@ -2,6 +2,7 @@ namespace AirlyAnalyzer
 {
   using System.IO;
   using System.Text.Json.Serialization;
+  using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
@@ -44,6 +45,9 @@ namespace AirlyAnalyzer
 
       services.AddSingleton<IAirQualityDataDownloader<Measurements>>(
           x => new AirlyDataDownloader(x.GetRequiredService<IConfiguration>()));
+
+      services.AddSingleton<IForecastErrorsCalculator>(
+          _ => new ForecastErrorsCalculator());
 
       services
           .AddControllersWithViews()

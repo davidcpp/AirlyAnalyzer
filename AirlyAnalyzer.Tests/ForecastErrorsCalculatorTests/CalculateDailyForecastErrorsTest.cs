@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
+﻿namespace AirlyAnalyzer.Tests.ForecastErrorsCalculatorTests
 {
   using System;
   using System.Linq;
@@ -43,10 +43,10 @@
           numberOfForecastErrorsInDay)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+      var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
           _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert
@@ -65,10 +65,10 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+      var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
           _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert
@@ -88,10 +88,10 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+      var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
           _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert

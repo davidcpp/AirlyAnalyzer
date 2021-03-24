@@ -15,7 +15,7 @@
   [Collection("RepositoryTests")]
   public class CalculateTotalForecastErrorsTest
   {
-    private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
+    private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
 
@@ -38,7 +38,7 @@
       _idForAllInstallations = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _forecastErrorsCalculation = new ForecastErrorsCalculator();
+      _forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       _context.Clear();
     }
@@ -54,7 +54,7 @@
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, installationIds);
+          _unitOfWork, _forecastErrorsCalculator, installationIds);
 
       // Act
       var newTotalForecastErrors
@@ -69,7 +69,7 @@
     {
       // Arrange
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, _installationIds);
+          _unitOfWork, _forecastErrorsCalculator, _installationIds);
 
       // Act
       var newTotalForecastErrors
@@ -90,7 +90,7 @@
 
       var programController = new ProgramController(
           _unitOfWork,
-          _forecastErrorsCalculation,
+          _forecastErrorsCalculator,
           _installationIds,
           _idForAllInstallations);
 

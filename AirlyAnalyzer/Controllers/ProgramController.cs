@@ -17,7 +17,7 @@
   {
     private readonly IAirQualityDataDownloader<Measurements>
         _airQualityDataDownloader;
-    private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
+    private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
 
@@ -30,14 +30,14 @@
 
     public ProgramController(
         UnitOfWork unitOfWork,
-        IForecastErrorsCalculator forecastErrorsCalculation = null,
+        IForecastErrorsCalculator forecastErrorsCalculator = null,
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
         IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,
         short minNumberOfMeasurements = 24)
     {
       _unitOfWork = unitOfWork;
-      _forecastErrorsCalculation = forecastErrorsCalculation;
+      _forecastErrorsCalculator = forecastErrorsCalculator;
       _airQualityDataDownloader = airQualityDataDownloader;
 
       _installationIds = installationIDsList;
@@ -66,7 +66,7 @@
       _airQualityDataDownloader = serviceProvider
           .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
 
-      _forecastErrorsCalculation = serviceProvider
+      _forecastErrorsCalculator = serviceProvider
           .GetRequiredService<IForecastErrorsCalculator>();
     }
 
@@ -157,12 +157,12 @@
         var (newMeasurements, newForecasts) = await _unitOfWork
             .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
-        var hourlyForecastErrors = _forecastErrorsCalculation
+        var hourlyForecastErrors = _forecastErrorsCalculator
             .CalculateHourly(installationId, newMeasurements, newForecasts);
 
         allHourlyForecastErrors.AddRange(hourlyForecastErrors);
 
-        allDailyForecastErrors.AddRange(_forecastErrorsCalculation.CalculateDaily(
+        allDailyForecastErrors.AddRange(_forecastErrorsCalculator.CalculateDaily(
             installationId, _minNumberOfMeasurements, hourlyForecastErrors));
       }
 
@@ -197,7 +197,7 @@
 
         if (dailyForecastErrors.Count > 0)
         {
-          var installationForecastError = _forecastErrorsCalculation
+          var installationForecastError = _forecastErrorsCalculator
               .CalculateTotal(installationId, dailyForecastErrors);
 
           newTotalForecastErrors.Add(installationForecastError);
@@ -207,7 +207,7 @@
       if (newTotalForecastErrors.Count > 0)
       {
         // Calculating total forecast error from all installations
-        var totalForecastError = _forecastErrorsCalculation
+        var totalForecastError = _forecastErrorsCalculator
             .CalculateTotal(_idForAllInstallations, newTotalForecastErrors);
 
         newTotalForecastErrors.Add(totalForecastError);

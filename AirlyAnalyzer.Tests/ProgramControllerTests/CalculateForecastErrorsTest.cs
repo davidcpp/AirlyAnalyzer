@@ -14,7 +14,7 @@
   [Collection("RepositoryTests")]
   public class CalculateForecastErrorsTest
   {
-    private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
+    private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
 
@@ -33,7 +33,7 @@
       _minNumberOfMeasurements = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      _forecastErrorsCalculation = new ForecastErrorsCalculator();
+      _forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       _context.Clear();
     }
@@ -60,7 +60,7 @@
           numberOfElementsInDay);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, installationIds);
+          _unitOfWork, _forecastErrorsCalculator, installationIds);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -76,7 +76,7 @@
     {
       // Arrange
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, _installationIds);
+          _unitOfWork, _forecastErrorsCalculator, _installationIds);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -104,7 +104,7 @@
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculation, _installationIds);
+          _unitOfWork, _forecastErrorsCalculator, _installationIds);
 
       // Act
       var (hourlyErrors, dailyErrors)

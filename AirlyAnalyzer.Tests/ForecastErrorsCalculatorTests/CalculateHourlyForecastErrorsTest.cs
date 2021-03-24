@@ -1,4 +1,4 @@
-namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
+namespace AirlyAnalyzer.Tests.ForecastErrorsCalculatorTests
 {
   using System;
   using System.Collections.Generic;
@@ -44,10 +44,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -88,10 +88,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -121,10 +121,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfForecasts)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -156,10 +156,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfForecastsInDay)
         .ToList();
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -211,10 +211,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert
@@ -275,10 +275,10 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculation = new ForecastErrorsCalculator();
+      var forecastErrorsCalculator = new ForecastErrorsCalculator();
 
       // Act
-      var forecastErrors = forecastErrorsCalculation
+      var forecastErrors = forecastErrorsCalculator
           .CalculateHourly(_installationId, newMeasurements, newForecasts);
 
       // Assert

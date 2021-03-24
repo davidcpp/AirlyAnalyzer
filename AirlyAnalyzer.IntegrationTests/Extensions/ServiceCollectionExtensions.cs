@@ -19,9 +19,7 @@
       services.Remove(descriptor);
 
       services.AddDbContext<AirlyContext>(options =>
-      {
-        options.UseInMemoryDatabase("AirlyAnalyzerDbForTesting");
-      });
+          options.UseInMemoryDatabase("AirlyAnalyzerDbForTesting"));
 
       var airlyDataDownloaderMock
           = new Mock<IAirQualityDataDownloader<Measurements>>();

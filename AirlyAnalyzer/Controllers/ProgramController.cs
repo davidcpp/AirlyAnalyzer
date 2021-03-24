@@ -15,6 +15,8 @@
 
   public class ProgramController : IHostedService, IDisposable
   {
+    private readonly IAirQualityDataDownloader<Measurements>
+        _airQualityDataDownloader;
     private readonly IForecastErrorsCalculator _forecastErrorsCalculation;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -23,7 +25,6 @@
     private readonly short _idForAllInstallations;
     private readonly short _minNumberOfMeasurements;
 
-    private IAirQualityDataDownloader<Measurements> _airQualityDataDownloader;
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
@@ -62,6 +63,9 @@
       _idForAllInstallations = config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
+      _airQualityDataDownloader = serviceProvider
+          .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
+
       _forecastErrorsCalculation =
           new ForecastErrorsCalculator(_minNumberOfMeasurements);
     }
@@ -80,8 +84,6 @@
       using (var scope = _serviceProvider.CreateScope())
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
-        _airQualityDataDownloader = scope.ServiceProvider
-            .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
 
         var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
 

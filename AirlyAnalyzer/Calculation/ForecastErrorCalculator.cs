@@ -10,16 +10,6 @@
     private List<AirQualityMeasurement> _newArchiveMeasurements;
     private List<AirQualityForecast> _newArchiveForecasts;
 
-    /// <summary>
-    /// Minimal number of measurements to calculate daily forecast error
-    /// </summary>
-    private readonly short _minNumberOfMeasurements;
-
-    public ForecastErrorsCalculator(short minNumberOfMeasurements)
-    {
-      _minNumberOfMeasurements = minNumberOfMeasurements;
-    }
-
     public List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newArchiveMeasurements,
@@ -59,6 +49,7 @@
 
     public List<AirQualityForecastError> CalculateDaily(
         short installationId,
+        short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors)
     {
       var dailyForecastErrorsSum = new ErrorSum();
@@ -75,7 +66,7 @@
         // Calculate MAPE of daily forecast
         if (currentMeasurementRequestTime != previousMeasurementRequestTime)
         {
-          if (i > 0 && dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+          if (i > 0 && dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
           {
             var dailyError = dailyForecastErrorsSum
                 .CalculateMeanForecastError(ForecastErrorType.Daily);
@@ -92,7 +83,7 @@
         dailyForecastErrorsSum.AddAbs(newHourlyForecastErrors[i]);
       }
 
-      if (dailyForecastErrorsSum.Counter >= _minNumberOfMeasurements)
+      if (dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
       {
         var lastDailyError = dailyForecastErrorsSum
             .CalculateMeanForecastError(ForecastErrorType.Daily);

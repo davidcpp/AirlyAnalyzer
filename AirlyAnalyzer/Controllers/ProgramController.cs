@@ -66,8 +66,7 @@
       _airQualityDataDownloader = serviceProvider
           .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
 
-      _forecastErrorsCalculation =
-          new ForecastErrorsCalculator(_minNumberOfMeasurements);
+      _forecastErrorsCalculation = new ForecastErrorsCalculator();
     }
 
     public Task StartAsync(CancellationToken stoppingToken)
@@ -162,8 +161,8 @@
 
         allHourlyForecastErrors.AddRange(hourlyForecastErrors);
 
-        allDailyForecastErrors.AddRange(_forecastErrorsCalculation
-            .CalculateDaily(installationId, hourlyForecastErrors));
+        allDailyForecastErrors.AddRange(_forecastErrorsCalculation.CalculateDaily(
+            installationId, _minNumberOfMeasurements, hourlyForecastErrors));
       }
 
       return (allHourlyForecastErrors, allDailyForecastErrors);

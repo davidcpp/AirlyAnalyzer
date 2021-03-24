@@ -25,7 +25,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     public void correct_forecast_error()
     {
       // Arrange
-      const short minNumberOfMeasurements = 22;
       const short numberOfDays = 1;
       const short numberOfElementsInDay = 1;
       var measurementsStartDate = _startDate;
@@ -45,8 +44,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -73,7 +71,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         int numberOfForecastsErrors)
     {
       // Arrange
-      const short minNumberOfMeasurements = 22;
       var measurementsStartDate = _startDate;
       var forecastsStartDate = _startDate;
 
@@ -91,8 +88,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -106,7 +102,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     public void empty_forecast_error_list_when_non_overlapping_elements()
     {
       // Arrange
-      const short minNumberOfMeasurements = 23;
       const short numberOfMeasurements = 24;
       const short numberOfForecasts = 24;
       // These start date values simulate a case of a two-day break in requests 
@@ -126,8 +121,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfForecasts)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -142,7 +136,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     {
       // Arrange
       const short numberOfDays = 2;
-      const short minNumberOfMeasurements = 23;
       const short numberOfMeasurementsInDay = 24;
       const short numberOfForecastsInDay = 24;
       var measurementsStartDate = _startDate;
@@ -163,8 +156,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
           numberOfForecastsInDay)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -194,8 +186,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         short airlyPm25_ForecastError,
         short airlyPm10_ForecastError)
     {
-      // Arrange
-      const short minNumberOfMeasurements = 23;
+      // Arrange    
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
           = _startDate.AddDays(1).AddMinutes(RequestMinutesOffset);
@@ -221,8 +212,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation
@@ -259,8 +249,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
         short airlyPm25_ForecastError,
         short airlyPm10_ForecastError)
     {
-      // Arrange
-      const short minNumberOfMeasurements = 23;
+      // Arrange 
       var measurementsStartDate = _startDate;
       var measurementsRequestDate
           = _startDate.AddDays(1).AddMinutes(RequestMinutesOffset);
@@ -286,8 +275,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculation

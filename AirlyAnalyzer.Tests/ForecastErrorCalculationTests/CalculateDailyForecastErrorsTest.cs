@@ -43,12 +43,11 @@
           numberOfForecastErrorsInDay)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDaily(_installationId, newForecastErrors);
+      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+          _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert
       Assert.Equal(numberOfDailyForecastsErrors, dailyForecastErrors.Count);
@@ -66,12 +65,11 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDaily(_installationId, newForecastErrors);
+      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+          _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert
       Assert.Empty(dailyForecastErrors);
@@ -90,12 +88,11 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculation
-          = new ForecastErrorsCalculator(minNumberOfMeasurements);
+      var forecastErrorsCalculation = new ForecastErrorsCalculator();
 
       // Act
-      var dailyForecastErrors = forecastErrorsCalculation
-          .CalculateDaily(_installationId, newForecastErrors);
+      var dailyForecastErrors = forecastErrorsCalculation.CalculateDaily(
+          _installationId, minNumberOfMeasurements, newForecastErrors);
 
       // Assert
       startDate = _startDate.ToLocalTime();

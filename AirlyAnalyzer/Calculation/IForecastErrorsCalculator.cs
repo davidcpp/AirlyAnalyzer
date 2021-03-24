@@ -14,6 +14,7 @@
 
     public List<AirQualityForecastError> CalculateDaily(
         short installationId,
+        short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors);
 
     public AirQualityForecastError CalculateTotal(

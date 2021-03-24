@@ -88,7 +88,7 @@
     }
 
     [Fact]
-    public async Task returns_forecast_errors_with_proper_count()
+    public async Task returns_forecast_errors_with_correct_count()
     {
       // Arrange
       const short numberOfDays = 7;

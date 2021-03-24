@@ -80,7 +80,7 @@
     }
 
     [Fact]
-    public async Task returns_proper_new_total_errors_when_one_daily_error_for_each_installation()
+    public async Task returns_correct_new_total_errors_when_one_daily_error_for_each_installation()
     {
       // Arrange
       const short numberOfDays = 2;

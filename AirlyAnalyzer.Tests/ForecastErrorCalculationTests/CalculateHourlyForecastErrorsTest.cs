@@ -22,7 +22,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Fact]
-    public void correct_forecast_error()
+    public void returns_correct_forecast_error()
     {
       // Arrange
       const short numberOfDays = 1;
@@ -99,7 +99,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Fact]
-    public void empty_forecast_error_list_when_non_overlapping_elements()
+    public void returns_empty_forecast_error_list_when_non_overlapping_elements()
     {
       // Arrange
       const short numberOfMeasurements = 24;
@@ -132,7 +132,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Fact]
-    public void correct_forecast_error_list_when_overlapping_elements()
+    public void returns_correct_forecast_error_list_when_overlapping_elements()
     {
       // Arrange
       const short numberOfDays = 2;

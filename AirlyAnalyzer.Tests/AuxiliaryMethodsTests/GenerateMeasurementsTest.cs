@@ -19,7 +19,7 @@
     }
 
     [Fact]
-    public void list_of_measurements_from_one_day()
+    public void returns_list_of_measurements_from_one_day()
     {
       // Arrange
       const int numberOfMeasurements = 20;
@@ -50,7 +50,7 @@
     }
 
     [Fact]
-    public void list_of_measurements_from_many_days()
+    public void returns_list_of_measurements_from_many_days()
     {
       // Arrange
       const short numberOfDays = 15;

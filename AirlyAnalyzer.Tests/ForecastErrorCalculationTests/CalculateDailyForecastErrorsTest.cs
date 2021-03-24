@@ -76,7 +76,7 @@
     }
 
     [Fact]
-    public void correct_daily_forecast_error_when_number_of_elements_is_equal_min()
+    public void returns_correct_daily_forecast_error_when_number_of_elements_is_equal_min()
     {
       // Arrange
       const short minNumberOfMeasurements = 20;

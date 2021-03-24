@@ -39,7 +39,7 @@
     }
 
     [Fact]
-    public async Task empty_new_forecast_errors_when_no_installations()
+    public async Task returns_empty_new_forecast_errors_when_no_installations()
     {
       // Arrange
       const short numberOfDays = 7;
@@ -72,7 +72,7 @@
     }
 
     [Fact]
-    public async Task empty_new_forecast_errors_when_no_measurements_in_database()
+    public async Task returns_empty_new_forecast_errors_when_no_measurements_in_database()
     {
       // Arrange
       var programController = new ProgramController(
@@ -88,7 +88,7 @@
     }
 
     [Fact]
-    public async Task proper_number_of_calculated_forecast_errors()
+    public async Task returns_proper_number_of_calculated_forecast_errors()
     {
       // Arrange
       const short numberOfDays = 7;

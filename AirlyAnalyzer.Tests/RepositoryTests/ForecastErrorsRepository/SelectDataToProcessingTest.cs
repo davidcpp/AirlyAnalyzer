@@ -29,7 +29,7 @@
     }
 
     [Fact]
-    public async Task empty_new_data_when_no_data_in_database()
+    public async Task returns_empty_new_data_when_no_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -44,7 +44,7 @@
     }
 
     [Fact]
-    public async Task empty_new_data_when_no_data_to_process_in_database()
+    public async Task returns_empty_new_data_when_no_data_to_process_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -67,7 +67,7 @@
     }
 
     [Fact]
-    public async Task new_data_when_only_data_to_process_in_database()
+    public async Task returns_new_data_when_only_data_to_process_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -107,7 +107,7 @@
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]
     [InlineData(2, 24, 23)]
-    public async Task new_data_when_data_to_process_from_several_installations_in_database(
+    public async Task returns_new_data_when_data_to_process_from_several_installations_in_database(
         short numberOfNotProcessedDays,
         short numberOfNewMeasurementsInDay,
         short numberOfNewForecastsInDay)

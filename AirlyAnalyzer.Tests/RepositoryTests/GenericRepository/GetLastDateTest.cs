@@ -30,7 +30,7 @@
     }
 
     [Fact]
-    public async void date_time_min_value_when_no_data_in_database()
+    public async void returns_date_time_min_value_when_no_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -44,7 +44,7 @@
     }
 
     [Fact]
-    public async void date_time_min_value_when_only_data_from_other_installations_in_database()
+    public async void returns_date_time_min_value_when_only_data_from_other_installations_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];
@@ -67,7 +67,7 @@
     }
 
     [Fact]
-    public async void proper_date_when_all_installations_data_in_database()
+    public async void returns_proper_date_when_all_installations_data_in_database()
     {
       // Arrange
       short installationId = _installationIds[0];

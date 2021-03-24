@@ -34,7 +34,7 @@
     [Theory]
     [InlineData(7, 0)]
     [InlineData(7, 3)]
-    public async Task return_daily_foreacst_errors_count(
+    public async Task returns_daily_foreacst_errors_count(
         short numberOfHourlyErrorDays, short numberOfDailyErrorDays)
     {
       // Arrange

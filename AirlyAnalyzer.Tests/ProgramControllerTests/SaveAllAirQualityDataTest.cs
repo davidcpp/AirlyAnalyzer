@@ -36,7 +36,7 @@
     [InlineData(0, 1)]
     [InlineData(1, 0)]
     [InlineData(1, 1)]
-    public async Task return_min_of_collections_count(
+    public async Task returns_min_of_collections_count(
         short numberOfMeasurementDays, short numberOfForecastDays)
     {
       // Arrange

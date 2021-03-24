@@ -68,6 +68,21 @@
     public async Task returns_empty_new_total_error_list_when_no_daily_errors_in_database()
     {
       // Arrange
+      const short numberOfDays = 1;
+      const short numberOfElements = 22;
+
+      _context.AddAllMeasurementsToDatabase(
+          _installationIds, _startDate, numberOfDays, numberOfElements);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds, _startDate, numberOfDays, numberOfElements);
+
+      foreach (short installationId in _installationIds)
+      {
+        _context.AddHourlyForecastErrorsToDatabase(
+            installationId, _startDate, numberOfElements);
+      }
+
       var programController = new ProgramController(
           _unitOfWork, _forecastErrorsCalculator, _installationIds);
 

@@ -54,7 +54,7 @@
     }
 
     [Fact]
-    public void no_daily_forecast_error_when_number_of_elements_less_than_min()
+    public void returns_empty_daily_forecast_error_list_when_number_of_elements_less_than_min()
     {
       // Arrange
       const short minNumberOfMeasurements = 20;

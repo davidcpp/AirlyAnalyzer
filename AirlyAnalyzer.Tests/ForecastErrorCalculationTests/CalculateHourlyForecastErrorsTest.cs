@@ -174,7 +174,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     [Theory]
     [InlineData(0, 0, 0, 2, 2, 2, -200, -200, -200)]
     [InlineData(0, 0, 0, 255, 240, 320, -25500, -24000, -32000)]
-    public void negative_forecast_errors_when_measurements_are_zero(
+    public void returns_negative_all_types_of_forecast_error_when_measurements_are_zero(
         byte airlyCaqi_Measurement,
         short airlyPm25_Measurement,
         short airlyPm10_Measurement,
@@ -238,7 +238,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     [InlineData(40, 40, 40, 41, 41, 41, -2, -2, -2)] // test rounding negative errors to even numbers (2.5->2)
     [InlineData(200, 180, 240, 197, 175, 235, 2, 3, 2)] // test round positive errors to even numbers (1.5->2)
     [InlineData(200, 180, 240, 203, 185, 245, -2, -3, -2)] // test round negative errors to even numbers (1.5->2)
-    public void correctly_calculated_forecast_errors(
+    public void returns_correctly_calculated_all_types_of_forecast_error(
         byte airlyCaqi_Measurement,
         short airlyPm25_Measurement,
         short airlyPm10_Measurement,

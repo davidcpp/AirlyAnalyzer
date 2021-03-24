@@ -1,17 +1,13 @@
 ﻿namespace AirlyAnalyzer.IntegrationTests
 {
   using System;
-  using System.Linq;
-  using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.IntegrationTests.Extensions;
   using AirlyAnalyzer.Tests.Models;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Mvc.Testing;
-  using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Logging;
-  using Moq;
 
   public class CustomWebApplicationFactory<TStartup>
       : WebApplicationFactory<TStartup> where TStartup : class
@@ -27,25 +23,7 @@
     {
       builder.ConfigureServices(services =>
       {
-        var descriptor = services.SingleOrDefault(
-            d => d.ServiceType ==
-                typeof(DbContextOptions<AirlyContext>));
-
-        services.Remove(descriptor);
-
-        services.AddDbContext<AirlyContext>(options =>
-        {
-          options.UseInMemoryDatabase("AirlyAnalyzerDbForTesting");
-        });
-
-        var airlyDataDownloaderMock
-            = new Mock<IAirQualityDataDownloader<Measurements>>();
-
-        airlyDataDownloaderMock
-            .Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
-            .ReturnsAsync(new Measurements());
-
-        services.AddSingleton(_ => airlyDataDownloaderMock.Object);
+        services.ConfigureCommonServices();
 
         var sp = services.BuildServiceProvider();
 

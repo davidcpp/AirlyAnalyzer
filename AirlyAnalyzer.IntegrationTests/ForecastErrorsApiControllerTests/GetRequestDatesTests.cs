@@ -1,15 +1,11 @@
 ﻿namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsApiControllerTests
 {
-  using System.Linq;
   using System.Net.Http;
   using System.Threading.Tasks;
-  using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
-  using Microsoft.EntityFrameworkCore;
+  using AirlyAnalyzer.IntegrationTests.Extensions;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Logging;
-  using Moq;
   using Xunit;
 
   public class GetRequestDatesTests
@@ -49,25 +45,7 @@
       {
         builder.ConfigureServices(services =>
         {
-          var descriptor = services.SingleOrDefault(
-              d => d.ServiceType ==
-                  typeof(DbContextOptions<AirlyContext>));
-
-          services.Remove(descriptor);
-
-          services.AddDbContext<AirlyContext>(options =>
-          {
-            options.UseInMemoryDatabase("AirlyAnalyzerDbForTesting");
-          });
-
-          var airlyDataDownloaderMock
-              = new Mock<IAirQualityDataDownloader<Measurements>>();
-
-          airlyDataDownloaderMock
-              .Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
-              .ReturnsAsync(new Measurements());
-
-          services.AddSingleton(_ => airlyDataDownloaderMock.Object);
+          services.ConfigureCommonServices();
 
           var sp = services.BuildServiceProvider();
 

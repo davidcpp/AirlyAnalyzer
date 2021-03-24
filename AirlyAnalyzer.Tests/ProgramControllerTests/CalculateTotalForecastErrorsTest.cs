@@ -44,7 +44,7 @@
     }
 
     [Fact]
-    public async Task returns_empty_new_total_errors_when_no_installations()
+    public async Task returns_empty_new_total_error_list_when_no_installations()
     {
       // Arrange
       const short numberOfDays = 2;
@@ -65,7 +65,7 @@
     }
 
     [Fact]
-    public async Task returns_empty_new_total_errors_when_no_daily_errors_in_database()
+    public async Task returns_empty_new_total_error_list_when_no_daily_errors_in_database()
     {
       // Arrange
       var programController = new ProgramController(
@@ -80,7 +80,7 @@
     }
 
     [Fact]
-    public async Task returns_correct_new_total_errors_when_one_daily_error_for_each_installation()
+    public async Task returns_correct_new_total_error_list()
     {
       // Arrange
       const short numberOfDays = 2;

@@ -46,7 +46,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsApiControllerTests
     }
 
     [Fact]
-    public async Task returns_empty_request_dates_when_no_forecast_errors_in_database()
+    public async Task returns_empty_request_date_list_when_no_forecast_errors_in_database()
     {
       // Act
       var requestDates = await controller.GetRequestDates();

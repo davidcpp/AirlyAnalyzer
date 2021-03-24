@@ -172,7 +172,6 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Theory]
-    [InlineData(0, 0, 0, 0, 0, 0, 0, 0, 0)]
     [InlineData(0, 0, 0, 2, 2, 2, -200, -200, -200)]
     [InlineData(0, 0, 0, 255, 240, 320, -25500, -24000, -32000)]
     public void negative_forecast_errors_when_measurements_are_zero(
@@ -225,6 +224,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorCalculationTests
     }
 
     [Theory]
+    [InlineData(0, 0, 0, 0, 0, 0, 0, 0, 0)]
     [InlineData(1, 1, 1, 255, 240, 320, -25400, -23900, -31900)] // min non-zero measurements and max forecasts
                                                                  // -> max errors
     [InlineData(255, 240, 320, 254, 239, 319, 0, 0, 0)] // min positive diff between measurements and forecasts

@@ -13,7 +13,7 @@
     public void Configure(EntityTypeBuilder<AirQualityMeasurement> builder)
     {
       builder.ToTable("Measurements")
-          .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
+          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -27,7 +27,7 @@
     public void Configure(EntityTypeBuilder<AirQualityForecast> builder)
     {
       builder.ToTable("Forecasts")
-          .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
+          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -48,7 +48,7 @@
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
     {
       builder.ToTable("ForecastErrors").HasKey(x =>
-          new { x.InstallationId, x.FromDateTime, x.TillDateTime, x.ErrorType });
+          new { x.ErrorType, x.TillDateTime, x.FromDateTime, x.InstallationId });
 
       builder.Property(x => x.ErrorType)
           .HasConversion<string>()

@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Controllers;
@@ -113,6 +114,44 @@
       // Assert
       Assert.Equal(numberOfHourlyErrors, hourlyErrors.Count);
       Assert.Equal(numberOfDailyErrors, dailyErrors.Count);
+    }
+
+    [Fact]
+    public async Task returns_forecast_errors_with_correct_installaton_ids()
+    {
+      // Arrange
+      const short numberOfDays = 7;
+      short numberOfElementsInDay = _minNumberOfMeasurements;
+
+      int numberOfDailyErrors = numberOfDays * _installationIds.Count;
+      int numberOfHourlyErrors = numberOfDailyErrors * numberOfElementsInDay;
+
+      _context.AddAllMeasurementsToDatabase(
+          _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
+
+      var programController = new ProgramController(
+          _unitOfWork, _forecastErrorsCalculator, _installationIds);
+
+      // Act
+      var (hourlyErrors, dailyErrors)
+          = await programController.CalculateForecastErrors();
+
+      var hourlyErrorsInstallationIds
+          = hourlyErrors.Select(fe => fe.InstallationId).Distinct().ToList();
+      var dailyErrorsInstallationIds
+          = dailyErrors.Select(fe => fe.InstallationId).Distinct().ToList();
+
+      // Assert
+      Assert.Equal(_installationIds.Count, hourlyErrorsInstallationIds.Count);
+      Assert.Equal(_installationIds[0], hourlyErrorsInstallationIds[0]);
+      Assert.Equal(_installationIds.Last(), hourlyErrorsInstallationIds.Last());
+
+      Assert.Equal(_installationIds.Count, dailyErrorsInstallationIds.Count);
+      Assert.Equal(_installationIds[0], dailyErrorsInstallationIds[0]);
+      Assert.Equal(_installationIds.Last(), dailyErrorsInstallationIds.Last());
     }
   }
 }

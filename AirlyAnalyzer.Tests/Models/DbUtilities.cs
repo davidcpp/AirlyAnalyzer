@@ -145,9 +145,8 @@
         DateTime startDate,
         int numberOfForecastErrors)
     {
-      context.ForecastErrors.AddRange(
-          GenerateHourlyForecastErrors(
-              installationId, startDate, numberOfForecastErrors));
+      context.ForecastErrors.AddRange(GenerateHourlyForecastErrors(
+          installationId, startDate, numberOfForecastErrors));
 
       context.SaveChanges();
     }
@@ -191,10 +190,7 @@
       const short numberOfElementsInDay = 24;
 
       context.AddAllElementsToDatabase(
-          _installationIds,
-          _startDate,
-          numberOfDays,
-          numberOfElementsInDay);
+          _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       context.SaveChanges();
     }

@@ -62,9 +62,7 @@
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
-      Assert.Equal(
-          finalNumberOfMeasurements,
-          _context.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.Measurements.Count());
     }
 
     [Fact]
@@ -88,9 +86,7 @@
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
-      Assert.Equal(
-          finalNumberOfMeasurements,
-          _context.ArchiveMeasurements.Count());
+      Assert.Equal(finalNumberOfMeasurements, _context.Measurements.Count());
     }
 
     [Theory]
@@ -123,7 +119,7 @@
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.Forecasts.Count());
     }
 
     [Fact]
@@ -147,7 +143,7 @@
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
-      Assert.Equal(finalNumberOfForecasts, _context.ArchiveForecasts.Count());
+      Assert.Equal(finalNumberOfForecasts, _context.Forecasts.Count());
     }
 
     [Theory]

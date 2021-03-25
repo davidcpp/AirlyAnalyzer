@@ -12,7 +12,7 @@
   {
     public void Configure(EntityTypeBuilder<AirQualityMeasurement> builder)
     {
-      builder.ToTable("ArchiveMeasurements")
+      builder.ToTable("Measurements")
           .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
@@ -26,7 +26,7 @@
   {
     public void Configure(EntityTypeBuilder<AirQualityForecast> builder)
     {
-      builder.ToTable("ArchiveForecasts")
+      builder.ToTable("Forecasts")
           .HasKey(x => new { x.InstallationId, x.FromDateTime, x.TillDateTime });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
@@ -75,8 +75,8 @@
           config.GetValue<byte>("AppSettings:Databases:MaxErrorTypeLength");
     }
 
-    public DbSet<AirQualityMeasurement> ArchiveMeasurements { get; set; }
-    public DbSet<AirQualityForecast> ArchiveForecasts { get; set; }
+    public DbSet<AirQualityMeasurement> Measurements { get; set; }
+    public DbSet<AirQualityForecast> Forecasts { get; set; }
     public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

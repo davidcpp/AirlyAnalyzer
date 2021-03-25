@@ -87,8 +87,8 @@
           .SaveAllAirQualityData(newMeasurements, newForecasts);
 
       // Assert
-      Assert.Empty(_context.ArchiveMeasurements);
-      Assert.Empty(_context.ArchiveForecasts);
+      Assert.Empty(_context.Measurements);
+      Assert.Empty(_context.Forecasts);
     }
 
     [Fact]
@@ -128,13 +128,8 @@
           .SaveAllAirQualityData(newMeasurements, newForecasts);
 
       // Assert
-      Assert.Equal(
-        numberOfMeasurementElements,
-        _context.ArchiveMeasurements.Count());
-
-      Assert.Equal(
-        numberOfForecastElements,
-        _context.ArchiveForecasts.Count());
+      Assert.Equal(numberOfMeasurementElements, _context.Measurements.Count());
+      Assert.Equal(numberOfForecastElements, _context.Forecasts.Count());
     }
   }
 }

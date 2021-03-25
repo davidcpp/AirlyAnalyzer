@@ -95,9 +95,8 @@
         DateTime startDate,
         int numberOfMeasurements)
     {
-      context.ArchiveMeasurements.AddRange(
-          GenerateMeasurements(
-              installationId, startDate, numberOfMeasurements));
+      context.Measurements.AddRange(GenerateMeasurements(
+          installationId, startDate, numberOfMeasurements));
 
       context.SaveChanges();
     }
@@ -109,9 +108,8 @@
         short numberOfDays,
         short numberOfMeasurementsInDay)
     {
-      context.ArchiveMeasurements.AddRange(
-          GenerateMeasurements(
-              installationId, startDate, numberOfDays, numberOfMeasurementsInDay));
+      context.Measurements.AddRange(GenerateMeasurements(
+          installationId, startDate, numberOfDays, numberOfMeasurementsInDay));
 
       context.SaveChanges();
     }
@@ -122,9 +120,8 @@
         DateTime startDate,
         int numberOfForecasts)
     {
-      context.ArchiveForecasts.AddRange(
-          GenerateForecasts(
-              installationId, startDate, numberOfForecasts));
+      context.Forecasts.AddRange(GenerateForecasts(
+          installationId, startDate, numberOfForecasts));
 
       context.SaveChanges();
     }
@@ -136,9 +133,8 @@
         short numberOfDays,
         short numberOfForecastsInDay)
     {
-      context.ArchiveForecasts.AddRange(
-          GenerateForecasts(
-              installationId, startDate, numberOfDays, numberOfForecastsInDay));
+      context.Forecasts.AddRange(GenerateForecasts(
+          installationId, startDate, numberOfDays, numberOfForecastsInDay));
 
       context.SaveChanges();
     }
@@ -183,8 +179,8 @@
 
     public static void Clear(this AirlyContext context)
     {
-      context.ArchiveMeasurements.RemoveRange(context.ArchiveMeasurements);
-      context.ArchiveForecasts.RemoveRange(context.ArchiveForecasts);
+      context.Measurements.RemoveRange(context.Measurements);
+      context.Forecasts.RemoveRange(context.Forecasts);
       context.ForecastErrors.RemoveRange(context.ForecastErrors);
       context.SaveChanges();
     }

@@ -45,11 +45,11 @@ function updateForecastErrorsTable(requestDate) {
 
       for (let i = 0; i < forecastErrors.length; i++) {
         let forecastError = [
-          forecastErrors[i].installationId,
+          forecastErrors[i].errorType,
           (new Date(forecastErrors[i].tillDateTime)).toLocaleString('tr-TR'),
+          forecastErrors[i].installationId,
           forecastErrors[i].airlyCaqiPct + '%',
           forecastErrors[i].airlyCaqi,
-          forecastErrors[i].errorType,
         ]
 
         forecastErrorsTable.row.add(forecastError);

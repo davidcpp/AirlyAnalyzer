@@ -13,19 +13,19 @@
       <thead>
         <tr>
           <th>
-            @Html.DisplayNameFor(model => model.InstallationId)
+            @Html.DisplayNameFor(model => model.ErrorType)
           </th>
           <th>
             @Html.DisplayNameFor(model => model.TillDateTime)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.InstallationId)
           </th>
           <th>
             @Html.DisplayNameFor(model => model.AirlyCaqiPct)
           </th>
           <th>
             @Html.DisplayNameFor(model => model.AirlyCaqi)
-          </th>
-          <th>
-            @Html.DisplayNameFor(model => model.ErrorType)
           </th>
         </tr>
       </thead>
@@ -34,19 +34,19 @@
         {
           <tr>
             <td>
-              @Html.DisplayFor(modelItem => item.InstallationId)
+              @Html.DisplayFor(modelItem => item.ErrorType)
             </td>
             <td>
               @Html.DisplayFor(modelItem => item.TillDateTime)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.InstallationId)
             </td>
             <td>
               @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%
             </td>
             <td>
               @Html.DisplayFor(modelItem => item.AirlyCaqi)
-            </td>
-            <td>
-              @Html.DisplayFor(modelItem => item.ErrorType)
             </td>
           </tr>
         }

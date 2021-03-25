@@ -35,12 +35,12 @@
       short installationId = _installationIds[0];
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+      var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
-      Assert.Empty(newArchiveMeasurements);
-      Assert.Empty(newArchiveForecasts);
+      Assert.Empty(newMeasurements);
+      Assert.Empty(newForecasts);
     }
 
     [Fact]
@@ -58,12 +58,12 @@
           numberOfElementsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+      var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
-      Assert.Empty(newArchiveMeasurements);
-      Assert.Empty(newArchiveForecasts);
+      Assert.Empty(newMeasurements);
+      Assert.Empty(newForecasts);
     }
 
     [Fact]
@@ -91,16 +91,16 @@
           numberOfNewForecastsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+      var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
           numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
-          newArchiveMeasurements.Count);
+          newMeasurements.Count);
       Assert.Equal(
           numberOfNewForecastsInDay * numberOfNotProcessedDays,
-          newArchiveForecasts.Count);
+          newForecasts.Count);
     }
 
     [Theory]
@@ -139,18 +139,18 @@
           numberOfNewForecastsInDay);
 
       // Act
-      var (newArchiveMeasurements, newArchiveForecasts) = await _unitOfWork
+      var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(installationId);
 
       // Assert
       Assert.Equal(
           numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
-          newArchiveMeasurements.Count);
+          newMeasurements.Count);
       Assert.Equal(
           numberOfNewForecastsInDay * numberOfNotProcessedDays,
-          newArchiveForecasts.Count);
-      Assert.Equal(installationId, newArchiveMeasurements[0].InstallationId);
-      Assert.Equal(installationId, newArchiveForecasts[0].InstallationId);
+          newForecasts.Count);
+      Assert.Equal(installationId, newMeasurements[0].InstallationId);
+      Assert.Equal(installationId, newForecasts[0].InstallationId);
     }
   }
 }

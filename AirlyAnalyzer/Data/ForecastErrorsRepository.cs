@@ -17,17 +17,17 @@
     {
       var lastForecastErrorDate = await GetLastDate(installationId);
 
-      var _newArchiveMeasurements = await _context.ArchiveMeasurements
+      var _newMeasurements = await _context.Measurements
           .Where(m => m.InstallationId == installationId
                    && m.TillDateTime > lastForecastErrorDate)
           .ToListAsync();
 
-      var _newArchiveForecasts = await _context.ArchiveForecasts
+      var _newForecasts = await _context.Forecasts
           .Where(f => f.InstallationId == installationId
                    && f.TillDateTime > lastForecastErrorDate)
           .ToListAsync();
 
-      return (_newArchiveMeasurements, _newArchiveForecasts);
+      return (_newMeasurements, _newForecasts);
     }
   }
 }

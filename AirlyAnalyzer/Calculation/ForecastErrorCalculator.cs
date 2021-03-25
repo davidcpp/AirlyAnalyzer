@@ -7,24 +7,24 @@
 
   public class ForecastErrorsCalculator : IForecastErrorsCalculator
   {
-    private List<AirQualityMeasurement> _newArchiveMeasurements;
-    private List<AirQualityForecast> _newArchiveForecasts;
+    private List<AirQualityMeasurement> _newMeasurements;
+    private List<AirQualityForecast> _newForecasts;
 
     public List<AirQualityForecastError> CalculateHourly(
         short installationId,
-        List<AirQualityMeasurement> newArchiveMeasurements,
-        List<AirQualityForecast> newArchiveForecasts)
+        List<AirQualityMeasurement> newMeasurements,
+        List<AirQualityForecast> newForecasts)
     {
       int i = 0, j = 0;
-      _newArchiveMeasurements = newArchiveMeasurements;
-      _newArchiveForecasts = newArchiveForecasts;
+      _newMeasurements = newMeasurements;
+      _newForecasts = newForecasts;
 
       var calculatedForecastErrors = new List<AirQualityForecastError>();
 
-      for (; i < _newArchiveMeasurements.Count && j < _newArchiveForecasts.Count;)
+      for (; i < _newMeasurements.Count && j < _newForecasts.Count;)
       {
-        var currentMeasurementDateTime = _newArchiveMeasurements[i].TillDateTime;
-        var currentForecastDateTime = _newArchiveForecasts[j].TillDateTime;
+        var currentMeasurementDateTime = _newMeasurements[i].TillDateTime;
+        var currentForecastDateTime = _newForecasts[j].TillDateTime;
 
         if (currentForecastDateTime == currentMeasurementDateTime)
         {
@@ -36,11 +36,11 @@
         }
         else if (currentForecastDateTime > currentMeasurementDateTime)
         {
-          _newArchiveMeasurements.RemoveAt(i);
+          _newMeasurements.RemoveAt(i);
         }
         else
         {
-          _newArchiveForecasts.RemoveAt(j);
+          _newForecasts.RemoveAt(j);
         }
       }
 
@@ -98,22 +98,22 @@
         short installationId, int i, int j)
     {
       short pm25Error = (short)
-          (_newArchiveMeasurements[i].Pm25 - _newArchiveForecasts[j].Pm25);
+          (_newMeasurements[i].Pm25 - _newForecasts[j].Pm25);
 
       short pm10Error = (short)
-          (_newArchiveMeasurements[i].Pm10 - _newArchiveForecasts[j].Pm10);
+          (_newMeasurements[i].Pm10 - _newForecasts[j].Pm10);
 
       short airlyCaqiError = (short)
-          (_newArchiveMeasurements[i].AirlyCaqi - _newArchiveForecasts[j].AirlyCaqi);
+          (_newMeasurements[i].AirlyCaqi - _newForecasts[j].AirlyCaqi);
 
-      double pm25Measurement = _newArchiveMeasurements[i].Pm25 > 0 ?
-          (double)_newArchiveMeasurements[i].Pm25 : 1;
+      double pm25Measurement = _newMeasurements[i].Pm25 > 0 ?
+          (double)_newMeasurements[i].Pm25 : 1;
 
-      double pm10Measurement = _newArchiveMeasurements[i].Pm10 > 0 ?
-          (double)_newArchiveMeasurements[i].Pm10 : 1;
+      double pm10Measurement = _newMeasurements[i].Pm10 > 0 ?
+          (double)_newMeasurements[i].Pm10 : 1;
 
-      double airlyCaqiMeasurement = _newArchiveMeasurements[i].AirlyCaqi > 0 ?
-          (double)_newArchiveMeasurements[i].AirlyCaqi : 1;
+      double airlyCaqiMeasurement = _newMeasurements[i].AirlyCaqi > 0 ?
+          (double)_newMeasurements[i].AirlyCaqi : 1;
 
       double pm25RelativeError = (double)pm25Error / pm25Measurement;
       double pm10RelativeError = (double)pm10Error / pm10Measurement;
@@ -122,15 +122,15 @@
       return new AirQualityForecastError
       {
         InstallationId = installationId,
-        FromDateTime = _newArchiveMeasurements[i].FromDateTime,
-        TillDateTime = _newArchiveMeasurements[i].TillDateTime,
+        FromDateTime = _newMeasurements[i].FromDateTime,
+        TillDateTime = _newMeasurements[i].TillDateTime,
         AirlyCaqiPct = Convert.ToInt16(airlyCaqiRelativeError * 100),
         Pm25Pct = Convert.ToInt16(pm25RelativeError * 100),
         Pm10Pct = Convert.ToInt16(pm10RelativeError * 100),
         AirlyCaqi = airlyCaqiError,
         Pm25 = pm25Error,
         Pm10 = pm10Error,
-        RequestDateTime = _newArchiveMeasurements[i].RequestDateTime,
+        RequestDateTime = _newMeasurements[i].RequestDateTime,
         ErrorType = ForecastErrorType.Hourly,
       };
     }

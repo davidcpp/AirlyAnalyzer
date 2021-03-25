@@ -9,8 +9,8 @@
   {
     public List<AirQualityForecastError> CalculateHourly(
         short installationId,
-        List<AirQualityMeasurement> newArchiveMeasurements,
-        List<AirQualityForecast> newArchiveForecasts);
+        List<AirQualityMeasurement> newMeasurements,
+        List<AirQualityForecast> newForecasts);
 
     public List<AirQualityForecastError> CalculateDaily(
         short installationId,

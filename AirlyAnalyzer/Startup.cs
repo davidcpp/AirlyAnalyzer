@@ -44,7 +44,7 @@ namespace AirlyAnalyzer
       services.AddScoped<UnitOfWork>();
 
       services.AddSingleton<IAirQualityDataDownloader<Measurements>>(
-          x => new AirlyDataDownloader(x.GetRequiredService<IConfiguration>()));
+          x => new AirlyMeasurementsDownloader(x.GetRequiredService<IConfiguration>()));
 
       services.AddSingleton<IForecastErrorsCalculator>(
           _ => new ForecastErrorsCalculator());

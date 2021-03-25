@@ -175,7 +175,7 @@
       foreach (short installationId in _installationIds)
       {
         newForecastErrors.AddRange(GenerateHourlyForecastErrors(
-            installationId, newForecastErrorsStartDate,numberOfForecastErrors));
+            installationId, newForecastErrorsStartDate, numberOfForecastErrors));
       }
 
       // Act

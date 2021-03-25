@@ -251,7 +251,7 @@
     public async Task add_daily_forecast_errors_when_no_forecast_errors_in_database()
     {
       // Arrange
-      const short numberOfForecastErrors = 24;
+      const short numberOfForecastErrors = 5;
       int finalNumberOfForecastErrors
           = numberOfForecastErrors * _installationIds.Count;
       var newForecastErrorsStartDate = _startDate;

@@ -8,13 +8,13 @@
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;
 
-  public class CalculateDailyForecastErrorsTest : IClassFixture<SimpleFixture>
+  public class CalculateDailyTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
 
     private readonly DateTime _startDate;
 
-    public CalculateDailyForecastErrorsTest(SimpleFixture fixture)
+    public CalculateDailyTest(SimpleFixture fixture)
     {
       _startDate = fixture.StartDate;
       _installationId = fixture.InstallationId;

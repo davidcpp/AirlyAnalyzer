@@ -9,13 +9,13 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsCalculatorTests
   using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
   using Xunit;
 
-  public class CalculateHourlyForecastErrorsTest : IClassFixture<SimpleFixture>
+  public class CalculateHourlyTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
 
     private readonly DateTime _startDate;
 
-    public CalculateHourlyForecastErrorsTest(SimpleFixture fixture)
+    public CalculateHourlyTest(SimpleFixture fixture)
     {
       _startDate = fixture.StartDate;
       _installationId = fixture.InstallationId;

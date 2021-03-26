@@ -13,10 +13,12 @@
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
 
+  using IAirlyMeasurementsDownloader
+      = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Measurements>;
+
   public class ProgramController : IHostedService, IDisposable
   {
-    private readonly IAirQualityDataDownloader<Measurements>
-        _airlyMeasurementsDownloader;
+    private readonly IAirlyMeasurementsDownloader _airlyMeasurementsDownloader;
     private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -33,7 +35,7 @@
         IForecastErrorsCalculator forecastErrorsCalculator = null,
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
-        IAirQualityDataDownloader<Measurements> airlyMeasurementsDownloader = null,
+        IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
         short minNumberOfMeasurements = 24)
     {
       _unitOfWork = unitOfWork;
@@ -64,7 +66,7 @@
           "AppSettings:AirlyApi:IdForAllInstallations");
 
       _airlyMeasurementsDownloader = serviceProvider
-          .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
+          .GetRequiredService<IAirlyMeasurementsDownloader>();
 
       _forecastErrorsCalculator = serviceProvider
           .GetRequiredService<IForecastErrorsCalculator>();

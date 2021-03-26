@@ -110,7 +110,6 @@
 
       var requestDateTime = DateTime.UtcNow;
 
-      // Downloading and saving new data in database
       foreach (short installationId in _installationIds)
       {
         var lastMeasurementDate = await _unitOfWork

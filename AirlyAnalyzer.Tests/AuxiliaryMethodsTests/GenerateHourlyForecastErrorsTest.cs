@@ -10,7 +10,6 @@
   public class GenerateHourlyForecastErrorsTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
-
     private readonly DateTime _startDate;
 
     public GenerateHourlyForecastErrorsTest(SimpleFixture fixture)

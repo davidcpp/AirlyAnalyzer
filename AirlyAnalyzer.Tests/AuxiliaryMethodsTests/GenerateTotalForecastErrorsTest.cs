@@ -11,7 +11,6 @@
   public class GenerateTotalForecastErrorsTest : IClassFixture<SimpleFixture>
   {
     private readonly List<short> _installationIds;
-
     private readonly DateTime _startDate;
 
     public GenerateTotalForecastErrorsTest(SimpleFixture fixture)

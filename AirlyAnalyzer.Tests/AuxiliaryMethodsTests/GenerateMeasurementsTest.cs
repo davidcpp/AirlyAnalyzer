@@ -9,7 +9,6 @@
   public class GenerateMeasurementsTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
-
     private readonly DateTime _startDate;
 
     public GenerateMeasurementsTest(SimpleFixture fixture)

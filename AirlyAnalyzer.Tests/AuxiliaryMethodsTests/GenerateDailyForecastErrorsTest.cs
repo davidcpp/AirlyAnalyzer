@@ -10,7 +10,6 @@
   public class GenerateDailyForecastErrorsTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
-
     private readonly DateTime _startDate;
 
     public GenerateDailyForecastErrorsTest(SimpleFixture fixture)

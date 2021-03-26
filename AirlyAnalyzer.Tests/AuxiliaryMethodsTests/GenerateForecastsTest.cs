@@ -9,7 +9,6 @@
   public class GenerateForecastsTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
-
     private readonly DateTime _startDate;
 
     public GenerateForecastsTest(SimpleFixture fixture)

@@ -5,8 +5,11 @@
   public class AirQualityMeasurement : AirQualityObject
   {
     public short Pm1 { get; set; }
+
     public byte Humidity { get; set; }
+
     public short Pressure { get; set; }
+
     public short Temperature { get; set; }
 
     public static explicit operator AirQualityMeasurement(

@@ -10,13 +10,19 @@
     private DateTime _requestDateTime;
 
     public short InstallationId { get; set; } = 0;
+
     public int Counter { get; set; } = 0;
 
     public int CaqiPct { get; set; } = 0;
+
     public int Pm25Pct { get; set; } = 0;
+
     public int Pm10Pct { get; set; } = 0;
+
     public int Caqi { get; set; } = 0;
+
     public int Pm25 { get; set; } = 0;
+
     public int Pm10 { get; set; } = 0;
 
     public DateTime FromDateTime

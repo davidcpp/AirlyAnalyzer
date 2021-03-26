@@ -76,7 +76,9 @@
     }
 
     public DbSet<AirQualityMeasurement> Measurements { get; set; }
+
     public DbSet<AirQualityForecast> Forecasts { get; set; }
+
     public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -28,7 +28,9 @@
     }
 
     public List<Measurement> Values { get; set; }
+
     public List<Index> Indexes { get; set; }
+
     public List<Standard> Standards { get; set; }
   }
 }

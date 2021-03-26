@@ -21,14 +21,14 @@
       services.AddDbContext<AirlyContext>(options =>
           options.UseInMemoryDatabase("AirlyAnalyzerDbForTesting"));
 
-      var airlyDataDownloaderMock
+      var airlyMeasurementsDownloaderMock
           = new Mock<IAirQualityDataDownloader<Measurements>>();
 
-      airlyDataDownloaderMock
+      airlyMeasurementsDownloaderMock
           .Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
           .ReturnsAsync(new Measurements());
 
-      services.AddSingleton(_ => airlyDataDownloaderMock.Object);
+      services.AddSingleton(_ => airlyMeasurementsDownloaderMock.Object);
     }
   }
 }

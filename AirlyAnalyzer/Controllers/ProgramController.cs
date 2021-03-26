@@ -16,7 +16,7 @@
   public class ProgramController : IHostedService, IDisposable
   {
     private readonly IAirQualityDataDownloader<Measurements>
-        _airQualityDataDownloader;
+        _airlyMeasurementsDownloader;
     private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -33,12 +33,12 @@
         IForecastErrorsCalculator forecastErrorsCalculator = null,
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
-        IAirQualityDataDownloader<Measurements> airQualityDataDownloader = null,
+        IAirQualityDataDownloader<Measurements> airlyMeasurementsDownloader = null,
         short minNumberOfMeasurements = 24)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculator = forecastErrorsCalculator;
-      _airQualityDataDownloader = airQualityDataDownloader;
+      _airlyMeasurementsDownloader = airlyMeasurementsDownloader;
 
       _installationIds = installationIDsList;
 
@@ -63,7 +63,7 @@
       _idForAllInstallations = config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _airQualityDataDownloader = serviceProvider
+      _airlyMeasurementsDownloader = serviceProvider
           .GetRequiredService<IAirQualityDataDownloader<Measurements>>();
 
       _forecastErrorsCalculator = serviceProvider
@@ -117,7 +117,7 @@
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)
         {
-          var responseMeasurements = await _airQualityDataDownloader
+          var responseMeasurements = await _airlyMeasurementsDownloader
               .DownloadAirQualityData(installationId);
 
           newMeasurements.AddRange(responseMeasurements.History

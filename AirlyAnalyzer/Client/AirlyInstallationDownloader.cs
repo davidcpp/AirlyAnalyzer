@@ -37,14 +37,15 @@
           "AppSettings:AirlyApi:Uri");
 
       _webClient = webClient;
-    }
 
-    public async Task<Installation> DownloadAirQualityData(short installationId)
-    {
       _webClient.BaseAddress = _uri;
       _webClient.Headers.Remove(HttpRequestHeader.Accept);
       _webClient.Headers.Add(HttpRequestHeader.Accept, _contentType);
       _webClient.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
+    }
+
+    public async Task<Installation> DownloadAirQualityData(short installationId)
+    {
 
       try
       {

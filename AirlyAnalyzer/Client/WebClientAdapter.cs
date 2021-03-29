@@ -28,5 +28,10 @@
     {
       return _webClient.DownloadStringTaskAsync(address);
     }
+
+    public void Dispose()
+    {
+      _webClient.Dispose();
+    }
   }
 }

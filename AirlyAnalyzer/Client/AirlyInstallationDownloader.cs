@@ -70,5 +70,10 @@
         return new Installation();
       }
     }
+
+    public void Dispose()
+    {
+      _webClient.Dispose();
+    }
   }
 }

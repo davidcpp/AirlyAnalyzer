@@ -69,5 +69,10 @@
         return new Measurements();
       }
     }
+
+    public void Dispose()
+    {
+      _webClient.Dispose();
+    }
   }
 }

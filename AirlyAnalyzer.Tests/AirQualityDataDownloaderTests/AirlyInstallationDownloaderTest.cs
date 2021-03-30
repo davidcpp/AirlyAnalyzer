@@ -30,7 +30,7 @@
     }
 
     [Fact]
-    public async Task call_download_string_method_with_correct_address_parameter()
+    public async Task calls_download_string_method_with_correct_address_parameter()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();
@@ -54,7 +54,7 @@
     }
 
     [Fact]
-    public async Task return_empty_installation_object_when_api_respone_is_empty()
+    public async Task returns_empty_installation_object_when_api_respone_is_empty()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();
@@ -76,7 +76,7 @@
     }
 
     [Fact]
-    public async Task return_empty_installation_object_when_api_respone_is_empty_json_object()
+    public async Task returns_empty_installation_object_when_api_respone_is_empty_json_object()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();
@@ -98,7 +98,7 @@
     }
 
     [Fact]
-    public async Task return_empty_installation_object_when_api_respone_is_mismatched_json_object()
+    public async Task returns_empty_installation_object_when_api_respone_is_mismatched_json_object()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();

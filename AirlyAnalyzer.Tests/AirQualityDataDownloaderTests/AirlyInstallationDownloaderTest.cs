@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.UnitTests.AirQualityDataDownloaderTests
+﻿namespace AirlyAnalyzer.Tests.AirQualityDataDownloaderTests
 {
   using System.Net;
   using System.Threading.Tasks;

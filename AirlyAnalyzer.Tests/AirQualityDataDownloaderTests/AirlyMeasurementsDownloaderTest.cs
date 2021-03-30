@@ -1,10 +1,9 @@
 ﻿namespace AirlyAnalyzer.UnitTests.AirQualityDataDownloaderTests
 {
-  using System;
-  using System.IO;
   using System.Net;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
+  using AirlyAnalyzer.Tests.Models;
   using Microsoft.Extensions.Configuration;
   using Moq;
   using Xunit;
@@ -18,12 +17,7 @@
 
     public AirlyMeasurementsDownloaderTest()
     {
-      string configFilePath = Path.Combine(
-          AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-
-      _config = new ConfigurationBuilder()
-          .AddJsonFile(configFilePath)
-          .Build();
+      _config = ConfigUtilities.GetApplicationConfig();
 
       _measurementsUri = _config.GetValue<string>(
           "AppSettings:AirlyApi:MeasurementsUri");

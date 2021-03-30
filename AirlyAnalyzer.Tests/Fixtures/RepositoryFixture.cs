@@ -2,8 +2,8 @@
 {
   using System;
   using System.Collections.Generic;
-  using System.IO;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Tests.Models;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Xunit;
@@ -19,12 +19,7 @@
           .UseInMemoryDatabase("AirlyAnalyzerDbForTesting")
           .Options;
 
-      string configFilePath = Path.Combine(
-          AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-
-      Config = new ConfigurationBuilder()
-          .AddJsonFile(configFilePath)
-          .Build();
+      Config = ConfigUtilities.GetApplicationConfig();
 
       InstallationIds = Config
           .GetSection("AppSettings:AirlyApi:InstallationIds")

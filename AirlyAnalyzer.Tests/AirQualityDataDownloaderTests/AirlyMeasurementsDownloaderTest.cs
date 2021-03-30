@@ -36,7 +36,8 @@
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(
-          _measurementsUri + _installationId.ToString()));
+          _measurementsUri + _installationId.ToString()))
+                   .ReturnsAsync("{}");
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 

@@ -54,6 +54,29 @@
     }
 
     [Fact]
+    public async Task calls_download_string_method_once()
+    {
+      // Arrange
+      var webClientMock = new Mock<IWebClientAdapter>();
+
+      webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
+                   .ReturnsAsync("{}");
+
+      webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
+
+      var airlyMeasurementsDownloader
+          = new AirlyMeasurementsDownloader(_config, webClientMock.Object);
+
+      // Act
+      var measurements = await airlyMeasurementsDownloader
+          .DownloadAirQualityData(_installationId);
+
+      // Assert
+      webClientMock.Verify(
+          _ => _.DownloadStringTaskAsync(It.IsAny<string>()), Times.Once());
+    }
+
+    [Fact]
     public async Task returns_empty_measurements_object_when_api_response_is_empty()
     {
       // Arrange

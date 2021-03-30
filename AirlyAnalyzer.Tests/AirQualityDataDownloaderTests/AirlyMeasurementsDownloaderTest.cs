@@ -96,5 +96,27 @@
       // Assert
       Assert.NotNull(measurements);
     }
+
+    [Fact]
+    public async Task return_empty_measurements_object_when_api_respone_is_mismatched_json_object()
+    {
+      // Arrange
+      var webClientMock = new Mock<IWebClientAdapter>();
+
+      webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
+                   .ReturnsAsync(@"{ ""field1"": {}, ""field2"": 0 }");
+
+      webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
+
+      var airlyMeasurementsDownloader
+          = new AirlyMeasurementsDownloader(_config, webClientMock.Object);
+
+      // Act
+      var measurements = await airlyMeasurementsDownloader
+          .DownloadAirQualityData(_installationId);
+
+      // Assert
+      Assert.NotNull(measurements);
+    }
   }
 }

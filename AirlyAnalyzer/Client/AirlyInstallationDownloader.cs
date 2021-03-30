@@ -57,7 +57,8 @@
             new JsonSerializerSettings()
             {
               NullValueHandling = NullValueHandling.Ignore
-            });
+            })
+          ?? new Installation();
       }
       catch (Exception e)
       {

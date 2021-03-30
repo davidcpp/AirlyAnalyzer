@@ -56,7 +56,8 @@
             new JsonSerializerSettings()
             {
               NullValueHandling = NullValueHandling.Ignore
-            });
+            })
+          ?? new Measurements();
       }
       catch (Exception e)
       {

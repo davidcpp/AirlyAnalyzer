@@ -46,7 +46,6 @@
 
     public async Task<Installation> DownloadAirQualityData(short installationId)
     {
-
       try
       {
         string response = await _webClientAdapter.DownloadStringTaskAsync(

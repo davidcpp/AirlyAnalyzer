@@ -7,17 +7,17 @@
 
   public interface IForecastErrorsCalculator
   {
-    public List<AirQualityForecastError> CalculateHourly(
+    List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newMeasurements,
         List<AirQualityForecast> newForecasts);
 
-    public List<AirQualityForecastError> CalculateDaily(
+    List<AirQualityForecastError> CalculateDaily(
         short installationId,
         short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors);
 
-    public AirQualityForecastError CalculateTotal(
+    AirQualityForecastError CalculateTotal(
         short installationId, IEnumerable<AirQualityForecastError> allForecastErrors);
   }
 }

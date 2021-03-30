@@ -5,6 +5,6 @@
 
   public interface IAirQualityDataDownloader<T> : IDisposable
   {
-    public Task<T> DownloadAirQualityData(short installationId);
+    Task<T> DownloadAirQualityData(short installationId);
   }
 }

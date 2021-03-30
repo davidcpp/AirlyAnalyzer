@@ -8,13 +8,13 @@
 
   public interface IRepository<TEntity> where TEntity : class
   {
-    public Task AddAsync(List<TEntity> entities);
-    public void Delete(Expression<Func<TEntity, bool>> wherePredicate);
+    Task AddAsync(List<TEntity> entities);
+    void Delete(Expression<Func<TEntity, bool>> wherePredicate);
 
-    public Task<List<TEntity>> Get(
+    Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null);
 
-    public Task<List<T>> GetParameters<T>(
+    Task<List<T>> GetParameters<T>(
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,

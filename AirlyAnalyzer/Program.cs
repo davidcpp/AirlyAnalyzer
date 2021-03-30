@@ -1,8 +1,8 @@
 namespace AirlyAnalyzer
 {
   using System;
-  using AirlyAnalyzer.Controllers;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Services;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;

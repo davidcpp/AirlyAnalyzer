@@ -5,7 +5,7 @@
   using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
-  using AirlyAnalyzer.Controllers;
+  using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Tests.Fixtures;
   using AirlyAnalyzer.Tests.Models;

@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Controllers
+﻿namespace AirlyAnalyzer.Services
 {
   using System;
   using System.Collections.Generic;

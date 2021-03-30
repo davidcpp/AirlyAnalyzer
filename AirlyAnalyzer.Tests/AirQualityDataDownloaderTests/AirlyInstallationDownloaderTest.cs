@@ -73,5 +73,27 @@
       // Assert
       Assert.NotNull(installation);
     }
+
+    [Fact]
+    public async Task return_empty_installation_object_when_api_respone_is_empty_json_object()
+    {
+      // Arrange
+      var webClientMock = new Mock<IWebClientAdapter>();
+
+      webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
+                   .ReturnsAsync("{}");
+
+      webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
+
+      var airlyInstallationDownloader
+          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+
+      // Act
+      var installation = await airlyInstallationDownloader
+          .DownloadAirQualityData(_installationId);
+
+      // Assert
+      Assert.NotNull(installation);
+    }
   }
 }

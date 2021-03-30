@@ -38,7 +38,7 @@ namespace AirlyAnalyzer
             .ConfigureWebHostDefaults(webBuilder
                 => webBuilder.UseStartup<Startup>())
             .ConfigureServices(services
-                => services.AddHostedService<ProgramController>(x =>
+                => services.AddHostedService(x =>
                     new ProgramController(
                         x.GetRequiredService<IServiceProvider>(),
                         x.GetRequiredService<IConfiguration>(),

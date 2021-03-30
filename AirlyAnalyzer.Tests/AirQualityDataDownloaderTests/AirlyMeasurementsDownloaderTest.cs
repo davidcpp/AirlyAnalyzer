@@ -54,7 +54,7 @@
     }
 
     [Fact]
-    public async Task returns_empty_measurements_object_when_api_respone_is_empty()
+    public async Task returns_empty_measurements_object_when_api_response_is_empty()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();
@@ -76,7 +76,7 @@
     }
 
     [Fact]
-    public async Task returns_empty_measurements_object_when_api_respone_is_empty_json_object()
+    public async Task returns_empty_measurements_object_when_api_response_is_empty_json_object()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();
@@ -98,7 +98,7 @@
     }
 
     [Fact]
-    public async Task returns_empty_measurements_object_when_api_respone_is_mismatched_json_object()
+    public async Task returns_empty_measurements_object_when_api_response_is_mismatched_json_object()
     {
       // Arrange
       var webClientMock = new Mock<IWebClientAdapter>();

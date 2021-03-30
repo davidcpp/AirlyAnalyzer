@@ -108,15 +108,15 @@
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
-      var airlyMeasurementsDownloader
-          = new AirlyMeasurementsDownloader(_config, webClientMock.Object);
+      var airlyInstallationDownloader
+          = new AirlyInstallationDownloader(_config, webClientMock.Object);
 
       // Act
-      var measurements = await airlyMeasurementsDownloader
+      var installation = await airlyInstallationDownloader
           .DownloadAirQualityData(_installationId);
 
       // Assert
-      Assert.NotNull(measurements);
+      Assert.NotNull(installation);
     }
   }
 }

@@ -16,10 +16,10 @@
     private readonly string _installationUri;
     private readonly string _uri;
 
-    private readonly IWebClientAdapter _webClient;
+    private readonly IWebClientAdapter _webClientAdapter;
 
     public AirlyInstallationDownloader(
-        IConfiguration config, IWebClientAdapter webClient)
+        IConfiguration config, IWebClientAdapter webClientAdapter)
     {
       _airlyApiKeyHeaderName = config.GetValue<string>(
           "AppSettings:AirlyApi:KeyHeaderName");
@@ -36,12 +36,12 @@
       _uri = config.GetValue<string>(
           "AppSettings:AirlyApi:Uri");
 
-      _webClient = webClient;
+      _webClientAdapter = webClientAdapter;
 
-      _webClient.BaseAddress = _uri;
-      _webClient.Headers.Remove(HttpRequestHeader.Accept);
-      _webClient.Headers.Add(HttpRequestHeader.Accept, _contentType);
-      _webClient.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
+      _webClientAdapter.BaseAddress = _uri;
+      _webClientAdapter.Headers.Remove(HttpRequestHeader.Accept);
+      _webClientAdapter.Headers.Add(HttpRequestHeader.Accept, _contentType);
+      _webClientAdapter.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
     }
 
     public async Task<Installation> DownloadAirQualityData(short installationId)
@@ -49,7 +49,7 @@
 
       try
       {
-        string response = await _webClient.DownloadStringTaskAsync(
+        string response = await _webClientAdapter.DownloadStringTaskAsync(
             _installationUri + installationId.ToString());
 
         return JsonConvert.DeserializeObject<Installation>(
@@ -73,7 +73,7 @@
 
     public void Dispose()
     {
-      _webClient.Dispose();
+      _webClientAdapter.Dispose();
     }
   }
 }

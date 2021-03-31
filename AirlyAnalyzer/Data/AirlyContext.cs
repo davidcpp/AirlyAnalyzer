@@ -61,6 +61,15 @@
     }
   }
 
+  public class InstallationInfoConfiguration
+      : IEntityTypeConfiguration<InstallationInfo>
+  {
+    public void Configure(EntityTypeBuilder<InstallationInfo> builder)
+    {
+      builder.ToTable("InstallationInfos").HasKey(x => x.InstallationId);
+    }
+  }
+
   public class AirlyContext : DbContext
   {
     private readonly byte _maxErrorTypeLength;
@@ -81,6 +90,8 @@
 
     public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
 
+    public DbSet<InstallationInfo> InstallationInfos { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       base.OnConfiguring(optionsBuilder);
@@ -96,6 +107,7 @@
       modelBuilder.ApplyConfiguration(new ForecastConfiguration());
       modelBuilder.ApplyConfiguration(
           new ForecastErrorConfiguration(_maxErrorTypeLength));
+      modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
 
       modelBuilder.HasAnnotation(
           "SqlServer:ValueGenerationStrategy",

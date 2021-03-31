@@ -8,51 +8,49 @@
 <h1>Index</h1>
 
 <div class="row mb-3 justify-content-center">
-  <div class="table-responsive-lg">
-    <table class="table" id="forecastErrors">
-      <thead>
+  <table class="display responsive nowrap" id="forecastErrors" width="100%">
+    <thead>
+      <tr>
+        <th>
+          @Html.DisplayNameFor(model => model.ErrorType)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.TillDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.InstallationId)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqiPct)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqi)
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
         <tr>
-          <th>
-            @Html.DisplayNameFor(model => model.ErrorType)
-          </th>
-          <th>
-            @Html.DisplayNameFor(model => model.TillDateTime)
-          </th>
-          <th>
-            @Html.DisplayNameFor(model => model.InstallationId)
-          </th>
-          <th>
-            @Html.DisplayNameFor(model => model.AirlyCaqiPct)
-          </th>
-          <th>
-            @Html.DisplayNameFor(model => model.AirlyCaqi)
-          </th>
+          <td>
+            @Html.DisplayFor(modelItem => item.ErrorType)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.TillDateTime)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.InstallationId)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AirlyCaqi)
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        @foreach (var item in Model)
-        {
-          <tr>
-            <td>
-              @Html.DisplayFor(modelItem => item.ErrorType)
-            </td>
-            <td>
-              @Html.DisplayFor(modelItem => item.TillDateTime)
-            </td>
-            <td>
-              @Html.DisplayFor(modelItem => item.InstallationId)
-            </td>
-            <td>
-              @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%
-            </td>
-            <td>
-              @Html.DisplayFor(modelItem => item.AirlyCaqi)
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+      }
+    </tbody>
+  </table>
 </div>
 
 <div class="row mb-4 justify-content-center">

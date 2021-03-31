@@ -6,6 +6,7 @@ let forecastErrorsTable = {};
 
 $(document).ready(function () {
   forecastErrorsTable = $('#forecastErrors').DataTable({
+    responsive: true,
     scrollY: '45vh',
     paging: false,
   });

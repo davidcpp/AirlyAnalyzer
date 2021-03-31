@@ -7,7 +7,7 @@
 
   using ET = AirlyAnalyzer.Models.ForecastErrorType;
 
-  public static class DbUtilities
+  public static class DbExtenstions
   {
     public const short _idForAllInstallations = -1;
     public const byte RequestMinutesOffset = 30;
@@ -15,7 +15,7 @@
     public static DateTime _startDate;
     public static List<short> _installationIds;
 
-    static DbUtilities()
+    static DbExtenstions()
     {
       _startDate = new DateTime(2000, 1, 1);
       _installationIds = new List<short> { 6306, 6307, 6308, 6309, 6310, 6311 };

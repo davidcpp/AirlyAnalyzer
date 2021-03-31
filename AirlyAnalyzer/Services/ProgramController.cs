@@ -16,9 +16,14 @@
   using IAirlyMeasurementsDownloader
       = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Measurements>;
 
+  using IAirlyInstallationDownloader
+    = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Installation>;
+
   public class ProgramController : IHostedService, IDisposable
   {
     private readonly IAirlyMeasurementsDownloader _airlyMeasurementsDownloader;
+    private readonly IAirlyInstallationDownloader _airlyInstallationDownloader;
+
     private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -36,11 +41,13 @@
         List<short> installationIDsList = null,
         short idForAllInstallations = -1,
         IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
+        IAirlyInstallationDownloader airlyInstallationDownloader = null,
         short minNumberOfMeasurements = 24)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculator = forecastErrorsCalculator;
       _airlyMeasurementsDownloader = airlyMeasurementsDownloader;
+      _airlyInstallationDownloader = airlyInstallationDownloader;
 
       _installationIds = installationIDsList;
 
@@ -99,6 +106,9 @@
         }
       }
     }
+
+    public Task<List<InstallationInfo>> DownloadInstallationInfos()
+        => throw new NotImplementedException();
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()

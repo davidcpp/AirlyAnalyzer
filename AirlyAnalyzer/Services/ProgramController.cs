@@ -107,8 +107,16 @@
       }
     }
 
-    public Task<List<InstallationInfo>> DownloadInstallationInfos()
-        => throw new NotImplementedException();
+    public async Task<List<InstallationInfo>> DownloadInstallationInfos()
+    {
+      foreach (short installationId in _installationIds)
+      {
+        var installation = _airlyInstallationDownloader
+            .DownloadAirQualityData(installationId);
+      }
+
+      return new List<InstallationInfo>();
+    }
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()

@@ -27,11 +27,12 @@
     public async Task calls_download_string_method_with_correct_address_parameter()
     {
       // Arrange
+      const string response = "{}";
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(
           _measurementsUri + _installationId.ToString()))
-                   .ReturnsAsync("{}");
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
@@ -51,10 +52,11 @@
     public async Task calls_download_string_method_once()
     {
       // Arrange
+      const string response = "{}";
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
-                   .ReturnsAsync("{}");
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
@@ -74,10 +76,11 @@
     public async Task returns_empty_measurements_object_when_api_response_is_empty()
     {
       // Arrange
+      const string response = "";
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
-                   .ReturnsAsync("");
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
@@ -96,10 +99,11 @@
     public async Task returns_empty_measurements_object_when_api_response_is_empty_json_object()
     {
       // Arrange
+      const string response = "{}";
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
-                   .ReturnsAsync("{}");
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
@@ -118,10 +122,11 @@
     public async Task returns_empty_measurements_object_when_api_response_is_mismatched_json_object()
     {
       // Arrange
+      const string response = @"{ ""field1"": {}, ""field2"": 0 }";
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
-                   .ReturnsAsync(@"{ ""field1"": {}, ""field2"": 0 }");
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
@@ -140,10 +145,11 @@
     public async Task returns_empty_measurements_object_when_api_response_is_null()
     {
       // Arrange
+      const string response = null;
       var webClientMock = new Mock<IWebClientAdapter>();
 
       webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
-                   .ReturnsAsync((string)null);
+                   .ReturnsAsync(response);
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 

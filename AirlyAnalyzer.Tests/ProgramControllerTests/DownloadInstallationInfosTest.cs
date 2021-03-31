@@ -33,6 +33,29 @@
     }
 
     [Fact]
+    public async Task does_not_download_when_no_installations()
+    {
+      // Arrange
+      var downloadedData = new Installation();
+      var emptyInstallationIds = new List<short>();
+
+      _downloaderMock.Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
+          .ReturnsAsync(downloadedData);
+
+      var programController = new ProgramController(
+          unitOfWork: _unitOfWork,
+          installationIDsList: emptyInstallationIds,
+          airlyInstallationDownloader: _downloaderMock.Object);
+
+      // Act
+      var installationInfos = await programController.DownloadInstallationInfos();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never());
+    }
+
+    [Fact]
     public async Task download_for_all_installations_when_no_data_in_database()
     {
       // Arrange

@@ -24,7 +24,7 @@
       const int numberOfForecasts = 20;
 
       // Act
-      var forecasts = AuxiliaryMethods.GenerateForecasts(
+      var forecasts = ModelUtilities.GenerateForecasts(
           _installationId, _startDate, numberOfForecasts)
         .ToList();
 
@@ -40,7 +40,7 @@
       var endDate = _startDate.AddDays(1);
 
       // Act
-      var forecasts = AuxiliaryMethods.GenerateForecasts(
+      var forecasts = ModelUtilities.GenerateForecasts(
           _installationId, _startDate, numberOfForecasts)
         .ToList();
 
@@ -56,7 +56,7 @@
       const short numberOfForecastsInDay = 23;
 
       // Act
-      var forecasts = AuxiliaryMethods.GenerateForecasts(
+      var forecasts = ModelUtilities.GenerateForecasts(
           _installationId,
           _startDate,
           numberOfDays,
@@ -77,7 +77,7 @@
                               .AddHours(numberOfForecastsInDay - 24);
 
       // Act
-      var forecasts = AuxiliaryMethods.GenerateForecasts(
+      var forecasts = ModelUtilities.GenerateForecasts(
           _installationId,
           _startDate,
           numberOfDays,
@@ -96,10 +96,10 @@
       const short numberOfForecastsInDay = 23;
       var endRequestDate = _startDate
           .AddDays(numberOfDays)
-          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
+          .AddMinutes(ModelUtilities.RequestMinutesOffset);
 
       // Act
-      var forecasts = AuxiliaryMethods.GenerateForecasts(
+      var forecasts = ModelUtilities.GenerateForecasts(
           _installationId,
           _startDate,
           numberOfDays,

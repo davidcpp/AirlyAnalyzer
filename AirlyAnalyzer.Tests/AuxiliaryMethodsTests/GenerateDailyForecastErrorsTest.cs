@@ -26,7 +26,7 @@
       const short numberOfHourlyErrorsInDay = 24;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+      var dailyErrors = ModelUtilities.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,
@@ -47,7 +47,7 @@
       const int numberOfDailyErrors = 15;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+      var dailyErrors = ModelUtilities.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,
@@ -69,7 +69,7 @@
       const short numberOfHourlyErrorsInDay = 24;
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+      var dailyErrors = ModelUtilities.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,
@@ -92,7 +92,7 @@
                               .AddHours(numberOfHourlyErrorsInDay - 24);
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+      var dailyErrors = ModelUtilities.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,
@@ -116,10 +116,10 @@
       var endRequestDate = _startDate
           .AddDays(numberOfDailyErrors)
           .AddHours(lastDayRequestInterval - 24)
-          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
+          .AddMinutes(ModelUtilities.RequestMinutesOffset);
 
       // Act
-      var dailyErrors = AuxiliaryMethods.GenerateDailyForecastErrors(
+      var dailyErrors = ModelUtilities.GenerateDailyForecastErrors(
           _installationId,
           _startDate,
           numberOfDailyErrors,

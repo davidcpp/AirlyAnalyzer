@@ -26,7 +26,7 @@
       const short numberOfDays = 10;
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateTotalForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateTotalForecastErrors(
           _installationIds, _startDate, numberOfDays)
         .ToList();
 
@@ -40,7 +40,7 @@
     public void correct_number_of_forecast_errors(short numberOfDays)
     {
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateTotalForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateTotalForecastErrors(
           _installationIds, _startDate, numberOfDays)
         .ToList();
 
@@ -58,7 +58,7 @@
       var endDate = _startDate.AddDays(numberOfDays);
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateTotalForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateTotalForecastErrors(
           _installationIds, _startDate, numberOfDays)
         .ToList();
 
@@ -75,10 +75,10 @@
       // Arrange
       var endRequestDate = _startDate
           .AddDays(numberOfDays)
-          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
+          .AddMinutes(ModelUtilities.RequestMinutesOffset);
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateTotalForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateTotalForecastErrors(
           _installationIds, _startDate, numberOfDays)
         .ToList();
 

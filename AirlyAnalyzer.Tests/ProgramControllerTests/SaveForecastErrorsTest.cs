@@ -9,7 +9,7 @@
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
   using AirlyAnalyzer.Tests.Models;
-  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
+  using static AirlyAnalyzer.Tests.Models.ModelUtilities;
   using Xunit;
 
   [Collection("RepositoryTests")]

@@ -25,7 +25,7 @@
       const int numberOfForecastErrors = 20;
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfForecastErrors)
@@ -42,7 +42,7 @@
       const int numberOfForecastErrors = 20;
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfForecastErrors)
@@ -62,7 +62,7 @@
       var endDate = _startDate.AddHours(numberOfForecastErrors);
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfForecastErrors)
@@ -80,7 +80,7 @@
       const short numberOfForecastErrorsInDay = 23;
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfDays,
@@ -101,7 +101,7 @@
       const short numberOfForecastErrorsInDay = 23;
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfDays,
@@ -123,7 +123,7 @@
       var endDate = _startDate.AddDays(numberOfDays)
                               .AddHours(numberOfForecastErrorsInDay - 24);
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfDays,
@@ -147,10 +147,10 @@
       var endRequestDate = _startDate
           .AddDays(numberOfDays)
           .AddHours(lastDayRequestInterval - 24)
-          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
+          .AddMinutes(ModelUtilities.RequestMinutesOffset);
 
       // Act
-      var forecastErrors = AuxiliaryMethods.GenerateHourlyForecastErrors(
+      var forecastErrors = ModelUtilities.GenerateHourlyForecastErrors(
           _installationId,
           _startDate,
           numberOfDays,

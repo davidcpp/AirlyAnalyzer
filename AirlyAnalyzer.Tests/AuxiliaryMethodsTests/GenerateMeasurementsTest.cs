@@ -24,7 +24,7 @@
       const int numberOfMeasurements = 20;
 
       // Act
-      var measurements = AuxiliaryMethods.GenerateMeasurements(
+      var measurements = ModelUtilities.GenerateMeasurements(
           _installationId, _startDate, numberOfMeasurements)
         .ToList();
 
@@ -40,7 +40,7 @@
       var endDate = _startDate.AddDays(1);
 
       // Act
-      var measurements = AuxiliaryMethods.GenerateMeasurements(
+      var measurements = ModelUtilities.GenerateMeasurements(
           _installationId, _startDate, numberOfMeasurements)
         .ToList();
 
@@ -56,7 +56,7 @@
       const short numberOfMeasurementsInDay = 23;
 
       // Act
-      var measurements = AuxiliaryMethods.GenerateMeasurements(
+      var measurements = ModelUtilities.GenerateMeasurements(
           _installationId,
           _startDate,
           numberOfDays,
@@ -79,7 +79,7 @@
                               .AddHours(numberOfMeasurementsInDay - 24);
 
       // Act
-      var measurements = AuxiliaryMethods.GenerateMeasurements(
+      var measurements = ModelUtilities.GenerateMeasurements(
           _installationId,
           _startDate,
           numberOfDays,
@@ -98,10 +98,10 @@
       const short numberOfMeasurementsInDay = 23;
       var endRequestDate = _startDate
           .AddDays(numberOfDays)
-          .AddMinutes(AuxiliaryMethods.RequestMinutesOffset);
+          .AddMinutes(ModelUtilities.RequestMinutesOffset);
 
       // Act
-      var measurements = AuxiliaryMethods.GenerateMeasurements(
+      var measurements = ModelUtilities.GenerateMeasurements(
           _installationId,
           _startDate,
           numberOfDays,

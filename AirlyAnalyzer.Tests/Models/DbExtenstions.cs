@@ -3,7 +3,7 @@
   using System;
   using System.Collections.Generic;
   using AirlyAnalyzer.Data;
-  using static AirlyAnalyzer.Tests.Models.AuxiliaryMethods;
+  using static AirlyAnalyzer.Tests.Models.ModelUtilities;
 
   using ET = AirlyAnalyzer.Models.ForecastErrorType;
 

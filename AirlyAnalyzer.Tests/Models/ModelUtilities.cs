@@ -6,7 +6,7 @@
 
   using ET = AirlyAnalyzer.Models.ForecastErrorType;
 
-  public static class AuxiliaryMethods
+  public static class ModelUtilities
   {
     public const byte RequestMinutesOffset = 30;
 

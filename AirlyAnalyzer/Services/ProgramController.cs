@@ -107,7 +107,7 @@
       }
     }
 
-    public async Task<List<InstallationInfo>> DownloadInstallationInfos()
+    public async Task<List<Installation>> DownloadInstallationInfos()
     {
       foreach (short installationId in _installationIds)
       {
@@ -115,7 +115,7 @@
             .DownloadAirQualityData(installationId);
       }
 
-      return new List<InstallationInfo>();
+      return new List<Installation>();
     }
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>

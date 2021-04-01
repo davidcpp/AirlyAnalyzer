@@ -35,7 +35,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(0)]
-    public async Task do_not_add_repeated_measurements(
+    public async Task does_not_add_repeated_measurements(
         short hoursRequestInterval)
     {
       // Arrange
@@ -92,7 +92,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(0)]
-    public async Task do_not_add_repeated_forecasts(
+    public async Task does_not_add_repeated_forecasts(
         short hoursRequestInterval)
     {
       // Arrange
@@ -149,7 +149,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(0)]
-    public async Task do_not_add_repeated_hourly_forecast_errors(
+    public async Task does_not_add_repeated_hourly_forecast_errors(
         short hoursRequestInterval)
     {
       // Arrange
@@ -210,7 +210,7 @@
     [Theory]
     [InlineData(3)]
     [InlineData(0)]
-    public async Task do_not_add_repeated_daily_forecast_errors(
+    public async Task does_not_add_repeated_daily_forecast_errors(
         short daysRequestInterval)
     {
       // Arrange

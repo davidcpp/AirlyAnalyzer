@@ -69,7 +69,7 @@
     }
 
     [Fact]
-    public async Task do_not_save_any_forecast_errors_in_database_when_get_empty_new_ones()
+    public async Task does_not_save_any_forecast_errors_in_database_when_get_empty_new_ones()
     {
       // Arrange
       var hourlyForecastErrors = new List<AirQualityForecastError>();

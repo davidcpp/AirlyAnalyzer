@@ -34,7 +34,7 @@
     }
 
     [Fact]
-    public async Task do_not_remove_total_forecast_errors_when_no_new_total_errors()
+    public async Task does_not_remove_total_forecast_errors_when_no_new_total_errors()
     {
       // Arrange
       const short numberOfDays = 10;

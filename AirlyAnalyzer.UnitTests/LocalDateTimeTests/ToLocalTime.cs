@@ -44,7 +44,7 @@
     }
 
     [Fact]
-    public void do_not_add_extra_hour_to_local_time_when_begin_of_daylight_time()
+    public void does_not_add_extra_hour_to_local_time_when_begin_of_daylight_time()
     {
       // Arrange
       var beforeTransitionTimeLocal
@@ -60,7 +60,7 @@
     }
 
     [Fact]
-    public void do_not_subtract_extra_hour_to_local_time_when_end_of_daylight_time()
+    public void does_not_subtract_extra_hour_to_local_time_when_end_of_daylight_time()
     {
       // Arrange
       var beforeTransitionTimeLocal

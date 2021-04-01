@@ -39,7 +39,7 @@
     }
 
     [Fact]
-    public async Task do_not_download_when_no_installations()
+    public async Task does_not_download_when_no_installations()
     {
       // Arrange
       const short numberOfDays = 1;
@@ -72,7 +72,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
-    public async Task do_not_download_when_data_is_up_to_date(
+    public async Task does_not_download_when_data_is_up_to_date(
         short minNumberOfMeasurements)
     {
       // Arrange

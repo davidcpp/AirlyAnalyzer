@@ -94,6 +94,9 @@
 
       // Assert
       Assert.NotNull(installation);
+      Assert.NotNull(installation.Address);
+      Assert.NotNull(installation.Location);
+      Assert.NotNull(installation.Sponsor);
     }
 
     [Fact]

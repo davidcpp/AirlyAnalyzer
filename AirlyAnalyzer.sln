@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlyAnalyzer", "AirlyAnalyzer\AirlyAnalyzer.csproj", "{C7DABFD7-5186-4B7A-997D-370E649E74E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlyAnalyzer.UnitTests", "AirlyAnalyzer.Tests\AirlyAnalyzer.UnitTests.csproj", "{3F0A8380-BFCC-44BA-8B77-74D06855D566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirlyAnalyzer.UnitTests", "AirlyAnalyzer.UnitTests\AirlyAnalyzer.UnitTests.csproj", "{3F0A8380-BFCC-44BA-8B77-74D06855D566}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C7DABFD7-5186-4B7A-997D-370E649E74E3} = {C7DABFD7-5186-4B7A-997D-370E649E74E3}
 	EndProjectSection

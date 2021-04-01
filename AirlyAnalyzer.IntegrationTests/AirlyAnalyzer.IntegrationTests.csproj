@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirlyAnalyzer.Tests\AirlyAnalyzer.UnitTests.csproj" />
+    <ProjectReference Include="..\AirlyAnalyzer.UnitTests\AirlyAnalyzer.UnitTests.csproj" />
     <ProjectReference Include="..\AirlyAnalyzer\AirlyAnalyzer.csproj" />
   </ItemGroup>
 

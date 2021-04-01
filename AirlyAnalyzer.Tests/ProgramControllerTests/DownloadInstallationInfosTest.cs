@@ -7,7 +7,7 @@
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Moq;
   using Xunit;
 

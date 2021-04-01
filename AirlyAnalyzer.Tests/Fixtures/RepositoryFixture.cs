@@ -3,7 +3,7 @@
   using System;
   using System.Collections.Generic;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Xunit;

@@ -2,7 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.Extensions.Configuration;
 
   public class SimpleFixture

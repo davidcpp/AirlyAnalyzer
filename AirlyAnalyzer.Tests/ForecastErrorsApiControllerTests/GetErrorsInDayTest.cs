@@ -7,7 +7,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsApiControllerTests
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Xunit;

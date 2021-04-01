@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.Models
+﻿namespace AirlyAnalyzer.Tests.Helpers
 {
   using System;
   using System.IO;

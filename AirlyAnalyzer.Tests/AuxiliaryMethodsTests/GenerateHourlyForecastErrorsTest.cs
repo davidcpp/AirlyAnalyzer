@@ -4,7 +4,7 @@
   using System.Linq;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Xunit;
 
   public class GenerateHourlyForecastErrorsTest : IClassFixture<SimpleFixture>

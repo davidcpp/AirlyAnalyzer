@@ -3,7 +3,7 @@
   using System.Net;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.Extensions.Configuration;
   using Moq;
   using Xunit;

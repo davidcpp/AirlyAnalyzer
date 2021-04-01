@@ -6,7 +6,7 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsCalculatorTests
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Tests.Fixtures;
-  using static AirlyAnalyzer.Tests.Models.ModelUtilities;
+  using static AirlyAnalyzer.Tests.Helpers.ModelUtilities;
   using Xunit;
 
   public class CalculateHourlyTest : IClassFixture<SimpleFixture>

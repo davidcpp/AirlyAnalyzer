@@ -8,7 +8,7 @@
   using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.Extensions.Configuration;
   using Xunit;
 

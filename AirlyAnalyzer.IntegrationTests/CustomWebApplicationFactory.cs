@@ -3,7 +3,7 @@
   using System;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.IntegrationTests.Extensions;
-  using AirlyAnalyzer.Tests.Models;
+  using AirlyAnalyzer.Tests.Helpers;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Mvc.Testing;
   using Microsoft.Extensions.DependencyInjection;

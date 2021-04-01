@@ -8,8 +8,8 @@
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Models;
-  using static AirlyAnalyzer.Tests.Models.ModelUtilities;
+  using AirlyAnalyzer.Tests.Helpers;
+  using static AirlyAnalyzer.Tests.Helpers.ModelUtilities;
   using Xunit;
 
   using ET = AirlyAnalyzer.Models.ForecastErrorType;

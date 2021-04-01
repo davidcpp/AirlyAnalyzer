@@ -181,6 +181,7 @@
       context.Measurements.RemoveRange(context.Measurements);
       context.Forecasts.RemoveRange(context.Forecasts);
       context.ForecastErrors.RemoveRange(context.ForecastErrors);
+      context.InstallationInfos.RemoveRange(context.InstallationInfos);
       context.SaveChanges();
     }
 

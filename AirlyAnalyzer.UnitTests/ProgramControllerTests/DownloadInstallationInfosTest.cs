@@ -48,7 +48,7 @@
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
-      var installationInfos = await programController.DownloadInstallationInfos();
+      var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -75,7 +75,7 @@
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
-      var installationInfos = await programController.DownloadInstallationInfos();
+      var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -120,7 +120,7 @@
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
-      var installationInfos = await programController.DownloadInstallationInfos();
+      var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(

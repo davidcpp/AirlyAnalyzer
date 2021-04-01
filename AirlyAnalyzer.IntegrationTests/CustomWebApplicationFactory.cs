@@ -39,11 +39,12 @@
 
           try
           {
+            context.Clear();
             context.Seed(NumberOfDays);
           }
           catch (Exception ex)
           {
-            logger.LogError(ex, "An error occurred seeding the " +
+            logger.LogError(ex, "An error occurred seeding or clearing the " +
                 "database with test messages. Error: {Message}", ex.Message);
           }
         }

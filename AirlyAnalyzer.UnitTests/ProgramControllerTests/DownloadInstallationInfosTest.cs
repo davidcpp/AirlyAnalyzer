@@ -92,10 +92,13 @@
 
       var exampleInstallationInfo = new InstallationInfo
       {
-        City = "Pniewy",
-        Country = "Poland",
-        Street = "Poznańska",
-        Number = "15",
+        Address = new Address()
+        {
+          City = "Pniewy",
+          Country = "Poland",
+          Street = "Poznańska",
+          Number = "15",
+        }
       };
 
       foreach (short installationId in _installationIds)

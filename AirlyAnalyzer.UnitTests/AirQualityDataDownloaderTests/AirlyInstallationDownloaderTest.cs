@@ -72,6 +72,30 @@
           _ => _.DownloadStringTaskAsync(It.IsAny<string>()), Times.Once());
     }
 
+
+    [Fact]
+    public async Task returns_not_null_installation_object_when_api_response_is_correct_json_object()
+    {
+      // Arrange
+      string response = AirlyApiUtilities.GetTestAirlyInstallationJson();
+      var webClientMock = new Mock<IWebClientAdapter>();
+
+      webClientMock.Setup(_ => _.DownloadStringTaskAsync(It.IsAny<string>()))
+                   .ReturnsAsync(response);
+
+      webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
+
+      var airlyInstallationDownloader
+          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+
+      // Act
+      var installation = await airlyInstallationDownloader
+          .DownloadAirQualityData(_installationId);
+
+      // Assert
+      Assert.NotNull(installation);
+    }
+
     [Fact]
     public async Task returns_empty_installation_object_when_api_response_is_empty()
     {
@@ -153,11 +177,11 @@
 
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
-      var airlyMeasurementsDownloader
+      var airlyInstallationDownloader
           = new AirlyInstallationDownloader(_config, webClientMock.Object);
 
       // Act
-      var installation = await airlyMeasurementsDownloader
+      var installation = await airlyInstallationDownloader
           .DownloadAirQualityData(_installationId);
 
       // Assert

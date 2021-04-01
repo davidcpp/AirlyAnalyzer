@@ -109,13 +109,17 @@
 
     public async Task<List<Installation>> DownloadInstallationInfos()
     {
+      var installations = new List<Installation>();
+
       foreach (short installationId in _installationIds)
       {
-        var installation = _airlyInstallationDownloader
+        var installation = await _airlyInstallationDownloader
             .DownloadAirQualityData(installationId);
+
+        installations.Add(installation);
       }
 
-      return new List<Installation>();
+      return installations;
     }
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>

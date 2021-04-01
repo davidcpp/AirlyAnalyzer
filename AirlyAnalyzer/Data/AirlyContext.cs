@@ -67,6 +67,7 @@
     public void Configure(EntityTypeBuilder<InstallationInfo> builder)
     {
       builder.ToTable("InstallationInfos").HasKey(x => x.InstallationId);
+      builder.OwnsOne(i => i.Address);
     }
   }
 

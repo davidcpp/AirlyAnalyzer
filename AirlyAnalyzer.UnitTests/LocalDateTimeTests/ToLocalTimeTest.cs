@@ -3,7 +3,7 @@
   using System;
   using Xunit;
 
-  public class ToLocalTime
+  public class ToLocalTimeTest
   {
     [Fact]
     public void add_one_hour_more_in_to_local_time_conversion_when_begin_of_daylight_time()

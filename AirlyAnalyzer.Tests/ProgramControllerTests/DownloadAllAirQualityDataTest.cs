@@ -124,6 +124,11 @@
       // Act
       var (newMeasurements, newForecasts)
           = await programController.DownloadAllAirQualityData();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          Times.Exactly(_installationIds.Count));
     }
 
     [Theory]
@@ -159,6 +164,11 @@
       // Act
       var (newMeasurements, newForecasts)
           = await programController.DownloadAllAirQualityData();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          Times.Exactly(_installationIds.Count));
     }
 
     [Fact]
@@ -203,6 +213,11 @@
       // Act
       var (newMeasurements, newForecasts)
           = await programController.DownloadAllAirQualityData();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          Times.Exactly((int)Math.Ceiling((double)_installationIds.Count/2)));
     }
   }
 }

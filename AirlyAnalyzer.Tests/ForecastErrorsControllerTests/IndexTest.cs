@@ -1,4 +1,4 @@
-namespace AirlyAnalyzer.Tests.ForecastErrorsControllerTests
+namespace AirlyAnalyzer.UnitTests.ForecastErrorsControllerTests
 {
   using System;
   using System.Collections.Generic;
@@ -6,8 +6,8 @@ namespace AirlyAnalyzer.Tests.ForecastErrorsControllerTests
   using AirlyAnalyzer.Controllers;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Microsoft.AspNetCore.Mvc;
   using Xunit;
 

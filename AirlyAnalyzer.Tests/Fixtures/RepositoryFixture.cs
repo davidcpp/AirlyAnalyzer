@@ -1,9 +1,9 @@
-﻿namespace AirlyAnalyzer.Tests.Fixtures
+﻿namespace AirlyAnalyzer.UnitTests.Fixtures
 {
   using System;
   using System.Collections.Generic;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Xunit;

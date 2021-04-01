@@ -1,9 +1,9 @@
-﻿namespace AirlyAnalyzer.Tests.Helpers
+﻿namespace AirlyAnalyzer.UnitTests.Helpers
 {
   using System;
   using System.Collections.Generic;
   using AirlyAnalyzer.Data;
-  using static AirlyAnalyzer.Tests.Helpers.ModelUtilities;
+  using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
 
   using ET = AirlyAnalyzer.Models.ForecastErrorType;
 

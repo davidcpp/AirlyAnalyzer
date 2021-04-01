@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.ProgramControllerTests
+﻿namespace AirlyAnalyzer.UnitTests.ProgramControllerTests
 {
   using System;
   using System.Collections.Generic;
@@ -7,9 +7,9 @@
   using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Helpers;
-  using static AirlyAnalyzer.Tests.Helpers.ModelUtilities;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
+  using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
   using Xunit;
 
   [Collection("RepositoryTests")]

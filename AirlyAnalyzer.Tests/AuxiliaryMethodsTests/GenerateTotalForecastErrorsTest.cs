@@ -1,11 +1,11 @@
-﻿namespace AirlyAnalyzer.Tests.AuxiliaryMethodsTests
+﻿namespace AirlyAnalyzer.UnitTests.AuxiliaryMethodsTests
 {
   using System;
   using System.Collections.Generic;
   using System.Linq;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Xunit;
 
   public class GenerateTotalForecastErrorsTest : IClassFixture<SimpleFixture>

@@ -1,11 +1,11 @@
-﻿namespace AirlyAnalyzer.Tests.RepositoryTests
+﻿namespace AirlyAnalyzer.UnitTests.RepositoryTests
 {
   using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Xunit;
 
   [Collection("RepositoryTests")]

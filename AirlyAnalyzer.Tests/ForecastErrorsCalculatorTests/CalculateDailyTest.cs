@@ -1,11 +1,11 @@
-﻿namespace AirlyAnalyzer.Tests.ForecastErrorsCalculatorTests
+﻿namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
 {
   using System;
   using System.Linq;
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using static AirlyAnalyzer.Tests.Helpers.ModelUtilities;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
   using Xunit;
 
   public class CalculateDailyTest : IClassFixture<SimpleFixture>

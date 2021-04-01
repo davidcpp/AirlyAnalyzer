@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.ProgramControllerTests
+﻿namespace AirlyAnalyzer.UnitTests.ProgramControllerTests
 {
   using System.Collections.Generic;
   using System.Threading.Tasks;
@@ -6,8 +6,8 @@
   using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
-  using AirlyAnalyzer.Tests.Fixtures;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Moq;
   using Xunit;
 

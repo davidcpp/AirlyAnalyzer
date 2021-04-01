@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.Tests.DateTimeTests
+﻿namespace AirlyAnalyzer.UnitTests.DateTimeTests
 {
   using System;
   using Xunit;

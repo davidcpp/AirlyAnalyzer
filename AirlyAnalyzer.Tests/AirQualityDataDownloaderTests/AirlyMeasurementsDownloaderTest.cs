@@ -1,9 +1,9 @@
-﻿namespace AirlyAnalyzer.Tests.AirQualityDataDownloaderTests
+﻿namespace AirlyAnalyzer.UnitTests.AirQualityDataDownloaderTests
 {
   using System.Net;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
-  using AirlyAnalyzer.Tests.Helpers;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Microsoft.Extensions.Configuration;
   using Moq;
   using Xunit;

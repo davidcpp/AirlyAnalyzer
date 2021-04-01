@@ -127,5 +127,31 @@
           x => x.DownloadAirQualityData(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
     }
+
+    [Fact]
+    public async Task returns_data_for_all_installations()
+    {
+      // Arrange
+      var downloadedData = new Installation();
+      var mockSequence = new MockSequence();
+
+      foreach (short installationId in _installationIds)
+      {
+        _downloaderMock
+            .Setup(x => x.DownloadAirQualityData(installationId))
+            .ReturnsAsync(downloadedData);
+      }
+
+      var programController = new ProgramController(
+          unitOfWork: _unitOfWork,
+          installationIDsList: _installationIds,
+          airlyInstallationDownloader: _downloaderMock.Object);
+
+      // Act
+      var installations = await programController.DownloadInstallationInfos();
+
+      // Assert
+      Assert.Equal(_installationIds.Count, installations.Count);
+    }
   }
 }

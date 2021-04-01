@@ -4,8 +4,8 @@ namespace AirlyAnalyzer.IntegrationTests.ForecastErrorsControllerTests
   using System.Threading.Tasks;
   using Xunit;
 
+  [Collection("ControllerIntegrationTests")]
   public class IndexTests
-      : IClassFixture<CustomWebApplicationFactory<AirlyAnalyzer.Startup>>
   {
     private readonly HttpClient _client;
 

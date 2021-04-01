@@ -8,8 +8,8 @@
   using Microsoft.Extensions.Logging;
   using Xunit;
 
+  [Collection("ControllerIntegrationTests")]
   public class GetRequestDatesTests
-      : IClassFixture<CustomWebApplicationFactory<AirlyAnalyzer.Startup>>
   {
     private readonly CustomWebApplicationFactory<AirlyAnalyzer.Startup> _factory;
     private HttpClient _client;

@@ -111,12 +111,18 @@
     {
       var installations = new List<Installation>();
 
+      var dbInstallationIds = await _unitOfWork.InstallationsRepository
+          .GetParameters<short>(i => i.InstallationId);
+
       foreach (short installationId in _installationIds)
       {
-        var installation = await _airlyInstallationDownloader
-            .DownloadAirQualityData(installationId);
+        if (!dbInstallationIds.Contains(installationId))
+        {
+          var installation = await _airlyInstallationDownloader
+              .DownloadAirQualityData(installationId);
 
-        installations.Add(installation);
+          installations.Add(installation);
+        }
       }
 
       return installations;

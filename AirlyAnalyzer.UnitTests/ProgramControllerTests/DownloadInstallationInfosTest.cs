@@ -39,7 +39,7 @@
       var emptyInstallationIds = new List<short>();
 
       _downloaderMock.Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
-          .ReturnsAsync(downloadedData);
+                     .ReturnsAsync(downloadedData);
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
@@ -86,8 +86,7 @@
       // Arrange
       var downloadedData = new Installation();
 
-      var modifiedInstallationIds
-          = _installationIds.GetRange(0, _installationIds.Count - 1);
+      var modifiedInstallationIds = new List<short>();
 
       short newInstallationId = 1;
       while (_installationIds.Contains(newInstallationId))
@@ -96,6 +95,8 @@
       }
 
       modifiedInstallationIds.Add(newInstallationId);
+      modifiedInstallationIds.AddRange(
+          _installationIds.GetRange(0, _installationIds.Count - 1));
 
       foreach (short installationId in _installationIds)
       {

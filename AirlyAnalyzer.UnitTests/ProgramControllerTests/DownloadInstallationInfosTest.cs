@@ -1,5 +1,6 @@
 ﻿namespace AirlyAnalyzer.UnitTests.ProgramControllerTests
 {
+  using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
@@ -8,6 +9,7 @@
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using AirlyAnalyzer.UnitTests.Helpers;
+  using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
   using Moq;
   using Xunit;
 
@@ -129,6 +131,45 @@
       // Assert
       _downloaderMock.Verify(
           x => x.DownloadAirQualityData(newInstallationId), Times.Once);
+
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Once);
+
+      Assert.Single(installations);
+    }
+
+    [Fact]
+    public async Task downloads_when_at_least_week_elapsed_from_last_update()
+    {
+      // Arrange
+      short outOfDateInstallationId = _installationIds[0];
+      var outOfDateRequestDate = DateTime.UtcNow.Date.AddDays(-7);
+
+      var exampleInstallationInfo = GetTestInstallationInfo(
+          outOfDateInstallationId, outOfDateRequestDate);
+
+      _context.InstallationInfos.Add(exampleInstallationInfo);
+
+      for (int i = 1; i < _installationIds.Count; i++)
+      {
+        exampleInstallationInfo = GetTestInstallationInfo(
+             _installationIds[i], outOfDateRequestDate.AddDays(1));
+
+        _context.InstallationInfos.Add(exampleInstallationInfo);
+      }
+      _context.SaveChanges();
+
+      var programController = new ProgramController(
+          unitOfWork: _unitOfWork,
+          installationIDsList: _installationIds,
+          airlyInstallationDownloader: _downloaderMock.Object);
+
+      // Act
+      var installations = await programController.DownloadInstallationInfos();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(outOfDateInstallationId), Times.Once);
 
       _downloaderMock.Verify(
           x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Once);

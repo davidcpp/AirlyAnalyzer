@@ -28,8 +28,7 @@
 
       _context.Clear();
 
-      _downloaderMock = new Mock<IAirQualityDataDownloader<Installation>>(
-          MockBehavior.Strict);
+      _downloaderMock = new Mock<IAirQualityDataDownloader<Installation>>();
     }
 
     [Fact]

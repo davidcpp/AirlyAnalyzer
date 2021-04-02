@@ -34,8 +34,7 @@
 
       _context.Clear();
 
-      _downloaderMock = new Mock<IAirQualityDataDownloader<Measurements>>(
-          MockBehavior.Strict);
+      _downloaderMock = new Mock<IAirQualityDataDownloader<Measurements>>();
     }
 
     [Fact]

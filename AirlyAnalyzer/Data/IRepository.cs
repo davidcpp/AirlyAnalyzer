@@ -11,6 +11,8 @@
     Task AddAsync(List<TEntity> entities);
     void Delete(Expression<Func<TEntity, bool>> wherePredicate);
 
+    Task<TEntity> GetById(object id);
+
     Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null);
 

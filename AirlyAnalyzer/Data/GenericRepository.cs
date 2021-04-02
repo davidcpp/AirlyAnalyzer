@@ -42,6 +42,11 @@
       _dbSet.RemoveRange(_dbSet.Where(wherePredicate));
     }
 
+    public async Task<TEntity> GetById(object id)
+    {
+      return await _dbSet.FindAsync(id);
+    }
+
     public Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null)
     {

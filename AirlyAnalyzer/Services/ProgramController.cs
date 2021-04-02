@@ -111,12 +111,15 @@
     {
       var installations = new List<Installation>();
 
-      var dbInstallationIds = await _unitOfWork.InstallationsRepository
-          .GetParameters<short>(i => i.InstallationId);
-
       foreach (short installationId in _installationIds)
       {
-        if (!dbInstallationIds.Contains(installationId))
+        var dbInstallationInfo = await _unitOfWork
+            .InstallationsRepository.GetById(installationId);
+
+        var now = DateTime.UtcNow.Date;
+
+        if (dbInstallationInfo == null
+            || (now - dbInstallationInfo.RequestDate.Date).TotalDays >= 7)
         {
           var installation = await _airlyInstallationDownloader
               .DownloadAirQualityData(installationId);

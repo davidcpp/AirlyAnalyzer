@@ -10,6 +10,23 @@
   {
     public const byte RequestMinutesOffset = 30;
 
+    public static InstallationInfo GetTestInstallationInfo(
+        short installationId, DateTime requestDate)
+    {
+      return new InstallationInfo
+      {
+        InstallationId = installationId,
+        RequestDate = requestDate,
+        Address = new Address()
+        {
+          City = "Pniewy",
+          Country = "Poland",
+          Street = "Poznańska",
+          Number = "15",
+        }
+      };
+    }
+
     public static IEnumerable<AirQualityMeasurement> GenerateMeasurements(
         short installationId,
         DateTime startDate,

@@ -107,13 +107,11 @@
     {
       // Arrange
       var downloadedData = new Measurements();
-      var mockSequence = new MockSequence();
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.InSequence(mockSequence)
-            .Setup(x => x.DownloadAirQualityData(installationId))
-            .ReturnsAsync(downloadedData);
+        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+                       .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
@@ -140,7 +138,6 @@
       // Arrange
       const short numberOfDays = 1;
 
-      var mockSequence = new MockSequence();
       var downloadedData = new Measurements();
 
       var startDate = DateTime.UtcNow.AddHours(-(2 * minNumberOfMeasurements));
@@ -150,9 +147,8 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.InSequence(mockSequence)
-            .Setup(x => x.DownloadAirQualityData(installationId))
-            .ReturnsAsync(downloadedData);
+        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+                       .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
@@ -177,7 +173,6 @@
       // Arrange
       const short numberOfDays = 1;
 
-      var mockSequence = new MockSequence();
       var downloadedData = new Measurements();
       var installationIds = new List<short>();
 
@@ -198,9 +193,8 @@
         }
         else
         {
-          _downloaderMock.InSequence(mockSequence)
-              .Setup(x => x.DownloadAirQualityData(_installationIds[i]))
-              .ReturnsAsync(downloadedData);
+          _downloaderMock.Setup(x => x.DownloadAirQualityData(_installationIds[i]))
+                         .ReturnsAsync(downloadedData);
         }
       }
 

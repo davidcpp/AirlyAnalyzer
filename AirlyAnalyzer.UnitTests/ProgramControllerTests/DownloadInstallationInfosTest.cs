@@ -60,13 +60,11 @@
     {
       // Arrange
       var downloadedData = new Installation();
-      var mockSequence = new MockSequence();
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.InSequence(mockSequence)
-            .Setup(x => x.DownloadAirQualityData(installationId))
-            .ReturnsAsync(downloadedData);
+        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+                       .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
@@ -143,13 +141,11 @@
     {
       // Arrange
       var downloadedData = new Installation();
-      var mockSequence = new MockSequence();
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock
-            .Setup(x => x.DownloadAirQualityData(installationId))
-            .ReturnsAsync(downloadedData);
+        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+                       .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(

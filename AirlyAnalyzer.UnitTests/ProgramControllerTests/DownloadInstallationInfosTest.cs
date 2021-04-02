@@ -129,6 +129,61 @@
     }
 
     [Fact]
+    public async Task downloads_data_for_installations_not_present_in_database()
+    {
+      // Arrange
+      var downloadedData = new Installation();
+
+      var modifiedInstallationIds
+          = _installationIds.GetRange(0, _installationIds.Count - 1);
+
+      short newInstallationId = 1;
+      while (_installationIds.Contains(newInstallationId))
+      {
+        newInstallationId++;
+      }
+
+      modifiedInstallationIds.Add(newInstallationId);
+
+      foreach (short installationId in _installationIds)
+      {
+        var exampleInstallationInfo = new InstallationInfo
+        {
+          InstallationId = installationId,
+          Address = new Address()
+          {
+            City = "Pniewy",
+            Country = "Poland",
+            Street = "Poznańska",
+            Number = "15",
+          }
+        };
+        _context.InstallationInfos.Add(exampleInstallationInfo);
+        _context.SaveChanges();
+      }
+
+      _downloaderMock.Setup(x => x.DownloadAirQualityData(newInstallationId))
+                     .ReturnsAsync(downloadedData);
+
+      var programController = new ProgramController(
+          unitOfWork: _unitOfWork,
+          installationIDsList: modifiedInstallationIds,
+          airlyInstallationDownloader: _downloaderMock.Object);
+
+      // Act
+      var installations = await programController.DownloadInstallationInfos();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(newInstallationId), Times.Once);
+
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Once);
+
+      Assert.Single(installations);
+    }
+
+    [Fact]
     public async Task returns_data_for_all_installations()
     {
       // Arrange

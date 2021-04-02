@@ -102,17 +102,9 @@
 
       foreach (short installationId in _installationIds)
       {
-        var exampleInstallationInfo = new InstallationInfo
-        {
-          InstallationId = installationId,
-          Address = new Address()
-          {
-            City = "Pniewy",
-            Country = "Poland",
-            Street = "Poznańska",
-            Number = "15",
-          }
-        };
+        var exampleInstallationInfo
+            = GetTestInstallationInfo(installationId, DateTime.UtcNow.Date);
+
         _context.InstallationInfos.Add(exampleInstallationInfo);
         _context.SaveChanges();
       }

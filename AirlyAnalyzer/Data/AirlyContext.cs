@@ -68,6 +68,7 @@
     {
       builder.ToTable("InstallationInfos").HasKey(x => x.InstallationId);
       builder.OwnsOne(i => i.Address);
+      builder.Property(x => x.RequestDate).HasColumnType("date");
     }
   }
 

@@ -22,6 +22,14 @@
       _dbSet = context.Set<TEntity>();
     }
 
+    public async Task AddAsync(TEntity entity)
+    {
+      if (!_dbSet.Contains(entity))
+      {
+        await _dbSet.AddAsync(entity);
+      }
+    }
+
     public async Task AddListAsync(List<TEntity> entities)
     {
       for (int i = 0; i < entities.Count;)
@@ -37,9 +45,24 @@
       await _dbSet.AddRangeAsync(entities);
     }
 
+    public bool Contains(TEntity entity)
+    {
+      return _dbSet.Contains(entity);
+    }
+
+    public async Task Delete(object id)
+    {
+      _dbSet.Remove(await _dbSet.FindAsync(id));
+    }
+
     public void Delete(Expression<Func<TEntity, bool>> wherePredicate)
     {
       _dbSet.RemoveRange(_dbSet.Where(wherePredicate));
+    }
+
+    public void Update(TEntity entity)
+    {
+      _dbSet.Update(entity);
     }
 
     public async Task<TEntity> GetById(object id)

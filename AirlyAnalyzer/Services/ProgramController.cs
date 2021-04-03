@@ -75,6 +75,9 @@
       _airlyMeasurementsDownloader = serviceProvider
           .GetRequiredService<IAirlyMeasurementsDownloader>();
 
+      _airlyInstallationDownloader = serviceProvider
+        .GetRequiredService<IAirlyInstallationDownloader>();
+
       _forecastErrorsCalculator = serviceProvider
           .GetRequiredService<IForecastErrorsCalculator>();
     }

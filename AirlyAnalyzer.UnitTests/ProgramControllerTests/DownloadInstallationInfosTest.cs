@@ -57,6 +57,36 @@
     }
 
     [Fact]
+    public async Task does_not_download_when_data_is_up_to_date_and_all_installation_ids_in_database()
+    {
+      // Arrange
+      var upToDateRequestDate = DateTime.UtcNow.Date.AddDays(-5);
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        var exampleInstallationInfo = GetTestInstallationInfo(
+              _installationIds[i], upToDateRequestDate);
+
+        _context.InstallationInfos.Add(exampleInstallationInfo);
+      }
+      _context.SaveChanges();
+
+      var programController = new ProgramController(
+          unitOfWork: _unitOfWork,
+          installationIDsList: _installationIds,
+          airlyInstallationDownloader: _downloaderMock.Object);
+
+      // Act
+      var installations = await programController.DownloadInstallationInfos();
+
+      // Assert
+      _downloaderMock.Verify(
+          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never);
+
+      Assert.Empty(installations);
+    }
+
+    [Fact]
     public async Task download_for_all_installations_when_no_data_in_database()
     {
       // Arrange

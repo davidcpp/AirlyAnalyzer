@@ -162,8 +162,7 @@
           continue;
         }
 
-        if (_unitOfWork.InstallationsRepository
-            .GetById(installationInfo.InstallationId) != null)
+        if (_unitOfWork.InstallationsRepository.Contains(installationInfo))
         {
           _unitOfWork.InstallationsRepository.Update(installationInfo);
           await _unitOfWork.SaveChangesAsync();

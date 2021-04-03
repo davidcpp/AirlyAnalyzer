@@ -136,6 +136,20 @@
       return installations;
     }
 
+    public List<InstallationInfo> ConvertInstallations(
+        List<Installation> installations)
+    {
+      var installationInfos = new List<InstallationInfo>();
+
+      foreach (var installation in installations)
+      {
+        installationInfos.Add(
+            installation.ConvertToInstallationInfo(DateTime.UtcNow.Date));
+      }
+
+      return installationInfos;
+    }
+
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()
     {

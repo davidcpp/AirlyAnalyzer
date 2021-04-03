@@ -17,7 +17,7 @@
       = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Measurements>;
 
   using IAirlyInstallationDownloader
-    = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Installation>;
+      = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Installation>;
 
   public class ProgramController : IHostedService, IDisposable
   {
@@ -153,7 +153,7 @@
     }
 
     public async Task UpdateInstallationInfos(
-    List<InstallationInfo> newInstallationInfos)
+        List<InstallationInfo> newInstallationInfos)
     {
       foreach (var installationInfo in newInstallationInfos)
       {

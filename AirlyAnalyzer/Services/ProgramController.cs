@@ -151,6 +151,41 @@
       return installationInfos;
     }
 
+    public async Task UpdateInstallationInfos(
+    List<InstallationInfo> newInstallationInfos)
+    {
+      foreach (var installationInfo in newInstallationInfos)
+      {
+        if (installationInfo.InstallationId == 0)
+        {
+          continue;
+        }
+
+        if (_unitOfWork.InstallationsRepository
+            .GetById(installationInfo.InstallationId) != null)
+        {
+          _unitOfWork.InstallationsRepository.Update(installationInfo);
+          await _unitOfWork.SaveChangesAsync();
+        }
+        else
+        {
+          await _unitOfWork.InstallationsRepository.AddAsync(installationInfo);
+          await _unitOfWork.SaveChangesAsync();
+        }
+      }
+
+      var dbInstallationInfos = await _unitOfWork.InstallationsRepository.Get();
+
+      foreach (var dbInstallationInfo in dbInstallationInfos)
+      {
+        if (!_installationIds.Contains(dbInstallationInfo.InstallationId))
+        {
+          await _unitOfWork.InstallationsRepository
+              .Delete(dbInstallationInfo.InstallationId);
+        }
+      }
+    }
+
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         DownloadAllAirQualityData()
     {

@@ -98,6 +98,7 @@
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
         var installations = await DownloadInstallationInfos();
+        var installationInfos = ConvertInstallations(installations);
 
         var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
 

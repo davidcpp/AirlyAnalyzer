@@ -8,7 +8,7 @@
 
   public interface IRepository<TEntity> where TEntity : class
   {
-    Task AddAsync(List<TEntity> entities);
+    Task AddListAsync(List<TEntity> entities);
     void Delete(Expression<Func<TEntity, bool>> wherePredicate);
 
     Task<TEntity> GetById(object id);

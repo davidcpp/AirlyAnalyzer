@@ -58,7 +58,7 @@
       }
 
       // Act
-      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.MeasurementRepository.AddListAsync(newMeasurements);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -82,7 +82,7 @@
       }
 
       // Act
-      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
+      await _unitOfWork.MeasurementRepository.AddListAsync(newMeasurements);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -115,7 +115,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.ForecastRepository.AddListAsync(newForecasts);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -139,7 +139,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.ForecastRepository.AddListAsync(newForecasts);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -175,7 +175,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.ForecastErrorRepository.AddListAsync(newForecastErrors);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -200,7 +200,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.ForecastErrorRepository.AddListAsync(newForecastErrors);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -236,7 +236,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.ForecastErrorRepository.AddListAsync(newForecastErrors);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert
@@ -261,7 +261,7 @@
       }
 
       // Act
-      await _unitOfWork.ForecastErrorRepository.AddAsync(newForecastErrors);
+      await _unitOfWork.ForecastErrorRepository.AddListAsync(newForecastErrors);
       await _unitOfWork.SaveChangesAsync();
 
       // Assert

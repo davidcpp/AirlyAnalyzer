@@ -18,7 +18,7 @@
       _dbSet = context.Set<TEntity>();
     }
 
-    public async Task AddAsync(List<TEntity> entities)
+    public async Task AddListAsync(List<TEntity> entities)
     {
       for (int i = 0; i < entities.Count;)
       {

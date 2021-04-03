@@ -169,8 +169,8 @@
     {
       _logger?.LogInformation("SaveAllAirQualityData() is starting");
 
-      await _unitOfWork.MeasurementRepository.AddAsync(newMeasurements);
-      await _unitOfWork.ForecastRepository.AddAsync(newForecasts);
+      await _unitOfWork.MeasurementRepository.AddListAsync(newMeasurements);
+      await _unitOfWork.ForecastRepository.AddListAsync(newForecasts);
       await _unitOfWork.SaveChangesAsync();
 
       return Math.Min(newMeasurements.Count, newForecasts.Count);
@@ -207,8 +207,12 @@
     {
       _logger?.LogInformation("SaveForecastErrors() is starting");
 
-      await _unitOfWork.ForecastErrorRepository.AddAsync(hourlyForecastErrors);
-      await _unitOfWork.ForecastErrorRepository.AddAsync(dailyForecastErrors);
+      await _unitOfWork.ForecastErrorRepository
+          .AddListAsync(hourlyForecastErrors);
+
+      await _unitOfWork.ForecastErrorRepository
+          .AddListAsync(dailyForecastErrors);
+
       await _unitOfWork.SaveChangesAsync();
 
       return dailyForecastErrors.Count;
@@ -260,7 +264,9 @@
 
         await _unitOfWork.SaveChangesAsync();
 
-        await _unitOfWork.ForecastErrorRepository.AddAsync(newTotalForecastErrors);
+        await _unitOfWork.ForecastErrorRepository
+            .AddListAsync(newTotalForecastErrors);
+
         await _unitOfWork.SaveChangesAsync();
       }
     }

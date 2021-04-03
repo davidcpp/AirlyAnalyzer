@@ -99,6 +99,7 @@
 
         var installations = await DownloadInstallationInfos();
         var installationInfos = ConvertInstallations(installations);
+        await UpdateInstallationInfos(installationInfos);
 
         var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
 

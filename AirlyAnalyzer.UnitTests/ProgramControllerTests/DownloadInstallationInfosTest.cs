@@ -54,6 +54,8 @@
       // Assert
       _downloaderMock.Verify(
           x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never());
+
+      Assert.Empty(installations);
     }
 
     [Fact]

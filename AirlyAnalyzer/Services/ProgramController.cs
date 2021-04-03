@@ -97,6 +97,8 @@
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
+        var installations = await DownloadInstallationInfos();
+
         var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
 
         if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)

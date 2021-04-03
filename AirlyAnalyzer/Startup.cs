@@ -48,6 +48,11 @@ namespace AirlyAnalyzer
               x.GetRequiredService<IConfiguration>(),
               new WebClientAdapter(new System.Net.WebClient())));
 
+      services.AddSingleton<IAirQualityDataDownloader<Installation>>(
+          x => new AirlyInstallationDownloader(
+              x.GetRequiredService<IConfiguration>(),
+              new WebClientAdapter(new System.Net.WebClient())));
+
       services.AddSingleton<IForecastErrorsCalculator>(
           _ => new ForecastErrorsCalculator());
 

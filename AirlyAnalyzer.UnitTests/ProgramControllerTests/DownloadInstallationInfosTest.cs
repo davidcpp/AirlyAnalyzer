@@ -183,7 +183,7 @@
       for (int i = 1; i < _installationIds.Count; i++)
       {
         exampleInstallationInfo = GetTestInstallationInfo(
-             _installationIds[i], outOfDateUpdateDate.AddDays(1));
+             _installationIds[i], outOfDateUpdateDate.AddDays(2));
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }

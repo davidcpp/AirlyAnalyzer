@@ -16,7 +16,7 @@
       return new InstallationInfo
       {
         InstallationId = installationId,
-        RequestDate = requestDate,
+        UpdateDate = requestDate,
         Address = new Address()
         {
           City = "Pniewy",

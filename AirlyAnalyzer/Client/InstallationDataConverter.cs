@@ -11,7 +11,7 @@
       return new InstallationInfo()
       {
         InstallationId = (short)installation.Id,
-        RequestDate = requestDate,
+        UpdateDate = requestDate,
         Address = new Address()
         {
           Country = installation.Address.Country ?? "",

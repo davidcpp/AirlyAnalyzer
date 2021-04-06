@@ -5,16 +5,16 @@ namespace AirlyAnalyzer
 {
   public class InstallationInfo
   {
-    private DateTime requestDate;
+    private DateTime updateDate;
 
     public short InstallationId { get; set; }
 
     public Address Address { get; set; }
 
-    public DateTime RequestDate
+    public DateTime UpdateDate
     {
-      get => requestDate.ToLocalTime();
-      set => requestDate = value.ToUniversalTime();
+      get => updateDate.ToLocalTime();
+      set => updateDate = value.ToUniversalTime();
     }
   }
 }

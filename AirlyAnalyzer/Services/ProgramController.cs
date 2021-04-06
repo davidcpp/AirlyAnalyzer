@@ -133,7 +133,7 @@
 
         var now = DateTime.UtcNow.Date;
         var installationUpdateDate
-            = dbInstallationInfo?.RequestDate.Date ?? new DateTime();
+            = dbInstallationInfo?.UpdateDate.Date ?? new DateTime();
 
         double fromLastUpdatePeriod = (now - installationUpdateDate).TotalDays;
 

@@ -91,7 +91,7 @@
     }
 
     [Fact]
-    public async Task download_for_all_installations_when_no_data_in_database()
+    public async Task downloads_for_all_installations_when_no_data_in_database()
     {
       // Arrange
       var downloadedData = new Installation();

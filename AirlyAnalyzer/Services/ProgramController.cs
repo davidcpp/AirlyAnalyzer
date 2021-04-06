@@ -176,6 +176,7 @@
 
       var dbInstallationInfos = await _unitOfWork.InstallationsRepository.Get();
 
+      // delete informations for out-of-date installations
       foreach (var dbInstallationInfo in dbInstallationInfos)
       {
         if (!_installationIds.Contains(dbInstallationInfo.InstallationId))

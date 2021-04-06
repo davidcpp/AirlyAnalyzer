@@ -63,12 +63,12 @@
     {
       // Arrange
       const short installationUpdateDaysPeriod = 3;
-      var upToDateRequestDate = DateTime.UtcNow.Date.AddDays(-1);
+      var upToDateUpdateDate = DateTime.UtcNow.Date.AddDays(-1);
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
         var exampleInstallationInfo = GetTestInstallationInfo(
-              _installationIds[i], upToDateRequestDate);
+              _installationIds[i], upToDateUpdateDate);
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
@@ -170,18 +170,18 @@
       // Arrange
       short outOfDateInstallationId = _installationIds[0];
       const short installationUpdateDaysPeriod = 3;
-      var outOfDateRequestDate
+      var outOfDateUpdateDate
           = DateTime.UtcNow.Date.AddDays(-installationUpdateDaysPeriod);
 
       var exampleInstallationInfo = GetTestInstallationInfo(
-          outOfDateInstallationId, outOfDateRequestDate);
+          outOfDateInstallationId, outOfDateUpdateDate);
 
       _context.InstallationInfos.Add(exampleInstallationInfo);
 
       for (int i = 1; i < _installationIds.Count; i++)
       {
         exampleInstallationInfo = GetTestInstallationInfo(
-             _installationIds[i], outOfDateRequestDate.AddDays(1));
+             _installationIds[i], outOfDateUpdateDate.AddDays(1));
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }

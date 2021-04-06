@@ -11,12 +11,12 @@
     public const byte RequestMinutesOffset = 30;
 
     public static InstallationInfo GetTestInstallationInfo(
-        short installationId, DateTime requestDate)
+        short installationId, DateTime updateDate)
     {
       return new InstallationInfo
       {
         InstallationId = installationId,
-        UpdateDate = requestDate,
+        UpdateDate = updateDate,
         Address = new Address()
         {
           City = "Pniewy",

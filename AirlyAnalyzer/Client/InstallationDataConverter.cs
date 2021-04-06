@@ -6,12 +6,12 @@
   public static class InstallationDataConverter
   {
     public static InstallationInfo ConvertToInstallationInfo(
-        this Installation installation, DateTime requestDate)
+        this Installation installation, DateTime updateDate)
     {
       return new InstallationInfo()
       {
         InstallationId = (short)installation.Id,
-        UpdateDate = requestDate,
+        UpdateDate = updateDate,
         Address = new Address()
         {
           Country = installation.Address.Country ?? "",

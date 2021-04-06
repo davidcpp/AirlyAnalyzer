@@ -30,6 +30,7 @@
 
     private readonly List<short> _installationIds;
     private readonly short _idForAllInstallations;
+    private readonly short _installationUpdateDaysPeriod;
     private readonly short _minNumberOfMeasurements;
 
     private UnitOfWork _unitOfWork;
@@ -42,7 +43,8 @@
         short idForAllInstallations = -1,
         IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
         IAirlyInstallationDownloader airlyInstallationDownloader = null,
-        short minNumberOfMeasurements = 24)
+        short minNumberOfMeasurements = 24,
+        short installationUpdateDaysPeriod = 7)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculator = forecastErrorsCalculator;
@@ -53,6 +55,7 @@
 
       _minNumberOfMeasurements = minNumberOfMeasurements;
       _idForAllInstallations = idForAllInstallations;
+      _installationUpdateDaysPeriod = installationUpdateDaysPeriod;
     }
 
     public ProgramController(

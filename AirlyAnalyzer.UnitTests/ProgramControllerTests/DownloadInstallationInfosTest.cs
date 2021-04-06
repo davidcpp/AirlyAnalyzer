@@ -114,6 +114,8 @@
       _downloaderMock.Verify(
           x => x.DownloadAirQualityData(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
+
+      Assert.Equal(_installationIds.Count, installations.Count);
     }
 
     [Fact]

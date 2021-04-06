@@ -62,7 +62,8 @@
     public async Task does_not_download_when_data_is_up_to_date_and_all_installation_ids_in_database()
     {
       // Arrange
-      var upToDateRequestDate = DateTime.UtcNow.Date.AddDays(-5);
+      const short installationUpdateDaysPeriod = 3;
+      var upToDateRequestDate = DateTime.UtcNow.Date.AddDays(-1);
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
@@ -76,7 +77,8 @@
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIDsList: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyInstallationDownloader: _downloaderMock.Object,
+          installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();
@@ -163,11 +165,13 @@
     }
 
     [Fact]
-    public async Task downloads_when_at_least_week_elapsed_from_last_update()
+    public async Task downloads_when_at_least_update_period_elapsed_from_last_update()
     {
       // Arrange
       short outOfDateInstallationId = _installationIds[0];
-      var outOfDateRequestDate = DateTime.UtcNow.Date.AddDays(-7);
+      const short installationUpdateDaysPeriod = 3;
+      var outOfDateRequestDate
+          = DateTime.UtcNow.Date.AddDays(-installationUpdateDaysPeriod);
 
       var exampleInstallationInfo = GetTestInstallationInfo(
           outOfDateInstallationId, outOfDateRequestDate);
@@ -186,7 +190,8 @@
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIDsList: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyInstallationDownloader: _downloaderMock.Object,
+          installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();

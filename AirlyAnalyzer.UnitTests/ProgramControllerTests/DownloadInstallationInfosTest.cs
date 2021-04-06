@@ -142,8 +142,9 @@
             = GetTestInstallationInfo(installationId, DateTime.UtcNow.Date);
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
-        _context.SaveChanges();
       }
+
+      _context.SaveChanges();
 
       _downloaderMock.Setup(x => x.DownloadAirQualityData(newInstallationId))
                      .ReturnsAsync(downloadedData);

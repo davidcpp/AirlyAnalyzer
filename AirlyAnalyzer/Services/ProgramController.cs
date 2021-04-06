@@ -69,6 +69,9 @@
       _minNumberOfMeasurements = config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
+      _installationUpdateDaysPeriod = config.GetValue<short>(
+          "AppSettings:AirlyApi:InstallationUpdateDaysPeriod");
+
       _installationIds = config.GetSection(
           "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
 
@@ -126,10 +129,17 @@
         var dbInstallationInfo = await _unitOfWork
             .InstallationsRepository.GetById(installationId);
 
-        var now = DateTime.UtcNow.Date;
+        bool noInstallationInDatabase = dbInstallationInfo == null;
 
-        if (dbInstallationInfo == null
-            || (now - dbInstallationInfo.RequestDate.Date).TotalDays >= 7)
+        var now = DateTime.UtcNow.Date;
+        var installationUpdateDate
+            = dbInstallationInfo?.RequestDate.Date ?? new DateTime();
+
+        double fromLastUpdatePeriod = (now - installationUpdateDate).TotalDays;
+
+        bool dataIsOutOfDate = fromLastUpdatePeriod >= _installationUpdateDaysPeriod;
+
+        if (noInstallationInDatabase || dataIsOutOfDate)
         {
           var installation = await _airlyInstallationDownloader
               .DownloadAirQualityData(installationId);

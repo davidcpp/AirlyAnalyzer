@@ -4,6 +4,7 @@ namespace AirlyAnalyzer
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Services;
   using Microsoft.AspNetCore.Hosting;
+  using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
@@ -21,7 +22,7 @@ namespace AirlyAnalyzer
         try
         {
           var context = services.GetRequiredService<AirlyContext>();
-          context.Database.EnsureCreated();
+          context.Database.Migrate();
         }
         catch (Exception ex)
         {

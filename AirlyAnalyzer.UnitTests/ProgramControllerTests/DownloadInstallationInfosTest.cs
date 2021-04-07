@@ -120,7 +120,7 @@
     }
 
     [Fact]
-    public async Task downloads_data_for_installations_not_present_in_database()
+    public async Task downloads_for_installations_not_present_in_database()
     {
       // Arrange
       var downloadedData = new Installation();

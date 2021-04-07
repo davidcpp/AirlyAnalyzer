@@ -185,7 +185,8 @@
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
 
-      var dbInstallationInfos = _context.InstallationInfos.ToList();
+      var dbInstallationInfos
+          = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
 
       // Assert
       Assert.Equal(_installationIds.Count, dbInstallationInfos.Count);
@@ -234,7 +235,8 @@
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
 
-      var dbInstallationInfos = _context.InstallationInfos.ToList();
+      var dbInstallationInfos
+          = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
 
       // Assert
       Assert.Equal(newInstallationIds.Count, dbInstallationInfos.Count);

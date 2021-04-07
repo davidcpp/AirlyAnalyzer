@@ -178,14 +178,14 @@
 
         if (_unitOfWork.InstallationsRepository.Contains(installationInfo))
         {
-          _unitOfWork.InstallationsRepository.Update(installationInfo);
+          await _unitOfWork.InstallationsRepository
+              .Delete(installationInfo.InstallationId);
+
           await _unitOfWork.SaveChangesAsync();
         }
-        else
-        {
-          await _unitOfWork.InstallationsRepository.AddAsync(installationInfo);
-          await _unitOfWork.SaveChangesAsync();
-        }
+
+        await _unitOfWork.InstallationsRepository.AddAsync(installationInfo);
+        await _unitOfWork.SaveChangesAsync();
       }
 
       var dbInstallationInfos = await _unitOfWork.InstallationsRepository.Get();
@@ -199,6 +199,8 @@
               .Delete(dbInstallationInfo.InstallationId);
         }
       }
+
+      await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>

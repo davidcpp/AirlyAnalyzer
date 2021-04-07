@@ -29,6 +29,7 @@
     private readonly IServiceProvider _serviceProvider;
 
     private readonly List<short> _installationIds;
+
     private readonly short _idForAllInstallations;
     private readonly short _installationUpdateDaysPeriod;
     private readonly short _minNumberOfMeasurements;

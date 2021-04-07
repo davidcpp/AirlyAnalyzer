@@ -72,6 +72,7 @@
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
+
       _context.SaveChanges();
 
       var programController = new ProgramController(
@@ -188,6 +189,7 @@
 
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
+
       _context.SaveChanges();
 
       var programController = new ProgramController(

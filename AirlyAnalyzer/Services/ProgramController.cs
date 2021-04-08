@@ -108,7 +108,9 @@
         var installationInfos = ConvertInstallations(installations);
         await UpdateInstallationInfos(installationInfos);
 
-        var (newMeasurements, newForecasts) = await DownloadAllAirQualityData();
+        var newMeasurementsList = await DownloadAllAirQualityData();
+        var (newMeasurements, newForecasts)
+            = ConvertAllAirQualityData(newMeasurementsList);
 
         if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)
         {
@@ -203,13 +205,11 @@
       await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
-        DownloadAllAirQualityData()
+    public async Task<List<Measurements>> DownloadAllAirQualityData()
     {
       _logger?.LogInformation("DownloadAllAirQualityData() is starting");
 
-      var newMeasurements = new List<AirQualityMeasurement>();
-      var newForecasts = new List<AirQualityForecast>();
+      var allMeasurements = new List<Measurements>();
 
       var requestDateTime = DateTime.UtcNow;
 
@@ -224,12 +224,34 @@
           var responseMeasurements = await _airlyMeasurementsDownloader
               .DownloadAirQualityData(installationId);
 
-          newMeasurements.AddRange(responseMeasurements.History
-              .ConvertToAirQualityMeasurements(installationId, requestDateTime));
-
-          newForecasts.AddRange(responseMeasurements.Forecast
-              .ConvertToAirQualityForecasts(installationId, requestDateTime));
+          allMeasurements.Add(responseMeasurements);
         }
+        else
+        {
+          allMeasurements.Add(new Measurements());
+        }
+      }
+
+      return allMeasurements;
+    }
+
+    public (List<AirQualityMeasurement>, List<AirQualityForecast>)
+        ConvertAllAirQualityData(List<Measurements> measurementsList)
+    {
+      _logger?.LogInformation("ConvertAllAirQualityData() is starting");
+
+      var requestDateTime = DateTime.UtcNow;
+
+      var newMeasurements = new List<AirQualityMeasurement>();
+      var newForecasts = new List<AirQualityForecast>();
+
+      for (int i = 0; i < measurementsList.Count; i++)
+      {
+        newMeasurements.AddRange(measurementsList[i].History
+            .ConvertToAirQualityMeasurements(_installationIds[i], requestDateTime));
+
+        newForecasts.AddRange(measurementsList[i].Forecast
+            .ConvertToAirQualityForecasts(_installationIds[i], requestDateTime));
       }
 
       return (newMeasurements, newForecasts);

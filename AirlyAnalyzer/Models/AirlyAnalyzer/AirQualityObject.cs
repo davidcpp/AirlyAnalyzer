@@ -10,6 +10,8 @@
 
     public short InstallationId { get; set; }
 
+    public string InstallationAddress { get; set; }
+
     public short AirlyCaqi { get; set; }
 
     public short Pm25 { get; set; }

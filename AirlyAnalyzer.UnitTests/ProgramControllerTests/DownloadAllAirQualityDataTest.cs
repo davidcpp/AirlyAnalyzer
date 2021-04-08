@@ -55,7 +55,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: emptyInstallationIds,
+          installationIds: emptyInstallationIds,
           airlyMeasurementsDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: _minNumberOfMeasurements);
 
@@ -88,7 +88,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyMeasurementsDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: minNumberOfMeasurements);
 
@@ -115,7 +115,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyMeasurementsDownloader: _downloaderMock.Object);
 
       // Act
@@ -152,7 +152,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyMeasurementsDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: minNumberOfMeasurements);
 
@@ -199,7 +199,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyMeasurementsDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: _minNumberOfMeasurements);
 

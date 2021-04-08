@@ -45,7 +45,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: emptyInstallationIds,
+          installationIds: emptyInstallationIds,
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
@@ -77,7 +77,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyInstallationDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
@@ -105,7 +105,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
@@ -152,7 +152,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: modifiedInstallationIds,
+          installationIds: modifiedInstallationIds,
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act
@@ -194,7 +194,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyInstallationDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
@@ -225,7 +225,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIDsList: _installationIds,
+          installationIds: _installationIds,
           airlyInstallationDownloader: _downloaderMock.Object);
 
       // Act

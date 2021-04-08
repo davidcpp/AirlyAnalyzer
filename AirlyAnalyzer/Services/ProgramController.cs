@@ -40,7 +40,7 @@
     public ProgramController(
         UnitOfWork unitOfWork,
         IForecastErrorsCalculator forecastErrorsCalculator = null,
-        List<short> installationIDsList = null,
+        List<short> installationIds = null,
         short idForAllInstallations = -1,
         IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
         IAirlyInstallationDownloader airlyInstallationDownloader = null,
@@ -52,7 +52,7 @@
       _airlyMeasurementsDownloader = airlyMeasurementsDownloader;
       _airlyInstallationDownloader = airlyInstallationDownloader;
 
-      _installationIds = installationIDsList;
+      _installationIds = installationIds;
 
       _minNumberOfMeasurements = minNumberOfMeasurements;
       _idForAllInstallations = idForAllInstallations;

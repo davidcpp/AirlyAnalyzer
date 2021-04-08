@@ -60,7 +60,7 @@
           minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
-      var (newMeasurements, newForecasts)
+      var newMeasurementsList
           = await programController.DownloadAllAirQualityData();
 
       // Assert
@@ -93,7 +93,7 @@
           minNumberOfMeasurements: minNumberOfMeasurements);
 
       // Act
-      var (newMeasurements, newForecasts)
+      var newMeasurementsList
           = await programController.DownloadAllAirQualityData();
 
       // Assert
@@ -119,7 +119,7 @@
           airlyMeasurementsDownloader: _downloaderMock.Object);
 
       // Act
-      var (newMeasurements, newForecasts)
+      var newMeasurementsList
           = await programController.DownloadAllAirQualityData();
 
       // Assert
@@ -157,7 +157,7 @@
           minNumberOfMeasurements: minNumberOfMeasurements);
 
       // Act
-      var (newMeasurements, newForecasts)
+      var newMeasurementsList
           = await programController.DownloadAllAirQualityData();
 
       // Assert
@@ -204,7 +204,7 @@
           minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
-      var (newMeasurements, newForecasts)
+      var newMeasurementsList
           = await programController.DownloadAllAirQualityData();
 
       // Assert

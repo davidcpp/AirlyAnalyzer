@@ -1,6 +1,5 @@
 ﻿namespace AirlyAnalyzer.Controllers
 {
-  using System;
   using System.Collections.Generic;
   using System.Linq;
   using System.Threading.Tasks;
@@ -21,7 +20,7 @@
     public async Task<ActionResult> Index()
     {
       var requestDates = await _unitOfWork
-          .ForecastErrorRepository.GetParameters<DateTime>(
+          .ForecastErrorRepository.GetParameters(
               selectPredicate: fe => fe.RequestDateTime.Date,
               orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
               isDistinct: true);

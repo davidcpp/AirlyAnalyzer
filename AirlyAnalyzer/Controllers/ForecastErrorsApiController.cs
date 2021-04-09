@@ -41,7 +41,7 @@
     [HttpGet]
     public Task<List<DateTime>> GetRequestDates()
     {
-      return _unitOfWork.ForecastErrorRepository.GetParameters<DateTime>(
+      return _unitOfWork.ForecastErrorRepository.GetParameters(
           selectPredicate: fe => fe.RequestDateTime.Date,
           orderByMethod: q => q.OrderBy(dateTime => dateTime),
           isDistinct: true);

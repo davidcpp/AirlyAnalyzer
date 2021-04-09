@@ -20,6 +20,8 @@
 
     public short InstallationId { get; set; } = 0;
 
+    public string InstallationAddress { get; set; }
+
     public int Counter { get; set; } = 0;
 
     public int CaqiPct { get; set; } = 0;

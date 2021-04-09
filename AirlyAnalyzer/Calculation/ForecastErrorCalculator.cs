@@ -121,6 +121,7 @@
       return new AirQualityForecastError
       {
         InstallationId = installationId,
+        InstallationAddress  = _newMeasurements[i].InstallationAddress,
         FromDateTime = _newMeasurements[i].FromDateTime,
         TillDateTime = _newMeasurements[i].TillDateTime,
         AirlyCaqiPct = Convert.ToInt16(airlyCaqiRelativeError * 100),

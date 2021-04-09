@@ -52,7 +52,7 @@
         short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors)
     {
-      var dailyForecastErrorsSum = new ErrorSum();
+      var dailyForecastErrorsSum = new ErrorSum(installationId);
       var dailyForecastErrors = new List<AirQualityForecastError>();
 
       for (int i = 0; i < newHourlyForecastErrors.Count; i++)
@@ -75,7 +75,6 @@
           }
 
           dailyForecastErrorsSum.Reset(
-              installationId,
               newHourlyForecastErrors[i].FromDateTime,
               newHourlyForecastErrors[i].RequestDateTime);
         }

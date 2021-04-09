@@ -9,6 +9,15 @@
     private DateTime _tillDateTime;
     private DateTime _requestDateTime;
 
+    public ErrorSum()
+    {
+    }
+
+    public ErrorSum(short installationId)
+    {
+      InstallationId = installationId;
+    }
+
     public short InstallationId { get; set; } = 0;
 
     public int Counter { get; set; } = 0;
@@ -56,11 +65,8 @@
       Counter++;
     }
 
-    public void Reset(
-        short installationId, DateTime fromDateTime, DateTime requestDateTime)
+    public void Reset(DateTime fromDateTime, DateTime requestDateTime)
     {
-      InstallationId = installationId;
-
       FromDateTime = fromDateTime;
       TillDateTime = DateTime.MinValue;
       RequestDateTime = requestDateTime;

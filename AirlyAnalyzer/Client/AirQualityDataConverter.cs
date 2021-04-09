@@ -18,13 +18,7 @@
       {
         var measurement = (AirQualityMeasurement)averagedValue;
         measurement.InstallationId = installationId;
-
-        measurement.InstallationAddress
-            = (installationAddress?.Street ?? "") + " "
-            + (installationAddress?.Number ?? "") + ", "
-            + (installationAddress?.City ?? "") + ", "
-            + (installationAddress?.Country ?? "");
-
+        measurement.InstallationAddress = installationAddress?.ToString();
         measurement.RequestDateTime = requestTime;
 
         airQualityMeasurements.Add(measurement);
@@ -45,13 +39,7 @@
       {
         var forecast = (AirQualityForecast)averagedValue;
         forecast.InstallationId = installationId;
-
-        forecast.InstallationAddress
-            = (installationAddress?.Street ?? "") + " "
-            + (installationAddress?.Number ?? "") +", "
-            + (installationAddress?.City ?? "") + ", "
-            + (installationAddress?.Country ?? "");
-
+        forecast.InstallationAddress = installationAddress?.ToString();
         forecast.RequestDateTime = requestTime;
 
         airQualityForecasts.Add(forecast);

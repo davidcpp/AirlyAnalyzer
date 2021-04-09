@@ -12,5 +12,13 @@ namespace AirlyAnalyzer.Models
     public string Street { get; set; }
 
     public string Number { get; set; }
+
+    public override string ToString()
+    {
+      return (this.Street ?? "") + " "
+          + (this.Number ?? "") + ", "
+          + (this.City ?? "") + ", "
+          + (this.Country ?? "");
+    }
   }
 }

@@ -90,6 +90,7 @@
       return new AirQualityForecastError
       {
         InstallationId = this.InstallationId,
+        InstallationAddress = this.InstallationAddress,
         FromDateTime = this.FromDateTime,
         TillDateTime = this.TillDateTime,
         AirlyCaqiPct = (short)(CaqiPct / Counter),

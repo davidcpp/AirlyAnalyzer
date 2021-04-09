@@ -110,7 +110,7 @@
 
         var newMeasurementsList = await DownloadAllAirQualityData();
         var (newMeasurements, newForecasts)
-            = ConvertAllAirQualityData(newMeasurementsList);
+            = await ConvertAllAirQualityData(newMeasurementsList);
 
         if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)
         {
@@ -235,7 +235,7 @@
       return allMeasurements;
     }
 
-    public (List<AirQualityMeasurement>, List<AirQualityForecast>)
+    public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         ConvertAllAirQualityData(List<Measurements> measurementsList)
     {
       _logger?.LogInformation("ConvertAllAirQualityData() is starting");
@@ -247,11 +247,16 @@
 
       for (int i = 0; i < measurementsList.Count; i++)
       {
-        newMeasurements.AddRange(measurementsList[i].History
-            .ConvertToAirQualityMeasurements(_installationIds[i], requestDateTime));
+        var installationAddress = (await _unitOfWork.InstallationsRepository
+            .GetById(_installationIds[i]))?.Address;
 
-        newForecasts.AddRange(measurementsList[i].Forecast
-            .ConvertToAirQualityForecasts(_installationIds[i], requestDateTime));
+        newMeasurements.AddRange(
+            measurementsList[i].History.ConvertToAirQualityMeasurements(
+                _installationIds[i], installationAddress, requestDateTime));
+
+        newForecasts.AddRange(
+            measurementsList[i].Forecast.ConvertToAirQualityForecasts(
+                _installationIds[i], installationAddress, requestDateTime));
       }
 
       return (newMeasurements, newForecasts);

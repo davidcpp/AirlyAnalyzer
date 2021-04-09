@@ -146,6 +146,7 @@
       var errorSum = new ErrorSum
       {
         InstallationId = installationId,
+        InstallationAddress = allForecastErrors.Last().InstallationAddress,
         FromDateTime = allForecastErrors.First().FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,
         CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPct),

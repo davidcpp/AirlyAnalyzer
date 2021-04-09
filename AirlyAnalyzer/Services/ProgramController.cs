@@ -105,15 +105,21 @@
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
         var installations = await DownloadInstallationInfos();
-        var installationInfos = ConvertInstallations(installations);
-        await UpdateInstallationInfos(installationInfos);
+
+        if (installations.Count > 0)
+        {
+          var installationInfos = ConvertInstallations(installations);
+          await UpdateInstallationInfos(installationInfos);
+        }
 
         var newMeasurementsList = await DownloadAllAirQualityData();
-        var (newMeasurements, newForecasts)
-            = await ConvertAllAirQualityData(newMeasurementsList);
 
-        if (await SaveAllAirQualityData(newMeasurements, newForecasts) > 0)
+        if (newMeasurementsList.Count > 0)
         {
+          var (newMeasurements, newForecasts)
+              = await ConvertAllAirQualityData(newMeasurementsList);
+          await SaveAllAirQualityData(newMeasurements, newForecasts);
+
           var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
           await SaveForecastErrors(hourlyErrors, dailyErrors);
 

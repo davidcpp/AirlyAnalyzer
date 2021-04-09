@@ -61,7 +61,10 @@
           numberOfElementsInDay);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculator, installationIds);
+          _unitOfWork,
+          _forecastErrorsCalculator,
+          installationIds,
+          minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -105,7 +108,10 @@
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculator, _installationIds);
+          _unitOfWork,
+          _forecastErrorsCalculator,
+          _installationIds,
+          minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -133,7 +139,10 @@
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculator, _installationIds);
+          _unitOfWork,
+          _forecastErrorsCalculator,
+          _installationIds,
+          minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
       var (hourlyErrors, dailyErrors)

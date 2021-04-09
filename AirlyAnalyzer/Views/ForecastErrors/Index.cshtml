@@ -21,6 +21,9 @@
           @Html.DisplayNameFor(model => model.InstallationId)
         </th>
         <th>
+          @Html.DisplayNameFor(model => model.InstallationAddress)
+        </th>
+        <th>
           @Html.DisplayNameFor(model => model.AirlyCaqiPct)
         </th>
         <th>
@@ -40,6 +43,9 @@
           </td>
           <td>
             @Html.DisplayFor(modelItem => item.InstallationId)
+          </td>          
+          <td>
+            @Html.DisplayFor(modelItem => item.InstallationAddress)
           </td>
           <td>
             @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%

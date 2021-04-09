@@ -254,7 +254,7 @@
       for (int i = 0; i < measurementsList.Count; i++)
       {
         var installationAddress = (await _unitOfWork.InstallationsRepository
-            .GetById(_installationIds[i]))?.Address;
+            .GetById(_installationIds[i]))?.Address ?? new Address();
 
         newMeasurements.AddRange(
             measurementsList[i].History.ConvertToAirQualityMeasurements(

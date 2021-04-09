@@ -125,6 +125,8 @@
 
     public async Task<List<Installation>> DownloadInstallationInfos()
     {
+      _logger?.LogInformation("DownloadInstallationInfos() is starting");
+
       var installations = new List<Installation>();
 
       foreach (short installationId in _installationIds)
@@ -157,6 +159,8 @@
     public List<InstallationInfo> ConvertInstallations(
         List<Installation> installations)
     {
+      _logger?.LogInformation("ConvertInstallations() is starting");
+
       var installationInfos = new List<InstallationInfo>();
 
       foreach (var installation in installations)
@@ -171,6 +175,8 @@
     public async Task UpdateInstallationInfos(
         List<InstallationInfo> newInstallationInfos)
     {
+      _logger?.LogInformation("UpdateInstallationInfos() is starting");
+
       foreach (var installationInfo in newInstallationInfos)
       {
         if (installationInfo.InstallationId == 0)

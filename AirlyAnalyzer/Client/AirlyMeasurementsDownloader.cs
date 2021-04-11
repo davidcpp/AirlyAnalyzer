@@ -14,6 +14,7 @@
     private readonly string _airlyApiKey;
     private readonly string _contentType;
     private readonly string _measurementsUri;
+    private readonly string _measurementsUriParameters;
     private readonly string _uri;
 
     private readonly IWebClientAdapter _webClientAdapter;
@@ -33,6 +34,9 @@
       _measurementsUri = config.GetValue<string>(
           "AppSettings:AirlyApi:MeasurementsUri");
 
+      _measurementsUriParameters = config.GetValue<string>(
+          "AppSettings:AirlyApi:MeasurementsUriParameters");
+
       _uri = config.GetValue<string>(
           "AppSettings:AirlyApi:Uri");
 
@@ -49,7 +53,9 @@
       try
       {
         string response = await _webClientAdapter.DownloadStringTaskAsync(
-            _measurementsUri + installationId.ToString());
+            _measurementsUri
+            + installationId.ToString()
+            + _measurementsUriParameters);
 
         return JsonConvert.DeserializeObject<Measurements>(
             response,

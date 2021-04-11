@@ -12,6 +12,10 @@
 
     public short Temperature { get; set; }
 
+    public float WindSpeed { get; set; }
+
+    public short WindBearing { get; set; }
+
     public static explicit operator AirQualityMeasurement(
         AveragedValues averagedValue)
     {
@@ -50,6 +54,12 @@
             break;
           case "TEMPERATURE":
             measurement.Temperature = Convert.ToInt16(Math.Ceiling(measure.Value));
+            break;
+          case "WIND_SPEED":
+            measurement.WindSpeed = (float)measure.Value;
+            break;
+          case "WIND_BEARING":
+            measurement.WindBearing = Convert.ToInt16(measure.Value);
             break;
         }
       }

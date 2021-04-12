@@ -39,10 +39,13 @@
       : IEntityTypeConfiguration<AirQualityForecastError>
   {
     private readonly byte _maxPeriodPropertyLength;
+    private readonly byte _maxClassPropertyLength;
 
-    public ForecastErrorConfiguration(byte maxPeriodPropertyLength)
+    public ForecastErrorConfiguration(
+        byte maxPeriodPropertyLength, byte maxClassPropertyLength)
     {
       _maxPeriodPropertyLength = maxPeriodPropertyLength;
+      _maxClassPropertyLength = maxClassPropertyLength;
     }
 
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
@@ -54,6 +57,11 @@
           .HasConversion<string>()
           .IsUnicode(false)
           .HasMaxLength(_maxPeriodPropertyLength);
+
+      builder.Property(x => x.Class)
+          .HasConversion<string>()
+          .IsUnicode(false)
+          .HasMaxLength(_maxClassPropertyLength);
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -75,6 +83,8 @@
   public class AirlyContext : DbContext
   {
     private readonly byte _maxPeriodPropertyLength;
+    private readonly byte _maxClassPropertyLength;
+
     public static readonly ILoggerFactory _loggerFactory =
         LoggerFactory.Create(builder => builder.AddDebug());
 
@@ -84,6 +94,9 @@
     {
       _maxPeriodPropertyLength =
           config.GetValue<byte>("AppSettings:Databases:MaxPeriodPropertyLength");
+
+      _maxClassPropertyLength = config.GetValue<byte>(
+          "AppSettings:Databases:MaxForecastErrorClassPropertyLength");
     }
 
     public DbSet<AirQualityMeasurement> Measurements { get; set; }
@@ -107,8 +120,8 @@
     {
       modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
       modelBuilder.ApplyConfiguration(new ForecastConfiguration());
-      modelBuilder.ApplyConfiguration(
-          new ForecastErrorConfiguration(_maxPeriodPropertyLength));
+      modelBuilder.ApplyConfiguration(new ForecastErrorConfiguration(
+          _maxPeriodPropertyLength, _maxClassPropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
 
       modelBuilder.HasAnnotation(

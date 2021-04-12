@@ -20,7 +20,7 @@
     }
 
     [Fact]
-    public void correct_error_type_of_forecast_errors()
+    public void correct_period_of_forecast_errors()
     {
       // Arrange
       const short numberOfDays = 10;
@@ -31,7 +31,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(ForecastErrorType.Total, forecastErrors[0].ErrorType);
+      Assert.Equal(ForecastErrorPeriod.Total, forecastErrors[0].Period);
     }
 
     [Theory]

@@ -4,7 +4,7 @@
   using System.Collections.Generic;
   using AirlyAnalyzer.Models;
 
-  using ET = AirlyAnalyzer.Models.ForecastErrorType;
+  using EP = AirlyAnalyzer.Models.ForecastErrorPeriod;
 
   public static class ModelUtilities
   {
@@ -150,7 +150,7 @@
       {
         yield return CreateForecastError(
             installationId,
-            ET.Hourly,
+            EP.Hour,
             startDate.AddHours(i),
             startDate.AddHours(numberOfForecastErrors)
                      .AddMinutes(RequestMinutesOffset),
@@ -174,7 +174,7 @@
         {
           yield return CreateForecastError(
               installationId,
-              ET.Hourly,
+              EP.Hour,
               startDate.AddHours(j),
               startDate.AddHours(requestInterval)
                        .AddMinutes(RequestMinutesOffset));
@@ -196,7 +196,7 @@
 
         yield return CreateForecastError(
             installationId,
-            ET.Daily,
+            EP.Day,
             startDate.AddDays(i),
             startDate.AddDays(i).AddHours(requestInterval)
                                 .AddMinutes(RequestMinutesOffset),
@@ -215,16 +215,16 @@
       foreach (short installationId in _installationIds)
       {
         yield return CreateForecastError(
-            installationId, ET.Total, startDate, requestDate, durationInHours);
+            installationId, EP.Total, startDate, requestDate, durationInHours);
       }
 
       yield return CreateForecastError(
-          -1, ET.Total, startDate, requestDate, durationInHours);
+          -1, EP.Total, startDate, requestDate, durationInHours);
     }
 
     public static AirQualityForecastError CreateForecastError(
         short installationId,
-        ForecastErrorType errorType,
+        ForecastErrorPeriod errorPeriod,
         DateTime forecastErrorDate,
         DateTime requestDate,
         int durationInHours = 1)
@@ -241,7 +241,7 @@
         Pm10 = 1,
         Pm10Pct = 1,
         RequestDateTime = requestDate,
-        ErrorType = errorType,
+        Period = errorPeriod,
       };
     }
   }

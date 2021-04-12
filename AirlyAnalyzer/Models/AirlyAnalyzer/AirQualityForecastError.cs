@@ -13,14 +13,14 @@
     [DisplayName("PM10 Error [%]")]
     public short Pm10Pct { get; set; }
 
-    [DisplayName("Error Type")]
-    public ForecastErrorType ErrorType { get; set; }
+    [DisplayName("Error Period")]
+    public ForecastErrorPeriod Period { get; set; }
   }
 
-  public enum ForecastErrorType
+  public enum ForecastErrorPeriod
   {
-    Hourly,
-    Daily,
+    Hour,
+    Day,
     Total,
   }
 }

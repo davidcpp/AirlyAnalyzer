@@ -55,7 +55,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
       var endDate = measurementsStartDate.AddHours(1).ToLocalTime();
 
       Assert.Single(forecastErrors);
-      Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
+      Assert.Equal(ForecastErrorPeriod.Hour, forecastErrors[0].Period);
       Assert.Equal(_installationId, forecastErrors[0].InstallationId);
       Assert.Equal(startDate, forecastErrors[0].FromDateTime);
       Assert.Equal(endDate, forecastErrors[0].TillDateTime);

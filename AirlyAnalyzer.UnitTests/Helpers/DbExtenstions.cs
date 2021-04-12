@@ -5,7 +5,7 @@
   using AirlyAnalyzer.Data;
   using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
 
-  using ET = AirlyAnalyzer.Models.ForecastErrorType;
+  using ET = AirlyAnalyzer.Models.ForecastErrorPeriod;
 
   public static class DbExtenstions
   {

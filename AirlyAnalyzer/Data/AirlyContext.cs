@@ -38,22 +38,22 @@
   public class ForecastErrorConfiguration
       : IEntityTypeConfiguration<AirQualityForecastError>
   {
-    private readonly byte _maxErrorTypeLength;
+    private readonly byte _maxPeriodPropertyLength;
 
-    public ForecastErrorConfiguration(byte maxErrorTypeLength)
+    public ForecastErrorConfiguration(byte maxPeriodPropertyLength)
     {
-      _maxErrorTypeLength = maxErrorTypeLength;
+      _maxPeriodPropertyLength = maxPeriodPropertyLength;
     }
 
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
     {
       builder.ToTable("ForecastErrors").HasKey(x =>
-          new { x.ErrorType, x.TillDateTime, x.FromDateTime, x.InstallationId });
+          new { x.Period, x.TillDateTime, x.FromDateTime, x.InstallationId });
 
-      builder.Property(x => x.ErrorType)
+      builder.Property(x => x.Period)
           .HasConversion<string>()
           .IsUnicode(false)
-          .HasMaxLength(_maxErrorTypeLength);
+          .HasMaxLength(_maxPeriodPropertyLength);
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -74,7 +74,7 @@
 
   public class AirlyContext : DbContext
   {
-    private readonly byte _maxErrorTypeLength;
+    private readonly byte _maxPeriodPropertyLength;
     public static readonly ILoggerFactory _loggerFactory =
         LoggerFactory.Create(builder => builder.AddDebug());
 
@@ -82,8 +82,8 @@
         DbContextOptions<AirlyContext> options, IConfiguration config)
         : base(options)
     {
-      _maxErrorTypeLength =
-          config.GetValue<byte>("AppSettings:Databases:MaxErrorTypeLength");
+      _maxPeriodPropertyLength =
+          config.GetValue<byte>("AppSettings:Databases:MaxPeriodPropertyLength");
     }
 
     public DbSet<AirQualityMeasurement> Measurements { get; set; }
@@ -108,7 +108,7 @@
       modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
       modelBuilder.ApplyConfiguration(new ForecastConfiguration());
       modelBuilder.ApplyConfiguration(
-          new ForecastErrorConfiguration(_maxErrorTypeLength));
+          new ForecastErrorConfiguration(_maxPeriodPropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
 
       modelBuilder.HasAnnotation(

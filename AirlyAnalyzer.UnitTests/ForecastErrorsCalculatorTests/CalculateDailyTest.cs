@@ -99,7 +99,7 @@
       endDate = endDate.ToLocalTime();
 
       Assert.Single(dailyForecastErrors);
-      Assert.Equal(ForecastErrorType.Daily, dailyForecastErrors[0].ErrorType);
+      Assert.Equal(ForecastErrorPeriod.Day, dailyForecastErrors[0].Period);
       Assert.Equal(_installationId, dailyForecastErrors[0].InstallationId);
       Assert.Equal(startDate, dailyForecastErrors[0].FromDateTime);
       Assert.Equal(endDate, dailyForecastErrors[0].TillDateTime);

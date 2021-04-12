@@ -12,7 +12,7 @@
   using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
   using Xunit;
 
-  using ET = AirlyAnalyzer.Models.ForecastErrorType;
+  using ET = AirlyAnalyzer.Models.ForecastErrorPeriod;
 
   [Collection("RepositoryTests")]
   public class UpdateTotalForecastErrorsTest

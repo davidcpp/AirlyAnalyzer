@@ -85,7 +85,7 @@
     }
 
     public AirQualityForecastError CalculateMeanForecastError(
-        ForecastErrorType errorType)
+        ForecastErrorPeriod errorType)
     {
       return new AirQualityForecastError
       {
@@ -100,7 +100,7 @@
         Pm25 = (short)(Pm25 / Counter),
         Pm10 = (short)(Pm10 / Counter),
         RequestDateTime = this.RequestDateTime,
-        ErrorType = errorType,
+        Period = errorType,
       };
     }
   }

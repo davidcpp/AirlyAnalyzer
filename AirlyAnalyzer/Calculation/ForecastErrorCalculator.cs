@@ -74,7 +74,7 @@
           if (i > 0 && dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
           {
             var dailyError = dailyForecastErrorsSum
-                .CalculateMeanForecastError(ForecastErrorType.Daily);
+                .CalculateMeanForecastError(ForecastErrorPeriod.Day);
 
             dailyForecastErrors.Add(dailyError);
           }
@@ -90,7 +90,7 @@
       if (dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
       {
         var lastDailyError = dailyForecastErrorsSum
-            .CalculateMeanForecastError(ForecastErrorType.Daily);
+            .CalculateMeanForecastError(ForecastErrorPeriod.Day);
 
         dailyForecastErrors.Add(lastDailyError);
       }
@@ -136,7 +136,7 @@
         Pm25 = pm25Error,
         Pm10 = pm10Error,
         RequestDateTime = _newMeasurements[i].RequestDateTime,
-        ErrorType = ForecastErrorType.Hourly,
+        Period = ForecastErrorPeriod.Hour,
       };
     }
 
@@ -159,7 +159,7 @@
         Counter = allForecastErrors.Count(),
       };
 
-      return errorSum.CalculateMeanForecastError(ForecastErrorType.Total);
+      return errorSum.CalculateMeanForecastError(ForecastErrorPeriod.Total);
     }
   }
 }

@@ -117,12 +117,12 @@
       Assert.Equal(
         numberOfHourlyErrors,
         _context.ForecastErrors.Where(
-            fe => fe.ErrorType == ForecastErrorType.Hourly).Count());
+            fe => fe.Period == ForecastErrorPeriod.Hour).Count());
 
       Assert.Equal(
         numberOfDailyErrors,
         _context.ForecastErrors.Where(
-            fe => fe.ErrorType == ForecastErrorType.Daily).Count());
+            fe => fe.Period == ForecastErrorPeriod.Day).Count());
     }
   }
 }

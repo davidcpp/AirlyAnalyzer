@@ -36,7 +36,7 @@
     }
 
     [Fact]
-    public void correct_error_type_of_forecast_errors_from_one_day()
+    public void correct_period_of_forecast_errors_from_one_day()
     {
       // Arrange
       const int numberOfForecastErrors = 20;
@@ -49,7 +49,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
+      Assert.Equal(ForecastErrorPeriod.Hour, forecastErrors[0].Period);
     }
 
     [Theory]
@@ -94,7 +94,7 @@
     }
 
     [Fact]
-    public void correct_error_type_of_forecast_errors_from_many_days()
+    public void correct_period_of_forecast_errors_from_many_days()
     {
       // Arrange
       const short numberOfDays = 15;
@@ -109,7 +109,7 @@
         .ToList();
 
       // Assert
-      Assert.Equal(ForecastErrorType.Hourly, forecastErrors[0].ErrorType);
+      Assert.Equal(ForecastErrorPeriod.Hour, forecastErrors[0].Period);
     }
 
     [Theory]

@@ -22,7 +22,7 @@
       _dbSet = context.Set<TEntity>();
     }
 
-    public async Task AddAsync(TEntity entity)
+    public virtual async Task AddAsync(TEntity entity)
     {
       if (!_dbSet.Contains(entity))
       {
@@ -30,7 +30,7 @@
       }
     }
 
-    public async Task AddListAsync(List<TEntity> entities)
+    public virtual async Task AddListAsync(List<TEntity> entities)
     {
       for (int i = 0; i < entities.Count;)
       {
@@ -45,32 +45,32 @@
       await _dbSet.AddRangeAsync(entities);
     }
 
-    public bool Contains(TEntity entity)
+    public virtual bool Contains(TEntity entity)
     {
       return _dbSet.Contains(entity);
     }
 
-    public async Task Delete(object id)
+    public virtual async Task Delete(object id)
     {
       _dbSet.Remove(await _dbSet.FindAsync(id));
     }
 
-    public void Delete(Expression<Func<TEntity, bool>> wherePredicate)
+    public virtual void Delete(Expression<Func<TEntity, bool>> wherePredicate)
     {
       _dbSet.RemoveRange(_dbSet.Where(wherePredicate));
     }
 
-    public void Update(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
       _dbSet.Update(entity);
     }
 
-    public async Task<TEntity> GetById(object id)
+    public virtual async Task<TEntity> GetById(object id)
     {
       return await _dbSet.FindAsync(id);
     }
 
-    public Task<List<TEntity>> Get(
+    public virtual Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null)
     {
       IQueryable<TEntity> query = _dbSet;
@@ -83,7 +83,7 @@
       return query.ToListAsync();
     }
 
-    public async Task<DateTime> GetLastDate(short installationId)
+    public virtual async Task<DateTime> GetLastDate(short installationId)
     {
       var lastDate = _dateTimeMinValue;
 
@@ -100,7 +100,7 @@
       return lastDate;
     }
 
-    public Task<List<T>> GetParameters<T>(
+    public virtual Task<List<T>> GetParameters<T>(
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,

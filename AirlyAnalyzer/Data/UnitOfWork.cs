@@ -11,6 +11,8 @@
     private GenericRepository<AirQualityMeasurement> measurementRepo;
     private GenericRepository<AirQualityForecast> forecastRepo;
     private ForecastErrorsRepository forecastErrorRepo;
+    private PlainForecastErrorsRepository plainForecastErrorRepo;
+    private ScaleForecastErrorsRepository scaleForecastErrorRepo;
     private BasicRepository<InstallationInfo> installationsRepo;
 
     private bool disposedValue;
@@ -31,6 +33,14 @@
     public ForecastErrorsRepository ForecastErrorRepository
         => forecastErrorRepo
             ??= new ForecastErrorsRepository(_context);
+
+    public PlainForecastErrorsRepository PlainForecastErrorRepository
+        => plainForecastErrorRepo
+            ??= new PlainForecastErrorsRepository(_context);
+
+    public ScaleForecastErrorsRepository ScaleForecastErrorRepository
+        => scaleForecastErrorRepo
+            ??= new ScaleForecastErrorsRepository(_context);
 
     public BasicRepository<InstallationInfo> InstallationsRepository
         => installationsRepo

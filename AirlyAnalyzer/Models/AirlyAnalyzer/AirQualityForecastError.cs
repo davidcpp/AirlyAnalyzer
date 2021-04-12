@@ -15,6 +15,9 @@
 
     [DisplayName("Error Period")]
     public ForecastErrorPeriod Period { get; set; }
+
+    [DisplayName("Error Class")]
+    public ForecastErrorClass Class { get; set; }
   }
 
   public enum ForecastErrorPeriod
@@ -22,5 +25,11 @@
     Hour,
     Day,
     Total,
+  }
+
+  public enum ForecastErrorClass
+  {
+    Plain,
+    Scale,
   }
 }

@@ -14,7 +14,7 @@
     protected readonly DbSet<TEntity> _dbSet;
     protected readonly AirlyContext _context;
 
-    private readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
+    protected readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
 
     public GenericRepository(AirlyContext context)
     {

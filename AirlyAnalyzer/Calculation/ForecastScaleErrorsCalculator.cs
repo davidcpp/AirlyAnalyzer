@@ -74,7 +74,7 @@
         InstallationAddress = _newMeasurements[i].InstallationAddress,
         FromDateTime = _newMeasurements[i].FromDateTime,
         TillDateTime = _newMeasurements[i].TillDateTime,
-        AirlyCaqiPct = (short)(airlyCaqiError >= 1 ? 100 : 0),
+        AirlyCaqiPct = (short)(Math.Abs(airlyCaqiError) >= 1 ? 100 : 0),
         AirlyCaqi = (short)airlyCaqiError,
         RequestDateTime = _newMeasurements[i].RequestDateTime,
         Period = ForecastErrorPeriod.Hour,

@@ -47,6 +47,7 @@
         short idForAllInstallations = -1,
         IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
         IAirlyInstallationDownloader airlyInstallationDownloader = null,
+        ForecastErrorsRepository forecastErrorsRepository = null,
         short minNumberOfMeasurements = 24,
         short installationUpdateDaysPeriod = 7)
     {
@@ -54,6 +55,7 @@
       _forecastErrorsCalculator = forecastErrorsCalculator;
       _airlyMeasurementsDownloader = airlyMeasurementsDownloader;
       _airlyInstallationDownloader = airlyInstallationDownloader;
+      _forecastErrorsRepository = forecastErrorsRepository;
 
       _installationIds = installationIds;
 

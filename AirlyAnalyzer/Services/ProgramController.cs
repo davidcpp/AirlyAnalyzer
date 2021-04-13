@@ -123,6 +123,7 @@
         {
           var (newMeasurements, newForecasts)
               = await ConvertAllAirQualityData(newMeasurementsList);
+
           await SaveAllAirQualityData(newMeasurements, newForecasts);
 
           for (int i = 0; i < _forecastErrorsCalculators.Count; i++)

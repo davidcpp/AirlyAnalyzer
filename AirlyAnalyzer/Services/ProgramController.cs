@@ -127,6 +127,16 @@
           {
             _forecastErrorsCalculator = _forecastErrorsCalculators[i];
 
+            switch (_forecastErrorsCalculator)
+            {
+              case ForecastErrorsCalculator _:
+                _forecastErrorsRepository = _unitOfWork.PlainForecastErrorRepository;
+                break;
+              case ForecastScaleErrorsCalculator _:
+                _forecastErrorsRepository = _unitOfWork.ScaleForecastErrorRepository;
+                break;
+            }
+
             var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
             await SaveForecastErrors(hourlyErrors, dailyErrors);
 

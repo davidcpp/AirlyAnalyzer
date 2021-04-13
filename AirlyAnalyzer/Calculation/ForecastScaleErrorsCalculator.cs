@@ -65,8 +65,14 @@
     private AirQualityForecastError CalculateHourlyForecastError(
         short installationId, int i, int j)
     {
-      int airlyCaqiError = (_newMeasurements[i].AirlyCaqi / _caqiScaleLevel)
-          - (_newForecasts[j].AirlyCaqi / _caqiScaleLevel);
+      int airlyCaqiError = 0;
+
+      if (_newMeasurements[i].AirlyCaqi > 2 * _caqiScaleLevel
+          || _newForecasts[j].AirlyCaqi > 2 * _caqiScaleLevel)
+      {
+        airlyCaqiError = (_newMeasurements[i].AirlyCaqi / _caqiScaleLevel)
+            - (_newForecasts[j].AirlyCaqi / _caqiScaleLevel);
+      }
 
       return new AirQualityForecastError
       {

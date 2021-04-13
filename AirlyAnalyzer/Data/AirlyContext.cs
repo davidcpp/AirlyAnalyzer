@@ -5,7 +5,6 @@
   using Microsoft.EntityFrameworkCore.Metadata;
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
   using Microsoft.Extensions.Configuration;
-  using Microsoft.Extensions.Logging;
 
   public class MeasurementConfiguration
       : IEntityTypeConfiguration<AirQualityMeasurement>
@@ -85,9 +84,6 @@
     private readonly byte _maxPeriodPropertyLength;
     private readonly byte _maxClassPropertyLength;
 
-    public static readonly ILoggerFactory _loggerFactory =
-        LoggerFactory.Create(builder => builder.AddDebug());
-
     public AirlyContext(
         DbContextOptions<AirlyContext> options, IConfiguration config)
         : base(options)
@@ -106,15 +102,6 @@
     public DbSet<AirQualityForecastError> ForecastErrors { get; set; }
 
     public DbSet<InstallationInfo> InstallationInfos { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      base.OnConfiguring(optionsBuilder);
-
-      optionsBuilder.EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-                    .UseLoggerFactory(_loggerFactory);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

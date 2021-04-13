@@ -62,7 +62,7 @@
         List<AirQualityForecastError> newHourlyForecastErrors)
     {
       string installationAddress = newHourlyForecastErrors.Count > 0 ?
-          newHourlyForecastErrors[0].InstallationAddress : "";
+          newHourlyForecastErrors.Last().InstallationAddress : "";
 
       var dailyForecastErrorsSum
           = new ErrorSum(installationId, installationAddress);

@@ -88,8 +88,8 @@
       var lastDate = _dateTimeMinValue;
 
       var selectedDates = await GetParameters(
-          wherePredicate: m => m.InstallationId == installationId,
-          selectPredicate: m => m.TillDateTime,
+          wherePredicate: x => x.InstallationId == installationId,
+          selectPredicate: x => x.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
       if (selectedDates.Count > 0)

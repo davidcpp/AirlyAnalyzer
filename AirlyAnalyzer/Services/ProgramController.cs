@@ -26,7 +26,6 @@
     private readonly IAirlyInstallationDownloader _airlyInstallationDownloader;
 
     private readonly List<IForecastErrorsCalculator> _forecastErrorsCalculators;
-    private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
 
@@ -36,6 +35,7 @@
     private readonly short _installationUpdateDaysPeriod;
     private readonly short _minNumberOfMeasurements;
 
+    private IForecastErrorsCalculator _forecastErrorsCalculator;
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
@@ -122,11 +122,16 @@
               = await ConvertAllAirQualityData(newMeasurementsList);
           await SaveAllAirQualityData(newMeasurements, newForecasts);
 
-          var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
-          await SaveForecastErrors(hourlyErrors, dailyErrors);
+          for (int i = 0; i < _forecastErrorsCalculators.Count; i++)
+          {
+            _forecastErrorsCalculator = _forecastErrorsCalculators[i];
 
-          var newTotalForecastErrors = await CalculateTotalForecastErrors();
-          await UpdateTotalForecastErrors(newTotalForecastErrors);
+            var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
+            await SaveForecastErrors(hourlyErrors, dailyErrors);
+
+            var newTotalForecastErrors = await CalculateTotalForecastErrors();
+            await UpdateTotalForecastErrors(newTotalForecastErrors);
+          }
         }
       }
     }

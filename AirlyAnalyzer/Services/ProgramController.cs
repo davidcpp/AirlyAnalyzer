@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Linq;
   using System.Threading;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Calculation;
@@ -24,6 +25,7 @@
     private readonly IAirlyMeasurementsDownloader _airlyMeasurementsDownloader;
     private readonly IAirlyInstallationDownloader _airlyInstallationDownloader;
 
+    private readonly List<IForecastErrorsCalculator> _forecastErrorsCalculators;
     private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly ILogger<ProgramController> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -85,8 +87,8 @@
       _airlyInstallationDownloader = serviceProvider
         .GetRequiredService<IAirlyInstallationDownloader>();
 
-      _forecastErrorsCalculator = serviceProvider
-          .GetRequiredService<IForecastErrorsCalculator>();
+      _forecastErrorsCalculators = serviceProvider
+          .GetServices<IForecastErrorsCalculator>().ToList();
     }
 
     public Task StartAsync(CancellationToken stoppingToken)

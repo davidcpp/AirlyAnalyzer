@@ -150,11 +150,6 @@
         FromDateTime = allForecastErrors.First().FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,
         CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPct),
-        Pm25Pct = allForecastErrors.Sum(fe => fe.Pm25Pct),
-        Pm10Pct = allForecastErrors.Sum(fe => fe.Pm10Pct),
-        Caqi = allForecastErrors.Sum(fe => fe.AirlyCaqi),
-        Pm25 = allForecastErrors.Sum(fe => fe.Pm25),
-        Pm10 = allForecastErrors.Sum(fe => fe.Pm10),
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
         Counter = allForecastErrors.Count(),
       };

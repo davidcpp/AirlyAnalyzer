@@ -315,8 +315,8 @@
 
       foreach (short installationId in _installationIds)
       {
-        var (newMeasurements, newForecasts) = await _unitOfWork
-            .ForecastErrorRepository.SelectDataToProcessing(installationId);
+        var (newMeasurements, newForecasts) = await
+            _forecastErrorsRepository.SelectDataToProcessing(installationId);
 
         var hourlyForecastErrors = _forecastErrorsCalculator
             .CalculateHourly(installationId, newMeasurements, newForecasts);

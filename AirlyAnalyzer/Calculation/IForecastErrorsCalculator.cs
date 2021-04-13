@@ -1,12 +1,12 @@
 ﻿namespace AirlyAnalyzer.Calculation
 {
-  using System;
   using System.Collections.Generic;
-  using System.Linq;
   using AirlyAnalyzer.Models;
 
   public interface IForecastErrorsCalculator
   {
+    public ForecastErrorClass ErrorClass { get; }
+
     List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newMeasurements,

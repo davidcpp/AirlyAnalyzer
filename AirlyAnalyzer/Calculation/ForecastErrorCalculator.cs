@@ -10,6 +10,15 @@
     private List<AirQualityMeasurement> _newMeasurements;
     private List<AirQualityForecast> _newForecasts;
 
+    private readonly ForecastErrorClass _forecastErrorClass;
+
+    public ForecastErrorsCalculator()
+    {
+      _forecastErrorClass = ForecastErrorClass.Plain;
+    }
+
+    public ForecastErrorClass ErrorClass => _forecastErrorClass;
+
     public List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newMeasurements,

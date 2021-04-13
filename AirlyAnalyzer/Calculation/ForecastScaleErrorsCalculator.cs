@@ -13,11 +13,17 @@
     private List<AirQualityMeasurement> _newMeasurements;
     private List<AirQualityForecast> _newForecasts;
 
+    private readonly ForecastErrorClass _forecastErrorClass;
+
     public ForecastScaleErrorsCalculator(IConfiguration config)
     {
       _caqiScaleLevel = config.GetValue<short>(
           "AppSettings:AirlyApi:CaqiScaleLevel");
+
+      _forecastErrorClass = ForecastErrorClass.Scale;
     }
+
+    public ForecastErrorClass ErrorClass => _forecastErrorClass;
 
     public List<AirQualityForecastError> CalculateHourly(
         short installationId,

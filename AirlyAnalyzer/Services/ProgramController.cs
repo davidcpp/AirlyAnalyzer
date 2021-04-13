@@ -358,7 +358,8 @@
       {
         var dailyForecastErrors = await _unitOfWork.ForecastErrorRepository.Get(
             fe => fe.InstallationId == installationId
-               && fe.Period == ForecastErrorPeriod.Day);
+               && fe.Period == ForecastErrorPeriod.Day
+               && fe.Class == _forecastErrorsCalculator.ErrorClass);
 
         if (dailyForecastErrors.Count > 0)
         {
@@ -389,7 +390,8 @@
       if (newTotalForecastErrors.Count > 0)
       {
         _unitOfWork.ForecastErrorRepository.Delete(
-            fe => fe.Period == ForecastErrorPeriod.Total);
+            fe => fe.Period == ForecastErrorPeriod.Total
+               && fe.Class == _forecastErrorsCalculator.ErrorClass);
 
         await _unitOfWork.SaveChangesAsync();
 

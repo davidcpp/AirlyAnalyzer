@@ -38,7 +38,7 @@
       _idForAllInstallations = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _forecastErrorsCalculator = new ForecastErrorsCalculator();
+      _forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
 
       _context.Clear();
     }

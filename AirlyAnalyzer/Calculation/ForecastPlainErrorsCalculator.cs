@@ -5,14 +5,14 @@
   using System.Linq;
   using AirlyAnalyzer.Models;
 
-  public class ForecastErrorsCalculator : IForecastErrorsCalculator
+  public class ForecastPlainErrorsCalculator : IForecastErrorsCalculator
   {
     private List<AirQualityMeasurement> _newMeasurements;
     private List<AirQualityForecast> _newForecasts;
 
     private readonly ForecastErrorClass _forecastErrorClass;
 
-    public ForecastErrorsCalculator()
+    public ForecastPlainErrorsCalculator()
     {
       _forecastErrorClass = ForecastErrorClass.Plain;
     }

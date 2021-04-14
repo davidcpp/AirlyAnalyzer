@@ -50,7 +50,7 @@
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
     {
       builder.ToTable("ForecastErrors").HasKey(x => new
-          { x.Period, x.TillDateTime, x.Class, x.FromDateTime, x.InstallationId });
+          { x.Period, x.Class, x.TillDateTime, x.FromDateTime, x.InstallationId });
 
       builder.Property(x => x.Period)
           .HasConversion<string>()

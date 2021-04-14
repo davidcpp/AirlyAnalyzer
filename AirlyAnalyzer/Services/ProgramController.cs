@@ -259,6 +259,10 @@
 
           allMeasurements.Add(responseMeasurements);
         }
+        else
+        {
+          allMeasurements.Add(new Measurements());
+        }
       }
 
       return allMeasurements;

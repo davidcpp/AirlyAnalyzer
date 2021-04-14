@@ -1,11 +1,13 @@
 namespace AirlyAnalyzer
 {
+  using System;
   using System.IO;
   using System.Text.Json.Serialization;
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Services;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
@@ -13,6 +15,7 @@ namespace AirlyAnalyzer
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
+  using Microsoft.Extensions.Logging;
 
   public class Startup
   {
@@ -57,6 +60,12 @@ namespace AirlyAnalyzer
           <IForecastErrorsCalculator, PlainForecastErrorsCalculator>();
       services.AddSingleton
           <IForecastErrorsCalculator, ScaleForecastErrorsCalculator>();
+
+      services.AddHostedService(x =>
+                    new ProgramController(
+                        x.GetRequiredService<IServiceProvider>(),
+                        x.GetRequiredService<IConfiguration>(),
+                        x.GetRequiredService<ILogger<ProgramController>>()));
 
       services
           .AddControllersWithViews()

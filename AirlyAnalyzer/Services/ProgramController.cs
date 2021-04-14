@@ -125,27 +125,27 @@
               = await ConvertAllAirQualityData(newMeasurementsList);
 
           await SaveAllAirQualityData(newMeasurements, newForecasts);
+        }
 
-          for (int i = 0; i < _forecastErrorsCalculators.Count; i++)
+        for (int i = 0; i < _forecastErrorsCalculators.Count; i++)
+        {
+          _forecastErrorsCalculator = _forecastErrorsCalculators[i];
+
+          switch (_forecastErrorsCalculator)
           {
-            _forecastErrorsCalculator = _forecastErrorsCalculators[i];
-
-            switch (_forecastErrorsCalculator)
-            {
-              case ForecastErrorsCalculator _:
-                _forecastErrorsRepository = _unitOfWork.PlainForecastErrorRepository;
-                break;
-              case ForecastScaleErrorsCalculator _:
-                _forecastErrorsRepository = _unitOfWork.ScaleForecastErrorRepository;
-                break;
-            }
-
-            var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
-            await SaveForecastErrors(hourlyErrors, dailyErrors);
-
-            var newTotalForecastErrors = await CalculateTotalForecastErrors();
-            await UpdateTotalForecastErrors(newTotalForecastErrors);
+            case ForecastErrorsCalculator _:
+              _forecastErrorsRepository = _unitOfWork.PlainForecastErrorRepository;
+              break;
+            case ForecastScaleErrorsCalculator _:
+              _forecastErrorsRepository = _unitOfWork.ScaleForecastErrorRepository;
+              break;
           }
+
+          var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
+          await SaveForecastErrors(hourlyErrors, dailyErrors);
+
+          var newTotalForecastErrors = await CalculateTotalForecastErrors();
+          await UpdateTotalForecastErrors(newTotalForecastErrors);
         }
       }
     }

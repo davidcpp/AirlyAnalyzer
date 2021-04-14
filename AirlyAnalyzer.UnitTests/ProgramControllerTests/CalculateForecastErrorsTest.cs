@@ -34,7 +34,7 @@
       _minNumberOfMeasurements = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      _forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      _forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       _context.Clear();
     }

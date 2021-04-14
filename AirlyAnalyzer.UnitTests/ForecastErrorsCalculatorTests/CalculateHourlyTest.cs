@@ -44,7 +44,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -88,7 +88,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -121,7 +121,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfForecasts)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -156,7 +156,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfForecastsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -211,7 +211,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -275,7 +275,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var forecastErrors = forecastErrorsCalculator

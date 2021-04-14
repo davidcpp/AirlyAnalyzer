@@ -54,9 +54,9 @@ namespace AirlyAnalyzer
               new WebClientAdapter(new System.Net.WebClient())));
 
       services.AddSingleton
-          <IForecastErrorsCalculator, ForecastPlainErrorsCalculator>();
+          <IForecastErrorsCalculator, PlainForecastErrorsCalculator>();
       services.AddSingleton
-          <IForecastErrorsCalculator, ForecastScaleErrorsCalculator>();
+          <IForecastErrorsCalculator, ScaleForecastErrorsCalculator>();
 
       services
           .AddControllersWithViews()

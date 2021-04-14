@@ -43,7 +43,7 @@
           numberOfForecastErrorsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
@@ -65,7 +65,7 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
@@ -88,7 +88,7 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculator = new ForecastPlainErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(

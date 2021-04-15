@@ -13,10 +13,9 @@
     {
     }
 
-    public ErrorSum(short installationId, string installationAddress = "")
+    public ErrorSum(short installationId)
     {
       InstallationId = installationId;
-      InstallationAddress = installationAddress;
     }
 
     public short InstallationId { get; set; } = 0;

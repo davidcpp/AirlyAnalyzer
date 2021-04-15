@@ -117,15 +117,15 @@
       var errorSum = new ErrorSum(installationId)
       {
         InstallationAddress = allForecastErrors.Last().InstallationAddress,
-        FromDateTime = allForecastErrors.First().FromDateTime,
-        TillDateTime = allForecastErrors.Last().TillDateTime,
+        FromDateTime = allForecastErrors.Min(x => x.FromDateTime),
+        TillDateTime = allForecastErrors.Max(x => x.TillDateTime),
         CaqiPct = allForecastErrors.Sum(fe => fe.AirlyCaqiPct),
         Pm25Pct = allForecastErrors.Sum(fe => fe.Pm25Pct),
         Pm10Pct = allForecastErrors.Sum(fe => fe.Pm10Pct),
         Caqi = allForecastErrors.Sum(fe => fe.AirlyCaqi),
         Pm25 = allForecastErrors.Sum(fe => fe.Pm25),
         Pm10 = allForecastErrors.Sum(fe => fe.Pm10),
-        RequestDateTime = allForecastErrors.Last().RequestDateTime,
+        RequestDateTime = allForecastErrors.Max(x => x.RequestDateTime),
         Counter = allForecastErrors.Count(),
       };
 

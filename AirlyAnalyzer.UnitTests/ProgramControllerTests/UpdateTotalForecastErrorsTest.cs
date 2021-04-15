@@ -13,6 +13,7 @@
   using Xunit;
 
   using ET = AirlyAnalyzer.Models.ForecastErrorPeriod;
+  using AirlyAnalyzer.Calculation;
 
   [Collection("RepositoryTests")]
   public class UpdateTotalForecastErrorsTest
@@ -28,7 +29,10 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      programController = new ProgramController(fixture.UnitOfWork);
+      programController = new ProgramController(
+          fixture.UnitOfWork,
+          forecastErrorsCalculator:
+              new PlainForecastErrorsCalculator(fixture.Config));
 
       _context.Clear();
     }

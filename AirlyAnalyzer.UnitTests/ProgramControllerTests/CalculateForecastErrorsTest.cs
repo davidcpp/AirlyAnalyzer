@@ -82,7 +82,10 @@
     {
       // Arrange
       var programController = new ProgramController(
-          _unitOfWork, _forecastErrorsCalculator, _installationIds);
+          _unitOfWork,
+          _forecastErrorsCalculator,
+          _installationIds,
+          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -113,7 +116,8 @@
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
-          minNumberOfMeasurements: _minNumberOfMeasurements);
+          minNumberOfMeasurements: _minNumberOfMeasurements,
+          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -144,7 +148,8 @@
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
-          minNumberOfMeasurements: _minNumberOfMeasurements);
+          minNumberOfMeasurements: _minNumberOfMeasurements,
+          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)

@@ -8,6 +8,7 @@
 
   public static class ModelUtilities
   {
+    private const short _idForAllInstallations = -1;
     public const byte RequestMinutesOffset = 30;
 
     public static InstallationInfo GetTestInstallationInfo(
@@ -219,7 +220,7 @@
       }
 
       yield return CreateForecastError(
-          -1, EP.Total, startDate, requestDate, durationInHours);
+          _idForAllInstallations, EP.Total, startDate, requestDate, durationInHours);
     }
 
     public static AirQualityForecastError CreateForecastError(

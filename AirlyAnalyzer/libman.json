@@ -23,6 +23,20 @@
       ]
     },
     {
+      "library": "datatables.net-responsive@2.2.7",
+      "destination": "wwwroot/lib/datatables/js",
+      "files": [
+        "dataTables.responsive.min.js"
+      ]
+    },
+    {
+      "library": "datatables.net-responsive-dt@2.2.7",
+      "destination": "wwwroot/lib/datatables/css",
+      "files": [
+        "responsive.dataTables.min.css"
+      ]
+    },
+    {
       "library": "jquery@3.5.1",
       "destination": "wwwroot/lib/jquery",
       "files": [

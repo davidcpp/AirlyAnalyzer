@@ -113,9 +113,8 @@
     public virtual AirQualityForecastError CalculateTotal(
         short installationId, IEnumerable<AirQualityForecastError> allForecastErrors)
     {
-      var errorSum = new ErrorSum
+      var errorSum = new ErrorSum(installationId)
       {
-        InstallationId = installationId,
         InstallationAddress = allForecastErrors.Last().InstallationAddress,
         FromDateTime = allForecastErrors.First().FromDateTime,
         TillDateTime = allForecastErrors.Last().TillDateTime,

@@ -12,6 +12,7 @@
   {
     private const short _installationId = 1;
     private readonly string _measurementsUri;
+    private readonly string _measurementsUriParameters;
 
     private readonly IConfiguration _config;
 
@@ -21,6 +22,9 @@
 
       _measurementsUri = _config.GetValue<string>(
           "AppSettings:AirlyApi:MeasurementsUri");
+
+      _measurementsUriParameters = _config.GetValue<string>(
+          "AppSettings:AirlyApi:MeasurementsUriParameters");
     }
 
     [Fact]
@@ -44,8 +48,12 @@
           .DownloadAirQualityData(_installationId);
 
       // Assert
-      webClientMock.Verify(_ => _.DownloadStringTaskAsync(
-          _measurementsUri + _installationId.ToString()), Times.Once());
+      webClientMock.Verify(
+          _ => _.DownloadStringTaskAsync(
+              _measurementsUri
+              + _installationId.ToString()
+              + _measurementsUriParameters),
+          Times.Once());
     }
 
     [Fact]

@@ -14,7 +14,6 @@
       "destination": "wwwroot/lib/datatables",
       "files": [
         "css/jquery.dataTables.min.css",
-        "js/dataTables.dataTables.min.js",
         "images/sort_asc.png",
         "images/sort_desc.png",
         "images/sort_both.png",

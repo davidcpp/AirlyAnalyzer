@@ -9,7 +9,7 @@
 
   public static class DbExtenstions
   {
-    public const short _idForAllInstallations = -1;
+    private const short _idForAllInstallations = -1;
     public const byte RequestMinutesOffset = 30;
 
     public static DateTime _startDate;

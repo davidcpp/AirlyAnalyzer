@@ -18,7 +18,7 @@
       InstallationId = installationId;
     }
 
-    public short InstallationId { get; set; } = 0;
+    public short InstallationId { get; } = 0;
 
     public string InstallationAddress { get; set; }
 

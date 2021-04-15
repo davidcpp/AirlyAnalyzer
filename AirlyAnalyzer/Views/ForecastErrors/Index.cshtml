@@ -15,6 +15,9 @@
           @Html.DisplayNameFor(model => model.Period)
         </th>
         <th>
+          @Html.DisplayNameFor(model => model.Class)
+        </th>
+        <th>
           @Html.DisplayNameFor(model => model.TillDateTime)
         </th>
         <th>
@@ -39,11 +42,14 @@
             @Html.DisplayFor(modelItem => item.Period)
           </td>
           <td>
+            @Html.DisplayFor(modelItem => item.Class)
+          </td>
+          <td>
             @Html.DisplayFor(modelItem => item.TillDateTime)
           </td>
           <td>
             @Html.DisplayFor(modelItem => item.InstallationId)
-          </td>          
+          </td>
           <td>
             @Html.DisplayFor(modelItem => item.InstallationAddress)
           </td>

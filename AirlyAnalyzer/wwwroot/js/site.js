@@ -47,6 +47,7 @@ function updateForecastErrorsTable(requestDate) {
       for (let i = 0; i < forecastErrors.length; i++) {
         let forecastError = [
           forecastErrors[i].period,
+          forecastErrors[i].class,
           (new Date(forecastErrors[i].tillDateTime)).toLocaleString('tr-TR'),
           forecastErrors[i].installationId,
           forecastErrors[i].installationAddress,

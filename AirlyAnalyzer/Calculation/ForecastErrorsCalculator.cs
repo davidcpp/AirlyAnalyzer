@@ -106,7 +106,7 @@
       if (dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
       {
         var lastDailyError = dailyForecastErrorsSum.CalculateMeanForecastError(
-          ForecastErrorPeriod.Day, _forecastErrorClass);
+            ForecastErrorPeriod.Day, _forecastErrorClass);
 
         dailyForecastErrors.Add(lastDailyError);
       }

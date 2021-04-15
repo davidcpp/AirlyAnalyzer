@@ -5,7 +5,6 @@
   using System.Linq;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;

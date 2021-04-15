@@ -12,12 +12,14 @@
       StartDate = new DateTime(2001, 3, 24, 22, 0, 0, DateTimeKind.Utc);
       InstallationId = 1;
 
-      var config = ConfigUtilities.GetApplicationConfig();
+      Config = ConfigUtilities.GetApplicationConfig();
 
-      InstallationIds = config
+      InstallationIds = Config
           .GetSection("AppSettings:AirlyApi:InstallationIds")
           .Get<List<short>>();
     }
+
+    public IConfiguration Config { get; }
 
     public DateTime StartDate { get; }
 

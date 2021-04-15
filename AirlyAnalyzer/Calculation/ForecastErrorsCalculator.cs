@@ -68,12 +68,7 @@
         short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors)
     {
-      string installationAddress = newHourlyForecastErrors.Count > 0 ?
-          newHourlyForecastErrors.Last().InstallationAddress : "";
-
-      var dailyForecastErrorsSum
-          = new ErrorSum(installationId, installationAddress);
-
+      var dailyForecastErrorsSum = new ErrorSum(installationId);
       var dailyForecastErrors = new List<AirQualityForecastError>();
 
       for (int i = 0; i < newHourlyForecastErrors.Count; i++)
@@ -96,6 +91,7 @@
           }
 
           dailyForecastErrorsSum.Reset(
+              newHourlyForecastErrors[i].InstallationAddress,
               newHourlyForecastErrors[i].FromDateTime,
               newHourlyForecastErrors[i].RequestDateTime);
         }

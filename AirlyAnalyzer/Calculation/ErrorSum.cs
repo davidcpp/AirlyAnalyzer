@@ -68,8 +68,10 @@
       Counter++;
     }
 
-    public void Reset(DateTime fromDateTime, DateTime requestDateTime)
+    public void Reset(string installationAddress, DateTime fromDateTime, DateTime requestDateTime)
     {
+      InstallationAddress = installationAddress;
+
       FromDateTime = fromDateTime;
       TillDateTime = DateTime.MinValue;
       RequestDateTime = requestDateTime;

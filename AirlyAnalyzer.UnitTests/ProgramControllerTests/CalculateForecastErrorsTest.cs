@@ -18,6 +18,7 @@
     private readonly IForecastErrorsCalculator _forecastErrorsCalculator;
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
+    private readonly IConfiguration _config;
 
     private readonly DateTime _startDate;
     private readonly List<short> _installationIds;
@@ -26,6 +27,7 @@
 
     public CalculateForecastErrorsTest(RepositoryFixture fixture)
     {
+      _config = fixture.Config;
       _unitOfWork = fixture.UnitOfWork;
       _context = fixture.Context;
       _startDate = fixture.StartDate;
@@ -34,7 +36,7 @@
       _minNumberOfMeasurements = fixture.Config.GetValue<short>(
           "AppSettings:AirlyApi:MinNumberOfMeasurements");
 
-      _forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      _forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       _context.Clear();
     }

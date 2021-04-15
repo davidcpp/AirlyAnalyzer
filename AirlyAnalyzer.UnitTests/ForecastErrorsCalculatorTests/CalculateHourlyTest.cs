@@ -7,16 +7,19 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
+  using Microsoft.Extensions.Configuration;
   using Xunit;
 
   public class CalculateHourlyTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
 
+    private readonly IConfiguration _config;
     private readonly DateTime _startDate;
 
     public CalculateHourlyTest(SimpleFixture fixture)
     {
+      _config = fixture.Config;
       _startDate = fixture.StartDate;
       _installationId = fixture.InstallationId;
     }
@@ -44,7 +47,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -88,7 +91,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfElementsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -121,7 +124,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfForecasts)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -156,7 +159,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
           numberOfForecastsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -211,7 +214,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator
@@ -275,7 +278,7 @@ namespace AirlyAnalyzer.UnitTests.ForecastErrorsCalculatorTests
       var newMeasurements = new List<AirQualityMeasurement> { measurement };
       var newForecasts = new List<AirQualityForecast> { forecast };
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var forecastErrors = forecastErrorsCalculator

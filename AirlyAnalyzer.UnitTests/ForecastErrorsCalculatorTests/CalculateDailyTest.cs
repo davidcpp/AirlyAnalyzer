@@ -6,16 +6,19 @@
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
+  using Microsoft.Extensions.Configuration;
   using Xunit;
 
   public class CalculateDailyTest : IClassFixture<SimpleFixture>
   {
     private readonly short _installationId;
 
+    private readonly IConfiguration _config;
     private readonly DateTime _startDate;
 
     public CalculateDailyTest(SimpleFixture fixture)
     {
+      _config = fixture.Config;
       _startDate = fixture.StartDate;
       _installationId = fixture.InstallationId;
     }
@@ -43,7 +46,7 @@
           numberOfForecastErrorsInDay)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
@@ -65,7 +68,7 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(
@@ -88,7 +91,7 @@
           _installationId, startDate, numberOfForecastErrors)
         .ToList();
 
-      var forecastErrorsCalculator = new PlainForecastErrorsCalculator();
+      var forecastErrorsCalculator = new PlainForecastErrorsCalculator(_config);
 
       // Act
       var dailyForecastErrors = forecastErrorsCalculator.CalculateDaily(

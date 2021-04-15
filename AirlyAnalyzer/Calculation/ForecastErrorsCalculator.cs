@@ -14,7 +14,7 @@
 
     public ForecastErrorClass ErrorClass => _forecastErrorClass;
 
-    public List<AirQualityForecastError> CalculateHourly(
+    public virtual List<AirQualityForecastError> CalculateHourly(
         short installationId,
         List<AirQualityMeasurement> newMeasurements,
         List<AirQualityForecast> newForecasts)
@@ -54,7 +54,7 @@
     protected abstract AirQualityForecastError CalculateHourlyForecastError(
         short installationId, int i, int j);
 
-    public List<AirQualityForecastError> CalculateDaily(
+    public virtual List<AirQualityForecastError> CalculateDaily(
         short installationId,
         short minNumberOfMeasurements,
         List<AirQualityForecastError> newHourlyForecastErrors)
@@ -105,7 +105,7 @@
       return dailyForecastErrors;
     }
 
-    public AirQualityForecastError CalculateTotal(
+    public virtual AirQualityForecastError CalculateTotal(
         short installationId, IEnumerable<AirQualityForecastError> allForecastErrors)
     {
       var errorSum = new ErrorSum

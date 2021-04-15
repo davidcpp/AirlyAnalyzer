@@ -8,7 +8,7 @@
   {
     private readonly short _caqiScaleLevel;
 
-    public ScaleForecastErrorsCalculator(IConfiguration config)
+    public ScaleForecastErrorsCalculator(IConfiguration config) : base(config)
     {
       _caqiScaleLevel = config.GetValue<short>(
           "AppSettings:AirlyApi:CaqiScaleLevel");

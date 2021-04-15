@@ -4,13 +4,22 @@
   using System.Collections.Generic;
   using System.Linq;
   using AirlyAnalyzer.Models;
+  using Microsoft.Extensions.Configuration;
 
   public abstract class ForecastErrorsCalculator : IForecastErrorsCalculator
   {
+    protected short _idForAllInstallations;
+
     protected List<AirQualityMeasurement> _newMeasurements;
     protected List<AirQualityForecast> _newForecasts;
 
     protected ForecastErrorClass _forecastErrorClass;
+
+    protected ForecastErrorsCalculator(IConfiguration config)
+    {
+      _idForAllInstallations = config.GetValue<short>(
+          "AppSettings:AirlyApi:IdForAllInstallations");
+    }
 
     public ForecastErrorClass ErrorClass => _forecastErrorClass;
 
@@ -123,6 +132,11 @@
         RequestDateTime = allForecastErrors.Last().RequestDateTime,
         Counter = allForecastErrors.Count(),
       };
+
+      if (installationId == _idForAllInstallations)
+      {
+        errorSum.InstallationAddress = "";
+      }
 
       return errorSum.CalculateMeanForecastError(
           ForecastErrorPeriod.Total, _forecastErrorClass);

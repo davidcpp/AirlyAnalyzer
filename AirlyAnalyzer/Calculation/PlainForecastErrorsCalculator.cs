@@ -2,10 +2,11 @@
 {
   using System;
   using AirlyAnalyzer.Models;
+  using Microsoft.Extensions.Configuration;
 
   public sealed class PlainForecastErrorsCalculator : ForecastErrorsCalculator
   {
-    public PlainForecastErrorsCalculator()
+    public PlainForecastErrorsCalculator(IConfiguration config) : base(config)
     {
       _forecastErrorClass = ForecastErrorClass.Plain;
     }

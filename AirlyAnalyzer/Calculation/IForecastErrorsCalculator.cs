@@ -18,6 +18,7 @@
         List<AirQualityForecastError> newHourlyForecastErrors);
 
     AirQualityForecastError CalculateTotal(
-        short installationId, IEnumerable<AirQualityForecastError> allForecastErrors);
+        short installationId,
+        IEnumerable<AirQualityForecastError> allForecastErrors);
   }
 }

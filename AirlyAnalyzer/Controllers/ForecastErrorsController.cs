@@ -6,19 +6,26 @@
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.Extensions.Logging;
 
   public class ForecastErrorsController : Controller
   {
     private readonly UnitOfWork _unitOfWork;
+    private readonly ILogger<ForecastErrorsController> _logger;
 
-    public ForecastErrorsController(UnitOfWork unitOfWork)
+    public ForecastErrorsController(
+        UnitOfWork unitOfWork,
+        ILogger<ForecastErrorsController> logger = null)
     {
       _unitOfWork = unitOfWork;
+      _logger = logger;
     }
 
     // GET: ForecastErrors
     public async Task<ActionResult> Index()
     {
+      _logger?.LogInformation("GET: ForecastErrors/Index");
+
       var requestDates = await _unitOfWork
           .ForecastErrorRepository.GetParameters(
               selectPredicate: fe => fe.RequestDateTime.Date,

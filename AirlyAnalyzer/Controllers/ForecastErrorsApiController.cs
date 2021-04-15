@@ -8,16 +8,21 @@
   using AirlyAnalyzer.Models;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
+  using Microsoft.Extensions.Logging;
 
   [Route("api/[controller]/[action]")]
   [ApiController]
   public class ForecastErrorsApiController : ControllerBase
   {
     private readonly UnitOfWork _unitOfWork;
+    private readonly ILogger<ForecastErrorsApiController> _logger;
 
-    public ForecastErrorsApiController(UnitOfWork unitOfWork)
+    public ForecastErrorsApiController(
+        UnitOfWork unitOfWork,
+        ILogger<ForecastErrorsApiController> logger = null)
     {
       _unitOfWork = unitOfWork;
+      _logger = logger;
     }
 
     // GET: api/<ForecastErrorsApiController>/GetErrorsInDay/{day}
@@ -26,6 +31,8 @@
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetErrorsInDay(DateTime selectedRequestDate)
     {
+      _logger?.LogInformation("GET: api/ForecastErrorsApi/GetErrorsInDay/{day}");
+
       var errorsInDay = await _unitOfWork.ForecastErrorRepository.Get(
           wherePredicate: fe => fe.RequestDateTime.Date == selectedRequestDate);
 
@@ -41,6 +48,8 @@
     [HttpGet]
     public Task<List<DateTime>> GetRequestDates()
     {
+      _logger?.LogInformation("GET: api/ForecastErrorsApi/GetRequestDates");
+
       return _unitOfWork.ForecastErrorRepository.GetParameters(
           selectPredicate: fe => fe.RequestDateTime.Date,
           orderByMethod: q => q.OrderBy(dateTime => dateTime),

@@ -3,6 +3,7 @@ const errorsInDayUri = webApiUri + 'GetErrorsInDay/';
 const requestDatesUri = webApiUri + 'GetRequestDates';
 
 let forecastErrorsTable = {};
+let columnSelectInputs = [];
 
 $(document).ready(function () {
   forecastErrorsTable = $('#forecastErrors').DataTable({
@@ -24,6 +25,8 @@ $(document).ready(function () {
         column.data().unique().sort().each(function (d, j) {
           select.append('<option value="' + d + '">' + d + '</option>')
         });
+
+        columnSelectInputs.push(select);
       });
     }
   });

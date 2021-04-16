@@ -22,7 +22,7 @@ $(document).ready(function () {
                   .draw();
           });
 
-        column.data().unique().sort().each(function (d, j) {
+        column.data().unique().sort().each(function (d) {
           select.append('<option value="' + d + '">' + d + '</option>')
         });
 

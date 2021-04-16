@@ -85,3 +85,17 @@ function updateForecastErrorsTable(requestDate) {
       console.log('Error: ' + err);
     });
 }
+
+function updateColumnSelectInputs() {
+  forecastErrorsTable.columns().every(function (index) {
+    var column = this;
+
+    columnSelectInputs[index].empty();
+    columnSelectInputs[index].append('<option value=""></option>');
+
+    column.data().unique().sort().each(function (d) {
+      columnSelectInputs[index]
+        .append('<option value="' + d + '">' + d + '</option>')
+    });
+  });
+}

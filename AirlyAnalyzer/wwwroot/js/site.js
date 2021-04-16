@@ -80,6 +80,7 @@ function updateForecastErrorsTable(requestDate) {
       }
 
       forecastErrorsTable.draw('full-reset');
+      updateColumnSelectInputs();
     })
     .fail((jqXHR, textStatus, err) => {
       console.log('Error: ' + err);

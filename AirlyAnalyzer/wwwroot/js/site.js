@@ -91,6 +91,11 @@ function updateColumnSelectInputs() {
   forecastErrorsTable.columns().every(function (index) {
     var column = this;
 
+    // Refresh searching to blank strings after table update 
+    // - to show all received data in table 
+    column.search('', true, false)
+          .draw();
+
     columnSelectInputs[index].empty();
     columnSelectInputs[index].append('<option value=""></option>');
 

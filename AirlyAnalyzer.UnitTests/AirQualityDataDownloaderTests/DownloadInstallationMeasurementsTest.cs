@@ -8,7 +8,7 @@
   using Moq;
   using Xunit;
 
-  public class AirlyMeasurementsDownloaderTest
+  public class DownloadInstallationMeasurementsTest
   {
     private const short _installationId = 1;
     private readonly string _measurementsUri;
@@ -16,7 +16,7 @@
 
     private readonly IConfiguration _config;
 
-    public AirlyMeasurementsDownloaderTest()
+    public DownloadInstallationMeasurementsTest()
     {
       _config = ConfigUtilities.GetApplicationConfig();
 

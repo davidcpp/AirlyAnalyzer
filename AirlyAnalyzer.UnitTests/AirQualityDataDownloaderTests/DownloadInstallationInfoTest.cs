@@ -8,14 +8,14 @@
   using Moq;
   using Xunit;
 
-  public class AirlyInstallationDownloaderTest
+  public class DownloadInstallationInfoTest
   {
     private const short _installationId = 1;
     private readonly string _installationUri;
 
     private readonly IConfiguration _config;
 
-    public AirlyInstallationDownloaderTest()
+    public DownloadInstallationInfoTest()
     {
       _config = ConfigUtilities.GetApplicationConfig();
 

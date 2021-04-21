@@ -16,8 +16,6 @@
   [Collection("RepositoryTests")]
   public class UpdateInstallationInfosTest
   {
-    private readonly Mock<IAirlyApiDownloader> _downloaderMock;
-
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
     private readonly List<short> _installationIds;
@@ -29,8 +27,6 @@
       _installationIds = fixture.InstallationIds;
 
       _context.Clear();
-
-      _downloaderMock = new Mock<IAirlyApiDownloader>(MockBehavior.Strict);
     }
 
     [Fact]
@@ -58,8 +54,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIds: _installationIds,
-          airlyApiDownloader: _downloaderMock.Object);
+          installationIds: _installationIds);
 
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
@@ -94,8 +89,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIds: _installationIds,
-          airlyApiDownloader: _downloaderMock.Object);
+          installationIds: _installationIds);
 
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
@@ -131,8 +125,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIds: newInstallationIds,
-          airlyApiDownloader: _downloaderMock.Object);
+          installationIds: newInstallationIds);
 
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
@@ -177,8 +170,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIds: _installationIds,
-          airlyApiDownloader: _downloaderMock.Object);
+          installationIds: _installationIds);
 
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);
@@ -227,8 +219,7 @@
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
-          installationIds: newInstallationIds,
-          airlyApiDownloader: _downloaderMock.Object);
+          installationIds: newInstallationIds);
 
       // Act
       await programController.UpdateInstallationInfos(newInstallationInfos);

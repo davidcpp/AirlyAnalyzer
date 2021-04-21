@@ -215,7 +215,7 @@
       // Assert
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
-          Times.Exactly((int)Math.Ceiling((double)_installationIds.Count/2)));
+          Times.Exactly((int)Math.Ceiling((double)_installationIds.Count / 2)));
     }
   }
 }

@@ -16,7 +16,7 @@
   [Collection("RepositoryTests")]
   public class DownloadInstallationInfosTest
   {
-    private readonly Mock<IAirQualityDataDownloader<Installation>> _downloaderMock;
+    private readonly Mock<IAirlyApiDownloader> _downloaderMock;
 
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
@@ -30,7 +30,7 @@
 
       _context.Clear();
 
-      _downloaderMock = new Mock<IAirQualityDataDownloader<Installation>>();
+      _downloaderMock = new Mock<IAirlyApiDownloader>();
     }
 
     [Fact]
@@ -40,20 +40,20 @@
       var downloadedData = new Installation();
       var emptyInstallationIds = new List<short>();
 
-      _downloaderMock.Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
+      _downloaderMock.Setup(x => x.DownloadInstallationInfo(It.IsAny<short>()))
                      .ReturnsAsync(downloadedData);
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never());
+          x => x.DownloadInstallationInfo(It.IsAny<short>()), Times.Never());
 
       Assert.Empty(installations);
     }
@@ -78,7 +78,7 @@
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
@@ -86,7 +86,7 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never);
+          x => x.DownloadInstallationInfo(It.IsAny<short>()), Times.Never);
 
       Assert.Empty(installations);
     }
@@ -99,21 +99,21 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+        _downloaderMock.Setup(x => x.DownloadInstallationInfo(installationId))
                        .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          x => x.DownloadInstallationInfo(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
 
       Assert.Equal(_installationIds.Count, installations.Count);
@@ -147,23 +147,23 @@
 
       _context.SaveChanges();
 
-      _downloaderMock.Setup(x => x.DownloadAirQualityData(newInstallationId))
+      _downloaderMock.Setup(x => x.DownloadInstallationInfo(newInstallationId))
                      .ReturnsAsync(downloadedData);
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: modifiedInstallationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(newInstallationId), Times.Once);
+          x => x.DownloadInstallationInfo(newInstallationId), Times.Once);
 
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Once);
+          x => x.DownloadInstallationInfo(It.IsAny<short>()), Times.Once);
 
       Assert.Single(installations);
     }
@@ -195,7 +195,7 @@
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
@@ -203,10 +203,10 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(outOfDateInstallationId), Times.Once);
+          x => x.DownloadInstallationInfo(outOfDateInstallationId), Times.Once);
 
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Once);
+          x => x.DownloadInstallationInfo(It.IsAny<short>()), Times.Once);
 
       Assert.Single(installations);
     }
@@ -219,14 +219,14 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+        _downloaderMock.Setup(x => x.DownloadInstallationInfo(installationId))
                        .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyInstallationDownloader: _downloaderMock.Object);
+          airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var installations = await programController.DownloadInstallationInfos();

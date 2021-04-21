@@ -16,7 +16,7 @@
   [Collection("RepositoryTests")]
   public class DownloadAllAirQualityDataTest
   {
-    private readonly Mock<IAirQualityDataDownloader<Measurements>> _downloaderMock;
+    private readonly Mock<IAirlyApiDownloader> _downloaderMock;
 
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
@@ -34,7 +34,7 @@
 
       _context.Clear();
 
-      _downloaderMock = new Mock<IAirQualityDataDownloader<Measurements>>();
+      _downloaderMock = new Mock<IAirlyApiDownloader>();
     }
 
     [Fact]
@@ -50,13 +50,14 @@
       _context.AddAllMeasurementsToDatabase(
           _installationIds, startDate, numberOfDays, _minNumberOfMeasurements);
 
-      _downloaderMock.Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
-                     .ReturnsAsync(downloadedData);
+      _downloaderMock
+          .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
+          .ReturnsAsync(downloadedData);
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
-          airlyMeasurementsDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
@@ -65,7 +66,8 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never());
+          x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
+          Times.Never());
     }
 
     [Theory]
@@ -83,13 +85,14 @@
       _context.AddAllMeasurementsToDatabase(
           _installationIds, startDate, numberOfDays, minNumberOfMeasurements);
 
-      _downloaderMock.Setup(x => x.DownloadAirQualityData(It.IsAny<short>()))
-                     .ReturnsAsync(downloadedData);
+      _downloaderMock
+          .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
+          .ReturnsAsync(downloadedData);
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyMeasurementsDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: minNumberOfMeasurements);
 
       // Act
@@ -98,7 +101,8 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()), Times.Never());
+        x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
+        Times.Never());
     }
 
     [Fact]
@@ -109,14 +113,14 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+        _downloaderMock.Setup(x => x.DownloadInstallationMeasurements(installationId))
                        .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyMeasurementsDownloader: _downloaderMock.Object);
+          airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var newMeasurementsList
@@ -124,7 +128,7 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
     }
 
@@ -146,14 +150,14 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.Setup(x => x.DownloadAirQualityData(installationId))
+        _downloaderMock.Setup(x => x.DownloadInstallationMeasurements(installationId))
                        .ReturnsAsync(downloadedData);
       }
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyMeasurementsDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: minNumberOfMeasurements);
 
       // Act
@@ -162,7 +166,7 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
     }
 
@@ -192,7 +196,8 @@
         }
         else
         {
-          _downloaderMock.Setup(x => x.DownloadAirQualityData(_installationIds[i]))
+          _downloaderMock.Setup(
+              x => x.DownloadInstallationMeasurements(_installationIds[i]))
                          .ReturnsAsync(downloadedData);
         }
       }
@@ -200,7 +205,7 @@
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
-          airlyMeasurementsDownloader: _downloaderMock.Object,
+          airlyApiDownloader: _downloaderMock.Object,
           minNumberOfMeasurements: _minNumberOfMeasurements);
 
       // Act
@@ -209,7 +214,7 @@
 
       // Assert
       _downloaderMock.Verify(
-          x => x.DownloadAirQualityData(It.IsAny<short>()),
+          x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly((int)Math.Ceiling((double)_installationIds.Count/2)));
     }
   }

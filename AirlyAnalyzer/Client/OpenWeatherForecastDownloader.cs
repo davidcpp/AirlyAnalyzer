@@ -10,7 +10,6 @@
   public class OpenWeatherForecastDownloader : OpenWeatherDownloader
   {
     private const string _exclude = "minutely,daily,current,alerts";
-    private const string _units = "metric";
 
     private readonly string _latitudeParameter;
     private readonly string _longtitudeParameter;

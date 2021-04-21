@@ -88,7 +88,7 @@
           .GetRequiredService<IAirlyMeasurementsDownloader>();
 
       _airlyInstallationDownloader = serviceProvider
-        .GetRequiredService<IAirlyInstallationDownloader>();
+          .GetRequiredService<IAirlyInstallationDownloader>();
 
       _forecastErrorsCalculators = serviceProvider
           .GetServices<IForecastErrorsCalculator>().ToList();

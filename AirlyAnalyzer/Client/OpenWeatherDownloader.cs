@@ -11,6 +11,7 @@
     protected string _unitsParameter;
 
     protected string _apiKey;
+    protected string _units;
 
     protected IWebClientAdapter _webClientAdapter;
 
@@ -31,6 +32,9 @@
 
       _apiKey = config.GetValue<string>(
           "AppSettings:OpenWeatherApi:Key");
+
+      _units = config.GetValue<string>(
+          "AppSettings:OpenWeatherApi:Units");
 
       _webClientAdapter = webClientAdapter;
       _webClientAdapter.BaseAddress = uri;

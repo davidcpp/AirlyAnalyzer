@@ -15,7 +15,7 @@
 
     protected IWebClientAdapter _webClientAdapter;
 
-    public OpenWeatherDownloader(
+    protected OpenWeatherDownloader(
         IConfiguration config, IWebClientAdapter webClientAdapter)
     {
       string uri = config.GetValue<string>(

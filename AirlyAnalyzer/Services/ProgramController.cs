@@ -14,16 +14,9 @@
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
 
-  using IAirlyMeasurementsDownloader
-      = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Measurements>;
-
-  using IAirlyInstallationDownloader
-      = AirlyAnalyzer.Client.IAirQualityDataDownloader<Models.Installation>;
-
   public class ProgramController : IHostedService, IDisposable
   {
-    private readonly IAirlyMeasurementsDownloader _airlyMeasurementsDownloader;
-    private readonly IAirlyInstallationDownloader _airlyInstallationDownloader;
+    private readonly IAirlyApiDownloader _airlyApiDownloader;
 
     private readonly List<IForecastErrorsCalculator> _forecastErrorsCalculators;
     private readonly ILogger<ProgramController> _logger;
@@ -45,16 +38,14 @@
         IForecastErrorsCalculator forecastErrorsCalculator = null,
         List<short> installationIds = null,
         short idForAllInstallations = -1,
-        IAirlyMeasurementsDownloader airlyMeasurementsDownloader = null,
-        IAirlyInstallationDownloader airlyInstallationDownloader = null,
+        IAirlyApiDownloader airlyApiDownloader = null,
         ForecastErrorsRepository forecastErrorsRepository = null,
         short minNumberOfMeasurements = 24,
         short installationUpdateDaysPeriod = 7)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculator = forecastErrorsCalculator;
-      _airlyMeasurementsDownloader = airlyMeasurementsDownloader;
-      _airlyInstallationDownloader = airlyInstallationDownloader;
+      _airlyApiDownloader = airlyApiDownloader;
       _forecastErrorsRepository = forecastErrorsRepository;
 
       _installationIds = installationIds;
@@ -84,11 +75,8 @@
       _idForAllInstallations = config.GetValue<short>(
           "AppSettings:AirlyApi:IdForAllInstallations");
 
-      _airlyMeasurementsDownloader = serviceProvider
-          .GetRequiredService<IAirlyMeasurementsDownloader>();
-
-      _airlyInstallationDownloader = serviceProvider
-          .GetRequiredService<IAirlyInstallationDownloader>();
+      _airlyApiDownloader = serviceProvider
+          .GetRequiredService<IAirlyApiDownloader>();
 
       _forecastErrorsCalculators = serviceProvider
           .GetServices<IForecastErrorsCalculator>().ToList();
@@ -173,8 +161,8 @@
 
         if (noInstallationInDatabase || dataIsOutOfDate)
         {
-          var installation = await _airlyInstallationDownloader
-              .DownloadAirQualityData(installationId);
+          var installation = await _airlyApiDownloader
+              .DownloadInstallationInfo(installationId);
 
           installations.Add(installation);
         }
@@ -254,8 +242,8 @@
         if ((requestDateTime - lastMeasurementDate).TotalHours
             >= _minNumberOfMeasurements)
         {
-          var responseMeasurements = await _airlyMeasurementsDownloader
-              .DownloadAirQualityData(installationId);
+          var responseMeasurements = await _airlyApiDownloader
+              .DownloadInstallationMeasurements(installationId);
 
           allMeasurements.Add(responseMeasurements);
         }

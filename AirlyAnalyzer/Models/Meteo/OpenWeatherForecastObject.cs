@@ -26,7 +26,7 @@
     public OpenWeatherRain Rain { get; set; }
 
     [JsonProperty("temp")]
-    public short Temperature { get; set; }
+    public float Temperature { get; set; }
 
     public int Visibility { get; set; }
 

@@ -37,11 +37,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       webClientMock.Verify(_ => _.DownloadStringTaskAsync(
@@ -61,11 +61,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       webClientMock.Verify(
@@ -86,11 +86,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       Assert.NotNull(installation);
@@ -112,11 +112,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       Assert.NotNull(installation);
@@ -135,11 +135,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       Assert.NotNull(installation);
@@ -158,11 +158,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       Assert.NotNull(installation);
@@ -181,11 +181,11 @@
       webClientMock.SetupProperty(_ => _.Headers, new WebHeaderCollection());
 
       var airlyInstallationDownloader
-          = new AirlyInstallationDownloader(_config, webClientMock.Object);
+          = new AirlyApiDownloader(_config, webClientMock.Object);
 
       // Act
       var installation = await airlyInstallationDownloader
-          .DownloadAirQualityData(_installationId);
+          .DownloadInstallationInfo(_installationId);
 
       // Assert
       Assert.NotNull(installation);

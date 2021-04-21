@@ -4,6 +4,11 @@
 
   public class OpenWeatherForecastObject
   {
+    public OpenWeatherForecastObject()
+    {
+      Rain = new OpenWeatherRain();
+    }
+
     [JsonProperty("dt")]
     public long Time { get; set; }
 
@@ -17,8 +22,8 @@
     [JsonProperty("pop")]
     public float PropababilityOfPrecipitation { get; set; }
 
-    [JsonProperty("rain.1h")]
-    public float Rain { get; set; }
+    [JsonProperty("rain")]
+    public OpenWeatherRain Rain { get; set; }
 
     [JsonProperty("temp")]
     public short Temperature { get; set; }

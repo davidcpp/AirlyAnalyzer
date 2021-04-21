@@ -6,7 +6,6 @@ namespace AirlyAnalyzer
   using AirlyAnalyzer.Calculation;
   using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Services;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
@@ -46,13 +45,8 @@ namespace AirlyAnalyzer
 
       services.AddScoped<UnitOfWork>();
 
-      services.AddSingleton<IAirQualityDataDownloader<Measurements>>(
-          x => new AirlyMeasurementsDownloader(
-              x.GetRequiredService<IConfiguration>(),
-              new WebClientAdapter(new System.Net.WebClient())));
-
-      services.AddSingleton<IAirQualityDataDownloader<Installation>>(
-          x => new AirlyInstallationDownloader(
+      services.AddSingleton<IAirlyApiDownloader>(
+          x => new AirlyApiDownloader(
               x.GetRequiredService<IConfiguration>(),
               new WebClientAdapter(new System.Net.WebClient())));
 

@@ -1,21 +1,28 @@
 ﻿namespace AirlyAnalyzer.Client
 {
+  using System;
+  using System.Diagnostics;
   using System.Net;
   using System.Threading.Tasks;
+  using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
+  using Newtonsoft.Json;
 
-  public abstract class AirlyApiDownloader<T> : IAirQualityDataDownloader<T>
+  public class AirlyApiDownloader : IAirlyApiDownloader
   {
     private readonly string _airlyApiKeyHeaderName;
     private readonly string _airlyApiKey;
     private readonly string _contentType;
     private readonly string _uri;
 
-    protected readonly IWebClientAdapter _webClientAdapter;
+    private readonly IConfiguration _config;
+    private readonly IWebClientAdapter _webClientAdapter;
 
-    protected AirlyApiDownloader(
+    public AirlyApiDownloader(
         IConfiguration config, IWebClientAdapter webClientAdapter)
     {
+      _config = config;
+
       _airlyApiKeyHeaderName = config.GetValue<string>(
           "AppSettings:AirlyApi:KeyHeaderName");
 
@@ -36,7 +43,72 @@
       _webClientAdapter.Headers.Add(_airlyApiKeyHeaderName, _airlyApiKey);
     }
 
-    public abstract Task<T> DownloadAirQualityData(short installationId);
+    public async Task<Installation>
+        DownloadInstallationInfo(short installationId)
+    {
+      try
+      {
+        string installationUri = _config.GetValue<string>(
+            "AppSettings:AirlyApi:InstallationUri");
+
+        string response = await _webClientAdapter.DownloadStringTaskAsync(
+            installationUri + installationId.ToString());
+
+        return JsonConvert.DeserializeObject<Installation>(
+            response,
+            new JsonSerializerSettings()
+            {
+              NullValueHandling = NullValueHandling.Ignore
+            })
+          ?? new Installation();
+      }
+      catch (Exception e)
+      {
+        string stackTrace = e.StackTrace;
+        Debug.WriteLine(stackTrace);
+        Debug.WriteLine(e.Message);
+        Debug.WriteLine(e.Source);
+        Debug.WriteLine("\n");
+
+        return new Installation();
+      }
+    }
+
+    public async Task<Measurements>
+        DownloadInstallationMeasurements(short installationId)
+    {
+      try
+      {
+        string measurementsUri = _config.GetValue<string>(
+            "AppSettings:AirlyApi:MeasurementsUri");
+
+        string measurementsUriParameters = _config.GetValue<string>(
+            "AppSettings:AirlyApi:MeasurementsUriParameters");
+
+        string response = await _webClientAdapter.DownloadStringTaskAsync(
+            measurementsUri
+            + installationId.ToString()
+            + measurementsUriParameters);
+
+        return JsonConvert.DeserializeObject<Measurements>(
+            response,
+            new JsonSerializerSettings()
+            {
+              NullValueHandling = NullValueHandling.Ignore
+            })
+          ?? new Measurements();
+      }
+      catch (Exception e)
+      {
+        string stackTrace = e.StackTrace;
+        Debug.WriteLine(stackTrace);
+        Debug.WriteLine(e.Message);
+        Debug.WriteLine(e.Source);
+        Debug.WriteLine("\n");
+
+        return new Measurements();
+      }
+    }
 
     public void Dispose()
     {

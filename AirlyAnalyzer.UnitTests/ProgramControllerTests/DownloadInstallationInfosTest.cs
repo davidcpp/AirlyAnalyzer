@@ -4,9 +4,9 @@
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
-  using AirlyAnalyzer.Services;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Services;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using AirlyAnalyzer.UnitTests.Helpers;
   using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;

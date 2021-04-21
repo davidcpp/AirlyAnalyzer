@@ -5,13 +5,13 @@
 
   public abstract class OpenWeatherDownloader : IDisposable
   {
-    protected string _forecastUri;
+    protected readonly string _forecastUri;
 
-    protected string _apiKeyParameter;
-    protected string _unitsParameter;
+    protected readonly string _apiKeyParameter;
+    protected readonly string _unitsParameter;
 
-    protected string _apiKey;
-    protected string _units;
+    protected readonly string _apiKey;
+    protected readonly string _units;
 
     protected IWebClientAdapter _webClientAdapter;
 

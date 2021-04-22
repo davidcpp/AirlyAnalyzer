@@ -11,6 +11,8 @@
   {
     private const string _exclude = "minutely,daily,current,alerts";
 
+    private readonly string _forecastUri;
+
     private readonly string _latitudeParameter;
     private readonly string _longtitudeParameter;
     private readonly string _excludeParameter;
@@ -19,6 +21,9 @@
         IConfiguration config, IWebClientAdapter webClientAdapter)
             : base(config, webClientAdapter)
     {
+      _forecastUri = config.GetValue<string>(
+          "AppSettings:OpenWeatherApi:ForecastUri");
+
       _latitudeParameter = config.GetValue<string>(
           "AppSettings:OpenWeatherApi:LatitudeParameter");
 

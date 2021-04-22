@@ -5,8 +5,6 @@
 
   public abstract class OpenWeatherDownloader : IDisposable
   {
-    protected readonly string _forecastUri;
-
     protected readonly string _apiKeyParameter;
     protected readonly string _unitsParameter;
 
@@ -20,9 +18,6 @@
     {
       string uri = config.GetValue<string>(
           "AppSettings:OpenWeatherApi:Uri");
-
-      _forecastUri = config.GetValue<string>(
-          "AppSettings:OpenWeatherApi:ForecastUri");
 
       _apiKeyParameter = config.GetValue<string>(
           "AppSettings:OpenWeatherApi:AppIdParameter");

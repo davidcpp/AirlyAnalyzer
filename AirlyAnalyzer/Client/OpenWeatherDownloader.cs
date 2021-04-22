@@ -51,7 +51,7 @@
         const string _exclude = "minutely,daily,current,alerts";
 
         string forecastUri = _config.GetValue<string>(
-            "AppSettings:OpenWeatherApi:ForecastUri");
+            "AppSettings:OpenWeatherApi:OneCallUri");
 
         string latitudeParameter = _config.GetValue<string>(
             "AppSettings:OpenWeatherApi:LatitudeParameter");

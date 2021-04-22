@@ -43,6 +43,12 @@ namespace AirlyAnalyzer
                   .GetConnectionString("AirlyDbConnection")
                   .Replace("[DataDirectory]", dataDirectoryPath)));
 
+      services.AddDbContext<WeatherContext>(options
+          => options.UseSqlServer(
+              Configuration
+                  .GetConnectionString("WeatherDbConnection")
+                  .Replace("[DataDirectory]", dataDirectoryPath)));
+
       services.AddScoped<UnitOfWork>();
 
       services.AddSingleton<IAirlyApiDownloader>(

@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace AirlyAnalyzer.Models
 {
+  [Owned]
   public class OpenWeatherRain
   {
     [JsonProperty("1h")]

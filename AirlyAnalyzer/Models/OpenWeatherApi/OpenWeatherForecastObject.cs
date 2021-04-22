@@ -38,5 +38,7 @@
 
     [JsonProperty("wind_gust")]
     public float WindGust { get; set; }
+
+    public float AirlyCaqi { get; set; }
   }
 }

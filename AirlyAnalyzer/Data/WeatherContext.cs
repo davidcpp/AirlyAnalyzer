@@ -6,12 +6,11 @@
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
   public class WeatherMeasurementConfiguration
-      : IEntityTypeConfiguration<OpenWeatherForecastObject>
+      : IEntityTypeConfiguration<WeatherMeasurement>
   {
-    public void Configure(EntityTypeBuilder<OpenWeatherForecastObject> builder)
+    public void Configure(EntityTypeBuilder<WeatherMeasurement> builder)
     {
-      builder.ToTable("WeatherMeasurements").HasKey(x => x.Time);
-      builder.OwnsOne(i => i.Rain);
+      builder.ToTable("WeatherMeasurements").HasKey(x => new { x.Month, x.Day, x.Hour });
     }
   }
 
@@ -22,7 +21,7 @@
     {
     }
 
-    public DbSet<OpenWeatherForecastObject> WeatherMeasurements { get; set; }
+    public DbSet<WeatherMeasurement> WeatherMeasurements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -2,6 +2,8 @@
 {
   public class WeatherMeasurement
   {
+    public int InstallationId { get; set; }
+
     public byte Month { get; set; }
 
     public byte Day { get; set; }

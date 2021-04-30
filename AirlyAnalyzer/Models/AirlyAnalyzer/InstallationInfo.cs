@@ -11,6 +11,8 @@ namespace AirlyAnalyzer
 
     public Address Address { get; set; }
 
+    public Coordinates Location { get; set; }
+
     public DateTime UpdateDate
     {
       get => updateDate.ToLocalTime();

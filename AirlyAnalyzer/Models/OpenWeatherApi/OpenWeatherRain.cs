@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-
-namespace AirlyAnalyzer.Models
+﻿namespace AirlyAnalyzer.Models
 {
+  using Microsoft.EntityFrameworkCore;
+  using Newtonsoft.Json;
+
   [Owned]
   public class OpenWeatherRain
   {

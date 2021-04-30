@@ -1,8 +1,8 @@
-﻿using System;
-using AirlyAnalyzer.Models;
-
-namespace AirlyAnalyzer
+﻿namespace AirlyAnalyzer
 {
+  using System;
+  using AirlyAnalyzer.Models;
+
   public class InstallationInfo
   {
     private DateTime updateDate;

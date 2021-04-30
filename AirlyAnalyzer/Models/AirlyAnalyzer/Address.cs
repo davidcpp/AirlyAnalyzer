@@ -1,7 +1,7 @@
 ﻿namespace AirlyAnalyzer.Models
 {
-  using Microsoft.EntityFrameworkCore;
   using System;
+  using Microsoft.EntityFrameworkCore;
 
   [Owned]
   public class Address

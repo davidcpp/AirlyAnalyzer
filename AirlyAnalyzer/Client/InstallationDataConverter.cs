@@ -18,7 +18,8 @@
           City = installation.Address.City ?? "",
           Street = installation.Address.Street ?? "",
           Number = installation.Address.Number ?? "",
-        }
+        },
+        Location = installation.Location,
       };
     }
   }

@@ -12,7 +12,7 @@
     [JsonProperty("dt")]
     public long Time { get; set; }
 
-    [JsonProperty("Clouds")]
+    [JsonProperty("clouds")]
     public byte Cloudiness { get; set; }
 
     public byte Humidity { get; set; }

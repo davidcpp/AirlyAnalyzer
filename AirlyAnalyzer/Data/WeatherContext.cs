@@ -16,10 +16,6 @@
 
   public class WeatherContext : DbContext
   {
-    public WeatherContext()
-    {
-    }
-
     public WeatherContext(DbContextOptions<WeatherContext> options)
         : base(options)
     {

@@ -21,7 +21,7 @@
     {
     }
 
-    public virtual DbSet<WeatherMeasurement> WeatherMeasurements { get; set; }
+    public DbSet<WeatherMeasurement> WeatherMeasurements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

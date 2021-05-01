@@ -14,11 +14,11 @@
     {
     }
 
-    public virtual DbSet<DaneMeteo2020> DaneMeteo2020s { get; set; }
+    public virtual DbSet<WeatherMeasurement> DaneMeteo2020s { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<DaneMeteo2020>(entity =>
+      modelBuilder.Entity<WeatherMeasurement>(entity =>
       {
         entity.HasKey(e => new { e.Month, e.Day, e.Hour });
 

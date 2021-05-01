@@ -1,6 +1,6 @@
 ﻿namespace AirlyAnalyzer.Models.Weather
 {
-    public class DaneMeteo2020
+    public class WeatherMeasurement
     {
         public byte Month { get; set; }
 

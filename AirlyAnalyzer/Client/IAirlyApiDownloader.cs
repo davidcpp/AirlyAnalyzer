@@ -1,8 +1,8 @@
 ﻿namespace AirlyAnalyzer.Client
 {
-  using AirlyAnalyzer.Models;
   using System;
   using System.Threading.Tasks;
+  using AirlyAnalyzer.Models;
 
   public interface IAirlyApiDownloader : IDisposable
   {

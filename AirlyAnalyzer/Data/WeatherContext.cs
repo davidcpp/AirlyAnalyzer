@@ -10,7 +10,7 @@
   {
     public void Configure(EntityTypeBuilder<WeatherMeasurement> builder)
     {
-      builder.ToTable("Dane_meteo_2020").HasKey(x => new { x.Month, x.Day, x.Hour });
+      builder.ToTable("WeatherMeasurements").HasKey(x => new { x.Month, x.Day, x.Hour });
     }
   }
 

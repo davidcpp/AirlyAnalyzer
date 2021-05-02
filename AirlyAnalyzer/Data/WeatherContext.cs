@@ -10,7 +10,8 @@
   {
     public void Configure(EntityTypeBuilder<WeatherMeasurement> builder)
     {
-      builder.ToTable("WeatherMeasurements").HasKey(x => new { x.Month, x.Day, x.Hour });
+      builder.ToTable("WeatherMeasurements")
+          .HasKey(x => new { x.Year, x.Month, x.Day, x.Hour, x.InstallationId });
     }
   }
 

@@ -2,11 +2,15 @@
 {
     public class WeatherMeasurement
     {
+        public short Year { get; set; }
+
         public byte Month { get; set; }
 
         public byte Day { get; set; }
 
         public byte Hour { get; set; }
+
+        public int InstallationId { get; set; }
 
         public byte CloudCover { get; set; }
 

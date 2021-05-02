@@ -30,6 +30,6 @@
 
         public float WindGust { get; set; }
 
-        public short? AirlyCaqi { get; set; }
+        public short AirlyCaqi { get; set; }
     }
 }

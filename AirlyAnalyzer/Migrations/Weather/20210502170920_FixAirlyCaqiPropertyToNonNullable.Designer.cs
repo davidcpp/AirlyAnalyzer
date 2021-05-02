@@ -3,14 +3,16 @@ using AirlyAnalyzer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirlyAnalyzer.Migrations.Weather
 {
     [DbContext(typeof(WeatherContext))]
-    partial class WeatherContextModelSnapshot : ModelSnapshot
+    [Migration("20210502170920_FixAirlyCaqiPropertyToNonNullable")]
+    partial class FixAirlyCaqiPropertyToNonNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,9 +22,6 @@ namespace AirlyAnalyzer.Migrations.Weather
 
             modelBuilder.Entity("AirlyAnalyzer.Models.Weather.WeatherMeasurement", b =>
                 {
-                    b.Property<short>("Year")
-                        .HasColumnType("smallint");
-
                     b.Property<byte>("Month")
                         .HasColumnType("tinyint");
 
@@ -32,10 +31,7 @@ namespace AirlyAnalyzer.Migrations.Weather
                     b.Property<byte>("Hour")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("InstallationId")
-                        .HasColumnType("int");
-
-                    b.Property<short?>("AirlyCaqi")
+                    b.Property<short>("AirlyCaqi")
                         .HasColumnType("smallint");
 
                     b.Property<byte>("CloudCover")
@@ -65,7 +61,7 @@ namespace AirlyAnalyzer.Migrations.Weather
                     b.Property<float>("WindSpeed")
                         .HasColumnType("real");
 
-                    b.HasKey("Year", "Month", "Day", "Hour", "InstallationId");
+                    b.HasKey("Month", "Day", "Hour");
 
                     b.ToTable("WeatherMeasurements");
                 });

@@ -3,6 +3,7 @@
   using System;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Models.Weather;
 
   public class UnitOfWork : IDisposable
   {
@@ -14,6 +15,7 @@
     private PlainForecastErrorsRepository plainForecastErrorRepo;
     private ScaleForecastErrorsRepository scaleForecastErrorRepo;
     private BasicRepository<InstallationInfo> installationsRepo;
+    private BasicRepository<WeatherMeasurement> weatherMeasurementsRepo;
 
     private bool disposedValue;
 
@@ -45,6 +47,10 @@
     public BasicRepository<InstallationInfo> InstallationsRepository
         => installationsRepo
             ??= new BasicRepository<InstallationInfo>(_context);
+
+    public BasicRepository<WeatherMeasurement> WeatherMeasurementsRepository
+        => weatherMeasurementsRepo
+            ??= new BasicRepository<WeatherMeasurement>(_context);
 
     public async Task SaveChangesAsync()
     {

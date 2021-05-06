@@ -138,6 +138,71 @@
       }
     }
 
+    public async Task AddCaqiToWeatherMeasurements()
+    {
+      const short initialInstallationId = 18730;
+
+      var weatherMeasurements
+          = await _unitOfWork.WeatherMeasurementsRepository.Get(
+              wherePredicate: wm => wm.InstallationId == initialInstallationId);
+
+      foreach (var weatherMeasurement in weatherMeasurements)
+      {
+        if (weatherMeasurement.AirlyCaqi != 0)
+        {
+          continue;
+        }
+
+        var airQualityTillDateTime = new DateTime(
+            weatherMeasurement.Year,
+            weatherMeasurement.Month,
+            weatherMeasurement.Day,
+            weatherMeasurement.Hour,
+            0,
+            0,
+            DateTimeKind.Utc);
+
+        var airQualityFromDateTime = airQualityTillDateTime.AddHours(-1);
+
+        var airQualityMeasurement = await _unitOfWork
+            .MeasurementRepository.GetById(
+                airQualityTillDateTime,
+                airQualityFromDateTime,
+                (short)weatherMeasurement.InstallationId);
+
+        if (airQualityMeasurement != null)
+        {
+          weatherMeasurement.AirlyCaqi = airQualityMeasurement.AirlyCaqi;
+        }
+        else
+        {
+          await _unitOfWork.WeatherMeasurementsRepository.Delete(
+              weatherMeasurement.Year,
+              weatherMeasurement.Month,
+              weatherMeasurement.Day,
+              weatherMeasurement.Hour,
+              weatherMeasurement.InstallationId);
+        }
+      }
+
+      await _unitOfWork.SaveChangesAsync();
+
+      foreach (short installationId in _installationIds)
+      {
+        if (installationId != initialInstallationId)
+        {
+          // Add weatherMeasurements with changed InstallationId only,
+          // no AirlyCaqi change - faulty - SQL code fix it
+          weatherMeasurements.ForEach(wm => wm.InstallationId = installationId);
+
+          await _unitOfWork.WeatherMeasurementsRepository
+              .AddListAsync(weatherMeasurements);
+
+          await _unitOfWork.SaveChangesAsync();
+        }
+      }
+    }
+
     public async Task<List<Installation>> DownloadInstallationInfos()
     {
       _logger?.LogInformation("DownloadInstallationInfos() is starting");

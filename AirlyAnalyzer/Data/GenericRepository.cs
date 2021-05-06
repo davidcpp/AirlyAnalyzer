@@ -50,7 +50,7 @@
       return _dbSet.Contains(entity);
     }
 
-    public virtual async Task Delete(object id)
+    public virtual async Task Delete(params object[] id)
     {
       _dbSet.Remove(await _dbSet.FindAsync(id));
     }
@@ -65,7 +65,7 @@
       _dbSet.Update(entity);
     }
 
-    public virtual async Task<TEntity> GetById(object id)
+    public virtual async Task<TEntity> GetById(params object[] id)
     {
       return await _dbSet.FindAsync(id);
     }

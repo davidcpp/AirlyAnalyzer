@@ -10,9 +10,9 @@
   public class BasicRepository<TEntity> : IRepository<TEntity> where TEntity : class
   {
     protected readonly DbSet<TEntity> _dbSet;
-    protected readonly AirlyContext _context;
+    protected readonly DbContext _context;
 
-    public BasicRepository(AirlyContext context)
+    public BasicRepository(DbContext context)
     {
       _context = context;
       _dbSet = context.Set<TEntity>();
@@ -46,7 +46,7 @@
       return _dbSet.Contains(entity);
     }
 
-    public async Task Delete(object id)
+    public async Task Delete(params object[] id)
     {
       _dbSet.Remove(await _dbSet.FindAsync(id));
     }
@@ -61,7 +61,7 @@
       _dbSet.Update(entity);
     }
 
-    public async Task<TEntity> GetById(object id)
+    public async Task<TEntity> GetById(params object[] id)
     {
       return await _dbSet.FindAsync(id);
     }

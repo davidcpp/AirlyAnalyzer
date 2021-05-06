@@ -11,11 +11,11 @@
     Task AddAsync(TEntity entity);
     Task AddListAsync(List<TEntity> entities);
     bool Contains(TEntity entity);
-    Task Delete(object id);
+    Task Delete(params object[] id);
     void Delete(Expression<Func<TEntity, bool>> wherePredicate);
     void Update(TEntity entity);
 
-    Task<TEntity> GetById(object id);
+    Task<TEntity> GetById(params object[] id);
 
     Task<List<TEntity>> Get(
         Expression<Func<TEntity, bool>> wherePredicate = null);

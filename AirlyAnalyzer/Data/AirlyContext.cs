@@ -1,6 +1,7 @@
 ﻿namespace AirlyAnalyzer.Data
 {
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Models.Weather;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.EntityFrameworkCore.Metadata;
   using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -79,6 +80,16 @@
     }
   }
 
+  public class WeatherMeasurementConfiguration
+    : IEntityTypeConfiguration<WeatherMeasurement>
+  {
+    public void Configure(EntityTypeBuilder<WeatherMeasurement> builder)
+    {
+      builder.ToTable("WeatherMeasurements")
+          .HasKey(x => new { x.Year, x.Month, x.Day, x.Hour, x.InstallationId });
+    }
+  }
+
   public class AirlyContext : DbContext
   {
     private readonly byte _maxPeriodPropertyLength;
@@ -103,6 +114,8 @@
 
     public DbSet<InstallationInfo> InstallationInfos { get; set; }
 
+    public DbSet<WeatherMeasurement> WeatherMeasurements { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
@@ -110,6 +123,7 @@
       modelBuilder.ApplyConfiguration(new ForecastErrorConfiguration(
           _maxPeriodPropertyLength, _maxClassPropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
+      modelBuilder.ApplyConfiguration(new WeatherMeasurementConfiguration());
 
       modelBuilder.HasAnnotation(
           "SqlServer:ValueGenerationStrategy",

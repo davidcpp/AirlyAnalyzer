@@ -97,6 +97,8 @@
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
+        await AddCaqiToWeatherMeasurements();
+
         var installations = await DownloadInstallationInfos();
 
         if (installations.Count > 0)

@@ -7,7 +7,7 @@
   using Microsoft.Extensions.Configuration;
   using Newtonsoft.Json;
 
-  public class OpenWeatherDownloader : IDisposable
+  public class OpenWeatherApiDownloader : IDisposable
   {
     private readonly IConfiguration _config;
 
@@ -19,7 +19,7 @@
 
     protected IWebClientAdapter _webClientAdapter;
 
-    public OpenWeatherDownloader(
+    public OpenWeatherApiDownloader(
         IConfiguration config, IWebClientAdapter webClientAdapter)
     {
       _config = config;

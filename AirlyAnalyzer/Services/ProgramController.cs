@@ -185,7 +185,7 @@
                 airQualityFromDateTime,
                 (short)weatherMeasurement.InstallationId);
 
-        if (airQualityMeasurement != null)
+        if (airQualityMeasurement != null && airQualityMeasurement.AirlyCaqi != 0)
         {
           weatherMeasurement.AirlyCaqi = airQualityMeasurement.AirlyCaqi;
         }

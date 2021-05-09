@@ -148,13 +148,26 @@
           = await _unitOfWork.WeatherMeasurementsRepository.Get(
               wherePredicate: wm => wm.InstallationId == initialInstallationId);
 
+      foreach (short installationId in _installationIds)
+      {
+        if (installationId != initialInstallationId)
+        {
+          // Add weatherMeasurements with changed InstallationId only,
+          // no AirlyCaqi change - faulty - SQL code fix it
+          weatherMeasurements.ForEach(wm => wm.InstallationId = installationId);
+
+          await _unitOfWork.WeatherMeasurementsRepository
+              .AddListAsync(weatherMeasurements);
+
+          await _unitOfWork.SaveChangesAsync();
+        }
+      }
+
+      weatherMeasurements
+          = await _unitOfWork.WeatherMeasurementsRepository.Get();
+
       foreach (var weatherMeasurement in weatherMeasurements)
       {
-        if (weatherMeasurement.AirlyCaqi != 0)
-        {
-          continue;
-        }
-
         var airQualityTillDateTime = new DateTime(
             weatherMeasurement.Year,
             weatherMeasurement.Month,
@@ -188,21 +201,6 @@
       }
 
       await _unitOfWork.SaveChangesAsync();
-
-      foreach (short installationId in _installationIds)
-      {
-        if (installationId != initialInstallationId)
-        {
-          // Add weatherMeasurements with changed InstallationId only,
-          // no AirlyCaqi change - faulty - SQL code fix it
-          weatherMeasurements.ForEach(wm => wm.InstallationId = installationId);
-
-          await _unitOfWork.WeatherMeasurementsRepository
-              .AddListAsync(weatherMeasurements);
-
-          await _unitOfWork.SaveChangesAsync();
-        }
-      }
     }
 
     public async Task<List<Installation>> DownloadInstallationInfos()

@@ -17,12 +17,12 @@
     {
       var lastForecastErrorDate = await GetLastDate(installationId);
 
-      var _newMeasurements = await _context.Measurements
+      var _newMeasurements = await _context.Set<AirQualityMeasurement>()
           .Where(m => m.InstallationId == installationId
                    && m.TillDateTime > lastForecastErrorDate)
           .ToListAsync();
 
-      var _newForecasts = await _context.Forecasts
+      var _newForecasts = await _context.Set<AirQualityForecast>()
           .Where(f => f.InstallationId == installationId
                    && f.TillDateTime > lastForecastErrorDate)
           .ToListAsync();

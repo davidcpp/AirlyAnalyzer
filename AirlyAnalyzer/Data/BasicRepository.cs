@@ -28,16 +28,6 @@
 
     public async Task AddListAsync(List<TEntity> entities)
     {
-      for (int i = 0; i < entities.Count;)
-      {
-        if (_dbSet.Contains(entities[i]))
-        {
-          entities.RemoveAt(i);
-          continue;
-        }
-        i++;
-      }
-
       await _dbSet.AddRangeAsync(entities);
     }
 

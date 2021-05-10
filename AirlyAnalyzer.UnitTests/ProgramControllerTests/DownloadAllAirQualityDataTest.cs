@@ -101,8 +101,8 @@
 
       // Assert
       _downloaderMock.Verify(
-        x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
-        Times.Never());
+          x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
+          Times.Never());
     }
 
     [Fact]
@@ -150,7 +150,8 @@
 
       foreach (short installationId in _installationIds)
       {
-        _downloaderMock.Setup(x => x.DownloadInstallationMeasurements(installationId))
+        _downloaderMock.Setup(
+            x => x.DownloadInstallationMeasurements(installationId))
                        .ReturnsAsync(downloadedData);
       }
 

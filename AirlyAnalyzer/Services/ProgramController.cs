@@ -107,11 +107,11 @@
 
         var newMeasurementsList = await DownloadAllAirQualityData();
 
-        if (newMeasurementsList.Count > 0)
-        {
-          var (newMeasurements, newForecasts)
-              = await ConvertAllAirQualityData(newMeasurementsList);
+        var (newMeasurements, newForecasts)
+            = await ConvertAllAirQualityData(newMeasurementsList);
 
+        if (newMeasurements.Count > 0 || newForecasts.Count > 0)
+        {
           await SaveAllAirQualityData(newMeasurements, newForecasts);
         }
 

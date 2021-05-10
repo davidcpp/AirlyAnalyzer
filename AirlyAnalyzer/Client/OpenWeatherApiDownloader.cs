@@ -1,10 +1,10 @@
 ﻿namespace AirlyAnalyzer.Client
 {
   using System;
-  using System.Diagnostics;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.Logging;
   using Newtonsoft.Json;
 
   public class OpenWeatherApiDownloader : IDisposable
@@ -17,12 +17,16 @@
     protected readonly string _apiKey;
     protected readonly string _units;
 
+    protected readonly ILogger<OpenWeatherApiDownloader> _logger;
     protected IWebClientAdapter _webClientAdapter;
 
     public OpenWeatherApiDownloader(
-        IConfiguration config, IWebClientAdapter webClientAdapter)
+        IConfiguration config,
+        IWebClientAdapter webClientAdapter,
+        ILogger<OpenWeatherApiDownloader> logger = null)
     {
       _config = config;
+      _logger = logger;
 
       string uri = config.GetValue<string>(
           "AppSettings:OpenWeatherApi:Uri");
@@ -80,11 +84,10 @@
       }
       catch (Exception e)
       {
-        string stackTrace = e.StackTrace;
-        Debug.WriteLine(stackTrace);
-        Debug.WriteLine(e.Message);
-        Debug.WriteLine(e.Source);
-        Debug.WriteLine("\n");
+        _logger?.LogError(e.StackTrace);
+        _logger?.LogError(e.Message);
+        _logger?.LogError(e.Source);
+        _logger?.LogError("\n");
 
         return new OpenWeatherForecast();
       }

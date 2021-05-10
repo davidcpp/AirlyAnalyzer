@@ -1,11 +1,11 @@
 ﻿namespace AirlyAnalyzer.Client
 {
   using System;
-  using System.Diagnostics;
   using System.Net;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.Logging;
   using Newtonsoft.Json;
 
   public class AirlyApiDownloader : IAirlyApiDownloader
@@ -16,12 +16,17 @@
     private readonly string _uri;
 
     private readonly IConfiguration _config;
+    private readonly ILogger<AirlyApiDownloader> _logger;
+
     private readonly IWebClientAdapter _webClientAdapter;
 
     public AirlyApiDownloader(
-        IConfiguration config, IWebClientAdapter webClientAdapter)
+        IConfiguration config,
+        IWebClientAdapter webClientAdapter,
+        ILogger<AirlyApiDownloader> logger = null)
     {
       _config = config;
+      _logger = logger;
 
       _airlyApiKeyHeaderName = config.GetValue<string>(
           "AppSettings:AirlyApi:KeyHeaderName");
@@ -64,11 +69,10 @@
       }
       catch (Exception e)
       {
-        string stackTrace = e.StackTrace;
-        Debug.WriteLine(stackTrace);
-        Debug.WriteLine(e.Message);
-        Debug.WriteLine(e.Source);
-        Debug.WriteLine("\n");
+        _logger?.LogError(e.StackTrace);
+        _logger?.LogError(e.Message);
+        _logger?.LogError(e.Source);
+        _logger?.LogError("\n");
 
         return new Installation();
       }
@@ -100,11 +104,10 @@
       }
       catch (Exception e)
       {
-        string stackTrace = e.StackTrace;
-        Debug.WriteLine(stackTrace);
-        Debug.WriteLine(e.Message);
-        Debug.WriteLine(e.Source);
-        Debug.WriteLine("\n");
+        _logger?.LogError(e.StackTrace);
+        _logger?.LogError(e.Message);
+        _logger?.LogError(e.Source);
+        _logger?.LogError("\n");
 
         return new Measurements();
       }

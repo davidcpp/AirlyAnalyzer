@@ -48,7 +48,8 @@ namespace AirlyAnalyzer
       services.AddSingleton<IAirlyApiDownloader>(
           x => new AirlyApiDownloader(
               x.GetRequiredService<IConfiguration>(),
-              new WebClientAdapter(new System.Net.WebClient())));
+              new WebClientAdapter(new System.Net.WebClient()),
+              x.GetRequiredService<ILogger<AirlyApiDownloader>>()));
 
       services.AddSingleton
           <IForecastErrorsCalculator, PlainForecastErrorsCalculator>();

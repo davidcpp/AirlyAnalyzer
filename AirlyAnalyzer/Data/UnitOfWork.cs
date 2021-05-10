@@ -4,10 +4,13 @@
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Models.Weather;
+  using Microsoft.EntityFrameworkCore;
+  using Microsoft.Extensions.Logging;
 
   public class UnitOfWork : IDisposable
   {
     private readonly AirlyContext _context;
+    private readonly ILogger<UnitOfWork> _logger;
 
     private GenericRepository<AirQualityMeasurement> measurementRepo;
     private GenericRepository<AirQualityForecast> forecastRepo;
@@ -19,9 +22,12 @@
 
     private bool disposedValue;
 
-    public UnitOfWork(AirlyContext context)
+    public UnitOfWork(
+        AirlyContext context,
+        ILogger<UnitOfWork> logger = null)
     {
       _context = context;
+      _logger = logger;
     }
 
     public GenericRepository<AirQualityMeasurement> MeasurementRepository
@@ -54,7 +60,14 @@
 
     public async Task SaveChangesAsync()
     {
-      await _context.SaveChangesAsync();
+      try
+      {
+        await _context.SaveChangesAsync();
+      }
+      catch (DbUpdateException e)
+      {
+        _logger?.LogError(e.Message);
+      }
     }
 
     protected virtual void Dispose(bool disposing)

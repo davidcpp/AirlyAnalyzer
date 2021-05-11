@@ -12,7 +12,7 @@
     {
     }
 
-    public async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
+    public virtual async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
         SelectDataToProcessing(short installationId)
     {
       var lastForecastErrorDate = await GetLastDate(installationId);

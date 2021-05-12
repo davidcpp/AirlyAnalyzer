@@ -7,7 +7,7 @@ namespace AirlyAnalyzerML.ConsoleApp
 {
   public static class Program
   {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
       // Create single instance of sample data from first line of dataset for model input
       var sampleData = new ModelInput()

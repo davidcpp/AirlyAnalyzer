@@ -9,7 +9,7 @@ using AirlyAnalyzerML.Model;
 
 namespace AirlyAnalyzerML.Model
 {
-  public class ConsumeModel
+  public static class ConsumeModel
   {
     private static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictionEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(CreatePredictionEngine);
 

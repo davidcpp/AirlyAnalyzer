@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AirlyAnalyzerML.Model;
 using Microsoft.ML;
 using Microsoft.ML.Data;
-using AirlyAnalyzerML.Model;
 using Microsoft.ML.Trainers.FastTree;
 
 namespace AirlyAnalyzerML.ConsoleApp

@@ -29,9 +29,9 @@ namespace AirlyAnalyzerML.ConsoleApp
           0, solutionFolder.IndexOf(AppDomain.CurrentDomain.FriendlyName));
 
       trainDataFilepath = Path.Combine(
-        solutionFolder,
-        @"AirlyAnalyzer\App_Data",
-        "126cb905-b298-492e-8060-afa7735e12c0.tsv");
+          solutionFolder,
+          @"AirlyAnalyzer\App_Data",
+          "126cb905-b298-492e-8060-afa7735e12c0.tsv");
 
       modelFilepath = Path.Combine(
           solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");

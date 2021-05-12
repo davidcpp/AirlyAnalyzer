@@ -13,14 +13,29 @@ namespace AirlyAnalyzerML.ConsoleApp
 {
   public static class ModelBuilder
   {
-    private static string TRAIN_DATA_FILEPATH = @"C:\Users\Dawid\AppData\Local\Temp\126cb905-b298-492e-8060-afa7735e12c0.tsv";
-    private static string MODEL_FILEPATH = @"C:\Users\Dawid\AppData\Local\Temp\MLVSTools\AirlyAnalyzerML\AirlyAnalyzerML.Model\MLModel.zip";
+    private static string TRAIN_DATA_FILEPATH;
+
+    private static string MODEL_FILEPATH;
+
     // Create MLContext to be shared across the model creation workflow objects 
     // Set a random seed for repeatable/deterministic results across multiple trainings.
     private static MLContext mlContext = new MLContext(seed: 1);
 
     public static void CreateModel()
     {
+      string solutionFolder = Environment.CurrentDirectory;
+
+      solutionFolder = solutionFolder.Substring(
+          0, solutionFolder.IndexOf(AppDomain.CurrentDomain.FriendlyName));
+
+      TRAIN_DATA_FILEPATH = Path.Combine(
+        solutionFolder,
+        @"AirlyAnalyzer\App_Data",
+        "126cb905-b298-492e-8060-afa7735e12c0.tsv");
+
+      MODEL_FILEPATH = Path.Combine(
+          solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
+
       // Load Data
       IDataView trainingDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
                                       path: TRAIN_DATA_FILEPATH,

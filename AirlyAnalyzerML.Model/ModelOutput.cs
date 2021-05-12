@@ -5,8 +5,8 @@ using Microsoft.ML.Data;
 
 namespace AirlyAnalyzerML.Model
 {
-    public class ModelOutput
-    {
-        public float Score { get; set; }
-    }
+  public class ModelOutput
+  {
+    public float Score { get; set; }
+  }
 }

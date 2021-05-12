@@ -74,7 +74,7 @@ namespace AirlyAnalyzerML.ConsoleApp
     {
       Console.WriteLine("=============== Training  model ===============");
 
-      ITransformer model = trainingPipeline.Fit(trainingDataView);
+      var model = trainingPipeline.Fit(trainingDataView);
 
       Console.WriteLine("=============== End of training process ===============");
       return model;
@@ -99,7 +99,7 @@ namespace AirlyAnalyzerML.ConsoleApp
 
     public static string GetAbsolutePath(string relativePath)
     {
-      FileInfo _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
+      var _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
       string assemblyFolderPath = _dataRoot.Directory.FullName;
 
       string fullPath = Path.Combine(assemblyFolderPath, relativePath);

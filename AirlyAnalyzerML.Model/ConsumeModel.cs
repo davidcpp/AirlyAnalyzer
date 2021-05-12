@@ -17,14 +17,14 @@ namespace AirlyAnalyzerML.Model
     // Method for consuming model in your app
     public static ModelOutput Predict(ModelInput input)
     {
-      ModelOutput result = PredictionEngine.Value.Predict(input);
+      var result = PredictionEngine.Value.Predict(input);
       return result;
     }
 
     public static PredictionEngine<ModelInput, ModelOutput> CreatePredictionEngine()
     {
       // Create new MLContext
-      MLContext mlContext = new MLContext();
+      var mlContext = new MLContext();
 
       // Load model & create prediction engine
       string modelPath = @"C:\Users\Dawid\AppData\Local\Temp\MLVSTools\AirlyAnalyzerML\AirlyAnalyzerML.Model\MLModel.zip";

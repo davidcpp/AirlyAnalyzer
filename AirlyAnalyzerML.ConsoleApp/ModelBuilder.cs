@@ -13,9 +13,9 @@ namespace AirlyAnalyzerML.ConsoleApp
 {
   public static class ModelBuilder
   {
-    private static string TRAIN_DATA_FILEPATH;
+    private static string trainDataFilepath;
 
-    private static string MODEL_FILEPATH;
+    private static string modelFilepath;
 
     // Create MLContext to be shared across the model creation workflow objects 
     // Set a random seed for repeatable/deterministic results across multiple trainings.
@@ -28,17 +28,17 @@ namespace AirlyAnalyzerML.ConsoleApp
       solutionFolder = solutionFolder.Substring(
           0, solutionFolder.IndexOf(AppDomain.CurrentDomain.FriendlyName));
 
-      TRAIN_DATA_FILEPATH = Path.Combine(
+      trainDataFilepath = Path.Combine(
         solutionFolder,
         @"AirlyAnalyzer\App_Data",
         "126cb905-b298-492e-8060-afa7735e12c0.tsv");
 
-      MODEL_FILEPATH = Path.Combine(
+      modelFilepath = Path.Combine(
           solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
 
       // Load Data
       IDataView trainingDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
-                                      path: TRAIN_DATA_FILEPATH,
+                                      path: trainDataFilepath,
                                       hasHeader: true,
                                       separatorChar: '\t',
                                       allowQuoting: true,
@@ -54,7 +54,7 @@ namespace AirlyAnalyzerML.ConsoleApp
       Evaluate(mlContext, trainingDataView, trainingPipeline);
 
       // Save model
-      SaveModel(mlContext, mlModel, MODEL_FILEPATH, trainingDataView.Schema);
+      SaveModel(mlContext, mlModel, modelFilepath, trainingDataView.Schema);
     }
 
     public static IEstimator<ITransformer> BuildTrainingPipeline(MLContext mlContext)

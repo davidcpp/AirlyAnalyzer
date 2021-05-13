@@ -14,7 +14,6 @@ namespace AirlyAnalyzerML.ConsoleApp
   public static class ModelBuilder
   {
     private static string trainDataFilepath;
-    private static string testDataFilepath;
 
     private static string modelFilepath;
 
@@ -34,11 +33,6 @@ namespace AirlyAnalyzerML.ConsoleApp
           @"AirlyAnalyzer\App_Data",
           "126cb905-b298-492e-8060-afa7735e12c0.tsv");
 
-      testDataFilepath = Path.Combine(
-          solutionFolder,
-          @"AirlyAnalyzer\App_Data",
-          "WeatherMeasurements_2021_04.csv");
-
       modelFilepath = Path.Combine(
           solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
 
@@ -50,10 +44,6 @@ namespace AirlyAnalyzerML.ConsoleApp
                                       allowQuoting: true,
                                       allowSparse: false);
 
-      IDataView testDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
-                                      path: testDataFilepath,
-                                      hasHeader: true,
-                                      separatorChar: ',');
       // Build training pipeline
       IEstimator<ITransformer> trainingPipeline = BuildTrainingPipeline(mlContext);
 
@@ -61,7 +51,7 @@ namespace AirlyAnalyzerML.ConsoleApp
       ITransformer mlModel = TrainModel(mlContext, trainingDataView, trainingPipeline);
 
       // Evaluate quality of Model
-      Evaluate(mlContext, mlModel, testDataView);
+      Evaluate(mlContext, trainingDataView, trainingPipeline);
 
       // Save model
       SaveModel(mlContext, mlModel, modelFilepath, trainingDataView.Schema);
@@ -121,15 +111,19 @@ namespace AirlyAnalyzerML.ConsoleApp
 
     private static void Evaluate(
         MLContext mlContext,
-        ITransformer model,
-        IDataView testDataView)
+        IDataView trainingDataView,
+        IEstimator<ITransformer> trainingPipeline)
     {
-      Console.WriteLine("=============== Evaluate ===============");
-      var predictions = model.Transform(testDataView);
-      var metrics = mlContext.Regression
-          .Evaluate(predictions, labelColumnName: "AirlyCaqi", "Score");
+      // Cross-Validate with single dataset (since we don't have two datasets, one for training and for evaluate)
+      // in order to evaluate and get the model's accuracy metrics
+      Console.WriteLine("=============== Cross-validating to get model's accuracy metrics ===============");
+      var crossValidationResults = mlContext.Regression.CrossValidate(
+          trainingDataView,
+          trainingPipeline,
+          numberOfFolds: 5,
+          labelColumnName: "AirlyCaqi");
 
-      PrintRegressionMetrics(metrics);
+      PrintRegressionFoldsAverageMetrics(crossValidationResults);
     }
 
     private static void SaveModel(

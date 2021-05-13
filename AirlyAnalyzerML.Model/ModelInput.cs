@@ -34,7 +34,7 @@ namespace AirlyAnalyzerML.Model
     public string Rain6h { get; set; }
 
     [ColumnName("Temperature"), LoadColumn(9)]
-    public string Temperature { get; set; }
+    public float Temperature { get; set; }
 
     [ColumnName("Visibility"), LoadColumn(10)]
     public float Visibility { get; set; }

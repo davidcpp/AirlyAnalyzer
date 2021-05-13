@@ -17,7 +17,7 @@ namespace AirlyAnalyzerML.ConsoleApp
         Hour = 23F,
         InstallationId = 18730F,
         Humidity = 64F,
-        Temperature = @"3,6",
+        Temperature = 3.6F,
         Visibility = 6000F,
         WindSpeed = 2F,
       };

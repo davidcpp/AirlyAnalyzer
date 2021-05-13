@@ -67,20 +67,49 @@ namespace AirlyAnalyzerML.ConsoleApp
       SaveModel(mlContext, mlModel, modelFilepath, trainingDataView.Schema);
     }
 
-    public static IEstimator<ITransformer> BuildTrainingPipeline(MLContext mlContext)
+    public static IEstimator<ITransformer> BuildTrainingPipeline(
+        MLContext mlContext)
     {
       // Data process configuration with pipeline data transformations 
-      var dataProcessPipeline = mlContext.Transforms.Categorical.OneHotHashEncoding(new[] { new InputOutputColumnPair("Temperature", "Temperature") })
-                                .Append(mlContext.Transforms.Concatenate("Features", new[] { "Temperature", "Month", "Day", "Hour", "InstallationId", "Humidity", "Visibility", "WindSpeed" }));
+      var dataProcessPipeline
+          = mlContext.Transforms.Categorical.OneHotHashEncoding(
+              new[] { new InputOutputColumnPair("Temperature", "Temperature") })
+          .Append(mlContext.Transforms.Concatenate(
+              "Features",
+              new[]
+              {
+                "Temperature",
+                "Month",
+                "Day",
+                "Hour",
+                "InstallationId",
+                "Humidity",
+                "Visibility",
+                "WindSpeed"
+              }));
+
       // Set the training algorithm 
-      var trainer = mlContext.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options() { NumberOfLeaves = 39, MinimumExampleCountPerLeaf = 10, NumberOfTrees = 500, LearningRate = 0.3330947f, Shrinkage = 0.5365936f, LabelColumnName = "AirlyCaqi", FeatureColumnName = "Features" });
+      var trainer = mlContext.Regression.Trainers.FastTree(
+          new FastTreeRegressionTrainer.Options()
+          {
+            NumberOfLeaves = 39,
+            MinimumExampleCountPerLeaf = 10,
+            NumberOfTrees = 500,
+            LearningRate = 0.3330947f,
+            Shrinkage = 0.5365936f,
+            LabelColumnName = "AirlyCaqi",
+            FeatureColumnName = "Features"
+          });
 
       var trainingPipeline = dataProcessPipeline.Append(trainer);
 
       return trainingPipeline;
     }
 
-    public static ITransformer TrainModel(MLContext mlContext, IDataView trainingDataView, IEstimator<ITransformer> trainingPipeline)
+    public static ITransformer TrainModel(
+        MLContext mlContext,
+        IDataView trainingDataView,
+        IEstimator<ITransformer> trainingPipeline)
     {
       Console.WriteLine("=============== Training  model ===============");
 
@@ -90,20 +119,33 @@ namespace AirlyAnalyzerML.ConsoleApp
       return model;
     }
 
-    private static void Evaluate(MLContext mlContext, ITransformer model, IDataView testDataView)
+    private static void Evaluate(
+        MLContext mlContext,
+        ITransformer model,
+        IDataView testDataView)
     {
       Console.WriteLine("=============== Evaluate ===============");
       var predictions = model.Transform(testDataView);
-      var metrics = mlContext.Regression.Evaluate(predictions, labelColumnName: "AirlyCaqi", "Score");
+      var metrics = mlContext.Regression
+          .Evaluate(predictions, labelColumnName: "AirlyCaqi", "Score");
+
       PrintRegressionMetrics(metrics);
     }
 
-    private static void SaveModel(MLContext mlContext, ITransformer mlModel, string modelRelativePath, DataViewSchema modelInputSchema)
+    private static void SaveModel(
+        MLContext mlContext,
+        ITransformer mlModel,
+        string modelRelativePath,
+        DataViewSchema modelInputSchema)
     {
       // Save/persist the trained model to a .ZIP file
       Console.WriteLine($"=============== Saving the model  ===============");
-      mlContext.Model.Save(mlModel, modelInputSchema, GetAbsolutePath(modelRelativePath));
-      Console.WriteLine("The model is saved to {0}", GetAbsolutePath(modelRelativePath));
+
+      mlContext.Model.Save(
+          mlModel, modelInputSchema, GetAbsolutePath(modelRelativePath));
+
+      Console.WriteLine(
+          "The model is saved to {0}", GetAbsolutePath(modelRelativePath));
     }
 
     public static string GetAbsolutePath(string relativePath)
@@ -129,7 +171,8 @@ namespace AirlyAnalyzerML.ConsoleApp
       Console.WriteLine($"*************************************************");
     }
 
-    public static void PrintRegressionFoldsAverageMetrics(IEnumerable<TrainCatalogBase.CrossValidationResult<RegressionMetrics>> crossValidationResults)
+    public static void PrintRegressionFoldsAverageMetrics(
+        IEnumerable<TrainCatalogBase.CrossValidationResult<RegressionMetrics>> crossValidationResults)
     {
       var L1 = crossValidationResults.Select(r => r.Metrics.MeanAbsoluteError);
       var L2 = crossValidationResults.Select(r => r.Metrics.MeanSquaredError);

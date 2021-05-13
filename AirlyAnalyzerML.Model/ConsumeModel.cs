@@ -8,7 +8,9 @@ namespace AirlyAnalyzerML.Model
 {
   public static class ConsumeModel
   {
-    private static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictionEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(CreatePredictionEngine);
+    private static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictionEngine
+        = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(
+            CreatePredictionEngine);
 
     // For more info on consuming ML.NET models, visit https://aka.ms/mlnet-consume
     // Method for consuming model in your app
@@ -32,8 +34,11 @@ namespace AirlyAnalyzerML.Model
       string modelPath = Path.Combine(
           solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
 
-      ITransformer mlModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
-      var predEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
+      ITransformer mlModel = mlContext.Model
+          .Load(modelPath, out var modelInputSchema);
+
+      var predEngine = mlContext.Model
+          .CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
 
       return predEngine;
     }

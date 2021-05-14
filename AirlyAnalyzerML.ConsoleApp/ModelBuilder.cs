@@ -66,8 +66,18 @@ namespace AirlyAnalyzerML.ConsoleApp
     {
       // Data process configuration with pipeline data transformations 
       var dataProcessPipeline
-          = mlContext.Transforms.Categorical.OneHotHashEncoding(
-              "Temperature", "Temperature")
+          = mlContext.Transforms.Conversion.ConvertType(
+              new[]
+              {
+                new InputOutputColumnPair("Month", "Month"),
+                new InputOutputColumnPair("Day", "Day"),
+                new InputOutputColumnPair("Hour", "Hour"),
+                new InputOutputColumnPair("InstallationId", "InstallationId"),
+                new InputOutputColumnPair("Humidity", "Humidity"),
+                new InputOutputColumnPair("Visibility", "Visibility"),
+                new InputOutputColumnPair("AirlyCaqi", "AirlyCaqi"),
+              },
+              DataKind.Single)
           .Append(mlContext.Transforms.Concatenate(
               "Features",
               new[]

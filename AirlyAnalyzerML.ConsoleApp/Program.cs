@@ -12,13 +12,13 @@ namespace AirlyAnalyzerML.ConsoleApp
       // Create single instance of sample data from first line of dataset for model input
       var sampleData = new ModelInput()
       {
-        Month = 3F,
-        Day = 27F,
-        Hour = 23F,
-        InstallationId = 18730F,
-        Humidity = 64F,
+        Month = 3,
+        Day = 27,
+        Hour = 23,
+        InstallationId = 18730,
+        Humidity = 64,
         Temperature = 3.6F,
-        Visibility = 6000F,
+        Visibility = 6000,
         WindSpeed = 2F,
       };
 

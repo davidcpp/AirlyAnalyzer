@@ -7,48 +7,48 @@ namespace AirlyAnalyzerML.Model
   public class ModelInput
   {
     [ColumnName("Year"), LoadColumn(0)]
-    public float Year { get; set; }
+    public short Year { get; set; }
 
     [ColumnName("Month"), LoadColumn(1)]
-    public float Month { get; set; }
+    public byte Month { get; set; }
 
     [ColumnName("Day"), LoadColumn(2)]
-    public float Day { get; set; }
+    public byte Day { get; set; }
 
     [ColumnName("Hour"), LoadColumn(3)]
-    public float Hour { get; set; }
+    public byte Hour { get; set; }
 
     [ColumnName("InstallationId"), LoadColumn(4)]
-    public float InstallationId { get; set; }
+    public int InstallationId { get; set; }
 
     [ColumnName("CloudCover"), LoadColumn(5)]
-    public float CloudCover { get; set; }
+    public byte CloudCover { get; set; }
 
     [ColumnName("Humidity"), LoadColumn(6)]
-    public float Humidity { get; set; }
+    public byte Humidity { get; set; }
 
     [ColumnName("Pressure"), LoadColumn(7)]
-    public string Pressure { get; set; }
+    public float Pressure { get; set; }
 
     [ColumnName("Rain6h"), LoadColumn(8)]
-    public string Rain6h { get; set; }
+    public float Rain6h { get; set; }
 
     [ColumnName("Temperature"), LoadColumn(9)]
     public float Temperature { get; set; }
 
     [ColumnName("Visibility"), LoadColumn(10)]
-    public float Visibility { get; set; }
+    public int Visibility { get; set; }
 
     [ColumnName("WindSpeed"), LoadColumn(11)]
     public float WindSpeed { get; set; }
 
     [ColumnName("WindDirection"), LoadColumn(12)]
-    public float WindDirection { get; set; }
+    public short WindDirection { get; set; }
 
     [ColumnName("WindGust"), LoadColumn(13)]
     public float WindGust { get; set; }
 
     [ColumnName("AirlyCaqi"), LoadColumn(14)]
-    public float AirlyCaqi { get; set; }
+    public short AirlyCaqi { get; set; }
   }
 }

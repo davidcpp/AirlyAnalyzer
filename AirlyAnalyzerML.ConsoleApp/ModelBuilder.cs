@@ -52,7 +52,7 @@ namespace AirlyAnalyzerML.ConsoleApp
       IEstimator<ITransformer> trainingPipeline = BuildTrainingPipeline(mlContext);
 
       // Train Model
-      ITransformer mlModel = TrainModel(mlContext, trainingDataView, trainingPipeline);
+      ITransformer mlModel = TrainModel(trainingDataView, trainingPipeline);
 
       // Evaluate quality of Model
       Evaluate(mlContext, trainingDataView, trainingPipeline);
@@ -111,7 +111,6 @@ namespace AirlyAnalyzerML.ConsoleApp
     }
 
     public static ITransformer TrainModel(
-        MLContext mlContext,
         IDataView trainingDataView,
         IEstimator<ITransformer> trainingPipeline)
     {

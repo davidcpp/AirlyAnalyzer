@@ -1,8 +1,5 @@
 ﻿namespace AirlyAnalyzer.UnitTests.Helpers
 {
-  using AirlyAnalyzer.Models;
-  using Newtonsoft.Json;
-
   static public class AirlyApiUtilities
   {
     static public string GetTestAirlyInstallationJson()

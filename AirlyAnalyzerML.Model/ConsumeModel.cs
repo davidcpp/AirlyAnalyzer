@@ -35,7 +35,7 @@ namespace AirlyAnalyzerML.Model
           solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
 
       ITransformer mlModel = mlContext.Model
-          .Load(modelPath, out var modelInputSchema);
+          .Load(modelPath, out var _);
 
       var predEngine = mlContext.Model
           .CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);

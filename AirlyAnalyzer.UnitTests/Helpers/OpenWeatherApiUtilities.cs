@@ -9,8 +9,6 @@
     static public string GetTestOpenWeatherApiForecastJson()
     {
       string currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-      string a2 = Assembly.GetCallingAssembly().GetName().Name;
-      //var a3 = Assembly.GetEntryAssembly().GetName().Name;
 
       string solutionFolder = Environment.CurrentDirectory;
 

@@ -7,7 +7,7 @@
   using Microsoft.Extensions.Logging;
   using Newtonsoft.Json;
 
-  public class OpenWeatherApiDownloader : IDisposable
+  public class OpenWeatherApiDownloader : IOpenWeatherApiDownloader
   {
     private readonly IConfiguration _config;
 

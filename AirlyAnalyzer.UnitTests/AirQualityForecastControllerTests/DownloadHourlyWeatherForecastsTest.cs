@@ -1,5 +1,6 @@
 ﻿namespace AirlyAnalyzer.UnitTests.AirQualityForecastControllerTests
 {
+  using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Models;
@@ -33,7 +34,13 @@
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
+      var configInstallationIds = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>("AppSettings:AirlyApi:InstallationIds:0", ""),
+      };
+
       var config = new ConfigurationBuilder()
+          .AddInMemoryCollection(configInstallationIds)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(

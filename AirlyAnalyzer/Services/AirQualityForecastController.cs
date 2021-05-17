@@ -43,10 +43,7 @@
 
     public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
     {
-      var openWeatherForecast = await _openWeatherApiDownloader
-          .DownloadHourlyWeatherForecast(0.0f, 0.0f);
-
-      return new List<OpenWeatherForecast> { openWeatherForecast };
+      return new List<OpenWeatherForecast>();
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

@@ -9,6 +9,7 @@
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
+  using AirlyAnalyzer.Models;
 
   public class AirQualityForecastController : IHostedService, IDisposable
   {
@@ -38,6 +39,14 @@
       _logger?.LogInformation("AirQualityForecastController is starting");
 
       return Task.CompletedTask;
+    }
+
+    public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
+    {
+      var openWeatherForecast = await _openWeatherApiDownloader
+          .DownloadHourlyWeatherForecast(0.0f, 0.0f);
+
+      return new List<OpenWeatherForecast> { openWeatherForecast };
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

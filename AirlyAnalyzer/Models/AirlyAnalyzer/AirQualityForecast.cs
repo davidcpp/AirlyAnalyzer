@@ -5,9 +5,6 @@
 
   public class AirQualityForecast : AirQualityObject
   {
-    [DefaultValue(AirQualityForecastSource.Airly)]
-    public AirQualityForecastSource Source { get; set; }
-
     public static explicit operator AirQualityForecast(
         AveragedValues averagedValue)
     {

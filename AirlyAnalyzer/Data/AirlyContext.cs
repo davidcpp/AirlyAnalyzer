@@ -58,6 +58,10 @@
       builder.ToTable("ForecastErrors").HasKey(x => new
           { x.Period, x.Class, x.TillDateTime, x.FromDateTime, x.InstallationId });
 
+      builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
+      builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
+      builder.Property(x => x.RequestDateTime).HasColumnType("smalldatetime");
+
       builder.Property(x => x.Period)
           .HasConversion<string>()
           .IsUnicode(false)
@@ -67,10 +71,6 @@
           .HasConversion<string>()
           .IsUnicode(false)
           .HasMaxLength(_maxClassPropertyLength);
-
-      builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
-      builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
-      builder.Property(x => x.RequestDateTime).HasColumnType("smalldatetime");
     }
   }
 

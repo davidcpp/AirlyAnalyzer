@@ -20,7 +20,13 @@
     public void Configure(EntityTypeBuilder<AirQualityMeasurement> builder)
     {
       builder.ToTable("Measurements")
-          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
+          .HasKey(x => new
+          {
+            x.TillDateTime,
+            x.FromDateTime,
+            x.InstallationId,
+            x.Source
+          });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -46,7 +52,13 @@
     public void Configure(EntityTypeBuilder<AirQualityForecast> builder)
     {
       builder.ToTable("Forecasts")
-          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
+          .HasKey(x => new
+          {
+            x.TillDateTime,
+            x.FromDateTime,
+            x.InstallationId,
+            x.Source
+          });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -68,7 +80,9 @@
     private readonly byte _maxClassPropertyLength;
 
     public ForecastErrorConfiguration(
-        byte maxPeriodPropertyLength, byte maxClassPropertyLength, byte maxSourcePropertyLength)
+        byte maxPeriodPropertyLength,
+        byte maxClassPropertyLength,
+        byte maxSourcePropertyLength)
     {
       _maxPeriodPropertyLength = maxPeriodPropertyLength;
       _maxClassPropertyLength = maxClassPropertyLength;
@@ -77,8 +91,16 @@
 
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
     {
-      builder.ToTable("ForecastErrors").HasKey(x => new
-          { x.Period, x.Class, x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
+      builder.ToTable("ForecastErrors")
+          .HasKey(x => new
+          {
+            x.Period,
+            x.Class,
+            x.TillDateTime,
+            x.FromDateTime,
+            x.InstallationId,
+            x.Source,
+          });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -160,7 +182,9 @@
       modelBuilder.ApplyConfiguration(new ForecastConfiguration(
           _maxSourcePropertyLength));
       modelBuilder.ApplyConfiguration(new ForecastErrorConfiguration(
-          _maxPeriodPropertyLength, _maxClassPropertyLength, _maxSourcePropertyLength));
+          _maxPeriodPropertyLength,
+          _maxClassPropertyLength,
+          _maxSourcePropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
       modelBuilder.ApplyConfiguration(new WeatherMeasurementConfiguration());
 

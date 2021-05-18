@@ -58,7 +58,7 @@
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
-          serviceProvider, config);
+          serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
@@ -113,7 +113,7 @@
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
-          serviceProvider, config);
+          serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
@@ -159,7 +159,7 @@
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
-          serviceProvider, config);
+          serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList

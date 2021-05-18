@@ -105,7 +105,8 @@
         short installationId,
         DateTime startDate,
         short numberOfDays,
-        short numberOfForecastsInDay)
+        short numberOfForecastsInDay,
+        AirQualityForecastSource source = AirQualityForecastSource.Airly)
     {
       for (int i = 0; i < numberOfDays; i++)
       {
@@ -114,7 +115,8 @@
           yield return CreateForecast(
               installationId,
               startDate.AddHours(j),
-              startDate.AddDays(1).AddMinutes(RequestMinutesOffset));
+              startDate.AddDays(1).AddMinutes(RequestMinutesOffset),
+              source: source);
         }
         startDate = startDate.AddDays(1);
       }
@@ -126,7 +128,8 @@
         DateTime requestDate,
         byte airlyCaqi = 1,
         short pm25 = 1,
-        short pm10 = 1)
+        short pm10 = 1,
+        AirQualityForecastSource source = AirQualityForecastSource.Airly)
     {
       return new AirQualityForecast
       {
@@ -137,6 +140,7 @@
         AirlyCaqi = airlyCaqi,
         Pm25 = pm25,
         Pm10 = pm10,
+        Source = source,
       };
     }
 

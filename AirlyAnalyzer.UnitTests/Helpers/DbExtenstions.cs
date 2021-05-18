@@ -80,12 +80,13 @@
         List<short> installationIds,
         DateTime startDate,
         short numberOfDays,
-        short numberOfForecastsInDay)
+        short numberOfForecastsInDay,
+        AirQualityForecastSource source = AirQualityForecastSource.Airly)
     {
       foreach (short installationId in installationIds)
       {
         context.AddForecastsToDatabase(
-            installationId, startDate, numberOfDays, numberOfForecastsInDay);
+            installationId, startDate, numberOfDays, numberOfForecastsInDay, source);
       }
     }
 
@@ -131,10 +132,11 @@
         short installationId,
         DateTime startDate,
         short numberOfDays,
-        short numberOfForecastsInDay)
+        short numberOfForecastsInDay,
+        AirQualityForecastSource source = AirQualityForecastSource.Airly)
     {
       context.Forecasts.AddRange(GenerateForecasts(
-          installationId, startDate, numberOfDays, numberOfForecastsInDay));
+          installationId, startDate, numberOfDays, numberOfForecastsInDay, source));
 
       context.SaveChanges();
     }

@@ -10,6 +10,13 @@
   public class MeasurementConfiguration
       : IEntityTypeConfiguration<AirQualityMeasurement>
   {
+    private readonly byte _maxSourcePropertyLength;
+
+    public MeasurementConfiguration(byte maxSourcePropertyLength)
+    {
+      _maxSourcePropertyLength = maxSourcePropertyLength;
+    }
+
     public void Configure(EntityTypeBuilder<AirQualityMeasurement> builder)
     {
       builder.ToTable("Measurements")
@@ -18,12 +25,24 @@
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.RequestDateTime).HasColumnType("smalldatetime");
+
+      builder.Property(x => x.Source)
+          .HasConversion<string>()
+          .IsUnicode(false)
+          .HasMaxLength(_maxSourcePropertyLength);
     }
   }
 
   public class ForecastConfiguration
       : IEntityTypeConfiguration<AirQualityForecast>
   {
+    private readonly byte _maxSourcePropertyLength;
+
+    public ForecastConfiguration(byte maxSourcePropertyLength)
+    {
+      _maxSourcePropertyLength = maxSourcePropertyLength;
+    }
+
     public void Configure(EntityTypeBuilder<AirQualityForecast> builder)
     {
       builder.ToTable("Forecasts")
@@ -74,6 +93,11 @@
           .HasConversion<string>()
           .IsUnicode(false)
           .HasMaxLength(_maxClassPropertyLength);
+
+      builder.Property(x => x.Source)
+          .HasConversion<string>()
+          .IsUnicode(false)
+          .HasMaxLength(_maxSourcePropertyLength);
     }
   }
 
@@ -100,6 +124,8 @@
 
   public class AirlyContext : DbContext
   {
+    private readonly byte _maxSourcePropertyLength;
+
     private readonly byte _maxPeriodPropertyLength;
     private readonly byte _maxClassPropertyLength;
 
@@ -112,6 +138,9 @@
 
       _maxClassPropertyLength = config.GetValue<byte>(
           "AppSettings:Databases:MaxForecastErrorClassPropertyLength");
+
+      _maxSourcePropertyLength = config.GetValue<byte>(
+          "AppSettings:Databases:MaxSourcePropertyLength");
     }
 
     public DbSet<AirQualityMeasurement> Measurements { get; set; }
@@ -126,10 +155,12 @@
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
-      modelBuilder.ApplyConfiguration(new ForecastConfiguration());
+      modelBuilder.ApplyConfiguration(new MeasurementConfiguration(
+          _maxSourcePropertyLength));
+      modelBuilder.ApplyConfiguration(new ForecastConfiguration(
+          _maxSourcePropertyLength));
       modelBuilder.ApplyConfiguration(new ForecastErrorConfiguration(
-          _maxPeriodPropertyLength, _maxClassPropertyLength));
+          _maxPeriodPropertyLength, _maxClassPropertyLength, _maxSourcePropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
       modelBuilder.ApplyConfiguration(new WeatherMeasurementConfiguration());
 

@@ -68,6 +68,8 @@
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Never());
+
+      Assert.Empty(newMeasurementsList);
     }
 
     [Theory]
@@ -103,6 +105,8 @@
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Never());
+
+      Assert.Equal(_installationIds.Count, newMeasurementsList.Count);
     }
 
     [Fact]
@@ -130,6 +134,8 @@
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
+
+      Assert.Equal(_installationIds.Count, newMeasurementsList.Count);
     }
 
     [Theory]
@@ -169,6 +175,8 @@
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly(_installationIds.Count));
+
+      Assert.Equal(_installationIds.Count, newMeasurementsList.Count);
     }
 
     [Fact]
@@ -217,6 +225,8 @@
       _downloaderMock.Verify(
           x => x.DownloadInstallationMeasurements(It.IsAny<short>()),
           Times.Exactly((int)Math.Ceiling((double)_installationIds.Count / 2)));
+
+      Assert.Equal(_installationIds.Count, newMeasurementsList.Count);
     }
   }
 }

@@ -81,7 +81,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(4 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
       var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();

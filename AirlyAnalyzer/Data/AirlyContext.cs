@@ -13,7 +13,7 @@
     public void Configure(EntityTypeBuilder<AirQualityMeasurement> builder)
     {
       builder.ToTable("Measurements")
-          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId });
+          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -27,7 +27,7 @@
     public void Configure(EntityTypeBuilder<AirQualityForecast> builder)
     {
       builder.ToTable("Forecasts")
-          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId });
+          .HasKey(x => new { x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
@@ -36,27 +36,30 @@
       builder.Property(x => x.Source)
           .HasConversion<string>()
           .IsUnicode(false)
-          .HasDefaultValue(AirQualityForecastSource.Airly);
+          .HasMaxLength(_maxSourcePropertyLength);
     }
   }
 
   public class ForecastErrorConfiguration
       : IEntityTypeConfiguration<AirQualityForecastError>
   {
+    private readonly byte _maxSourcePropertyLength;
+
     private readonly byte _maxPeriodPropertyLength;
     private readonly byte _maxClassPropertyLength;
 
     public ForecastErrorConfiguration(
-        byte maxPeriodPropertyLength, byte maxClassPropertyLength)
+        byte maxPeriodPropertyLength, byte maxClassPropertyLength, byte maxSourcePropertyLength)
     {
       _maxPeriodPropertyLength = maxPeriodPropertyLength;
       _maxClassPropertyLength = maxClassPropertyLength;
+      _maxSourcePropertyLength = maxSourcePropertyLength;
     }
 
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
     {
       builder.ToTable("ForecastErrors").HasKey(x => new
-          { x.Period, x.Class, x.TillDateTime, x.FromDateTime, x.InstallationId });
+          { x.Period, x.Class, x.TillDateTime, x.FromDateTime, x.InstallationId, x.Source });
 
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");

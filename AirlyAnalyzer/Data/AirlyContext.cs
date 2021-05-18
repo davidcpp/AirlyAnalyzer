@@ -80,13 +80,14 @@
     private readonly byte _maxClassPropertyLength;
 
     public ForecastErrorConfiguration(
+        byte maxSourcePropertyLength,
         byte maxPeriodPropertyLength,
-        byte maxClassPropertyLength,
-        byte maxSourcePropertyLength)
+        byte maxClassPropertyLength)
     {
+      _maxSourcePropertyLength = maxSourcePropertyLength;
+
       _maxPeriodPropertyLength = maxPeriodPropertyLength;
       _maxClassPropertyLength = maxClassPropertyLength;
-      _maxSourcePropertyLength = maxSourcePropertyLength;
     }
 
     public void Configure(EntityTypeBuilder<AirQualityForecastError> builder)
@@ -155,14 +156,14 @@
         DbContextOptions<AirlyContext> options, IConfiguration config)
         : base(options)
     {
+      _maxSourcePropertyLength = config.GetValue<byte>(
+          "AppSettings:Databases:MaxSourcePropertyLength");
+
       _maxPeriodPropertyLength =
           config.GetValue<byte>("AppSettings:Databases:MaxPeriodPropertyLength");
 
       _maxClassPropertyLength = config.GetValue<byte>(
           "AppSettings:Databases:MaxForecastErrorClassPropertyLength");
-
-      _maxSourcePropertyLength = config.GetValue<byte>(
-          "AppSettings:Databases:MaxSourcePropertyLength");
     }
 
     public DbSet<AirQualityMeasurement> Measurements { get; set; }
@@ -182,9 +183,9 @@
       modelBuilder.ApplyConfiguration(new ForecastConfiguration(
           _maxSourcePropertyLength));
       modelBuilder.ApplyConfiguration(new ForecastErrorConfiguration(
+          _maxSourcePropertyLength,
           _maxPeriodPropertyLength,
-          _maxClassPropertyLength,
-          _maxSourcePropertyLength));
+          _maxClassPropertyLength));
       modelBuilder.ApplyConfiguration(new InstallationInfoConfiguration());
       modelBuilder.ApplyConfiguration(new WeatherMeasurementConfiguration());
 

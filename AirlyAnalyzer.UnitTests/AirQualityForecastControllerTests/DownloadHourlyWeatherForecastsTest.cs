@@ -1,21 +1,32 @@
 ﻿namespace AirlyAnalyzer.UnitTests.AirQualityForecastControllerTests
 {
+  using System;
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
+  using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Services;
+  using AirlyAnalyzer.UnitTests.Fixtures;
+  using AirlyAnalyzer.UnitTests.Helpers;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Moq;
   using Xunit;
 
+  [Collection("RepositoryTests")]
   public class DownloadHourlyWeatherForecastsTest
   {
     private readonly Mock<IOpenWeatherApiDownloader> _downloaderMock;
 
-    public DownloadHourlyWeatherForecastsTest()
+    private readonly UnitOfWork _unitOfWork;
+    private readonly AirlyContext _context;
+
+    public DownloadHourlyWeatherForecastsTest(RepositoryFixture fixture)
     {
+      _unitOfWork = fixture.UnitOfWork;
+      _context = fixture.Context;
+
       _downloaderMock = new Mock<IOpenWeatherApiDownloader>();
     }
 

@@ -2,7 +2,7 @@
 {
   public enum AirQualityForecastSource
   {
-    App = 0,
-    Airly = 1,
+    Airly = 0,
+    App = 1,
   }
 }

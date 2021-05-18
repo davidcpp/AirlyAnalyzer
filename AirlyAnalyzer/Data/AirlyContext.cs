@@ -32,6 +32,11 @@
       builder.Property(x => x.FromDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.TillDateTime).HasColumnType("smalldatetime");
       builder.Property(x => x.RequestDateTime).HasColumnType("smalldatetime");
+
+      builder.Property(x => x.Source)
+          .HasConversion<string>()
+          .IsUnicode(false)
+          .HasDefaultValue(AirQualityForecastSource.Airly);
     }
   }
 

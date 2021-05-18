@@ -64,6 +64,7 @@
     public async Task downloads_for_all_installations()
     {
       // Arrange
+      var installationIds = new List<short> { 2, 4, 6 };
       var downloadedData = new OpenWeatherForecast();
 
       _downloaderMock.Setup(
@@ -78,11 +79,11 @@
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", "2"),
+            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", "4"),
+            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", "6"),
+            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -102,7 +103,7 @@
               It.IsAny<float>(), It.IsAny<float>()),
           Times.Exactly(configInstallationIds.Count));
 
-      Assert.Equal(configInstallationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
     }
   }
 }

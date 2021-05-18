@@ -28,6 +28,8 @@
       _context = fixture.Context;
 
       _downloaderMock = new Mock<IOpenWeatherApiDownloader>();
+
+      _context.Clear();
     }
 
     [Fact]

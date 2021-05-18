@@ -36,7 +36,8 @@
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
-        new KeyValuePair<string, string>("AppSettings:AirlyApi:InstallationIds:0", ""),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:0", ""),
       };
 
       var config = new ConfigurationBuilder()
@@ -76,9 +77,12 @@
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
-        new KeyValuePair<string, string>("AppSettings:AirlyApi:InstallationIds:0", "2"),
-        new KeyValuePair<string, string>("AppSettings:AirlyApi:InstallationIds:1", "4"),
-        new KeyValuePair<string, string>("AppSettings:AirlyApi:InstallationIds:2", "6"),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:0", "2"),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:1", "4"),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:2", "6"),
       };
 
       var config = new ConfigurationBuilder()

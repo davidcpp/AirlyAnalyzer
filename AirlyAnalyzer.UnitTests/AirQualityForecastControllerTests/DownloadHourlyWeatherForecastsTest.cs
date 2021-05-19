@@ -118,7 +118,7 @@
     }
 
     [Fact]
-    public async Task returns_new_empty_forecasts_for_all_installations_when_no_new_ones_are_downloaded()
+    public async Task returns_new_empty_forecasts_for_all_installations_when_air_quality_forecasts_is_up_to_date()
     {
       // Arrange
       const short numberOfDays = 3;
@@ -171,7 +171,7 @@
     }
 
     [Fact]
-    public async Task downloads_for_all_installations()
+    public async Task downloads_for_all_installations_when_no_air_quality_forecasts_in_database()
     {
       // Arrange
       var installationIds = new List<short> { 2, 4, 6 };

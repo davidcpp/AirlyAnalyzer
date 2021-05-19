@@ -65,6 +65,35 @@
     }
 
     [Fact]
+    public async Task returns_new_empty_forecast_list_when_no_installations()
+    {
+      // Arrange
+      var services = new ServiceCollection();
+      services.AddSingleton(_downloaderMock.Object);
+      var serviceProvider = services.BuildServiceProvider();
+
+      var configInstallationIds = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:0", ""),
+      };
+
+      var config = new ConfigurationBuilder()
+          .AddInMemoryCollection(configInstallationIds)
+          .Build();
+
+      var airQualityForecastController = new AirQualityForecastController(
+          serviceProvider, config, unitOfWork: _unitOfWork);
+
+      // Act
+      var weatherForecastsList
+          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+
+      // Assert
+      Assert.Empty(weatherForecastsList);
+    }
+
+    [Fact]
     public async Task does_not_download_when_air_quality_forecasts_is_up_to_date()
     {
       // Arrange
@@ -206,6 +235,58 @@
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
           Times.Exactly(installationIds.Count));
+    }
+
+    [Fact]
+    public async Task returns_downloaded_for_all_installations_when_no_air_quality_forecasts_in_database()
+    {
+      // Arrange
+      var installationIds = new List<short> { 2, 4, 6 };
+
+      var downloadedData = new OpenWeatherForecast();
+      downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
+
+      _downloaderMock.Setup(
+          x => x.DownloadHourlyWeatherForecast(
+              It.IsAny<float>(), It.IsAny<float>()))
+                     .ReturnsAsync(downloadedData);
+
+      var services = new ServiceCollection();
+      services.AddSingleton(_downloaderMock.Object);
+      var serviceProvider = services.BuildServiceProvider();
+
+      var configInstallationIds = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+      };
+
+      var config = new ConfigurationBuilder()
+          .AddInMemoryCollection(configInstallationIds)
+          .Build();
+
+      var airQualityForecastController = new AirQualityForecastController(
+          serviceProvider, config, unitOfWork: _unitOfWork);
+
+      // Act
+      var weatherForecastsList
+          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+
+      // Assert
+      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(
+          downloadedData.HourlyForecast.Count,
+          weatherForecastsList[0].HourlyForecast.Count);
+      Assert.Equal(
+          downloadedData.HourlyForecast.Count,
+          weatherForecastsList[1].HourlyForecast.Count);
+      Assert.Equal(
+          downloadedData.HourlyForecast.Count,
+          weatherForecastsList[2].HourlyForecast.Count);
     }
   }
 }

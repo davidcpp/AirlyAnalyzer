@@ -75,6 +75,10 @@
 
           hourlyWeatherForecasts.Add(weatherForecast);
         }
+        else
+        {
+          hourlyWeatherForecasts.Add(new OpenWeatherForecast());
+        }
       }
 
       return hourlyWeatherForecasts;

@@ -5,6 +5,11 @@
 
   public class OpenWeatherForecast
   {
+    public OpenWeatherForecast()
+    {
+      HourlyForecast = new List<OpenWeatherForecastObject>();
+    }
+
     [JsonProperty("timezone_offset")]
     public int TimeZoneOffset { get; set; }
 

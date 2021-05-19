@@ -125,6 +125,59 @@
     }
 
     [Fact]
+    public async Task returns_new_empty_forecasts_for_all_installations_when_no_new_ones_are_downloaded()
+    {
+      // Arrange
+      const short numberOfDays = 3;
+      const short updateHoursPeriod = 12;
+      const short numberOfForecastsInDay = 24;
+
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
+      var installationIds = new List<short> { 2, 4, 6 };
+
+      var services = new ServiceCollection();
+      services.AddSingleton(_downloaderMock.Object);
+      var serviceProvider = services.BuildServiceProvider();
+
+      _context.AddAllForecastsToDatabase(
+          installationIds,
+          startDate,
+          numberOfDays,
+          numberOfForecastsInDay,
+          AirQualityForecastSource.App);
+
+      var configInstallationIds = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:UpdateHoursPeriod",
+            updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+      };
+
+      var config = new ConfigurationBuilder()
+          .AddInMemoryCollection(configInstallationIds)
+          .Build();
+
+      var airQualityForecastController = new AirQualityForecastController(
+          serviceProvider, config, unitOfWork: _unitOfWork);
+
+      // Act
+      var weatherForecastsList
+          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+
+      // Assert
+      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.NotNull(weatherForecastsList[0]);
+      Assert.NotNull(weatherForecastsList[1]);
+      Assert.NotNull(weatherForecastsList[2]);
+    }
+
+    [Fact]
     public async Task downloads_for_all_installations()
     {
       // Arrange

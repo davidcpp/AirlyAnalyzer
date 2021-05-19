@@ -6,7 +6,7 @@
   public class OpenWeatherForecastTest
   {
     [Fact]
-    public void returns_not_null_hourly_forecast()
+    public void not_null_hourly_forecast_property_for_new_object()
     {
       // Act
       var openWeatherForecast = new OpenWeatherForecast();

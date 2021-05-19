@@ -9,23 +9,38 @@
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
+  using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
 
   public class AirQualityForecastController : IHostedService, IDisposable
   {
     private readonly IOpenWeatherApiDownloader _openWeatherApiDownloader;
+
     private readonly ILogger<AirQualityForecastController> _logger;
+    private readonly IServiceProvider _serviceProvider;
 
     private readonly List<short> _installationIds;
+    private readonly short _forecastUpdateHoursPeriod;
 
+    private UnitOfWork _unitOfWork;
     private Timer _timer;
 
     public AirQualityForecastController(
         IServiceProvider serviceProvider,
         IConfiguration config,
-        ILogger<AirQualityForecastController> logger = null)
+        ILogger<AirQualityForecastController> logger = null,
+        UnitOfWork unitOfWork = null /* Unit Tests variant */)
     {
+      _serviceProvider = serviceProvider;
       _logger = logger;
+
+      if (unitOfWork != null)
+      {
+        _unitOfWork = unitOfWork;
+      }
+
+      _forecastUpdateHoursPeriod = config.GetValue<short>(
+          "AppSettings:AirQualityForecast:UpdateHoursPeriod");
 
       _installationIds = config.GetSection(
           "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();
@@ -45,12 +60,21 @@
     {
       var hourlyWeatherForecasts = new List<OpenWeatherForecast>();
 
-      foreach (short _ in _installationIds)
-      {
-        var weatherForecast = await _openWeatherApiDownloader
-            .DownloadHourlyWeatherForecast(0.0f, 0.0f);
+      var requestDateTime = DateTime.UtcNow;
 
-        hourlyWeatherForecasts.Add(weatherForecast);
+      foreach (short installationId in _installationIds)
+      {
+        var lastForecastDate
+            = await _unitOfWork.ForecastRepository.GetLastDate(installationId);
+
+        if ((requestDateTime - lastForecastDate).TotalHours
+            >= _forecastUpdateHoursPeriod)
+        {
+          var weatherForecast = await _openWeatherApiDownloader
+              .DownloadHourlyWeatherForecast(0.0f, 0.0f);
+
+          hourlyWeatherForecasts.Add(weatherForecast);
+        }
       }
 
       return hourlyWeatherForecasts;

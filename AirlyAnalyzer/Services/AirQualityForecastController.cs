@@ -5,12 +5,12 @@
   using System.Threading;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Client;
+  using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
-  using AirlyAnalyzer.Data;
-  using AirlyAnalyzer.Models;
 
   public class AirQualityForecastController : IHostedService, IDisposable
   {

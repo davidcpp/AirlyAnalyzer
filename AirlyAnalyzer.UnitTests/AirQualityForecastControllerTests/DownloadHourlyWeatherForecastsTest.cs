@@ -165,7 +165,7 @@
       _downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(configInstallationIds.Count));
+          Times.Exactly(installationIds.Count));
     }
   }
 }

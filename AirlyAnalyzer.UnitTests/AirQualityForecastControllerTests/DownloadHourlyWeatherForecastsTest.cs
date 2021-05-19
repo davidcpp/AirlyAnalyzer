@@ -69,8 +69,6 @@
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
           Times.Never());
-
-      Assert.Empty(weatherForecastsList);
     }
 
     [Fact]
@@ -124,8 +122,6 @@
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
           Times.Never());
-
-      Assert.Empty(weatherForecastsList);
     }
 
     [Fact]
@@ -170,8 +166,6 @@
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
           Times.Exactly(configInstallationIds.Count));
-
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
     }
   }
 }

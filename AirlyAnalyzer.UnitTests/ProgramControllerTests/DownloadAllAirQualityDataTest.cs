@@ -110,7 +110,7 @@
     }
 
     [Fact]
-    public async Task download_for_all_installations_when_no_measurements_in_database()
+    public async Task downloads_for_all_installations_when_no_measurements_in_database()
     {
       // Arrange
       var downloadedData = new Measurements();
@@ -141,7 +141,7 @@
     [Theory]
     [InlineData(22)]
     [InlineData(24)]
-    public async Task download_for_all_installations_when_data_is_out_of_date(
+    public async Task downloads_for_all_installations_when_data_is_out_of_date(
         short minNumberOfMeasurements)
     {
       // Arrange
@@ -180,7 +180,7 @@
     }
 
     [Fact]
-    public async Task download_for_some_installations_when_some_data_is_out_of_date()
+    public async Task downloads_for_some_installations_when_some_data_is_out_of_date()
     {
       // Arrange
       const short numberOfDays = 1;

@@ -36,13 +36,6 @@
     public async Task does_not_download_when_no_installations()
     {
       // Arrange
-      var downloadedData = new OpenWeatherForecast();
-
-      _downloaderMock.Setup(
-          x => x.DownloadHourlyWeatherForecast(
-              It.IsAny<float>(), It.IsAny<float>()))
-                     .ReturnsAsync(downloadedData);
-
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
@@ -182,12 +175,6 @@
     {
       // Arrange
       var installationIds = new List<short> { 2, 4, 6 };
-      var downloadedData = new OpenWeatherForecast();
-
-      _downloaderMock.Setup(
-          x => x.DownloadHourlyWeatherForecast(
-              It.IsAny<float>(), It.IsAny<float>()))
-                     .ReturnsAsync(downloadedData);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);

@@ -68,11 +68,16 @@
             = await _unitOfWork.ForecastRepository.GetLastDate(
                 installationId, AirQualityDataSource.App);
 
+        var installationInfo = await
+            _unitOfWork.InstallationsRepository.GetById(installationId);
+
         if ((requestDateTime - lastForecastDate).TotalHours
-            >= _forecastUpdateHoursPeriod)
+            >= _forecastUpdateHoursPeriod || installationInfo == null )
         {
           var weatherForecast = await _openWeatherApiDownloader
-              .DownloadHourlyWeatherForecast(0.0f, 0.0f);
+              .DownloadHourlyWeatherForecast(
+                  installationInfo.Location.Latitude,
+                  installationInfo.Location.Longitude);
 
           hourlyWeatherForecasts.Add(weatherForecast);
         }

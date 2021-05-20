@@ -4,7 +4,7 @@
   using AirlyAnalyzer.Models;
   using Microsoft.Extensions.Configuration;
 
-  public class ScaleForecastErrorsCalculator : ForecastErrorsCalculator
+  public sealed class ScaleForecastErrorsCalculator : ForecastErrorsCalculator
   {
     private readonly short _caqiScaleLevel;
 

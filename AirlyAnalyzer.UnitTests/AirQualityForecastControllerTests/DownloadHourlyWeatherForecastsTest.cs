@@ -9,6 +9,7 @@
   using AirlyAnalyzer.Services;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using AirlyAnalyzer.UnitTests.Helpers;
+  using static AirlyAnalyzer.UnitTests.Helpers.ModelUtilities;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Moq;
@@ -21,6 +22,7 @@
 
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
+    private readonly List<InstallationInfo> _installationInfos;
     private readonly List<short> installationIds;
 
     public DownloadHourlyWeatherForecastsTest(RepositoryFixture fixture)
@@ -33,6 +35,10 @@
       _downloaderMock = new Mock<IOpenWeatherApiDownloader>();
 
       _context.Clear();
+
+      _installationInfos = GetTestInstallationInfoList(installationIds);
+      _context.InstallationInfos.AddRange(_installationInfos);
+      _context.SaveChanges();
     }
 
     [Fact]

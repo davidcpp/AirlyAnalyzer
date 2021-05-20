@@ -11,6 +11,29 @@
     private const short _idForAllInstallations = -1;
     public const byte RequestMinutesOffset = 30;
 
+    public static List<InstallationInfo> GetTestInstallationInfoList(
+        List<short> installationIds)
+    {
+      return new List<InstallationInfo>
+      {
+        new InstallationInfo
+        {
+          InstallationId = installationIds[0],
+          Location = new Coordinates { Latitude = 50.0f, Longitude = 10.0f }
+        },
+        new InstallationInfo
+        {
+          InstallationId = installationIds[1],
+          Location = new Coordinates { Latitude = 60.0f, Longitude = 30.0f }
+        },
+        new InstallationInfo
+        {
+          InstallationId = installationIds[2],
+          Location = new Coordinates { Latitude = 40.0f, Longitude = 20.0f }
+        },
+      };
+    }
+
     public static InstallationInfo GetTestInstallationInfo(
         short installationId, DateTime updateDate)
     {

@@ -207,7 +207,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
@@ -260,7 +260,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();
@@ -327,7 +327,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
@@ -387,7 +387,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();
@@ -459,7 +459,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
@@ -477,7 +477,7 @@
           installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
-          updateHoursPeriod,
+          1,
           AirQualityDataSource.Airly);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
@@ -519,7 +519,7 @@
       const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(8 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
       var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();

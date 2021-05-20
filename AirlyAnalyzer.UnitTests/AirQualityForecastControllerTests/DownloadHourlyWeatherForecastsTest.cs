@@ -21,9 +21,12 @@
 
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
+    private readonly List<short> installationIds;
 
     public DownloadHourlyWeatherForecastsTest(RepositoryFixture fixture)
     {
+      installationIds = new List<short> { 2, 4, 6 };
+
       _unitOfWork = fixture.UnitOfWork;
       _context = fixture.Context;
 
@@ -102,7 +105,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -155,7 +157,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -208,7 +209,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -261,7 +261,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
@@ -328,7 +327,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -388,7 +386,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
@@ -460,7 +457,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -520,7 +516,6 @@
       const short numberOfForecastsInDay = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
-      var installationIds = new List<short> { 2, 4, 6 };
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
@@ -589,8 +584,6 @@
     public async Task downloads_for_all_installations_when_no_air_quality_forecasts_in_database()
     {
       // Arrange
-      var installationIds = new List<short> { 2, 4, 6 };
-
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
@@ -627,8 +620,6 @@
     public async Task returns_downloaded_for_all_installations_when_no_air_quality_forecasts_in_database()
     {
       // Arrange
-      var installationIds = new List<short> { 2, 4, 6 };
-
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
 

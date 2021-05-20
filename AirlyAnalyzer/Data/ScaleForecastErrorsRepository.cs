@@ -11,14 +11,17 @@
     {
     }
 
-    public override async Task<DateTime> GetLastDate(short installationId)
+    public override async Task<DateTime> GetLastDate(
+        short installationId,
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       var lastDate = _dateTimeMinValue;
 
       var selectedDates = await GetParameters(
           wherePredicate:
               m => m.InstallationId == installationId
-                && m.Class == ForecastErrorClass.Scale,
+                && m.Class == ForecastErrorClass.Scale
+                && m.Source == source,
           selectPredicate: m => m.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 

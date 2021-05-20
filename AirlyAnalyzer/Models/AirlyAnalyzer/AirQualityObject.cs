@@ -45,7 +45,7 @@
       set => requestDateTime = value.ToUniversalTime();
     }
 
-    [DefaultValue(AirQualityForecastSource.Airly)]
-    public AirQualityForecastSource Source { get; set; }
+    [DefaultValue(AirQualityDataSource.Airly)]
+    public AirQualityDataSource Source { get; set; }
   }
 }

@@ -113,7 +113,7 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -166,7 +166,7 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -219,7 +219,7 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -280,7 +280,7 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -339,14 +339,14 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
           installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -407,14 +407,14 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
           installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -471,14 +471,14 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
           installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
-          AirQualityForecastSource.Airly);
+          AirQualityDataSource.Airly);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
@@ -539,14 +539,14 @@
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
-          AirQualityForecastSource.App);
+          AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
           installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
-          AirQualityForecastSource.Airly);
+          AirQualityDataSource.Airly);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {

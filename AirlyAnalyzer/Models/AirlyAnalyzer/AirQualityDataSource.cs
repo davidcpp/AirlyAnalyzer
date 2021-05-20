@@ -1,6 +1,6 @@
 ﻿namespace AirlyAnalyzer
 {
-  public enum AirQualityForecastSource
+  public enum AirQualityDataSource
   {
     Airly = 0,
     App = 1,

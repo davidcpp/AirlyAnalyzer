@@ -81,7 +81,7 @@
         DateTime startDate,
         short numberOfDays,
         short numberOfForecastsInDay,
-        AirQualityForecastSource source = AirQualityForecastSource.Airly)
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       foreach (short installationId in installationIds)
       {
@@ -133,7 +133,7 @@
         DateTime startDate,
         short numberOfDays,
         short numberOfForecastsInDay,
-        AirQualityForecastSource source = AirQualityForecastSource.Airly)
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       context.Forecasts.AddRange(GenerateForecasts(
           installationId, startDate, numberOfDays, numberOfForecastsInDay, source));

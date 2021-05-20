@@ -106,7 +106,7 @@
         DateTime startDate,
         short numberOfDays,
         short numberOfForecastsInDay,
-        AirQualityForecastSource source = AirQualityForecastSource.Airly)
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       for (int i = 0; i < numberOfDays; i++)
       {
@@ -129,7 +129,7 @@
         byte airlyCaqi = 1,
         short pm25 = 1,
         short pm10 = 1,
-        AirQualityForecastSource source = AirQualityForecastSource.Airly)
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       return new AirQualityForecast
       {

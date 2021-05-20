@@ -65,7 +65,8 @@
       foreach (short installationId in _installationIds)
       {
         var lastForecastDate
-            = await _unitOfWork.ForecastRepository.GetLastDate(installationId);
+            = await _unitOfWork.ForecastRepository.GetLastDate(
+                installationId, AirQualityDataSource.App);
 
         if ((requestDateTime - lastForecastDate).TotalHours
             >= _forecastUpdateHoursPeriod)

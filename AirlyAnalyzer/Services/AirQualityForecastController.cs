@@ -72,7 +72,7 @@
             _unitOfWork.InstallationsRepository.GetById(installationId);
 
         if ((requestDateTime - lastForecastDate).TotalHours
-            >= _forecastUpdateHoursPeriod || installationInfo == null )
+            >= _forecastUpdateHoursPeriod || installationInfo == null)
         {
           var weatherForecast = await _openWeatherApiDownloader
               .DownloadHourlyWeatherForecast(

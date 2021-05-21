@@ -53,6 +53,8 @@
     {
       _logger?.LogInformation("AirQualityForecastController is starting");
 
+      _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
+
       return Task.CompletedTask;
     }
 

@@ -58,6 +58,8 @@
 
     public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
     {
+      _logger?.LogInformation("DownloadHourlyWeatherForecasts() is starting");
+
       var hourlyWeatherForecasts = new List<OpenWeatherForecast>();
 
       var requestDateTime = DateTime.UtcNow;

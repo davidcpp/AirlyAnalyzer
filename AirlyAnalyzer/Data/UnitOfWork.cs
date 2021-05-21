@@ -12,8 +12,8 @@
     private readonly AirlyContext _context;
     private readonly ILogger<UnitOfWork> _logger;
 
-    private GenericRepository<AirQualityMeasurement> measurementRepo;
-    private GenericRepository<AirQualityForecast> forecastRepo;
+    private AirQualityRepository<AirQualityMeasurement> measurementRepo;
+    private AirQualityRepository<AirQualityForecast> forecastRepo;
     private ForecastErrorsRepository forecastErrorRepo;
     private PlainForecastErrorsRepository plainForecastErrorRepo;
     private ScaleForecastErrorsRepository scaleForecastErrorRepo;
@@ -30,13 +30,13 @@
       _logger = logger;
     }
 
-    public GenericRepository<AirQualityMeasurement> MeasurementRepository
+    public AirQualityRepository<AirQualityMeasurement> MeasurementRepository
         => measurementRepo
-            ??= new GenericRepository<AirQualityMeasurement>(_context);
+            ??= new AirQualityRepository<AirQualityMeasurement>(_context);
 
-    public GenericRepository<AirQualityForecast> ForecastRepository
+    public AirQualityRepository<AirQualityForecast> ForecastRepository
         => forecastRepo
-            ??= new GenericRepository<AirQualityForecast>(_context);
+            ??= new AirQualityRepository<AirQualityForecast>(_context);
 
     public ForecastErrorsRepository ForecastErrorRepository
         => forecastErrorRepo

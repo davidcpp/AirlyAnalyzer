@@ -7,12 +7,12 @@
   using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
 
-  public class GenericRepository<TEntity> : BasicRepository<TEntity>
+  public class AirQualityRepository<TEntity> : BasicRepository<TEntity>
       where TEntity : AirQualityObject
   {
     protected readonly DateTime _dateTimeMinValue = new DateTime(2000, 1, 1);
 
-    public GenericRepository(AirlyContext context) : base(context)
+    public AirQualityRepository(AirlyContext context) : base(context)
     {
     }
 

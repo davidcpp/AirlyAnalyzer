@@ -23,11 +23,11 @@
     private readonly UnitOfWork _unitOfWork;
     private readonly AirlyContext _context;
     private readonly List<InstallationInfo> _installationInfos;
-    private readonly List<short> installationIds;
+    private readonly List<short> _installationIds;
 
     public DownloadHourlyWeatherForecastsTest(RepositoryFixture fixture)
     {
-      installationIds = new List<short> { 2, 4, 6 };
+      _installationIds = new List<short> { 2, 4, 6 };
 
       _unitOfWork = fixture.UnitOfWork;
       _context = fixture.Context;
@@ -36,7 +36,7 @@
 
       _context.Clear();
 
-      _installationInfos = GetTestInstallationInfoList(installationIds);
+      _installationInfos = GetTestInstallationInfoList(_installationIds);
       _context.InstallationInfos.AddRange(_installationInfos);
       _context.SaveChanges();
     }
@@ -117,7 +117,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
@@ -129,11 +129,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -169,7 +169,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
@@ -181,11 +181,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -200,7 +200,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.NotNull(weatherForecastsList[0]);
       Assert.NotNull(weatherForecastsList[1]);
       Assert.NotNull(weatherForecastsList[2]);
@@ -221,7 +221,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
@@ -233,11 +233,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -255,7 +255,7 @@
       _downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(installationIds.Count));
+          Times.Exactly(_installationIds.Count));
     }
 
     [Fact]
@@ -281,7 +281,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
@@ -293,11 +293,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -312,7 +312,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.Equal(
           downloadedData.HourlyForecast.Count,
           weatherForecastsList[0].HourlyForecast.Count);
@@ -339,14 +339,14 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
-          installationIds[1],
+          _installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
@@ -358,11 +358,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -380,7 +380,7 @@
       _downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(installationIds.Count - 1));
+          Times.Exactly(_installationIds.Count - 1));
     }
 
     [Fact]
@@ -406,14 +406,14 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
-          installationIds[1],
+          _installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
@@ -425,11 +425,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -444,7 +444,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.Equal(
           downloadedData.HourlyForecast.Count,
           weatherForecastsList[0].HourlyForecast.Count);
@@ -469,14 +469,14 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
-          installationIds[1],
+          _installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           1,
@@ -488,11 +488,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -510,7 +510,7 @@
       _downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(installationIds.Count));
+          Times.Exactly(_installationIds.Count));
     }
 
     [Fact]
@@ -536,14 +536,14 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.AddAllForecastsToDatabase(
-          installationIds,
+          _installationIds,
           startDate,
           numberOfDays,
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
       _context.AddForecastsToDatabase(
-          installationIds[1],
+          _installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
           updateHoursPeriod,
@@ -555,11 +555,11 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -574,7 +574,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.Equal(
           downloadedData.HourlyForecast.Count,
           weatherForecastsList[0].HourlyForecast.Count);
@@ -597,11 +597,11 @@
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -619,7 +619,7 @@
       _downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(installationIds.Count));
+          Times.Exactly(_installationIds.Count));
     }
 
     [Fact]
@@ -641,11 +641,11 @@
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -660,7 +660,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.Equal(
           downloadedData.HourlyForecast.Count,
           weatherForecastsList[0].HourlyForecast.Count);
@@ -686,7 +686,7 @@
       var downloaderMock = new Mock<IOpenWeatherApiDownloader>(MockBehavior.Strict);
       var mockSequence = new MockSequence();
 
-      for (int i = 0; i < installationIds.Count; i++)
+      for (int i = 0; i < _installationIds.Count; i++)
       {
         downloaderMock.InSequence(mockSequence)
             .Setup(x => x.DownloadHourlyWeatherForecast(
@@ -702,11 +702,11 @@
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -724,7 +724,7 @@
       downloaderMock.Verify(
           x => x.DownloadHourlyWeatherForecast(
               It.IsAny<float>(), It.IsAny<float>()),
-          Times.Exactly(installationIds.Count));
+          Times.Exactly(_installationIds.Count));
     }
 
     [Fact]
@@ -741,7 +741,7 @@
       var downloaderMock = new Mock<IOpenWeatherApiDownloader>(MockBehavior.Strict);
       var mockSequence = new MockSequence();
 
-      for (int i = 0; i < installationIds.Count; i++)
+      for (int i = 0; i < _installationIds.Count; i++)
       {
         downloaderMock.InSequence(mockSequence)
             .Setup(x => x.DownloadHourlyWeatherForecast(
@@ -756,11 +756,11 @@
       var configInstallationIds = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:0", installationIds[0].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:1", installationIds[1].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
         new KeyValuePair<string, string>(
-            "AppSettings:AirlyApi:InstallationIds:2", installationIds[2].ToString()),
+            "AppSettings:AirlyApi:InstallationIds:2", _installationIds[2].ToString()),
       };
 
       var config = new ConfigurationBuilder()
@@ -775,7 +775,7 @@
           = await airQualityForecastController.DownloadHourlyWeatherForecasts();
 
       // Assert
-      Assert.Equal(installationIds.Count, weatherForecastsList.Count);
+      Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
       Assert.Equal(
           downloadedData[0].TimeZoneOffset, weatherForecastsList[0].TimeZoneOffset);
       Assert.Equal(

@@ -29,7 +29,6 @@
     private readonly short _minNumberOfMeasurements;
 
     private IForecastErrorsCalculator _forecastErrorsCalculator;
-    private ForecastErrorsRepository _forecastErrorsRepository;
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 

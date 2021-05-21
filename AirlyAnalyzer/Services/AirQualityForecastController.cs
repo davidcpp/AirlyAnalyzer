@@ -56,6 +56,16 @@
       return Task.CompletedTask;
     }
 
+    public async void DoWork(object state)
+    {
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
+
+        var weatherForecasts = await DownloadHourlyWeatherForecasts();
+      }
+    }
+
     public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
     {
       _logger?.LogInformation("DownloadHourlyWeatherForecasts() is starting");

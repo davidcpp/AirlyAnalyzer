@@ -85,7 +85,7 @@
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
-          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
+          forecastErrorsRepository: _unitOfWork.ForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -117,7 +117,7 @@
           _forecastErrorsCalculator,
           _installationIds,
           minNumberOfMeasurements: _minNumberOfMeasurements,
-          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
+          forecastErrorsRepository: _unitOfWork.ForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)
@@ -149,7 +149,7 @@
           _forecastErrorsCalculator,
           _installationIds,
           minNumberOfMeasurements: _minNumberOfMeasurements,
-          forecastErrorsRepository: _unitOfWork.PlainForecastErrorRepository);
+          forecastErrorsRepository: _unitOfWork.ForecastErrorRepository);
 
       // Act
       var (hourlyErrors, dailyErrors)

@@ -122,10 +122,8 @@
           switch (_forecastErrorsCalculator)
           {
             case PlainForecastErrorsCalculator _:
-              _forecastErrorsRepository = _unitOfWork.PlainForecastErrorRepository;
-              break;
             case ScaleForecastErrorsCalculator _:
-              _forecastErrorsRepository = _unitOfWork.ScaleForecastErrorRepository;
+              _forecastErrorsRepository = _unitOfWork.ForecastErrorRepository;
               break;
           }
 

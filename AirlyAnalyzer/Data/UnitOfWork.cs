@@ -15,8 +15,6 @@
     private AirQualityRepository<AirQualityMeasurement> measurementRepo;
     private AirQualityRepository<AirQualityForecast> forecastRepo;
     private ForecastErrorsRepository forecastErrorRepo;
-    private PlainForecastErrorsRepository plainForecastErrorRepo;
-    private ScaleForecastErrorsRepository scaleForecastErrorRepo;
     private BasicRepository<InstallationInfo> installationsRepo;
     private BasicRepository<WeatherMeasurement> weatherMeasurementsRepo;
 
@@ -40,14 +38,6 @@
 
     public ForecastErrorsRepository ForecastErrorRepository
         => forecastErrorRepo
-            ??= new ForecastErrorsRepository(_context);
-
-    public ForecastErrorsRepository PlainForecastErrorRepository
-        => plainForecastErrorRepo
-            ??= new ForecastErrorsRepository(_context);
-
-    public ForecastErrorsRepository ScaleForecastErrorRepository
-        => scaleForecastErrorRepo
             ??= new ForecastErrorsRepository(_context);
 
     public BasicRepository<InstallationInfo> InstallationsRepository

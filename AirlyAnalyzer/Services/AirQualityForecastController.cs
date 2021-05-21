@@ -92,7 +92,7 @@
 
     public Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger?.LogInformation("ProgramController is stopping");
+      _logger?.LogInformation("AirQualityForecastController is stopping");
 
       _timer?.Change(Timeout.Infinite, 0);
 

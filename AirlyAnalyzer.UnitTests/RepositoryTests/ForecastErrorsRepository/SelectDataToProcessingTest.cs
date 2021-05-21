@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Data;
+  using AirlyAnalyzer.Models;
   using AirlyAnalyzer.UnitTests.Fixtures;
   using AirlyAnalyzer.UnitTests.Helpers;
   using Xunit;
@@ -36,7 +37,8 @@
 
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
-          .ForecastErrorRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain);
 
       // Assert
       Assert.Empty(newMeasurements);
@@ -59,7 +61,8 @@
 
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
-          .ForecastErrorRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain);
 
       // Assert
       Assert.Empty(newMeasurements);
@@ -92,7 +95,8 @@
 
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
-          .ForecastErrorRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain);
 
       // Assert
       Assert.Equal(
@@ -140,7 +144,8 @@
 
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
-          .ForecastErrorRepository.SelectDataToProcessing(installationId);
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain);
 
       // Assert
       Assert.Equal(

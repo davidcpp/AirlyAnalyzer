@@ -42,13 +42,13 @@
         => forecastErrorRepo
             ??= new ForecastErrorsRepository(_context);
 
-    public PlainForecastErrorsRepository PlainForecastErrorRepository
+    public ForecastErrorsRepository PlainForecastErrorRepository
         => plainForecastErrorRepo
-            ??= new PlainForecastErrorsRepository(_context);
+            ??= new ForecastErrorsRepository(_context);
 
-    public ScaleForecastErrorsRepository ScaleForecastErrorRepository
+    public ForecastErrorsRepository ScaleForecastErrorRepository
         => scaleForecastErrorRepo
-            ??= new ScaleForecastErrorsRepository(_context);
+            ??= new ForecastErrorsRepository(_context);
 
     public BasicRepository<InstallationInfo> InstallationsRepository
         => installationsRepo

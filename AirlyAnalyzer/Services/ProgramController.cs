@@ -119,14 +119,6 @@
         {
           _forecastErrorsCalculator = _forecastErrorsCalculators[i];
 
-          switch (_forecastErrorsCalculator)
-          {
-            case PlainForecastErrorsCalculator _:
-            case ScaleForecastErrorsCalculator _:
-              _forecastErrorsRepository = _unitOfWork.ForecastErrorRepository;
-              break;
-          }
-
           var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
           await SaveForecastErrors(hourlyErrors, dailyErrors);
 
@@ -305,7 +297,7 @@
       foreach (short installationId in _installationIds)
       {
         var (newMeasurements, newForecasts) = await
-            _forecastErrorsRepository.SelectDataToProcessing(
+            _unitOfWork.ForecastErrorRepository.SelectDataToProcessing(
                 installationId, _forecastErrorsCalculator.ErrorClass);
 
         var hourlyForecastErrors = _forecastErrorsCalculator

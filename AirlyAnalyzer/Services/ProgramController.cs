@@ -39,14 +39,12 @@
         List<short> installationIds = null,
         short idForAllInstallations = -1,
         IAirlyApiDownloader airlyApiDownloader = null,
-        ForecastErrorsRepository forecastErrorsRepository = null,
         short minNumberOfMeasurements = 24,
         short installationUpdateDaysPeriod = 7)
     {
       _unitOfWork = unitOfWork;
       _forecastErrorsCalculator = forecastErrorsCalculator;
       _airlyApiDownloader = airlyApiDownloader;
-      _forecastErrorsRepository = forecastErrorsRepository;
 
       _installationIds = installationIds;
 

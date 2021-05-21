@@ -32,12 +32,14 @@
     }
 
     public virtual async Task<DateTime> GetLastDate(
-        short installationId, AirQualityDataSource source = AirQualityDataSource.Airly)
+        short installationId,
+        AirQualityDataSource source = AirQualityDataSource.Airly)
     {
       var lastDate = _dateTimeMinValue;
 
       var selectedDates = await GetParameters(
-          wherePredicate: x => x.InstallationId == installationId && x.Source == source,
+          wherePredicate: x => x.InstallationId == installationId
+                            && x.Source == source,
           selectPredicate: x => x.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 

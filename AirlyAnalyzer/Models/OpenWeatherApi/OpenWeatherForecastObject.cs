@@ -34,7 +34,7 @@
     public float WindSpeed { get; set; }
 
     [JsonProperty("wind_deg")]
-    public short WindBearing { get; set; }
+    public short WindDirection { get; set; }
 
     [JsonProperty("wind_gust")]
     public float WindGust { get; set; }

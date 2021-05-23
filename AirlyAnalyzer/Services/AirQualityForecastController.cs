@@ -66,6 +66,9 @@
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
         var weatherForecasts = await DownloadHourlyWeatherForecasts();
+
+        var convertedWeatherForecasts
+            = ConvertHourlyWeatherForecasts(weatherForecasts);
       }
     }
 

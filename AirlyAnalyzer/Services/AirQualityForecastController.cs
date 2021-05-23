@@ -72,6 +72,9 @@
             = ConvertHourlyWeatherForecasts(weatherForecasts);
 
         var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
+
+        await _unitOfWork.ForecastRepository.AddListAsync(airQualityPredictions);
+        await _unitOfWork.SaveChangesAsync();
       }
     }
 

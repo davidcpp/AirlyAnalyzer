@@ -32,7 +32,7 @@ namespace AirlyAnalyzerML.Model
 
       // Load model & create prediction engine
       string modelPath = Path.Combine(
-          solutionFolder, "AirlyAnalyzerML.Model", "MLModel.zip");
+          solutionFolder, @"AirlyAnalyzer\AirlyAnalyzerML.Model", "MLModel.zip");
 
       ITransformer mlModel = mlContext.Model
           .Load(modelPath, out var _);

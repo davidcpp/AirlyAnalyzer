@@ -70,6 +70,8 @@
 
         var convertedWeatherForecasts
             = ConvertHourlyWeatherForecasts(weatherForecasts);
+
+        var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
       }
     }
 

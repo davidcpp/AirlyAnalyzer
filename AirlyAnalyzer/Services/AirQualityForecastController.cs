@@ -7,6 +7,7 @@
   using AirlyAnalyzer.Client;
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
+  using AirlyAnalyzer.Models.Weather;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.DependencyInjection;
@@ -102,6 +103,25 @@
       }
 
       return hourlyWeatherForecasts;
+    }
+
+    public List<WeatherMeasurement> ConvertHourlyWeatherForecasts(
+        List<OpenWeatherForecast> weatherForecasts)
+    {
+      var convertedWeatherForecasts = new List<WeatherMeasurement>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        foreach (var weatherForecastItem in weatherForecasts[i].HourlyForecast)
+        {
+          var convertedWeatherForecast =
+              weatherForecastItem.ConvertToWeatherMeasurement(_installationIds[i]);
+
+          convertedWeatherForecasts.Add(convertedWeatherForecast);
+        }
+      }
+
+      return convertedWeatherForecasts;
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

@@ -8,6 +8,7 @@
   using AirlyAnalyzer.Data;
   using AirlyAnalyzer.Models;
   using AirlyAnalyzer.Models.Weather;
+  using AirlyAnalyzerML.Model;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.DependencyInjection;
@@ -125,6 +126,53 @@
       }
 
       return convertedWeatherForecasts;
+    }
+
+    public List<AirQualityForecast> PredictAirQuality(
+        List<WeatherMeasurement> weatherForecasts)
+    {
+      var airQualityForecasts = new List<AirQualityForecast>();
+
+      foreach (var weatherForecastItem in weatherForecasts)
+      {
+        var mlWeatherData = new ModelInput
+        {
+          Year = weatherForecastItem.Year,
+          Month = weatherForecastItem.Month,
+          Day = weatherForecastItem.Day,
+          Hour = weatherForecastItem.Hour,
+          InstallationId = weatherForecastItem.InstallationId,
+          Humidity = weatherForecastItem.Humidity,
+          Temperature = weatherForecastItem.Temperature,
+          Visibility = weatherForecastItem.Visibility,
+          WindSpeed = weatherForecastItem.WindSpeed,
+        };
+
+        var predictionResult = ConsumeModel.Predict(mlWeatherData);
+
+        var forecastDateTime = new DateTime(
+            mlWeatherData.Year,
+            mlWeatherData.Month,
+            mlWeatherData.Day,
+            mlWeatherData.Hour,
+            0,
+            0,
+            DateTimeKind.Utc);
+
+        var airQualityForecast = new AirQualityForecast
+        {
+          InstallationId = (short)weatherForecastItem.InstallationId,
+          FromDateTime = forecastDateTime.AddHours(-1),
+          TillDateTime = forecastDateTime,
+          RequestDateTime = DateTime.UtcNow,
+          Source = AirQualityDataSource.App,
+          AirlyCaqi = Convert.ToInt16(Math.Ceiling(predictionResult.Score))
+        };
+
+        airQualityForecasts.Add(airQualityForecast);
+      }
+
+      return airQualityForecasts;
     }
 
     public Task StopAsync(CancellationToken stoppingToken)

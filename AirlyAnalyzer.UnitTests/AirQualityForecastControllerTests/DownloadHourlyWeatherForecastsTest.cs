@@ -107,8 +107,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
 
@@ -159,8 +159,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
 
@@ -299,8 +299,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -351,8 +351,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -417,8 +417,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -476,8 +476,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -547,8 +547,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -606,8 +606,8 @@
     {
       // Arrange
       const short numberOfDays = 3;
-      const short updateHoursPeriod = 12;
       const short numberOfForecastsInDay = 24;
+      const short updateHoursPeriod = 12;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 

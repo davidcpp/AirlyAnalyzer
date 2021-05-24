@@ -109,6 +109,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
 
@@ -161,6 +162,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
 
@@ -211,6 +213,7 @@
     {
       // Arrange
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -255,6 +258,7 @@
     {
       // Arrange
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -301,6 +305,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -353,6 +358,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -419,6 +425,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -478,6 +485,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -549,6 +557,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 
@@ -608,6 +617,7 @@
       const short numberOfDays = 3;
       const short numberOfForecastsInDay = 24;
       const short updateHoursPeriod = 12;
+      const short weatherForecastHoursNumber = 24;
 
       var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
 

@@ -96,7 +96,12 @@
             = await _unitOfWork.ForecastRepository.GetLastDate(
                 installationId, AirQualityDataSource.App);
 
-        bool dataIsOutOfDate = (requestDateTime - lastForecastDate).TotalHours
+        // theoretic last weather request dateTime - WeatherForecastHoursNumber
+        // could be different for previously calculated air quality forecast
+        var lastRequestDateTime
+            = lastForecastDate.AddHours(-_weatherForecastHoursNumber);
+
+        bool dataIsOutOfDate = (requestDateTime - lastRequestDateTime).TotalHours
             >= _forecastUpdateHoursPeriod;
 
         var installationInfo = await

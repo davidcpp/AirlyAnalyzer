@@ -134,8 +134,11 @@
 
       for (int i = 0; i < _installationIds.Count; i++)
       {
-        foreach (var weatherForecastItem in weatherForecasts[i].HourlyForecast)
+        for (int j = 1; j < weatherForecasts[i].HourlyForecast.Count
+            && j < _weatherForecastHoursNumber + 1; j++)
         {
+          var weatherForecastItem = weatherForecasts[i].HourlyForecast[j];
+
           var convertedWeatherForecast =
               weatherForecastItem.ConvertToWeatherMeasurement(_installationIds[i]);
 

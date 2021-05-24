@@ -12,7 +12,7 @@
   using Xunit;
 
   [Collection("RepositoryTests")]
-  public class AddAsyncTest
+  public class AddListAsyncTest
   {
     private readonly AirlyContext _context;
     private readonly UnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@
 
     private readonly List<short> _installationIds;
 
-    public AddAsyncTest(RepositoryFixture fixture)
+    public AddListAsyncTest(RepositoryFixture fixture)
     {
       _context = fixture.Context;
       _unitOfWork = fixture.UnitOfWork;

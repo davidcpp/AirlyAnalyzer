@@ -101,7 +101,7 @@
         var lastRequestDateTime
             = lastForecastDate.AddHours(-_weatherForecastHoursNumber);
 
-        bool dataIsOutOfDate = (requestDateTime - lastRequestDateTime).TotalHours
+        bool forecastIsOutOfDate = (requestDateTime - lastRequestDateTime).TotalHours
             >= _forecastUpdateHoursPeriod;
 
         var installationInfo = await
@@ -109,7 +109,7 @@
 
         bool isInstallationInDatabase = installationInfo != null;
 
-        if (dataIsOutOfDate && isInstallationInDatabase)
+        if (forecastIsOutOfDate && isInstallationInDatabase)
         {
           var weatherForecast = await _openWeatherApiDownloader
               .DownloadHourlyWeatherForecast(

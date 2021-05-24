@@ -253,7 +253,7 @@
       var newMeasurements = new List<AirQualityMeasurement>();
       var newForecasts = new List<AirQualityForecast>();
 
-      for (int i = 0; i < measurementsList.Count; i++)
+      for (int i = 0; i < _installationIds.Count; i++)
       {
         var installationAddress = (await _unitOfWork.InstallationsRepository
             .GetById(_installationIds[i]))?.Address ?? new Address();

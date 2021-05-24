@@ -23,6 +23,7 @@
 
     private readonly List<short> _installationIds;
     private readonly short _forecastUpdateHoursPeriod;
+    private readonly short _weatherForecastHoursNumber;
 
     private UnitOfWork _unitOfWork;
     private Timer _timer;
@@ -43,6 +44,9 @@
 
       _forecastUpdateHoursPeriod = config.GetValue<short>(
           "AppSettings:AirQualityForecast:UpdateHoursPeriod");
+
+      _weatherForecastHoursNumber = config.GetValue<short>(
+          "AppSettings:AirQualityForecast:WeatherForecastHoursNumber");
 
       _installationIds = config.GetSection(
           "AppSettings:AirlyApi:InstallationIds").Get<List<short>>();

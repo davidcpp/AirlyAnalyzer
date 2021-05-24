@@ -43,7 +43,7 @@
         _context.InstallationInfos.Add(dbInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       for (int i = 0; i < _installationIds.Count + 1; i++)
       {
@@ -85,7 +85,7 @@
         _context.InstallationInfos.Add(dbInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
@@ -121,7 +121,7 @@
         _context.InstallationInfos.Add(dbInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
@@ -158,7 +158,7 @@
         _context.InstallationInfos.Add(dbInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       foreach (short installationId in _installationIds)
       {
@@ -207,7 +207,7 @@
         _context.InstallationInfos.Add(dbInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       foreach (short installationId in newInstallationIds)
       {

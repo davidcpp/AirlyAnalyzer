@@ -73,7 +73,7 @@
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,
@@ -145,7 +145,7 @@
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       _downloaderMock.Setup(x => x.DownloadInstallationInfo(newInstallationId))
                      .ReturnsAsync(downloadedData);
@@ -190,7 +190,7 @@
         _context.InstallationInfos.Add(exampleInstallationInfo);
       }
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var programController = new ProgramController(
           unitOfWork: _unitOfWork,

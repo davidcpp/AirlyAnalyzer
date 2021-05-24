@@ -228,7 +228,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.InstallationInfos.RemoveRange(_context.InstallationInfos);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var configData = new List<KeyValuePair<string, string>>
       {
@@ -276,7 +276,7 @@
       var serviceProvider = services.BuildServiceProvider();
 
       _context.InstallationInfos.RemoveRange(_context.InstallationInfos);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       var configData = new List<KeyValuePair<string, string>>
       {

@@ -111,7 +111,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + 1 + weatherForecastHoursNumber);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -167,7 +168,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod) + 1);
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + 1 + weatherForecastHoursNumber);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -319,7 +321,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -375,7 +378,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
@@ -445,7 +449,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -508,7 +513,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());
@@ -583,7 +589,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var services = new ServiceCollection();
       services.AddSingleton(_downloaderMock.Object);
@@ -646,7 +653,8 @@
       const short updateHoursPeriod = 12;
       const short weatherForecastHoursNumber = 24;
 
-      var startDate = DateTime.UtcNow.AddHours(-(7 * updateHoursPeriod));
+      var startDate = DateTime.UtcNow.AddHours(
+          -(7 * updateHoursPeriod) + weatherForecastHoursNumber);
 
       var downloadedData = new OpenWeatherForecast();
       downloadedData.HourlyForecast.Add(new OpenWeatherForecastObject());

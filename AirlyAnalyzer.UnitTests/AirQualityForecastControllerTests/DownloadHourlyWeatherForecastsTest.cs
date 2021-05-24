@@ -130,6 +130,9 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
+        new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
@@ -183,6 +186,9 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
+        new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
@@ -228,6 +234,9 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
+        new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
@@ -272,6 +281,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
@@ -325,6 +337,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
@@ -386,6 +401,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
@@ -452,6 +470,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
@@ -521,6 +542,9 @@
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
         new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
+        new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:1", _installationIds[1].ToString()),
@@ -584,6 +608,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(
@@ -652,6 +679,9 @@
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
             updateHoursPeriod.ToString()),
+        new KeyValuePair<string, string>(
+            "AppSettings:AirQualityForecast:WeatherForecastHoursNumber",
+            weatherForecastHoursNumber.ToString()),
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
         new KeyValuePair<string, string>(

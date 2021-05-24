@@ -634,7 +634,7 @@
           _installationIds[1],
           startDate.AddDays(numberOfDays),
           1,
-          updateHoursPeriod,
+          1,
           AirQualityDataSource.Airly);
 
       var configInstallationIds = new List<KeyValuePair<string, string>>

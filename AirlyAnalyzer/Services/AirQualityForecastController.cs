@@ -92,11 +92,15 @@
             = await _unitOfWork.ForecastRepository.GetLastDate(
                 installationId, AirQualityDataSource.App);
 
+        bool dataIsOutOfDate = (requestDateTime - lastForecastDate).TotalHours
+            >= _forecastUpdateHoursPeriod;
+
         var installationInfo = await
             _unitOfWork.InstallationsRepository.GetById(installationId);
 
-        if ((requestDateTime - lastForecastDate).TotalHours
-            >= _forecastUpdateHoursPeriod && installationInfo != null)
+        bool isInstallationInDatabase = installationInfo != null;
+
+        if (dataIsOutOfDate && isInstallationInDatabase)
         {
           var weatherForecast = await _openWeatherApiDownloader
               .DownloadHourlyWeatherForecast(

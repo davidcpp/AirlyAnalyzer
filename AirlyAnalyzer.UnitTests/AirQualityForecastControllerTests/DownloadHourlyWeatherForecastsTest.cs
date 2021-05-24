@@ -49,14 +49,14 @@
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", ""),
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -81,14 +81,14 @@
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", ""),
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -125,7 +125,7 @@
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -142,7 +142,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -182,7 +182,7 @@
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -199,7 +199,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -230,7 +230,7 @@
       _context.InstallationInfos.RemoveRange(_context.InstallationInfos);
       _context.SaveChanges();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -247,7 +247,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -278,7 +278,7 @@
       _context.InstallationInfos.RemoveRange(_context.InstallationInfos);
       _context.SaveChanges();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -295,7 +295,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -335,7 +335,7 @@
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -352,7 +352,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -400,7 +400,7 @@
           numberOfForecastsInDay,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -417,7 +417,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -470,7 +470,7 @@
           updateHoursPeriod,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -487,7 +487,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -542,7 +542,7 @@
           updateHoursPeriod,
           AirQualityDataSource.App);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -559,7 +559,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -610,7 +610,7 @@
           1,
           AirQualityDataSource.Airly);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -627,7 +627,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -682,7 +682,7 @@
           1,
           AirQualityDataSource.Airly);
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirQualityForecast:UpdateHoursPeriod",
@@ -699,7 +699,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -730,7 +730,7 @@
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
@@ -741,7 +741,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -774,7 +774,7 @@
       services.AddSingleton(_downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
@@ -785,7 +785,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -835,7 +835,7 @@
       services.AddSingleton(downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
@@ -846,7 +846,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(
@@ -889,7 +889,7 @@
       services.AddSingleton(downloaderMock.Object);
       var serviceProvider = services.BuildServiceProvider();
 
-      var configInstallationIds = new List<KeyValuePair<string, string>>
+      var configData = new List<KeyValuePair<string, string>>
       {
         new KeyValuePair<string, string>(
             "AppSettings:AirlyApi:InstallationIds:0", _installationIds[0].ToString()),
@@ -900,7 +900,7 @@
       };
 
       var config = new ConfigurationBuilder()
-          .AddInMemoryCollection(configInstallationIds)
+          .AddInMemoryCollection(configData)
           .Build();
 
       var airQualityForecastController = new AirQualityForecastController(

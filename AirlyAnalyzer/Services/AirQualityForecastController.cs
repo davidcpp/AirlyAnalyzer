@@ -76,6 +76,7 @@
             = ConvertHourlyWeatherForecasts(weatherForecasts);
 
         var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
+        await AddInstallationAddressToForecasts(airQualityPredictions);
 
         await _unitOfWork.ForecastRepository.AddListAsync(airQualityPredictions);
         await _unitOfWork.SaveChangesAsync();

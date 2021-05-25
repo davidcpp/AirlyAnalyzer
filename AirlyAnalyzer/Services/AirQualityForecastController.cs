@@ -82,6 +82,26 @@
       }
     }
 
+    private async Task AddInstallationAddressToForecasts(
+        List<AirQualityForecast> airQualityForecasts)
+    {
+      var installationAddresses = new Dictionary<int, Address>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        var installationAddress = (await _unitOfWork.InstallationsRepository
+            .GetById(_installationIds[i]))?.Address ?? new Address();
+
+        installationAddresses[_installationIds[i]] = installationAddress;
+      }
+
+      foreach (var airQualityForecast in airQualityForecasts)
+      {
+        airQualityForecast.InstallationAddress
+            = installationAddresses[airQualityForecast.InstallationId].ToString();
+      }
+    }
+
     public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
     {
       _logger?.LogInformation("DownloadHourlyWeatherForecasts() is starting");

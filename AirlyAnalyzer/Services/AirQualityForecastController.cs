@@ -130,6 +130,8 @@
     public List<WeatherMeasurement> ConvertHourlyWeatherForecasts(
         List<OpenWeatherForecast> weatherForecasts)
     {
+      _logger?.LogInformation("ConvertHourlyWeatherForecasts() is starting");
+
       var convertedWeatherForecasts = new List<WeatherMeasurement>();
 
       for (int i = 0; i < _installationIds.Count; i++)
@@ -152,6 +154,8 @@
     public List<AirQualityForecast> PredictAirQuality(
         List<WeatherMeasurement> weatherForecasts)
     {
+      _logger?.LogInformation("PredictAirQuality() is starting");
+
       var airQualityForecasts = new List<AirQualityForecast>();
 
       foreach (var weatherForecastItem in weatherForecasts)

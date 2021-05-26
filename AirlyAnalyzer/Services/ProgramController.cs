@@ -295,7 +295,9 @@
       {
         var (newMeasurements, newForecasts) = await
             _unitOfWork.ForecastErrorRepository.SelectDataToProcessing(
-                installationId, _forecastErrorsCalculator.ErrorClass);
+                installationId,
+                _forecastErrorsCalculator.ErrorClass,
+                AirQualityDataSource.Airly);
 
         var hourlyForecastErrors = _forecastErrorsCalculator
             .CalculateHourly(installationId, newMeasurements, newForecasts);

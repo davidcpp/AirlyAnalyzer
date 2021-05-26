@@ -37,9 +37,13 @@
     }
 
     public virtual async Task<(List<AirQualityMeasurement>, List<AirQualityForecast>)>
-        SelectDataToProcessing(short installationId, ForecastErrorClass errorClass)
+        SelectDataToProcessing(
+            short installationId,
+            ForecastErrorClass errorClass,
+            AirQualityDataSource source)
     {
-      var lastForecastErrorDate = await GetLastDate(installationId, errorClass);
+      var lastForecastErrorDate
+          = await GetLastDate(installationId, errorClass, source);
 
       var _newMeasurements = await _context.Set<AirQualityMeasurement>()
           .Where(m => m.InstallationId == installationId
@@ -48,7 +52,8 @@
 
       var _newForecasts = await _context.Set<AirQualityForecast>()
           .Where(f => f.InstallationId == installationId
-                   && f.TillDateTime > lastForecastErrorDate)
+                   && f.TillDateTime > lastForecastErrorDate
+                   && f.Source == source)
           .ToListAsync();
 
       return (_newMeasurements, _newForecasts);

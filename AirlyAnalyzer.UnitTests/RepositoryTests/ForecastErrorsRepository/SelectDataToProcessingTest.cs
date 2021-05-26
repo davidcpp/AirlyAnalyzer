@@ -147,7 +147,7 @@
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]
     [InlineData(2, 24, 23)]
-    public async Task returns_new_data_when_data_to_process_from_several_installations_in_database(
+    public async Task returns_new_data_when_when_also_processed_data_in_database(
         short numberOfNotProcessedDays,
         short numberOfNewMeasurementsInDay,
         short numberOfNewForecastsInDay)

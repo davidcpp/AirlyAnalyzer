@@ -194,5 +194,60 @@
       Assert.Equal(installationId, newMeasurements[0].InstallationId);
       Assert.Equal(installationId, newForecasts[0].InstallationId);
     }
+
+    [Fact]
+    public async Task returns_new_forecasts_from_correct_source_when_also_processed_data_in_database()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfProcessedDays = 2;
+      const short numberOfNotProcessedDays = 1;
+      const short numberOfAppForecastDays
+          = numberOfProcessedDays + numberOfNotProcessedDays;
+      const short numberOfElementsInDay = 24;
+
+      var processedDataStartDate = _startDate;
+      var newAppForecastsStartDate = _startDate;
+      var newElementsStartDate = _startDate.AddDays(2);
+
+      _context.AddAllElementsToDatabase(
+          _installationIds,
+          processedDataStartDate,
+          numberOfProcessedDays,
+          numberOfElementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
+          newAppForecastsStartDate,
+          numberOfAppForecastDays,
+          numberOfElementsInDay,
+          AirQualityDataSource.App);
+
+      _context.AddAllMeasurementsToDatabase(
+          _installationIds,
+          newElementsStartDate,
+          numberOfNotProcessedDays,
+          numberOfElementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
+          newElementsStartDate,
+          numberOfNotProcessedDays,
+          numberOfElementsInDay,
+          AirQualityDataSource.Airly);
+
+      // Act
+      var (_, newForecasts) = await _unitOfWork
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App);
+
+      // Assert
+      Assert.Equal(
+          numberOfElementsInDay * numberOfAppForecastDays,
+          newForecasts.Count);
+      Assert.Equal(
+          AirQualityDataSource.App,
+          newForecasts[0].Source);
+    }
   }
 }

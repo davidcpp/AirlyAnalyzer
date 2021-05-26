@@ -16,7 +16,7 @@
     public async Task<DateTime> GetLastDate(
         short installationId,
         ForecastErrorClass errorClass,
-        AirQualityDataSource source = AirQualityDataSource.Airly)
+        AirQualityDataSource forecastSource = AirQualityDataSource.Airly)
     {
       var lastDate = _dateTimeMinValue;
 
@@ -24,7 +24,7 @@
           wherePredicate:
               m => m.InstallationId == installationId
                 && m.Class == errorClass
-                && m.Source == source,
+                && m.Source == forecastSource,
           selectPredicate: m => m.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
@@ -40,10 +40,10 @@
         SelectDataToProcessing(
             short installationId,
             ForecastErrorClass errorClass,
-            AirQualityDataSource source)
+            AirQualityDataSource forecastSource)
     {
       var lastForecastErrorDate
-          = await GetLastDate(installationId, errorClass, source);
+          = await GetLastDate(installationId, errorClass, forecastSource);
 
       var _newMeasurements = await _context.Set<AirQualityMeasurement>()
           .Where(m => m.InstallationId == installationId
@@ -53,7 +53,7 @@
       var _newForecasts = await _context.Set<AirQualityForecast>()
           .Where(f => f.InstallationId == installationId
                    && f.TillDateTime > lastForecastErrorDate
-                   && f.Source == source)
+                   && f.Source == forecastSource)
           .ToListAsync();
 
       return (_newMeasurements, _newForecasts);

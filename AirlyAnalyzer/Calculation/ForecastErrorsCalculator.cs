@@ -41,8 +41,8 @@
 
         if (currentForecastDateTime == currentMeasurementDateTime)
         {
-          var forecastHourlyError =
-              CalculateHourlyForecastError(installationId, i, j);
+          var forecastHourlyError = CalculateHourlyForecastError(
+              installationId, i, j, _newForecasts[j].Source);
 
           calculatedForecastErrors.Add(forecastHourlyError);
           i++; j++;
@@ -85,7 +85,9 @@
           if (i > 0 && dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
           {
             var dailyError = dailyForecastErrorsSum.CalculateMeanForecastError(
-                ForecastErrorPeriod.Day, _forecastErrorClass);
+                ForecastErrorPeriod.Day,
+                _forecastErrorClass,
+                newHourlyForecastErrors[i - 1].Source);
 
             dailyForecastErrors.Add(dailyError);
           }
@@ -102,7 +104,9 @@
       if (dailyForecastErrorsSum.Counter >= minNumberOfMeasurements)
       {
         var lastDailyError = dailyForecastErrorsSum.CalculateMeanForecastError(
-            ForecastErrorPeriod.Day, _forecastErrorClass);
+            ForecastErrorPeriod.Day,
+            _forecastErrorClass,
+            newHourlyForecastErrors.Last().Source);
 
         dailyForecastErrors.Add(lastDailyError);
       }
@@ -135,7 +139,9 @@
       }
 
       return errorSum.CalculateMeanForecastError(
-          ForecastErrorPeriod.Total, _forecastErrorClass);
+          ForecastErrorPeriod.Total,
+          _forecastErrorClass,
+          allForecastErrors.Last().Source);
     }
   }
 }

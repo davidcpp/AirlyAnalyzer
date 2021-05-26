@@ -113,29 +113,21 @@
       // Arrange
       short installationId = _installationIds[0];
       const short numberOfNotProcessedDays = 1;
-      const short numberOfNewMeasurementsInDay = 24;
-      const short numberOfNewAirlyForecastsInDay = 24;
+      const short numberOfElementsInDay = 24;
       const short numberOfNewAppForecastsInDay = 19;
 
-      var newMeasurementsStartDate = _startDate;
-      var newForecastsStartDate = _startDate;
-
-      _context.AddAllMeasurementsToDatabase(
-          _installationIds,
-          newMeasurementsStartDate,
-          numberOfNotProcessedDays,
-          numberOfNewMeasurementsInDay);
+      var newElementsStartDate = _startDate;
 
       _context.AddAllForecastsToDatabase(
           _installationIds,
-          newForecastsStartDate,
+          newElementsStartDate,
           numberOfNotProcessedDays,
-          numberOfNewAirlyForecastsInDay,
+          numberOfElementsInDay,
           AirQualityDataSource.Airly);
 
       _context.AddAllForecastsToDatabase(
           _installationIds,
-          newForecastsStartDate,
+          newElementsStartDate,
           numberOfNotProcessedDays,
           numberOfNewAppForecastsInDay,
           AirQualityDataSource.App);

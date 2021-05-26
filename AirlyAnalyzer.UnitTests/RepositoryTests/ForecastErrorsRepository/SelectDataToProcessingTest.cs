@@ -107,6 +107,53 @@
           newForecasts.Count);
     }
 
+    [Fact]
+    public async Task returns_new_forecasts_from_correct_source()
+    {
+      // Arrange
+      short installationId = _installationIds[0];
+      const short numberOfNotProcessedDays = 1;
+      const short numberOfNewMeasurementsInDay = 24;
+      const short numberOfNewAirlyForecastsInDay = 24;
+      const short numberOfNewAppForecastsInDay = 19;
+
+      var newMeasurementsStartDate = _startDate;
+      var newForecastsStartDate = _startDate;
+
+      _context.AddAllMeasurementsToDatabase(
+          _installationIds,
+          newMeasurementsStartDate,
+          numberOfNotProcessedDays,
+          numberOfNewMeasurementsInDay);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
+          newForecastsStartDate,
+          numberOfNotProcessedDays,
+          numberOfNewAirlyForecastsInDay,
+          AirQualityDataSource.Airly);
+
+      _context.AddAllForecastsToDatabase(
+          _installationIds,
+          newForecastsStartDate,
+          numberOfNotProcessedDays,
+          numberOfNewAppForecastsInDay,
+          AirQualityDataSource.App);
+
+      // Act
+      var (newMeasurements, newForecasts) = await _unitOfWork
+          .ForecastErrorRepository.SelectDataToProcessing(
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App);
+
+      // Assert
+      Assert.Equal(
+          numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
+          newMeasurements.Count);
+      Assert.Equal(
+          numberOfNewAppForecastsInDay * numberOfNotProcessedDays,
+          newForecasts.Count);
+    }
+
     [Theory]
     [InlineData(1, 2, 4)]
     [InlineData(2, 23, 24)]

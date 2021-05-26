@@ -38,7 +38,7 @@
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.Airly);
 
       // Assert
       Assert.Empty(newMeasurements);
@@ -62,7 +62,7 @@
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.Airly);
 
       // Assert
       Assert.Empty(newMeasurements);
@@ -96,7 +96,7 @@
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.Airly);
 
       // Assert
       Assert.Equal(
@@ -145,7 +145,7 @@
       // Act
       var (newMeasurements, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.Airly);
 
       // Assert
       Assert.Equal(

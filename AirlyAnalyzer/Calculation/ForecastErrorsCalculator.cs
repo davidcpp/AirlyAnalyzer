@@ -61,7 +61,7 @@
     }
 
     protected abstract AirQualityForecastError CalculateHourlyForecastError(
-        short installationId, int i, int j);
+        short installationId, int i, int j, AirQualityDataSource forecastSource);
 
     public virtual List<AirQualityForecastError> CalculateDaily(
         short installationId,

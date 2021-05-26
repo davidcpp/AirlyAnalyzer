@@ -12,7 +12,7 @@
     }
 
     protected override AirQualityForecastError CalculateHourlyForecastError(
-        short installationId, int i, int j)
+        short installationId, int i, int j, AirQualityDataSource forecastSource)
     {
       short pm25Error = (short)
           (_newMeasurements[i].Pm25 - _newForecasts[j].Pm25);
@@ -51,6 +51,7 @@
         RequestDateTime = _newMeasurements[i].RequestDateTime,
         Period = ForecastErrorPeriod.Hour,
         Class = ForecastErrorClass.Plain,
+        Source = forecastSource,
       };
     }
   }

@@ -17,7 +17,7 @@
     }
 
     protected override AirQualityForecastError CalculateHourlyForecastError(
-        short installationId, int i, int j)
+        short installationId, int i, int j, AirQualityDataSource forecastSource)
     {
       int airlyCaqiError = 0;
 
@@ -39,6 +39,7 @@
         RequestDateTime = _newMeasurements[i].RequestDateTime,
         Period = ForecastErrorPeriod.Hour,
         Class = ForecastErrorClass.Scale,
+        Source = forecastSource,
       };
     }
   }

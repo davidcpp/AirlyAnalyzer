@@ -156,6 +156,7 @@
       short installationId = _installationIds[0];
       const short numberOfProcessedDays = 5;
       const short numberOfElementsInDay = 23;
+
       var processedDataStartDate = _startDate;
       var newMeasurementsStartDate = _startDate.AddDays(numberOfProcessedDays);
       var newForecastsStartDate = _startDate.AddDays(numberOfProcessedDays);

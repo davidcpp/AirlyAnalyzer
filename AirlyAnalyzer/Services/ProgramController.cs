@@ -120,10 +120,14 @@
 
             var (hourlyErrors, dailyErrors) = await CalculateForecastErrors(
                 (AirQualityDataSource)forecastSource);
+
             await SaveForecastErrors(hourlyErrors, dailyErrors);
 
-            var newTotalForecastErrors = await CalculateTotalForecastErrors();
-            await UpdateTotalForecastErrors(newTotalForecastErrors);
+            var newTotalForecastErrors = await CalculateTotalForecastErrors(
+                (AirQualityDataSource)forecastSource);
+
+            await UpdateTotalForecastErrors(
+                newTotalForecastErrors, (AirQualityDataSource)forecastSource);
           }
         }
       }
@@ -333,7 +337,8 @@
       return dailyForecastErrors.Count;
     }
 
-    public async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors()
+    public async Task<List<AirQualityForecastError>> CalculateTotalForecastErrors(
+        AirQualityDataSource forecastSource = AirQualityDataSource.Airly)
     {
       _logger?.LogInformation("CalculateTotalForecastErrors() is starting");
 
@@ -345,7 +350,8 @@
         var dailyForecastErrors = await _unitOfWork.ForecastErrorRepository.Get(
             fe => fe.InstallationId == installationId
                && fe.Period == ForecastErrorPeriod.Day
-               && fe.Class == _forecastErrorsCalculator.ErrorClass);
+               && fe.Class == _forecastErrorsCalculator.ErrorClass
+               && fe.Source == forecastSource);
 
         if (dailyForecastErrors.Count > 0)
         {
@@ -369,7 +375,8 @@
     }
 
     public async Task UpdateTotalForecastErrors(
-        List<AirQualityForecastError> newTotalForecastErrors)
+        List<AirQualityForecastError> newTotalForecastErrors,
+        AirQualityDataSource forecastSource = AirQualityDataSource.Airly)
     {
       _logger?.LogInformation("UpdateTotalForecastErrors() is starting");
 
@@ -377,7 +384,8 @@
       {
         _unitOfWork.ForecastErrorRepository.Delete(
             fe => fe.Period == ForecastErrorPeriod.Total
-               && fe.Class == _forecastErrorsCalculator.ErrorClass);
+               && fe.Class == _forecastErrorsCalculator.ErrorClass
+               && fe.Source == forecastSource);
 
         await _unitOfWork.SaveChangesAsync();
 

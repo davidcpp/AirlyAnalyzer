@@ -103,7 +103,7 @@
     }
 
     [Fact]
-    public async Task does_not_download_when_air_quality_forecasts_are_up_to_date()
+    public async Task does_not_download_when_all_air_quality_forecasts_are_up_to_date()
     {
       // Arrange
       const short numberOfDays = 3;
@@ -160,7 +160,7 @@
     }
 
     [Fact]
-    public async Task returns_new_empty_forecasts_for_all_installations_when_air_quality_forecasts_are_up_to_date()
+    public async Task returns_new_empty_forecasts_for_all_installations_when_all_air_quality_forecasts_are_up_to_date()
     {
       // Arrange
       const short numberOfDays = 3;

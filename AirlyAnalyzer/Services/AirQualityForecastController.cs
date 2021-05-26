@@ -99,7 +99,7 @@
         // theoretic last weather request dateTime - WeatherForecastHoursNumber
         // could be different for previously calculated air quality forecast
         var lastRequestDateTime
-            = lastForecastDate.AddHours(-_weatherForecastHoursNumber + 1);
+            = lastForecastDate.AddHours(-_weatherForecastHoursNumber);
 
         bool forecastIsOutOfDate = (requestDateTime - lastRequestDateTime).TotalHours
             >= _forecastUpdateHoursPeriod;

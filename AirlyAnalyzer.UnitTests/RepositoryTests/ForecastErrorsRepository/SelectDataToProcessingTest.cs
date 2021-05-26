@@ -133,14 +133,11 @@
           AirQualityDataSource.App);
 
       // Act
-      var (newMeasurements, newForecasts) = await _unitOfWork
+      var (_, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
               installationId, ForecastErrorClass.Plain, AirQualityDataSource.App);
 
       // Assert
-      Assert.Equal(
-          numberOfNewMeasurementsInDay * numberOfNotProcessedDays,
-          newMeasurements.Count);
       Assert.Equal(
           numberOfNewAppForecastsInDay * numberOfNotProcessedDays,
           newForecasts.Count);

@@ -101,8 +101,8 @@
         var lastRequestDateTime
             = lastForecastDate.AddHours(-_weatherForecastHoursNumber);
 
-        bool forecastIsOutOfDate = (requestDateTime - lastRequestDateTime).TotalHours
-            >= _forecastUpdateHoursPeriod;
+        bool forecastIsOutOfDate = (requestDateTime - lastRequestDateTime)
+            .TotalHours >= _forecastUpdateHoursPeriod;
 
         var installationInfo = await
             _unitOfWork.InstallationsRepository.GetById(installationId);

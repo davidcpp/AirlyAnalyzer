@@ -112,15 +112,19 @@
           await SaveAllAirQualityData(newMeasurements, newForecasts);
         }
 
-        for (int i = 0; i < _forecastErrorsCalculators.Count; i++)
+        foreach (object forecastSource in Enum.GetValues(typeof(AirQualityDataSource)))
         {
-          _forecastErrorsCalculator = _forecastErrorsCalculators[i];
+          for (int i = 0; i < _forecastErrorsCalculators.Count; i++)
+          {
+            _forecastErrorsCalculator = _forecastErrorsCalculators[i];
 
-          var (hourlyErrors, dailyErrors) = await CalculateForecastErrors();
-          await SaveForecastErrors(hourlyErrors, dailyErrors);
+            var (hourlyErrors, dailyErrors) = await CalculateForecastErrors(
+                (AirQualityDataSource)forecastSource);
+            await SaveForecastErrors(hourlyErrors, dailyErrors);
 
-          var newTotalForecastErrors = await CalculateTotalForecastErrors();
-          await UpdateTotalForecastErrors(newTotalForecastErrors);
+            var newTotalForecastErrors = await CalculateTotalForecastErrors();
+            await UpdateTotalForecastErrors(newTotalForecastErrors);
+          }
         }
       }
     }
@@ -284,7 +288,8 @@
     }
 
     public async Task<(List<AirQualityForecastError>, List<AirQualityForecastError>)>
-        CalculateForecastErrors()
+        CalculateForecastErrors(
+            AirQualityDataSource forecastSource = AirQualityDataSource.Airly)
     {
       _logger?.LogInformation("CalculateForecastErrors() is starting");
 
@@ -297,7 +302,7 @@
             _unitOfWork.ForecastErrorRepository.SelectDataToProcessing(
                 installationId,
                 _forecastErrorsCalculator.ErrorClass,
-                AirQualityDataSource.Airly);
+                forecastSource);
 
         var hourlyForecastErrors = _forecastErrorsCalculator
             .CalculateHourly(installationId, newMeasurements, newForecasts);

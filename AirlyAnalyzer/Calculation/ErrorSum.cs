@@ -86,7 +86,9 @@
     }
 
     public AirQualityForecastError CalculateMeanForecastError(
-        ForecastErrorPeriod errorType, ForecastErrorClass errorClass)
+        ForecastErrorPeriod errorType,
+        ForecastErrorClass errorClass,
+        AirQualityDataSource forecastSource)
     {
       return new AirQualityForecastError
       {
@@ -103,6 +105,7 @@
         RequestDateTime = this.RequestDateTime,
         Period = errorType,
         Class = errorClass,
+        Source = forecastSource,
       };
     }
   }

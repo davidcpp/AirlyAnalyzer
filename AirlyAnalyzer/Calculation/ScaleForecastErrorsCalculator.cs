@@ -38,7 +38,7 @@
         AirlyCaqi = (short)airlyCaqiError,
         RequestDateTime = _newMeasurements[i].RequestDateTime,
         Period = ForecastErrorPeriod.Hour,
-        Class = ForecastErrorClass.Scale,
+        Class = _forecastErrorClass,
         Source = forecastSource,
       };
     }

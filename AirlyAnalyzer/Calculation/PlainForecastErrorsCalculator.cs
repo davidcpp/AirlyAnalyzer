@@ -50,7 +50,7 @@
         Pm10 = pm10Error,
         RequestDateTime = _newMeasurements[i].RequestDateTime,
         Period = ForecastErrorPeriod.Hour,
-        Class = ForecastErrorClass.Plain,
+        Class = _forecastErrorClass,
         Source = forecastSource,
       };
     }

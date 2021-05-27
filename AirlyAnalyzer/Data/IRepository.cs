@@ -18,7 +18,9 @@
     Task<TEntity> GetById(params object[] id);
 
     Task<List<TEntity>> Get(
-        Expression<Func<TEntity, bool>> wherePredicate = null);
+        Expression<Func<TEntity, bool>> wherePredicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderByMethod = null,
+        int count = 0);
 
     Task<List<T>> GetParameters<T>(
         Expression<Func<TEntity, T>> selectPredicate,

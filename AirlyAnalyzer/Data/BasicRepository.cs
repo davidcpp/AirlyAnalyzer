@@ -57,13 +57,25 @@
     }
 
     public virtual Task<List<TEntity>> Get(
-        Expression<Func<TEntity, bool>> wherePredicate = null)
+        Expression<Func<TEntity, bool>> wherePredicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderByMethod = null,
+        int count = 0)
     {
       IQueryable<TEntity> query = _dbSet;
 
       if (wherePredicate != null)
       {
         query = query.Where(wherePredicate);
+      }
+
+      if (orderByMethod != null)
+      {
+        query = orderByMethod(query);
+      }
+
+      if (count > 0)
+      {
+        query = query.Take(count);
       }
 
       return query.ToListAsync();

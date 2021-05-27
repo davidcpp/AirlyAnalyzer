@@ -70,6 +70,7 @@ function updateForecastErrorsTable(requestDate) {
           forecastErrors[i].period,
           forecastErrors[i].class,
           (new Date(forecastErrors[i].tillDateTime)).toLocaleString('tr-TR'),
+          forecastErrors[i].source,
           forecastErrors[i].installationAddress,
           forecastErrors[i].airlyCaqiPct + '%',
           forecastErrors[i].airlyCaqi,

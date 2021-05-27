@@ -21,6 +21,9 @@
           @Html.DisplayNameFor(model => model.TillDateTime)
         </th>
         <th>
+          @Html.DisplayNameFor(model => model.Source)
+        </th>
+        <th>
           @Html.DisplayNameFor(model => model.InstallationAddress)
         </th>
         <th>
@@ -34,26 +37,29 @@
     <tbody>
       @foreach (var item in Model)
       {
-        <tr>
-          <td>
-            @Html.DisplayFor(modelItem => item.Period)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.Class)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.TillDateTime)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.InstallationAddress)
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%
-          </td>
-          <td>
-            @Html.DisplayFor(modelItem => item.AirlyCaqi)
-          </td>
-        </tr>
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Period)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Class)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.TillDateTime)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Source)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.InstallationAddress)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqiPct)%
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.AirlyCaqi)
+        </td>
+      </tr>
       }
     </tbody>
     <tfoot>
@@ -66,6 +72,9 @@
         </th>
         <th>
           @Html.DisplayNameFor(model => model.TillDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Source)
         </th>
         <th>
           @Html.DisplayNameFor(model => model.InstallationAddress)

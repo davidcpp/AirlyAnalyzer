@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AirQualityForecast>
+
+@{
+  ViewData["Title"] = "Air Quality Forecast";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mb-3 justify-content-center">
+  <table class="display responsive nowrap" id="forecasts" width="100%">
+    <thead>
+      <tr>
+        <th>
+          @Html.DisplayNameFor(model => model.TillDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.InstallationAddress)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqi)
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+        <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.TillDateTime)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.InstallationAddress)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.AirlyCaqi)
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>
+          @Html.DisplayNameFor(model => model.TillDateTime)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.InstallationAddress)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.AirlyCaqi)
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+@section Scripts {
+  <script type="text/javascript" src="~/js/forecastsSite.js"></script>
+}

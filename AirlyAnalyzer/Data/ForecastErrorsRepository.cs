@@ -22,10 +22,10 @@
 
       var selectedDates = await GetParameters(
           wherePredicate:
-              m => m.InstallationId == installationId
-                && m.Class == errorClass
-                && m.Source == forecastSource,
-          selectPredicate: m => m.TillDateTime,
+              fe => fe.InstallationId == installationId
+                && fe.Class == errorClass
+                && fe.Source == forecastSource,
+          selectPredicate: fe => fe.TillDateTime,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
 
       if (selectedDates.Count > 0)

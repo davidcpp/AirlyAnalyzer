@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Linq.Expressions;
   using System.Threading.Tasks;
   using AirlyAnalyzer.Models;
   using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,16 @@
       }
 
       return _dbSet.AddRangeAsync(entities);
+    }
+
+    public virtual async Task<List<TEntity>> GetLastElements(
+        short numberOfElements,
+        Expression<Func<TEntity, bool>> wherePredicate = null)
+    {
+      return await Get(
+          wherePredicate,
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
+          numberOfElements);
     }
 
     public virtual async Task<DateTime> GetLastDate(

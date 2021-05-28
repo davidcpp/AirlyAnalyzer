@@ -14,6 +14,7 @@
       "destination": "wwwroot/lib/datatables",
       "files": [
         "css/jquery.dataTables.min.css",
+        "css/jquery.dataTables.css",
         "images/sort_asc.png",
         "images/sort_desc.png",
         "images/sort_both.png",
@@ -25,14 +26,16 @@
       "library": "datatables.net-responsive@2.2.7",
       "destination": "wwwroot/lib/datatables/js",
       "files": [
-        "dataTables.responsive.min.js"
+        "dataTables.responsive.min.js",
+        "dataTables.responsive.js",
       ]
     },
     {
       "library": "datatables.net-responsive-dt@2.2.7",
       "destination": "wwwroot/lib/datatables/css",
       "files": [
-        "responsive.dataTables.min.css"
+        "responsive.dataTables.min.css",
+        "responsive.dataTables.css",
       ]
     },
     {
@@ -48,6 +51,7 @@
       "destination": "wwwroot/lib/bootstrap",
       "files": [
         "css/bootstrap.min.css",
+        "css/bootstrap.css",
         "css/bootstrap.min.css.map",
         "js/bootstrap.bundle.min.js",
         "js/bootstrap.bundle.min.js.map",

@@ -3,6 +3,7 @@ let columnSelectInputs = [];
 
 $(document).ready(function () {
   forecastsTable = $('#forecasts').DataTable({
+    responsive: true,
     scrollY: '45vh',
     paging: false,
     initComplete: function () {

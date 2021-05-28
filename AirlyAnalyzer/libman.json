@@ -3,14 +3,14 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "datatables.net@1.10.23",
+      "library": "datatables.net@1.10.24",
       "destination": "wwwroot/lib/datatables/js",
       "files": [
         "jquery.dataTables.min.js"
       ]
     },
     {
-      "library": "datatables.net-dt@1.10.23",
+      "library": "datatables.net-dt@1.10.24",
       "destination": "wwwroot/lib/datatables",
       "files": [
         "css/jquery.dataTables.min.css",

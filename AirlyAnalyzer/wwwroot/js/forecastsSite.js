@@ -1,29 +1,63 @@
-﻿let forecastsTable = {};
-let columnSelectInputs = [];
+﻿// Variables/objects from model
+let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
+
+for (let i = 0; i < airQualityForecasts.length; i++) {
+  let dateTime = new Date(airQualityForecasts[i].TillDateTime);
+  let seconds = dateTime.getSeconds();
+  seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
+  airQualityForecasts[i].TillDateTime
+    = dateTime.getHours().toString() + ":" + seconds;
+}
 
 $(document).ready(function () {
-  forecastsTable = $('#forecasts').DataTable({
-    responsive: true,
-    scrollY: '45vh',
-    paging: false,
-    initComplete: function () {
-      this.api().columns().every(function () {
-        var column = this;
-        var select = $('<select><option value=""></option></select>')
-          .appendTo($(column.footer()).empty())
-          .on('change', function () {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+  let margin = ({ top: 30, right: 0, bottom: 30, left: 40 })
+  let height = 500;
+  let width = 900;
 
-            column.search(val ? '^' + val + '$' : '', true, false)
-                  .draw();
-          });
+  let x = d3.scaleBand()
+    .domain(d3.range(airQualityForecasts.length))
+    .range([margin.left, width - margin.right])
+    .padding(0.1);
 
-        column.data().unique().sort().each(function (d) {
-          select.append('<option value="' + d + '">' + d + '</option>')
-        });
+  let y = d3.scaleLinear()
+    .domain([0, d3.max(airQualityForecasts, d => d.AirlyCaqi)]).nice()
+    .range([height - margin.bottom, margin.top]);
 
-        columnSelectInputs.push(select);
-      });
-    }
-  });
+  let xAxis = g => g
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(x).tickFormat(i => airQualityForecasts[i].TillDateTime)
+      .tickSizeOuter(0));
+
+  let yAxis = g => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y).ticks(null, airQualityForecasts.format))
+    .call(g => g.select(".domain").remove())
+    .call(g => g.append("text")
+      .attr("x", -margin.left)
+      .attr("y", 10)
+      .attr("fill", "currentColor")
+      .attr("text-anchor", "start")
+      .text(airQualityForecasts.AirlyCaqi));
+
+  let color = "steelblue";
+
+  const svg = d3.select("#mainDiv")
+    .append("svg")
+    .attr("viewBox", [0, 0, width, height]);
+
+  svg.append("g")
+    .attr("fill", color)
+    .selectAll("rect")
+    .data(airQualityForecasts)
+    .join("rect")
+    .attr("x", (d, i) => x(i))
+    .attr("y", d => y(d.AirlyCaqi))
+    .attr("height", d => y(0) - y(d.AirlyCaqi))
+    .attr("width", x.bandwidth());
+
+  svg.append("g")
+    .call(xAxis);
+
+  svg.append("g")
+    .call(yAxis);
 });

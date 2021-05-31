@@ -2,6 +2,7 @@
 
 @{
   ViewData["Title"] = "Air Quality Forecast";
+  AirQualityForecast[] airQualityForecasts = Model.ToArray();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -9,6 +10,9 @@
 <div class="row mb-3 justify-content-center">
 </div>
 
-@section Scripts {
-  <script type="text/javascript" src="~/js/forecastsSite.js"></script>
+@section Scripts
+{
+  <script id="forecastsSite" src="~/js/forecastsSite.js"
+          airQualityForecasts='@System.Text.Json.JsonSerializer.Serialize(airQualityForecasts)'>
+  </script>
 }

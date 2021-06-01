@@ -3,6 +3,14 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+      "library": "d3@6.7.0",
+      "destination": "wwwroot/lib/d3/",
+      "files": [
+        "d3.min.js",
+        "d3.js",
+      ]
+    },
+    {
       "library": "datatables.net@1.10.24",
       "destination": "wwwroot/lib/datatables/js",
       "files": [

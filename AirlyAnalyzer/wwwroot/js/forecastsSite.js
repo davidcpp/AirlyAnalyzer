@@ -18,16 +18,23 @@ function createForecastChart() {
   let height = 500;
   let width = 900;
 
+  const title = {
+    text: "CAQI",
+    fontSize: 10,
+    x: -margin.left,
+    y: 10,
+  };
+
   let yTitle = g => g
     .append("text")
-    .attr("x", -margin.left)
-    .attr("y", 10)
+    .attr("x", title.x)
+    .attr("y", title.y)
     .attr("fill", "currentColor")
     .attr("text-anchor", "start")
     .attr("font-family", "sans-serif")
     .attr("font-weight", "bold")
-    .attr("font-size", 10)
-    .text("CAQI");
+    .attr("font-size", title.fontSize)
+    .text(title.text);
 
   let x = d3.scaleBand()
     .domain(d3.range(airQualityForecasts.length))

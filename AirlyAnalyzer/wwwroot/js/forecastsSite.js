@@ -30,7 +30,7 @@ $(document).ready(function () {
 
   let yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, airQualityForecasts.format))
+    .call(d3.axisLeft(y))
     .call(g => g.select(".domain").remove())
     .call(g => g.append("text")
       .attr("x", -margin.left)

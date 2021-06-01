@@ -26,8 +26,9 @@ function createForecastChart() {
     text: "CAQI",
     fontSize: 10,
     x: -chart.margin.left,
-    y: 10,
   };
+
+  title.y = title.fontSize;
 
   let yTitle = g => g
     .append("text")

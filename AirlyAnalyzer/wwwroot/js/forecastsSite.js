@@ -37,7 +37,7 @@ $(document).ready(function () {
       .attr("y", 10)
       .attr("fill", "currentColor")
       .attr("text-anchor", "start")
-      .text(airQualityForecasts.AirlyCaqi));
+      .text("CAQI"));
 
   let color = "steelblue";
 

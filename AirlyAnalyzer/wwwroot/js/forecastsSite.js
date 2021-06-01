@@ -14,6 +14,17 @@ $(document).ready(function () {
   let height = 500;
   let width = 900;
 
+  let yTitle = g => g
+    .append("text")
+    .attr("x", -margin.left)
+    .attr("y", 10)
+    .attr("fill", "currentColor")
+    .attr("text-anchor", "start")
+    .attr("font-family", "sans-serif")
+    .attr("font-weight", "bold")
+    .attr("font-size", 10)
+    .text("CAQI");
+
   let x = d3.scaleBand()
     .domain(d3.range(airQualityForecasts.length))
     .range([margin.left, width - margin.right])
@@ -31,15 +42,7 @@ $(document).ready(function () {
   let yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
     .call(d3.axisLeft(y))
-    .call(g => g.append("text")
-      .attr("x", -margin.left)
-      .attr("y", 10)
-      .attr("fill", "currentColor")
-      .attr("text-anchor", "start")
-      .attr("font-family", "sans-serif")
-      .attr("font-weight", "bold")
-      .attr("font-size", 10)
-      .text("CAQI"));
+    .call(yTitle);
 
   let color = "steelblue";
 

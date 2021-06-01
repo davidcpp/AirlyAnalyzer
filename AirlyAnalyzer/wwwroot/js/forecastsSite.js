@@ -37,6 +37,9 @@ $(document).ready(function () {
       .attr("y", 10)
       .attr("fill", "currentColor")
       .attr("text-anchor", "start")
+      .attr("font-family", "sans-serif")
+      .attr("font-weight", "bold")
+      .attr("font-size", 10)
       .text("CAQI"));
 
   let color = "steelblue";

@@ -6,10 +6,14 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
   let seconds = dateTime.getSeconds();
   seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
   airQualityForecasts[i].TillDateTime
-    = dateTime.getHours().toString() + ":" + seconds;
+    = dateTime.getHours().toString(); // + ":" + seconds;
 }
 
 $(document).ready(function () {
+  createForecastChart();
+});
+
+function createForecastChart() {
   let margin = ({ top: 30, right: 0, bottom: 30, left: 40 })
   let height = 500;
   let width = 900;
@@ -65,4 +69,4 @@ $(document).ready(function () {
 
   svg.append("g")
     .call(yAxis);
-});
+}

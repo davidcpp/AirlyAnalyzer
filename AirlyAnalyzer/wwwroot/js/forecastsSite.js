@@ -1,6 +1,7 @@
 ﻿// Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let installationIds = {};
+let chart = {}
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
   if (airQualityForecasts[i].length > 0) {
@@ -17,7 +18,7 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
 }
 
 $(document).ready(function () {
-  let chart = createForecastChart();
+  chart = createForecastChart();
   updateInstallationsSelect();
 });
 

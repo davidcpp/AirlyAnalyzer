@@ -25,6 +25,16 @@ $(document).ready(function () {
   updateInstallationsSelect();
 });
 
+$('#airQualityInstallations').change(function () {
+  let selectedInstallationId = $(this).val();
+  updateForecastChart(selectedInstallationId);
+});
+
+function updateForecastChart(selectedInstallationId) {
+  chart.remove();
+  chart = createForecastChart(selectedInstallationId);
+}
+
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 

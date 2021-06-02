@@ -17,7 +17,7 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
 }
 
 $(document).ready(function () {
-  createForecastChart();
+  let chart = createForecastChart();
   updateInstallationsSelect();
 });
 
@@ -102,5 +102,7 @@ function createForecastChart() {
 
     svg.append("g")
       .call(yAxis);
+
+    return svg.node();
   }
 }

@@ -1,11 +1,14 @@
 ﻿// Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
+let forecastsDictionary = {}
 let installationIds = {};
 let chart = {}
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
   if (airQualityForecasts[i].length > 0) {
     installationIds[airQualityForecasts[i][0].InstallationId] = true;
+    forecastsDictionary[airQualityForecasts[i][0].InstallationId]
+        = airQualityForecasts[i];
   }
 
   for (let j = 0; j < airQualityForecasts[i].length; j++) {

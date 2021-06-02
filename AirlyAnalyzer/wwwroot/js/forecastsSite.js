@@ -36,12 +36,16 @@ function updateInstallationsSelect() {
   }
 }
 
-function createForecastChart() {
+function createForecastChart(installationId) {
   let dataIsNotNullOrEmpty = airQualityForecasts != null
     && airQualityForecasts != undefined
     && airQualityForecasts.length != 0
 
   if (dataIsNotNullOrEmpty) {
+    if (installationId == undefined) {
+      installationId = airQualityForecasts[0][0].InstallationId;
+    }
+
     const chart = {
       margin: ({ top: 30, right: 0, bottom: 30, left: 40 }),
       height: 500,
@@ -69,17 +73,18 @@ function createForecastChart() {
       .text(title.text);
 
     let x = d3.scaleBand()
-      .domain(d3.range(airQualityForecasts[0].length))
+      .domain(d3.range(forecastsDictionary[installationId].length))
       .range([chart.margin.left, chart.width - chart.margin.right])
       .padding(0.1);
 
     let y = d3.scaleLinear()
-      .domain([0, d3.max(airQualityForecasts[0], d => d.AirlyCaqi)]).nice()
+      .domain([0, d3.max(forecastsDictionary[installationId], d => d.AirlyCaqi)])
+      .nice()
       .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
     let xAxis = g => g
       .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
-      .call(d3.axisBottom(x).tickFormat(i => airQualityForecasts[0][i].TillDateTime)
+      .call(d3.axisBottom(x).tickFormat(i => forecastsDictionary[installationId][i].TillDateTime)
         .tickSizeOuter(0));
 
     let yAxis = g => g
@@ -94,7 +99,7 @@ function createForecastChart() {
     svg.append("g")
       .attr("fill", chart.color)
       .selectAll("rect")
-      .data(dataIsNotNullOrEmpty ? airQualityForecasts[0] : [])
+      .data(forecastsDictionary[installationId])
       .join("rect")
       .attr("x", (d, i) => x(i))
       .attr("y", d => y(d.AirlyCaqi))

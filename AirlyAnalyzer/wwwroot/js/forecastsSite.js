@@ -1,5 +1,6 @@
 ﻿// Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
+let installationIds = {};
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
   let dateTime = new Date(airQualityForecasts[i].TillDateTime);
@@ -7,6 +8,8 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
   seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
   airQualityForecasts[i].TillDateTime
     = dateTime.getHours().toString(); // + ":" + seconds;
+
+  installationIds[airQualityForecasts[i].InstallationId] = true;
 }
 
 $(document).ready(function () {

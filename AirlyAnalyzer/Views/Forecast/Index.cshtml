@@ -2,7 +2,7 @@
 
 @{
   ViewData["Title"] = "Air Quality Forecast";
-  AirQualityForecast[] airQualityForecasts = Model.ToArray();
+  var airQualityForecasts = Model.GroupBy(f => f.InstallationId);
 }
 
 <h1>@ViewData["Title"]</h1>

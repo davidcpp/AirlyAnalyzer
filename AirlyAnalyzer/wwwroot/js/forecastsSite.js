@@ -14,7 +14,19 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
 
 $(document).ready(function () {
   createForecastChart();
+  updateInstallationsSelect();
 });
+
+function updateInstallationsSelect() {
+  let select = document.getElementById('airQualityInstallations');
+
+  for (var installationId in installationIds) {
+    let option = document.createElement("option");
+    option.text = installationId;
+    option.value = installationId;
+    select.add(option);
+  }
+}
 
 function createForecastChart() {
 

@@ -81,7 +81,7 @@
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-      _logger?.LogInformation("ProgramController is starting");
+      _logger?.LogInformation("ForecastErrorsService is starting");
 
       _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
 
@@ -398,7 +398,7 @@
 
     public Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger?.LogInformation("ProgramController is stopping");
+      _logger?.LogInformation("ForecastErrorsService is stopping");
 
       _timer?.Change(Timeout.Infinite, 0);
 

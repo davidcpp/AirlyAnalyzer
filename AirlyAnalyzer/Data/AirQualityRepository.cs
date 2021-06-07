@@ -36,10 +36,14 @@
         short numberOfElements,
         Expression<Func<TEntity, bool>> wherePredicate = null)
     {
-      return await Get(
+      var lastElements = await Get(
           wherePredicate,
           orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
           numberOfElements);
+
+      return (from x in lastElements
+             orderby x.TillDateTime
+             select x).ToList();
     }
 
     public virtual async Task<DateTime> GetLastDate(

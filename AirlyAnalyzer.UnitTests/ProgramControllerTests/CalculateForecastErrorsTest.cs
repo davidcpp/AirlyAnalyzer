@@ -62,7 +62,7 @@
           numberOfDays,
           numberOfElementsInDay);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           installationIds,
@@ -81,7 +81,7 @@
     public async Task returns_empty_new_forecast_error_list_when_no_measurements_in_database()
     {
       // Arrange
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds);
@@ -111,7 +111,7 @@
       _context.AddAllForecastsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
@@ -142,7 +142,7 @@
       _context.AddAllForecastsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,

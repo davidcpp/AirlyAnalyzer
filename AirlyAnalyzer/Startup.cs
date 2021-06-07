@@ -63,10 +63,10 @@ namespace AirlyAnalyzer
           <IForecastErrorsCalculator, ScaleForecastErrorsCalculator>();
 
       services.AddHostedService(x =>
-          new ProgramController(
+          new ForecastErrorsService(
               x.GetRequiredService<IServiceProvider>(),
               x.GetRequiredService<IConfiguration>(),
-              x.GetRequiredService<ILogger<ProgramController>>()));
+              x.GetRequiredService<ILogger<ForecastErrorsService>>()));
 
       services.AddHostedService(x =>
           new ForecastService(

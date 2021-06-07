@@ -14,12 +14,12 @@
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
 
-  public class ProgramController : IHostedService, IDisposable
+  public class ForecastErrorsService : IHostedService, IDisposable
   {
     private readonly IAirlyApiDownloader _airlyApiDownloader;
 
     private readonly List<IForecastErrorsCalculator> _forecastErrorsCalculators;
-    private readonly ILogger<ProgramController> _logger;
+    private readonly ILogger<ForecastErrorsService> _logger;
     private readonly IServiceProvider _serviceProvider;
 
     private readonly List<short> _installationIds;
@@ -32,7 +32,7 @@
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
-    public ProgramController(
+    public ForecastErrorsService(
         UnitOfWork unitOfWork,
         IForecastErrorsCalculator forecastErrorsCalculator = null,
         List<short> installationIds = null,
@@ -52,10 +52,10 @@
       _installationUpdateDaysPeriod = installationUpdateDaysPeriod;
     }
 
-    public ProgramController(
+    public ForecastErrorsService(
         IServiceProvider serviceProvider,
         IConfiguration config,
-        ILogger<ProgramController> logger = null)
+        ILogger<ForecastErrorsService> logger = null)
     {
       _serviceProvider = serviceProvider;
       _logger = logger;

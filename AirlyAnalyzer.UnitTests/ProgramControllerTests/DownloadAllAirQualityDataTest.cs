@@ -54,7 +54,7 @@
           .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
           .ReturnsAsync(downloadedData);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -91,7 +91,7 @@
           .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
           .ReturnsAsync(downloadedData);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -121,7 +121,7 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);
@@ -161,7 +161,7 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -211,7 +211,7 @@
         }
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,

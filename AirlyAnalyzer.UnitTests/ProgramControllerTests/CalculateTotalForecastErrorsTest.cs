@@ -55,7 +55,7 @@
       _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork, _forecastErrorsCalculator, installationIds);
 
       // Act
@@ -85,7 +85,7 @@
             installationId, _startDate, numberOfElements);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork, _forecastErrorsCalculator, _installationIds);
 
       // Act
@@ -105,7 +105,7 @@
       _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,

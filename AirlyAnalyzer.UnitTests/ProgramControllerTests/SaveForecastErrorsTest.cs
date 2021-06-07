@@ -15,7 +15,7 @@
   [Collection("RepositoryTests")]
   public class SaveForecastErrorsTest
   {
-    private readonly ProgramController _programController;
+    private readonly ForecastErrorsService _programController;
     private readonly AirlyContext _context;
     private readonly DateTime _startDate;
     private readonly List<short> _installationIds;
@@ -26,7 +26,7 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      _programController = new ProgramController(fixture.UnitOfWork);
+      _programController = new ForecastErrorsService(fixture.UnitOfWork);
 
       _context.Clear();
     }

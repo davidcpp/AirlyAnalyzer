@@ -43,7 +43,7 @@
       _downloaderMock.Setup(x => x.DownloadInstallationInfo(It.IsAny<short>()))
                      .ReturnsAsync(downloadedData);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
           airlyApiDownloader: _downloaderMock.Object);
@@ -75,7 +75,7 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -103,7 +103,7 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);
@@ -150,7 +150,7 @@
       _downloaderMock.Setup(x => x.DownloadInstallationInfo(newInstallationId))
                      .ReturnsAsync(downloadedData);
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: modifiedInstallationIds,
           airlyApiDownloader: _downloaderMock.Object);
@@ -192,7 +192,7 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -223,7 +223,7 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);

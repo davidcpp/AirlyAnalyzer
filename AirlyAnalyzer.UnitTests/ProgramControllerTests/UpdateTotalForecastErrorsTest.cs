@@ -18,7 +18,7 @@
   [Collection("RepositoryTests")]
   public class UpdateTotalForecastErrorsTest
   {
-    private readonly ProgramController programController;
+    private readonly ForecastErrorsService programController;
     private readonly AirlyContext _context;
     private readonly DateTime _startDate;
     private readonly List<short> _installationIds;
@@ -29,7 +29,7 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      programController = new ProgramController(
+      programController = new ForecastErrorsService(
           fixture.UnitOfWork,
           forecastErrorsCalculator:
               new PlainForecastErrorsCalculator(fixture.Config));

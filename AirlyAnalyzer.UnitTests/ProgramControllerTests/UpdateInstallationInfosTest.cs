@@ -52,7 +52,7 @@
         newInstallationInfos.Add(emptyInstallationInfo);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
@@ -87,7 +87,7 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
@@ -123,7 +123,7 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: newInstallationIds);
 
@@ -168,7 +168,7 @@
         newInstallationInfos.Add(installationInfo);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
@@ -217,7 +217,7 @@
         newInstallationInfos.Add(installationInfo);
       }
 
-      var programController = new ProgramController(
+      var programController = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: newInstallationIds);
 

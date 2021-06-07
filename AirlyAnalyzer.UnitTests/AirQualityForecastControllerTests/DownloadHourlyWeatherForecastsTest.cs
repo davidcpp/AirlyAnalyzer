@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.UnitTests.forecastServiceTests
+﻿namespace AirlyAnalyzer.UnitTests.ForecastServiceTests
 {
   using System;
   using System.Collections.Generic;

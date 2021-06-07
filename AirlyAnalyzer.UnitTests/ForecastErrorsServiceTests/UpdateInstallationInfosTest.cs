@@ -52,12 +52,12 @@
         newInstallationInfos.Add(emptyInstallationInfo);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
       // Act
-      await programController.UpdateInstallationInfos(newInstallationInfos);
+      await forecastErrorsService.UpdateInstallationInfos(newInstallationInfos);
 
       var dbInstallationInfos
           = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
@@ -87,12 +87,12 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
       // Act
-      await programController.UpdateInstallationInfos(newInstallationInfos);
+      await forecastErrorsService.UpdateInstallationInfos(newInstallationInfos);
 
       var dbInstallationInfos
           = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
@@ -123,12 +123,12 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: newInstallationIds);
 
       // Act
-      await programController.UpdateInstallationInfos(newInstallationInfos);
+      await forecastErrorsService.UpdateInstallationInfos(newInstallationInfos);
 
       var dbInstallationInfos
           = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
@@ -168,12 +168,12 @@
         newInstallationInfos.Add(installationInfo);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds);
 
       // Act
-      await programController.UpdateInstallationInfos(newInstallationInfos);
+      await forecastErrorsService.UpdateInstallationInfos(newInstallationInfos);
 
       var dbInstallationInfos
           = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();
@@ -217,12 +217,12 @@
         newInstallationInfos.Add(installationInfo);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: newInstallationIds);
 
       // Act
-      await programController.UpdateInstallationInfos(newInstallationInfos);
+      await forecastErrorsService.UpdateInstallationInfos(newInstallationInfos);
 
       var dbInstallationInfos
           = _context.InstallationInfos.OrderBy(i => i.InstallationId).ToList();

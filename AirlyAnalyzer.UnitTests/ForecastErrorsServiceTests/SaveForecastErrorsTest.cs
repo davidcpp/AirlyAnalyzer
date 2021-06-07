@@ -15,7 +15,7 @@
   [Collection("RepositoryTests")]
   public class SaveForecastErrorsTest
   {
-    private readonly ForecastErrorsService _programController;
+    private readonly ForecastErrorsService _forecastErrorsService;
     private readonly AirlyContext _context;
     private readonly DateTime _startDate;
     private readonly List<short> _installationIds;
@@ -26,7 +26,7 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      _programController = new ForecastErrorsService(fixture.UnitOfWork);
+      _forecastErrorsService = new ForecastErrorsService(fixture.UnitOfWork);
 
       _context.Clear();
     }
@@ -61,7 +61,7 @@
       }
 
       // Act 
-      int result = await _programController
+      int result = await _forecastErrorsService
           .SaveForecastErrors(hourlyForecastErrors, dailyForecastErrors);
 
       // Assert
@@ -76,7 +76,7 @@
       var dailyForecastErrors = new List<AirQualityForecastError>();
 
       // Act 
-      await _programController
+      await _forecastErrorsService
           .SaveForecastErrors(hourlyForecastErrors, dailyForecastErrors);
 
       // Assert
@@ -110,7 +110,7 @@
       }
 
       // Act 
-      await _programController
+      await _forecastErrorsService
           .SaveForecastErrors(hourlyForecastErrors, dailyForecastErrors);
 
       // Assert

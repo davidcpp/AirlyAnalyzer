@@ -54,7 +54,7 @@
           .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
           .ReturnsAsync(downloadedData);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -62,7 +62,7 @@
 
       // Act
       var newMeasurementsList
-          = await programController.DownloadAllAirQualityData();
+          = await forecastErrorsService.DownloadAllAirQualityData();
 
       // Assert
       _downloaderMock.Verify(
@@ -91,7 +91,7 @@
           .Setup(x => x.DownloadInstallationMeasurements(It.IsAny<short>()))
           .ReturnsAsync(downloadedData);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -99,7 +99,7 @@
 
       // Act
       var newMeasurementsList
-          = await programController.DownloadAllAirQualityData();
+          = await forecastErrorsService.DownloadAllAirQualityData();
 
       // Assert
       _downloaderMock.Verify(
@@ -121,14 +121,14 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);
 
       // Act
       var newMeasurementsList
-          = await programController.DownloadAllAirQualityData();
+          = await forecastErrorsService.DownloadAllAirQualityData();
 
       // Assert
       _downloaderMock.Verify(
@@ -161,7 +161,7 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -169,7 +169,7 @@
 
       // Act
       var newMeasurementsList
-          = await programController.DownloadAllAirQualityData();
+          = await forecastErrorsService.DownloadAllAirQualityData();
 
       // Assert
       _downloaderMock.Verify(
@@ -211,7 +211,7 @@
         }
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
@@ -219,7 +219,7 @@
 
       // Act
       var newMeasurementsList
-          = await programController.DownloadAllAirQualityData();
+          = await forecastErrorsService.DownloadAllAirQualityData();
 
       // Assert
       _downloaderMock.Verify(

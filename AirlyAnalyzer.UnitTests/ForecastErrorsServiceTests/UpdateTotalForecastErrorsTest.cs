@@ -18,7 +18,7 @@
   [Collection("RepositoryTests")]
   public class UpdateTotalForecastErrorsTest
   {
-    private readonly ForecastErrorsService programController;
+    private readonly ForecastErrorsService forecastErrorsService;
     private readonly AirlyContext _context;
     private readonly DateTime _startDate;
     private readonly List<short> _installationIds;
@@ -29,7 +29,7 @@
       _startDate = fixture.StartDate;
       _installationIds = fixture.InstallationIds;
 
-      programController = new ForecastErrorsService(
+      forecastErrorsService = new ForecastErrorsService(
           fixture.UnitOfWork,
           forecastErrorsCalculator:
               new PlainForecastErrorsCalculator(fixture.Config));
@@ -49,7 +49,7 @@
       var newTotalForecastErrors = new List<AirQualityForecastError>();
 
       // Act
-      await programController.UpdateTotalForecastErrors(newTotalForecastErrors);
+      await forecastErrorsService.UpdateTotalForecastErrors(newTotalForecastErrors);
 
       // Assert
       Assert.Equal(_installationIds.Count + 1, _context.ForecastErrors.Count());
@@ -70,7 +70,7 @@
         .ToList();
 
       // Act
-      await programController.UpdateTotalForecastErrors(newTotalForecastErrors);
+      await forecastErrorsService.UpdateTotalForecastErrors(newTotalForecastErrors);
 
       // Assert
       Assert.Equal(_installationIds.Count + 1, _context.ForecastErrors.Count());

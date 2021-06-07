@@ -62,7 +62,7 @@
           numberOfDays,
           numberOfElementsInDay);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           installationIds,
@@ -70,7 +70,7 @@
 
       // Act
       var (hourlyErrors, dailyErrors)
-          = await programController.CalculateForecastErrors();
+          = await forecastErrorsService.CalculateForecastErrors();
 
       // Assert
       Assert.Empty(hourlyErrors);
@@ -81,14 +81,14 @@
     public async Task returns_empty_new_forecast_error_list_when_no_measurements_in_database()
     {
       // Arrange
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds);
 
       // Act
       var (hourlyErrors, dailyErrors)
-          = await programController.CalculateForecastErrors();
+          = await forecastErrorsService.CalculateForecastErrors();
 
       // Assert
       Assert.Empty(hourlyErrors);
@@ -111,7 +111,7 @@
       _context.AddAllForecastsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
@@ -119,7 +119,7 @@
 
       // Act
       var (hourlyErrors, dailyErrors)
-          = await programController.CalculateForecastErrors();
+          = await forecastErrorsService.CalculateForecastErrors();
 
       // Assert
       Assert.Equal(numberOfHourlyErrors, hourlyErrors.Count);
@@ -142,7 +142,7 @@
       _context.AddAllForecastsToDatabase(
           _installationIds, _startDate, numberOfDays, numberOfElementsInDay);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
@@ -150,7 +150,7 @@
 
       // Act
       var (hourlyErrors, dailyErrors)
-          = await programController.CalculateForecastErrors();
+          = await forecastErrorsService.CalculateForecastErrors();
 
       var hourlyErrorsInstallationIds
           = hourlyErrors.Select(fe => fe.InstallationId).Distinct().ToList();

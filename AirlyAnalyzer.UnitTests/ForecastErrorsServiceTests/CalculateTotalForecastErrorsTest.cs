@@ -55,12 +55,12 @@
       _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork, _forecastErrorsCalculator, installationIds);
 
       // Act
       var newTotalForecastErrors
-          = await programController.CalculateTotalForecastErrors();
+          = await forecastErrorsService.CalculateTotalForecastErrors();
 
       // Assert
       Assert.Empty(newTotalForecastErrors);
@@ -85,12 +85,12 @@
             installationId, _startDate, numberOfElements);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork, _forecastErrorsCalculator, _installationIds);
 
       // Act
       var newTotalForecastErrors
-          = await programController.CalculateTotalForecastErrors();
+          = await forecastErrorsService.CalculateTotalForecastErrors();
 
       // Assert
       Assert.Empty(newTotalForecastErrors);
@@ -105,7 +105,7 @@
       _context.AddAllElementsToDatabase(
           _installationIds, _startDate, numberOfDays, _minNumberOfMeasurements);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           _unitOfWork,
           _forecastErrorsCalculator,
           _installationIds,
@@ -113,7 +113,7 @@
 
       // Act
       var newTotalForecastErrors
-          = await programController.CalculateTotalForecastErrors();
+          = await forecastErrorsService.CalculateTotalForecastErrors();
 
       // Assert
       Assert.Equal(_installationIds.Count + 1, newTotalForecastErrors.Count);

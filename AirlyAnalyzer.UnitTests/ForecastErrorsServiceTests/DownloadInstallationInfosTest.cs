@@ -43,13 +43,13 @@
       _downloaderMock.Setup(x => x.DownloadInstallationInfo(It.IsAny<short>()))
                      .ReturnsAsync(downloadedData);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: emptyInstallationIds,
           airlyApiDownloader: _downloaderMock.Object);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -75,14 +75,14 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -103,13 +103,13 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -150,13 +150,13 @@
       _downloaderMock.Setup(x => x.DownloadInstallationInfo(newInstallationId))
                      .ReturnsAsync(downloadedData);
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: modifiedInstallationIds,
           airlyApiDownloader: _downloaderMock.Object);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -192,14 +192,14 @@
 
       await _context.SaveChangesAsync();
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object,
           installationUpdateDaysPeriod: installationUpdateDaysPeriod);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       _downloaderMock.Verify(
@@ -223,13 +223,13 @@
                        .ReturnsAsync(downloadedData);
       }
 
-      var programController = new ForecastErrorsService(
+      var forecastErrorsService = new ForecastErrorsService(
           unitOfWork: _unitOfWork,
           installationIds: _installationIds,
           airlyApiDownloader: _downloaderMock.Object);
 
       // Act
-      var installations = await programController.DownloadInstallationInfos();
+      var installations = await forecastErrorsService.DownloadInstallationInfos();
 
       // Assert
       Assert.Equal(_installationIds.Count, installations.Count);

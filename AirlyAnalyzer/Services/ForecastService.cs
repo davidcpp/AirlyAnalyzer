@@ -14,11 +14,11 @@
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
 
-  public class AirQualityForecastController : IHostedService, IDisposable
+  public class ForecastService : IHostedService, IDisposable
   {
     private readonly IOpenWeatherApiDownloader _openWeatherApiDownloader;
 
-    private readonly ILogger<AirQualityForecastController> _logger;
+    private readonly ILogger<ForecastService> _logger;
     private readonly IServiceProvider _serviceProvider;
 
     private readonly List<short> _installationIds;
@@ -28,10 +28,10 @@
     private UnitOfWork _unitOfWork;
     private Timer _timer;
 
-    public AirQualityForecastController(
+    public ForecastService(
         IServiceProvider serviceProvider,
         IConfiguration config,
-        ILogger<AirQualityForecastController> logger = null,
+        ILogger<ForecastService> logger = null,
         UnitOfWork unitOfWork = null /* Unit Tests variant */)
     {
       _serviceProvider = serviceProvider;

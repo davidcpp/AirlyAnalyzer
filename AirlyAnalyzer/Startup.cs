@@ -69,10 +69,10 @@ namespace AirlyAnalyzer
               x.GetRequiredService<ILogger<ProgramController>>()));
 
       services.AddHostedService(x =>
-          new AirQualityForecastController(
+          new ForecastService(
               x.GetRequiredService<IServiceProvider>(),
               x.GetRequiredService<IConfiguration>(),
-              x.GetRequiredService<ILogger<AirQualityForecastController>>()));
+              x.GetRequiredService<ILogger<ForecastService>>()));
 
       services
           .AddControllersWithViews()

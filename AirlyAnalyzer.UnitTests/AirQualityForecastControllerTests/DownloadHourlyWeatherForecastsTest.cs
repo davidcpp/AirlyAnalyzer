@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.UnitTests.AirQualityForecastControllerTests
+﻿namespace AirlyAnalyzer.UnitTests.forecastServiceTests
 {
   using System;
   using System.Collections.Generic;
@@ -59,12 +59,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -91,12 +91,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Empty(weatherForecastsList);
@@ -145,12 +145,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -202,12 +202,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -250,12 +250,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -298,12 +298,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -355,12 +355,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -420,12 +420,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -490,12 +490,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -562,12 +562,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -630,12 +630,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -702,12 +702,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -744,12 +744,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -788,12 +788,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -849,12 +849,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       downloaderMock.Verify(
@@ -903,12 +903,12 @@
           .AddInMemoryCollection(configData)
           .Build();
 
-      var airQualityForecastController = new AirQualityForecastController(
+      var forecastService = new ForecastService(
           serviceProvider, config, unitOfWork: _unitOfWork);
 
       // Act
       var weatherForecastsList
-          = await airQualityForecastController.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);

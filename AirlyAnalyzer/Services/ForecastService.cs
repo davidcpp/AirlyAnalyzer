@@ -57,7 +57,7 @@
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-      _logger?.LogInformation("AirQualityForecastController is starting");
+      _logger?.LogInformation("ForecastService is starting");
 
       _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
 
@@ -222,7 +222,7 @@
 
     public Task StopAsync(CancellationToken stoppingToken)
     {
-      _logger?.LogInformation("AirQualityForecastController is stopping");
+      _logger?.LogInformation("ForecastService is stopping");
 
       _timer?.Change(Timeout.Infinite, 0);
 

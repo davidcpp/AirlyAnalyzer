@@ -1,4 +1,4 @@
-﻿namespace AirlyAnalyzer.UnitTests.ProgramControllerTests
+﻿namespace AirlyAnalyzer.UnitTests.ForecastErrorsServiceTests
 {
   using System;
   using System.Collections.Generic;

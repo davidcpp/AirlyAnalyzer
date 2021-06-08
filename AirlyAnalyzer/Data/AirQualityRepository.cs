@@ -56,7 +56,8 @@
           wherePredicate: x => x.InstallationId == installationId
                             && x.Source == source,
           selectPredicate: x => x.TillDateTime,
-          orderByMethod: q => q.OrderByDescending(dateTime => dateTime));
+          orderByMethod: q => q.OrderByDescending(dateTime => dateTime),
+          count: 1);
 
       if (selectedDates.Count > 0)
       {

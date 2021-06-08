@@ -1,11 +1,11 @@
 ﻿const caqiRanges = {
   veryLow: {
     max: 25,
-    color: "lime",
+    color: "limegreen",
   },
   low: {
     max: 50,
-    color: "lightgreen",
+    color: "yellowgreen",
   },
   medium: {
     max: 75,

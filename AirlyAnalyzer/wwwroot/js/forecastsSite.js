@@ -56,11 +56,6 @@ $('#airQualityInstallations').change(function () {
   updateForecastChart(selectedInstallationId);
 });
 
-function updateForecastChart(selectedInstallationId) {
-  chart.remove();
-  chart = createForecastChart(selectedInstallationId);
-}
-
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 
@@ -70,6 +65,11 @@ function updateInstallationsSelect() {
     option.value = installationId;
     select.add(option);
   }
+}
+
+function updateForecastChart(selectedInstallationId) {
+  chart.remove();
+  chart = createForecastChart(selectedInstallationId);
 }
 
 function createForecastChart(installationId) {

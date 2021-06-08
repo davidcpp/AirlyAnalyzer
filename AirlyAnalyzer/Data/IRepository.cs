@@ -26,6 +26,7 @@
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,
-        bool isDistinct = false);
+        bool isDistinct = false,
+        int count = 0);
   }
 }

@@ -85,7 +85,8 @@
         Expression<Func<TEntity, T>> selectPredicate,
         Expression<Func<TEntity, bool>> wherePredicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderByMethod = null,
-        bool isDistinct = false)
+        bool isDistinct = false,
+        int count = 0)
     {
       IQueryable<TEntity> query = _dbSet;
       IQueryable<T> resultQuery;
@@ -107,6 +108,11 @@
         if (orderByMethod != null)
         {
           resultQuery = orderByMethod(resultQuery);
+        }
+
+        if (count > 0)
+        {
+          resultQuery = resultQuery.Take(count);
         }
 
         return resultQuery.ToListAsync();

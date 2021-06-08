@@ -86,15 +86,15 @@ function createForecastChart(installationId) {
     }
 
     const chart = {
-      margin: ({ top: 30, right: 0, bottom: 30, left: 40 }),
+      margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
       height: 500,
       width: 900,
     };
 
     const title = {
       text: "CAQI",
-      fontSize: 10,
-      x: -chart.margin.left,
+      fontSize: 13,
+      x: -chart.margin.left + 25,
     };
 
     title.y = title.fontSize;

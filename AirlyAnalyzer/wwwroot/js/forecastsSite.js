@@ -1,4 +1,30 @@
-﻿// Variables/objects from model
+﻿const caqiRanges = {
+  veryLow: {
+    max: 25,
+    color: "lime",
+  },
+  low: {
+    max: 50,
+    color: "lightgreen",
+  },
+  medium: {
+    max: 75,
+    color: "orange",
+  },
+  high: {
+    max: 100,
+    color: "orangered",
+  },
+  veryHigh: {
+    max: 125,
+    color: "mediumvioletred",
+  },
+  extreme: {
+    color: "purple",
+  },
+}
+
+// Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationIds = {};
@@ -8,7 +34,7 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
   if (airQualityForecasts[i].length > 0) {
     installationIds[airQualityForecasts[i][0].InstallationId] = true;
     forecastsDictionary[airQualityForecasts[i][0].InstallationId]
-        = airQualityForecasts[i];
+      = airQualityForecasts[i];
   }
 
   for (let j = 0; j < airQualityForecasts[i].length; j++) {
@@ -60,7 +86,6 @@ function createForecastChart(installationId) {
       margin: ({ top: 30, right: 0, bottom: 30, left: 40 }),
       height: 500,
       width: 900,
-      color: "steelblue",
     };
 
     const title = {
@@ -107,14 +132,14 @@ function createForecastChart(installationId) {
       .attr("viewBox", [0, 0, chart.width, chart.height]);
 
     svg.append("g")
-      .attr("fill", chart.color)
       .selectAll("rect")
       .data(forecastsDictionary[installationId])
       .join("rect")
       .attr("x", (d, i) => x(i))
       .attr("y", d => y(d.AirlyCaqi))
       .attr("height", d => y(0) - y(d.AirlyCaqi))
-      .attr("width", x.bandwidth());
+      .attr("width", x.bandwidth())
+      .attr("fill", d => getColorForCaqiRange(d.AirlyCaqi));
 
     svg.append("g")
       .call(xAxis);
@@ -123,5 +148,28 @@ function createForecastChart(installationId) {
       .call(yAxis);
 
     return svg.node();
+  }
+}
+
+function getColorForCaqiRange(caqi) {
+  switch (true) {
+    case (caqi <= caqiRanges.veryLow.max):
+      return caqiRanges.veryLow.color;
+      break;
+    case (caqi <= caqiRanges.low.max):
+      return caqiRanges.low.color;
+      break;
+    case (caqi <= caqiRanges.medium.max):
+      return caqiRanges.medium.color;
+      break;
+    case (caqi <= caqiRanges.high.max):
+      return caqiRanges.high.color;
+      break;
+    case (caqi <= caqiRanges.veryHigh.max):
+      return caqiRanges.veryHigh.color;
+      break;
+    default:
+      return caqiRanges.extreme.color;
+      break;
   }
 }

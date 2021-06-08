@@ -27,12 +27,13 @@
 // Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
-let installationIds = {};
+let installationAddresses = {};
 let chart = {}
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
   if (airQualityForecasts[i].length > 0) {
-    installationIds[airQualityForecasts[i][0].InstallationId] = true;
+    installationAddresses[airQualityForecasts[i][0].InstallationId]
+      = airQualityForecasts[i][0].InstallationAddress;
     forecastsDictionary[airQualityForecasts[i][0].InstallationId]
       = airQualityForecasts[i];
   }
@@ -59,9 +60,9 @@ $('#airQualityInstallations').change(function () {
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 
-  for (var installationId in installationIds) {
+  for (var installationId in installationAddresses) {
     let option = document.createElement("option");
-    option.text = installationId;
+    option.text = installationAddresses[installationId];
     option.value = installationId;
     select.add(option);
   }

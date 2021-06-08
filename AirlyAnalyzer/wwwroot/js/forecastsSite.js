@@ -119,7 +119,8 @@ function createForecastChart(installationId) {
 
     let xAxis = g => g
       .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
-      .call(d3.axisBottom(x).tickFormat(i => forecastsDictionary[installationId][i].TillDateTime)
+      .call(d3.axisBottom(x)
+        .tickFormat(i => forecastsDictionary[installationId][i].TillDateTime)
         .tickSizeOuter(0));
 
     let yAxis = g => g

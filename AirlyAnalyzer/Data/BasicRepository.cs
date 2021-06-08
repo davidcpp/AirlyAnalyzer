@@ -88,15 +88,15 @@
         bool isDistinct = false)
     {
       IQueryable<TEntity> query = _dbSet;
-
-      if (wherePredicate != null)
-      {
-        query = query.Where(wherePredicate);
-      }
-
       IQueryable<T> resultQuery;
+
       if (selectPredicate != null)
       {
+        if (wherePredicate != null)
+        {
+          query = query.Where(wherePredicate);
+        }
+
         resultQuery = query.Select(selectPredicate);
 
         if (isDistinct)

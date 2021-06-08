@@ -68,8 +68,10 @@ function updateInstallationsSelect() {
 }
 
 function updateForecastChart(selectedInstallationId) {
-  chart.remove();
-  chart = createForecastChart(selectedInstallationId);
+  if (selectedInstallationId != 0) {
+    chart.remove();
+    chart = createForecastChart(selectedInstallationId);
+  }
 }
 
 function createForecastChart(installationId) {

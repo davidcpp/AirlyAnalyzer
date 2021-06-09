@@ -72,7 +72,7 @@
 
         var weatherForecasts = await DownloadHourlyWeatherForecasts();
         var convertedWeatherForecasts
-            = ConvertHourlyWeatherForecasts(weatherForecasts);
+            = ConvertHourlyOpenWeatherForecasts(weatherForecasts);
 
         var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
         await AddInstallationAddressToForecasts(airQualityPredictions);
@@ -127,7 +127,7 @@
       return hourlyWeatherForecasts;
     }
 
-    public List<WeatherMeasurement> ConvertHourlyWeatherForecasts(
+    public List<WeatherMeasurement> ConvertHourlyOpenWeatherForecasts(
         List<OpenWeatherForecast> weatherForecasts)
     {
       _logger?.LogInformation("ConvertHourlyWeatherForecasts() is starting");

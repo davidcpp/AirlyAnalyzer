@@ -64,7 +64,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -96,7 +96,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Empty(weatherForecastsList);
@@ -150,7 +150,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -207,7 +207,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -255,7 +255,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -303,7 +303,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -360,7 +360,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -425,7 +425,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -495,7 +495,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -567,7 +567,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -635,7 +635,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -707,7 +707,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -749,7 +749,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       _downloaderMock.Verify(
@@ -793,7 +793,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);
@@ -854,7 +854,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       downloaderMock.Verify(
@@ -908,7 +908,7 @@
 
       // Act
       var weatherForecastsList
-          = await forecastService.DownloadHourlyWeatherForecasts();
+          = await forecastService.DownloadHourlyOpenWeatherForecasts();
 
       // Assert
       Assert.Equal(_installationIds.Count, weatherForecastsList.Count);

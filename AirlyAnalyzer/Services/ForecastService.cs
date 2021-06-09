@@ -70,7 +70,7 @@
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
-        var weatherForecasts = await DownloadHourlyWeatherForecasts();
+        var weatherForecasts = await DownloadHourlyOpenWeatherForecasts();
         var convertedWeatherForecasts
             = ConvertHourlyOpenWeatherForecasts(weatherForecasts);
 
@@ -82,7 +82,7 @@
       }
     }
 
-    public async Task<List<OpenWeatherForecast>> DownloadHourlyWeatherForecasts()
+    public async Task<List<OpenWeatherForecast>> DownloadHourlyOpenWeatherForecasts()
     {
       _logger?.LogInformation("DownloadHourlyWeatherForecasts() is starting");
 

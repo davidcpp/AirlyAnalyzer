@@ -70,9 +70,9 @@
       {
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
-        var weatherForecasts = await DownloadHourlyOpenWeatherForecasts();
+        var openWeatherForecasts = await DownloadHourlyOpenWeatherForecasts();
         var convertedWeatherForecasts
-            = ConvertHourlyOpenWeatherForecasts(weatherForecasts);
+            = ConvertHourlyOpenWeatherForecasts(openWeatherForecasts);
 
         var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
         await AddInstallationAddressToForecasts(airQualityPredictions);

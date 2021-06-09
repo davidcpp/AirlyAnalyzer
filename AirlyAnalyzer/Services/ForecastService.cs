@@ -130,7 +130,7 @@
     public List<WeatherMeasurement> ConvertHourlyOpenWeatherForecasts(
         List<OpenWeatherForecast> weatherForecasts)
     {
-      _logger?.LogInformation("ConvertHourlyWeatherForecasts() is starting");
+      _logger?.LogInformation("ConvertHourlyOpenWeatherForecasts() is starting");
 
       var convertedWeatherForecasts = new List<WeatherMeasurement>();
 

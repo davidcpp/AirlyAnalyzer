@@ -29,6 +29,44 @@
         WindGust = weatherForecastItem.WindGust,
       };
     }
+
+    public static WeatherMeasurement ConvertToWeatherMeasurement(
+        this AccuWeatherForecastObject weatherForecastItem, int installationId)
+    {
+      int visibility = 0;
+      int windSpeed = 0;
+
+      if (weatherForecastItem.Visibility.Unit == "km")
+      {
+        visibility = (int)weatherForecastItem.Visibility.Value * 1000;
+      }
+      else if (weatherForecastItem.Visibility.Unit == "m")
+      {
+        visibility = (int)weatherForecastItem.Visibility.Value;
+      }
+
+      if (weatherForecastItem.Wind.Speed.Unit == "km/h")
+      {
+        windSpeed = (int)weatherForecastItem.Wind.Speed.Value * 1000;
+      }
+      else if (weatherForecastItem.Wind.Speed.Unit == "m")
+      {
+        windSpeed = (int)weatherForecastItem.Wind.Speed.Value;
+      }
+
+      return new WeatherMeasurement()
+      {
+        Year = (short)weatherForecastItem.DateTime.Year,
+        Month = (byte)weatherForecastItem.DateTime.Month,
+        Day = (byte)weatherForecastItem.DateTime.Day,
+        Hour = (byte)weatherForecastItem.DateTime.Hour,
+        InstallationId = installationId,
+        Humidity = weatherForecastItem.RelativeHumidity,
+        Temperature = weatherForecastItem.Temperature.Value,
+        Visibility = visibility,
+        WindSpeed = windSpeed,
+      };
+    }
   }
 }
 

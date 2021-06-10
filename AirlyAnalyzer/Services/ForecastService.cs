@@ -88,6 +88,9 @@
         var convertedAccuWeatherForecasts =
             ConvertHourlyAccuWeatherForecasts(accuWeatherForecasts);
 
+        airQualityPredictions.AddRange(PredictAirQuality(
+            convertedAccuWeatherForecasts, AirQualityDataSource.App_AccuWeather));
+
         await AddInstallationAddressToForecasts(airQualityPredictions);
 
         await _unitOfWork.ForecastRepository.AddListAsync(airQualityPredictions);

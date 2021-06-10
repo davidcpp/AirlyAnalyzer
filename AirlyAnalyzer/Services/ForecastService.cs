@@ -74,7 +74,9 @@
         var convertedWeatherForecasts
             = ConvertHourlyOpenWeatherForecasts(openWeatherForecasts);
 
-        var airQualityPredictions = PredictAirQuality(convertedWeatherForecasts);
+        var airQualityPredictions = PredictAirQuality(
+            convertedWeatherForecasts, AirQualityDataSource.App_OpenWeather);
+
         await AddInstallationAddressToForecasts(airQualityPredictions);
 
         await _unitOfWork.ForecastRepository.AddListAsync(airQualityPredictions);
@@ -152,7 +154,7 @@
     }
 
     public List<AirQualityForecast> PredictAirQuality(
-        List<WeatherMeasurement> weatherForecasts)
+        List<WeatherMeasurement> weatherForecasts, AirQualityDataSource source)
     {
       _logger?.LogInformation("PredictAirQuality() is starting");
 
@@ -190,7 +192,7 @@
           FromDateTime = forecastDateTime.AddHours(-1),
           TillDateTime = forecastDateTime,
           RequestDateTime = DateTime.UtcNow,
-          Source = AirQualityDataSource.App_OpenWeather,
+          Source = source,
           AirlyCaqi = Convert.ToInt16(Math.Ceiling(predictionResult.Score))
         };
 

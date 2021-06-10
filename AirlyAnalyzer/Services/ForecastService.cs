@@ -84,6 +84,8 @@
         var airQualityPredictions = PredictAirQuality(
             convertedOpenWeatherForecasts, AirQualityDataSource.App_OpenWeather);
 
+        var accuWeatherForecasts = await DownloadHourlyAccuWeatherForecasts();
+
         await AddInstallationAddressToForecasts(airQualityPredictions);
 
         await _unitOfWork.ForecastRepository.AddListAsync(airQualityPredictions);

@@ -4,5 +4,6 @@
   {
     Airly,
     App_OpenWeather,
+    App_AccuWeather,
   }
 }

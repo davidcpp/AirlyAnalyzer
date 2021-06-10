@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AirQualityForecast>
+
+@{
+  ViewData["Title"] = "Air Quality Forecast";
+  var airQualityForecasts = Model.GroupBy(f => f.InstallationId);
+
+  var jsonSerializerOptions = new JsonSerializerOptions();
+  jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mb-3 mt-4 justify-content-center" id="mainDiv">
+</div>
+
+<div class="row mb-3 justify-content-center">
+
+  <div class="form-group col-sm-6 col-md-5 col-lg-4 col-xl-3">
+    <label for="airQualityInstallations">
+      Choose installation:
+    </label>
+    <select id="airQualityInstallations" class="form-control">
+      <option value="0">Please choose an option...</option>
+    </select>
+  </div>
+
+  <div class="col-sm-6 col-md-7 col-lg-8 col-xl-9">
+  </div>
+</div>
+
+@section Scripts
+{
+  <script id="forecastsSite" src="~/js/testForecastsSite.js"
+          airQualityForecasts='@JsonSerializer.Serialize(
+                                    airQualityForecasts, jsonSerializerOptions)'>
+  </script>
+}

@@ -85,6 +85,8 @@
             convertedOpenWeatherForecasts, AirQualityDataSource.App_OpenWeather);
 
         var accuWeatherForecasts = await DownloadHourlyAccuWeatherForecasts();
+        var convertedAccuWeatherForecasts =
+            ConvertHourlyAccuWeatherForecasts(accuWeatherForecasts);
 
         await AddInstallationAddressToForecasts(airQualityPredictions);
 

@@ -84,7 +84,7 @@
 
     public async Task<List<OpenWeatherForecast>> DownloadHourlyOpenWeatherForecasts()
     {
-      _logger?.LogInformation("DownloadHourlyWeatherForecasts() is starting");
+      _logger?.LogInformation("DownloadHourlyOpenWeatherForecasts() is starting");
 
       var hourlyWeatherForecasts = new List<OpenWeatherForecast>();
 

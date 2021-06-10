@@ -136,6 +136,51 @@
       return hourlyWeatherForecasts;
     }
 
+    public async Task<List<AccuWeatherForecast>> DownloadHourlyAccuWeatherForecasts()
+    {
+      _logger?.LogInformation("DownloadHourlyAccuWeatherForecasts() is starting");
+
+      var hourlyWeatherForecasts = new List<AccuWeatherForecast>();
+
+      var requestDateTime = DateTime.UtcNow;
+
+      foreach (short installationId in _installationIds)
+      {
+        var lastForecastDate
+            = await _unitOfWork.ForecastRepository.GetLastDate(
+                installationId, AirQualityDataSource.App_AccuWeather);
+
+        // theoretic last weather request dateTime - WeatherForecastHoursNumber
+        // could be different for previously calculated air quality forecast
+        var lastRequestDateTime
+            = lastForecastDate.AddHours(-_weatherForecastHoursNumber);
+
+        bool forecastIsOutOfDate = (requestDateTime - lastRequestDateTime)
+            .TotalHours >= _forecastUpdateHoursPeriod;
+
+        var installationInfo = await
+            _unitOfWork.InstallationsRepository.GetById(installationId);
+
+        bool isInstallationInDatabase = installationInfo != null;
+
+        if (forecastIsOutOfDate && isInstallationInDatabase)
+        {
+          var weatherForecast = await _accuWeatherApiDownloader
+              .DownloadHourlyWeatherForecast(
+                  installationInfo.Location.Latitude,
+                  installationInfo.Location.Longitude);
+
+          hourlyWeatherForecasts.Add(weatherForecast);
+        }
+        else
+        {
+          hourlyWeatherForecasts.Add(new AccuWeatherForecast());
+        }
+      }
+
+      return hourlyWeatherForecasts;
+    }
+
     public List<WeatherMeasurement> ConvertHourlyOpenWeatherForecasts(
         List<OpenWeatherForecast> weatherForecasts)
     {

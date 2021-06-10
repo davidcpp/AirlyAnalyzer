@@ -207,6 +207,30 @@
       return convertedWeatherForecasts;
     }
 
+    public List<WeatherMeasurement> ConvertHourlyAccuWeatherForecasts(
+        List<AccuWeatherForecast> weatherForecasts)
+    {
+      _logger?.LogInformation("ConvertHourlyAccuWeatherForecasts() is starting");
+
+      var convertedWeatherForecasts = new List<WeatherMeasurement>();
+
+      for (int i = 0; i < _installationIds.Count; i++)
+      {
+        for (int j = 0; j < weatherForecasts[i].Count
+            && j < _weatherForecastHoursNumber; j++)
+        {
+          var weatherForecastItem = weatherForecasts[i][j];
+
+          var convertedWeatherForecast =
+              weatherForecastItem.ConvertToWeatherMeasurement(_installationIds[i]);
+
+          convertedWeatherForecasts.Add(convertedWeatherForecast);
+        }
+      }
+
+      return convertedWeatherForecasts;
+    }
+
     public List<AirQualityForecast> PredictAirQuality(
         List<WeatherMeasurement> weatherForecasts, AirQualityDataSource source)
     {

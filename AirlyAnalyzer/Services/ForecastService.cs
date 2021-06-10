@@ -17,6 +17,7 @@
   public class ForecastService : IHostedService, IDisposable
   {
     private readonly IOpenWeatherApiDownloader _openWeatherApiDownloader;
+    private readonly IAccuWeatherApiDownloader _accuWeatherApiDownloader;
 
     private readonly ILogger<ForecastService> _logger;
     private readonly IServiceProvider _serviceProvider;
@@ -53,6 +54,9 @@
 
       _openWeatherApiDownloader
           = serviceProvider.GetRequiredService<IOpenWeatherApiDownloader>();
+
+      _accuWeatherApiDownloader
+          = serviceProvider.GetRequiredService<IAccuWeatherApiDownloader>();
     }
 
     public Task StartAsync(CancellationToken stoppingToken)

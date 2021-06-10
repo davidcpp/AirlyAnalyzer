@@ -71,11 +71,11 @@
         _unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
 
         var openWeatherForecasts = await DownloadHourlyOpenWeatherForecasts();
-        var convertedWeatherForecasts
+        var convertedOpenWeatherForecasts
             = ConvertHourlyOpenWeatherForecasts(openWeatherForecasts);
 
         var airQualityPredictions = PredictAirQuality(
-            convertedWeatherForecasts, AirQualityDataSource.App_OpenWeather);
+            convertedOpenWeatherForecasts, AirQualityDataSource.App_OpenWeather);
 
         await AddInstallationAddressToForecasts(airQualityPredictions);
 

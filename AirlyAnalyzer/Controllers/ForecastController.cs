@@ -54,6 +54,27 @@
       return View(currentForecasts);
     }
 
+    public async Task<ActionResult> Test()
+    {
+      _logger?.LogInformation("GET: Forecast/Test");
+
+      var currentForecasts = new List<AirQualityForecast>();
+
+      foreach (short installationId in _installationIds)
+      {
+        var currentForecast = await _unitOfWork
+            .ForecastRepository.GetLastElements(
+                _numberOfHours,
+                wherePredicate:
+                    f => f.InstallationId == installationId
+                      && f.TillDateTime > DateTime.UtcNow);
+
+        currentForecasts.AddRange(currentForecast);
+      }
+
+      return View(currentForecasts);
+    }
+
     protected override void Dispose(bool disposing)
     {
       if (disposing)

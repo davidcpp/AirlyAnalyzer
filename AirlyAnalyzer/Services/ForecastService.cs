@@ -94,7 +94,7 @@
       {
         var lastForecastDate
             = await _unitOfWork.ForecastRepository.GetLastDate(
-                installationId, AirQualityDataSource.App);
+                installationId, AirQualityDataSource.App_OpenWeather);
 
         // theoretic last weather request dateTime - WeatherForecastHoursNumber
         // could be different for previously calculated air quality forecast
@@ -190,7 +190,7 @@
           FromDateTime = forecastDateTime.AddHours(-1),
           TillDateTime = forecastDateTime,
           RequestDateTime = DateTime.UtcNow,
-          Source = AirQualityDataSource.App,
+          Source = AirQualityDataSource.App_OpenWeather,
           AirlyCaqi = Convert.ToInt16(Math.Ceiling(predictionResult.Score))
         };
 

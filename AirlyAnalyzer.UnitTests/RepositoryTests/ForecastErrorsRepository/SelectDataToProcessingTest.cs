@@ -130,12 +130,12 @@
           newElementsStartDate,
           numberOfNotProcessedDays,
           numberOfNewAppForecastsInDay,
-          AirQualityDataSource.App);
+          AirQualityDataSource.App_OpenWeather);
 
       // Act
       var (_, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App_OpenWeather);
 
       // Assert
       Assert.Equal(
@@ -221,7 +221,7 @@
           newAppForecastsStartDate,
           numberOfAppForecastDays,
           numberOfElementsInDay,
-          AirQualityDataSource.App);
+          AirQualityDataSource.App_OpenWeather);
 
       _context.AddAllMeasurementsToDatabase(
           _installationIds,
@@ -239,14 +239,14 @@
       // Act
       var (_, newForecasts) = await _unitOfWork
           .ForecastErrorRepository.SelectDataToProcessing(
-              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App);
+              installationId, ForecastErrorClass.Plain, AirQualityDataSource.App_OpenWeather);
 
       // Assert
       Assert.Equal(
           numberOfElementsInDay * numberOfAppForecastDays,
           newForecasts.Count);
       Assert.Equal(
-          AirQualityDataSource.App,
+          AirQualityDataSource.App_OpenWeather,
           newForecasts[0].Source);
     }
   }

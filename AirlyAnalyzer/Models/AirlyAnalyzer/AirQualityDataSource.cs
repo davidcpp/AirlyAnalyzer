@@ -3,6 +3,6 @@
   public enum AirQualityDataSource
   {
     Airly = 0,
-    App = 1,
+    App_OpenWeather = 1,
   }
 }

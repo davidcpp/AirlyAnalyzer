@@ -45,7 +45,7 @@
                 _numberOfHours,
                 wherePredicate:
                     f => f.InstallationId == installationId
-                      && f.Source == AirQualityDataSource.App
+                      && f.Source == AirQualityDataSource.App_OpenWeather
                       && f.TillDateTime > DateTime.UtcNow);
 
         currentForecasts.AddRange(currentForecast);

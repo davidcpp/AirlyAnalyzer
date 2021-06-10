@@ -14,6 +14,9 @@
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
 
+  using AccuWeatherForecast
+      = System.Collections.Generic.List<Models.AccuWeatherForecastObject>;
+
   public class ForecastService : IHostedService, IDisposable
   {
     private readonly IOpenWeatherApiDownloader _openWeatherApiDownloader;

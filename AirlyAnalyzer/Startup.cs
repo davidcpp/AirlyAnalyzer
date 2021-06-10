@@ -57,6 +57,12 @@ namespace AirlyAnalyzer
               new WebClientAdapter(new System.Net.WebClient()),
               x.GetRequiredService<ILogger<OpenWeatherApiDownloader>>()));
 
+      services.AddSingleton<IAccuWeatherApiDownloader>(
+          x => new AccuWeatherApiDownloader(
+              x.GetRequiredService<IConfiguration>(),
+              new WebClientAdapter(new System.Net.WebClient()),
+              x.GetRequiredService<ILogger<AccuWeatherApiDownloader>>()));
+
       services.AddSingleton
           <IForecastErrorsCalculator, PlainForecastErrorsCalculator>();
       services.AddSingleton

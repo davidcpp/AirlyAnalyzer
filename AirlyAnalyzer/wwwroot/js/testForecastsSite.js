@@ -159,7 +159,7 @@ function createForecastChart(forecast) {
   const chartDiv = d3.select("#mainDiv")
     .append("div")
     .attr("id", forecast[0].Source)
-    .attr("class", "col-12 col-sm-12 col-md-6 mb-5")
+    .attr("class", "col-12 col-sm-12 col-lg-6 mb-5")
 
   const svg = chartDiv
     .append("svg")

@@ -150,7 +150,7 @@ function createForecastChart(forecast) {
     .text(title.text);
 
   let x = d3.scaleBand()
-    .domain(d3.range(forecast.length))
+    .domain(d3.range(forecastHours.length))
     .range([chart.margin.left, chart.width - chart.margin.right])
     .padding(0.1);
 
@@ -162,7 +162,7 @@ function createForecastChart(forecast) {
   let xAxis = g => g
     .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
     .call(d3.axisBottom(x)
-      .tickFormat(i => forecast[i].TillDateTime)
+      .tickFormat(i => forecastHours[i])
       .tickSizeOuter(0));
 
   let yAxis = g => g

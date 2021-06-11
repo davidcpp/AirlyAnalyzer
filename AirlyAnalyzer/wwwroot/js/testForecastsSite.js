@@ -35,6 +35,7 @@ let forecastHours = [];
 let charts = {}
 
 $(document).ready(function () {
+  fillNextForecastHours();
   initForecastsDictionary();
   updateInstallationsSelect();
 

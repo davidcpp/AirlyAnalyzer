@@ -141,7 +141,7 @@ function createForecastChart(forecast) {
     .padding(0.1);
 
   let y = d3.scaleLinear()
-    .domain([0, d3.max(forecast, d => d?.AirlyCaqi)])
+    .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
     .nice()
     .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
@@ -170,10 +170,10 @@ function createForecastChart(forecast) {
     .data(forecast)
     .join("rect")
     .attr("x", (d, i) => x(i))
-    .attr("y", d => y(d?.AirlyCaqi))
-    .attr("height", d => y(0) - y(d?.AirlyCaqi))
+    .attr("y", d => y(d?.AirlyCaqi ?? 0))
+    .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
     .attr("width", x.bandwidth())
-    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi));
+    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
 
   svg.append("g")
     .call(xAxis);

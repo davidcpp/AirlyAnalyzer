@@ -36,6 +36,8 @@
       int visibility = 0;
       int windSpeed = 0;
 
+      var utcDateTime = weatherForecastItem.DateTime.ToUniversalTime();
+
       if (weatherForecastItem.Visibility.Unit == "km")
       {
         visibility = (int)weatherForecastItem.Visibility.Value * 1000;
@@ -56,10 +58,10 @@
 
       return new WeatherMeasurement()
       {
-        Year = (short)weatherForecastItem.DateTime.Year,
-        Month = (byte)weatherForecastItem.DateTime.Month,
-        Day = (byte)weatherForecastItem.DateTime.Day,
-        Hour = (byte)weatherForecastItem.DateTime.Hour,
+        Year = (short)utcDateTime.Year,
+        Month = (byte)utcDateTime.Month,
+        Day = (byte)utcDateTime.Day,
+        Hour = (byte)utcDateTime.Hour,
         InstallationId = installationId,
         Humidity = weatherForecastItem.RelativeHumidity,
         Temperature = weatherForecastItem.Temperature.Value,

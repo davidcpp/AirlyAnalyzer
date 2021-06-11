@@ -47,10 +47,10 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
       }, {});
 
     for (var source in forecastsBySource) {
-      if (!forecastsDictionary[source]) {
-        forecastsDictionary[source] = {};
+      if (!forecastsDictionary[installationId]) {
+        forecastsDictionary[installationId] = {};
       }
-      forecastsDictionary[source][installationId] = forecastsBySource[source];
+      forecastsDictionary[installationId][source] = forecastsBySource[source];
     }
   }
 
@@ -64,7 +64,9 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
 }
 
 $(document).ready(function () {
-  for (var source in forecastsDictionary) {
+  let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
+
+  for (var source in forecastsDictionary[firstInstallationId]) {
     charts[source] = {};
     charts[source] = createForecastChart(source);
   }
@@ -95,7 +97,7 @@ function updateInstallationsSelect() {
 }
 
 function updateForecastCharts(selectedInstallationId) {
-  for (var source in forecastsDictionary) {
+  for (var source in forecastsDictionary[selectedInstallationId]) {
     if (selectedInstallationId != 0) {
       charts[source].remove();
       charts[source] = createForecastChart(source, selectedInstallationId);
@@ -139,20 +141,20 @@ function createForecastChart(source, installationId) {
       .text(title.text);
 
     let x = d3.scaleBand()
-      .domain(d3.range(forecastsDictionary[source][installationId].length))
+      .domain(d3.range(forecastsDictionary[installationId][source].length))
       .range([chart.margin.left, chart.width - chart.margin.right])
       .padding(0.1);
 
     let y = d3.scaleLinear()
       .domain(
-        [0, d3.max(forecastsDictionary[source][installationId], d => d.AirlyCaqi)])
+        [0, d3.max(forecastsDictionary[installationId][source], d => d.AirlyCaqi)])
       .nice()
       .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
     let xAxis = g => g
       .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
       .call(d3.axisBottom(x)
-        .tickFormat(i => forecastsDictionary[source][installationId][i].TillDateTime)
+        .tickFormat(i => forecastsDictionary[installationId][source][i].TillDateTime)
         .tickSizeOuter(0));
 
     let yAxis = g => g
@@ -171,7 +173,7 @@ function createForecastChart(source, installationId) {
 
     svg.append("g")
       .selectAll("rect")
-      .data(forecastsDictionary[source][installationId])
+      .data(forecastsDictionary[installationId][source])
       .join("rect")
       .attr("x", (d, i) => x(i))
       .attr("y", d => y(d.AirlyCaqi))

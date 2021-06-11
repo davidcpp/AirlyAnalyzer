@@ -24,10 +24,13 @@
   },
 }
 
+let forecastHoursNumber = 24;
+
 // Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationAddresses = {};
+let forecastHours = [];
 
 let charts = {}
 

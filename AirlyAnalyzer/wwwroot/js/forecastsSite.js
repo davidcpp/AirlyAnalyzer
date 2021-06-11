@@ -60,7 +60,7 @@ $('#airQualityInstallations').change(function () {
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 
-  for (var installationId in installationAddresses) {
+  for (let installationId in installationAddresses) {
     let option = document.createElement("option");
     option.text = installationAddresses[installationId];
     option.value = installationId;

@@ -37,7 +37,7 @@ $(document).ready(function () {
 
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
-  for (var forecastSource in forecastsDictionary[firstInstallationId]) {
+  for (let forecastSource in forecastsDictionary[firstInstallationId]) {
     charts[forecastSource] = createForecastChart(
       forecastsDictionary[firstInstallationId][forecastSource]);
   }
@@ -51,7 +51,7 @@ $('#airQualityInstallations').change(function () {
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 
-  for (var installationId in installationAddresses) {
+  for (let installationId in installationAddresses) {
     let option = document.createElement("option");
     option.text = installationAddresses[installationId];
     option.value = installationId;
@@ -98,11 +98,11 @@ function initForecastsDictionary() {
 
 function updateForecastCharts(selectedInstallationId) {
   if (selectedInstallationId != 0) {
-    for (var forecastSource in charts) {
+    for (let forecastSource in charts) {
       charts[forecastSource].remove();
     }
 
-    for (var forecastSource in forecastsDictionary[selectedInstallationId]) {
+    for (let forecastSource in forecastsDictionary[selectedInstallationId]) {
       charts[forecastSource] = createForecastChart(
         forecastsDictionary[selectedInstallationId][forecastSource]);
     }

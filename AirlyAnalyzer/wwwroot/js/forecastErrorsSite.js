@@ -12,11 +12,11 @@ $(document).ready(function () {
     paging: false,
     initComplete: function () {
       this.api().columns().every(function () {
-        var column = this;
-        var select = $('<select><option value=""></option></select>')
+        let column = this;
+        let select = $('<select><option value=""></option></select>')
           .appendTo($(column.footer()).empty())
           .on('change', function () {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            let val = $.fn.dataTable.util.escapeRegex($(this).val());
 
             column.search(val ? '^' + val + '$' : '', true, false)
                   .draw();
@@ -89,7 +89,7 @@ function updateForecastErrorsTable(requestDate) {
 
 function updateColumnSelectInputs() {
   forecastErrorsTable.columns().every(function (index) {
-    var column = this;
+    let column = this;
 
     // Refresh searching to blank strings after table update 
     // - to show all received data in table 

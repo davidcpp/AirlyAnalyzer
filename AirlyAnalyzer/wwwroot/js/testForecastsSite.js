@@ -31,36 +31,36 @@ let installationAddresses = {};
 
 let charts = {}
 
-for (let i = 0; i < airQualityForecasts.length; i++) {
-  let installationForecasts = airQualityForecasts[i];
-
-  if (installationForecasts.length > 0) {
-    let installationId = installationForecasts[0].InstallationId;
-
-    installationAddresses[installationId]
-      = installationForecasts[0].InstallationAddress;
-
-    const forecastsBySource = installationForecasts.reduce(
-      (forecastsBySource, item) => {
-        const group = (forecastsBySource[item.Source] || []);
-        group.push(item);
-        forecastsBySource[item.Source] = group;
-        return forecastsBySource;
-      }, {});
-
-    forecastsDictionary[installationId] = forecastsBySource;
-  }
-
-  for (let j = 0; j < installationForecasts.length; j++) {
-    let dateTime = new Date(installationForecasts[j].TillDateTime);
-    let seconds = dateTime.getSeconds();
-    seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
-    installationForecasts[j].TillDateTime
-      = dateTime.getHours().toString() + ":" + seconds;
-  }
-}
-
 $(document).ready(function () {
+  for (let i = 0; i < airQualityForecasts.length; i++) {
+    let installationForecasts = airQualityForecasts[i];
+
+    if (installationForecasts.length > 0) {
+      let installationId = installationForecasts[0].InstallationId;
+
+      installationAddresses[installationId]
+        = installationForecasts[0].InstallationAddress;
+
+      const forecastsBySource = installationForecasts.reduce(
+        (forecastsBySource, item) => {
+          const group = (forecastsBySource[item.Source] || []);
+          group.push(item);
+          forecastsBySource[item.Source] = group;
+          return forecastsBySource;
+        }, {});
+
+      forecastsDictionary[installationId] = forecastsBySource;
+    }
+
+    for (let j = 0; j < installationForecasts.length; j++) {
+      let dateTime = new Date(installationForecasts[j].TillDateTime);
+      let seconds = dateTime.getSeconds();
+      seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
+      installationForecasts[j].TillDateTime
+        = dateTime.getHours().toString() + ":" + seconds;
+    }
+  }
+
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
   for (var source in forecastsDictionary[firstInstallationId]) {

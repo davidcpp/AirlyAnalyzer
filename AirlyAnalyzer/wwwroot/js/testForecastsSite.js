@@ -109,10 +109,6 @@ function updateForecastCharts(selectedInstallationId) {
 }
 
 function createForecastChart(source, installationId) {
-  let dataIsNotNullOrEmpty = airQualityForecasts != null
-    && airQualityForecasts != undefined
-    && airQualityForecasts.length != 0
-
   if (dataIsNotNullOrEmpty) {
     const chart = {
       margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),

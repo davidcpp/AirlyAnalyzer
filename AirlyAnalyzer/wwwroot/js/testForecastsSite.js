@@ -33,13 +33,13 @@ let charts = {}
 
 $(document).ready(function () {
   initForecastsDictionary();
+  updateInstallationsSelect();
+
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
   for (var source in forecastsDictionary[firstInstallationId]) {
     charts[source] = createForecastChart(source, firstInstallationId);
   }
-
-  updateInstallationsSelect();
 });
 
 $('#airQualityInstallations').change(function () {

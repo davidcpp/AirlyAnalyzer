@@ -37,7 +37,7 @@ $(document).ready(function () {
 
   for (var source in forecastsDictionary[firstInstallationId]) {
     charts[source] = {};
-    charts[source] = createForecastChart(source);
+    charts[source] = createForecastChart(source, firstInstallationId);
   }
 
   updateInstallationsSelect();
@@ -114,10 +114,6 @@ function createForecastChart(source, installationId) {
     && airQualityForecasts.length != 0
 
   if (dataIsNotNullOrEmpty) {
-    if (installationId == undefined) {
-      installationId = airQualityForecasts[0][0].InstallationId;
-    }
-
     const chart = {
       margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
       height: 500,

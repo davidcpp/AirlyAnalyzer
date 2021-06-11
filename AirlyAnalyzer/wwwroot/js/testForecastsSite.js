@@ -46,12 +46,7 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
         return forecastsBySource;
       }, {});
 
-    for (var source in forecastsBySource) {
-      if (!forecastsDictionary[installationId]) {
-        forecastsDictionary[installationId] = {};
-      }
-      forecastsDictionary[installationId][source] = forecastsBySource[source];
-    }
+    forecastsDictionary[installationId] = forecastsBySource;
   }
 
   for (let j = 0; j < airQualityForecasts[i].length; j++) {

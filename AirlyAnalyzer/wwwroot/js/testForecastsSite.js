@@ -101,10 +101,8 @@ function updateForecastCharts(selectedInstallationId) {
     for (var forecastSource in charts) {
       charts[forecastSource].remove();
     }
-  }
 
-  for (var source in forecastsDictionary[selectedInstallationId]) {
-    if (selectedInstallationId != 0) {
+    for (var source in forecastsDictionary[selectedInstallationId]) {
       charts[source] = createForecastChart(source, selectedInstallationId);
     }
   }

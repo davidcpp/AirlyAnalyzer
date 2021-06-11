@@ -37,9 +37,9 @@ $(document).ready(function () {
 
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
-  for (var source in forecastsDictionary[firstInstallationId]) {
-    charts[source] = createForecastChart(
-      forecastsDictionary[firstInstallationId][source]);
+  for (var forecastSource in forecastsDictionary[firstInstallationId]) {
+    charts[forecastSource] = createForecastChart(
+      forecastsDictionary[firstInstallationId][forecastSource]);
   }
 });
 
@@ -102,9 +102,9 @@ function updateForecastCharts(selectedInstallationId) {
       charts[forecastSource].remove();
     }
 
-    for (var source in forecastsDictionary[selectedInstallationId]) {
-      charts[source] = createForecastChart(
-        forecastsDictionary[selectedInstallationId][source]);
+    for (var forecastSource in forecastsDictionary[selectedInstallationId]) {
+      charts[forecastSource] = createForecastChart(
+        forecastsDictionary[selectedInstallationId][forecastSource]);
     }
   }
 }

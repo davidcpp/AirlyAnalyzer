@@ -32,13 +32,15 @@ let installationAddresses = {};
 let charts = {}
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
-  if (airQualityForecasts[i].length > 0) {
-    let installationId = airQualityForecasts[i][0].InstallationId;
+  let installationForecasts = airQualityForecasts[i];
+
+  if (installationForecasts.length > 0) {
+    let installationId = installationForecasts[0].InstallationId;
 
     installationAddresses[installationId]
-      = airQualityForecasts[i][0].InstallationAddress;
+      = installationForecasts[0].InstallationAddress;
 
-    const forecastsBySource = airQualityForecasts[i].reduce(
+    const forecastsBySource = installationForecasts.reduce(
       (forecastsBySource, item) => {
         const group = (forecastsBySource[item.Source] || []);
         group.push(item);
@@ -49,11 +51,11 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
     forecastsDictionary[installationId] = forecastsBySource;
   }
 
-  for (let j = 0; j < airQualityForecasts[i].length; j++) {
-    let dateTime = new Date(airQualityForecasts[i][j].TillDateTime);
+  for (let j = 0; j < installationForecasts.length; j++) {
+    let dateTime = new Date(installationForecasts[j].TillDateTime);
     let seconds = dateTime.getSeconds();
     seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
-    airQualityForecasts[i][j].TillDateTime
+    installationForecasts[j].TillDateTime
       = dateTime.getHours().toString() + ":" + seconds;
   }
 }

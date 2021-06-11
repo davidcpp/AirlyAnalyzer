@@ -59,21 +59,21 @@ function updateInstallationsSelect() {
   }
 
   if (airQualityForecasts?.length > 0) {
-    if (airQualityForecasts[0].length > 0) {
-      select.value = airQualityForecasts[0][0].InstallationId;
+    if (airQualityForecasts[0]?.length > 0) {
+      select.value = airQualityForecasts[0][0]?.InstallationId;
     }
   }
 }
 
 function initForecastsDictionary() {
-  for (let i = 0; i < airQualityForecasts.length; i++) {
+  for (let i = 0; i < airQualityForecasts?.length; i++) {
     let installationForecasts = airQualityForecasts[i];
 
-    if (installationForecasts.length > 0) {
-      let installationId = installationForecasts[0].InstallationId;
+    if (installationForecasts?.length > 0) {
+      let installationId = installationForecasts[0]?.InstallationId;
 
       installationAddresses[installationId]
-        = installationForecasts[0].InstallationAddress;
+        = installationForecasts[0]?.InstallationAddress;
 
       const forecastsBySource = installationForecasts.reduce(
         (forecastsBySource, item) => {
@@ -86,7 +86,7 @@ function initForecastsDictionary() {
       forecastsDictionary[installationId] = forecastsBySource;
     }
 
-    for (let j = 0; j < installationForecasts.length; j++) {
+    for (let j = 0; j < installationForecasts?.length; j++) {
       let dateTime = new Date(installationForecasts[j].TillDateTime);
       let seconds = dateTime.getSeconds();
       seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
@@ -141,7 +141,7 @@ function createForecastChart(forecast) {
     .padding(0.1);
 
   let y = d3.scaleLinear()
-    .domain([0, d3.max(forecast, d => d.AirlyCaqi)])
+    .domain([0, d3.max(forecast, d => d?.AirlyCaqi)])
     .nice()
     .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
@@ -170,10 +170,10 @@ function createForecastChart(forecast) {
     .data(forecast)
     .join("rect")
     .attr("x", (d, i) => x(i))
-    .attr("y", d => y(d.AirlyCaqi))
-    .attr("height", d => y(0) - y(d.AirlyCaqi))
+    .attr("y", d => y(d?.AirlyCaqi))
+    .attr("height", d => y(0) - y(d?.AirlyCaqi))
     .attr("width", x.bandwidth())
-    .attr("fill", d => getColorForCaqiRange(d.AirlyCaqi));
+    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi));
 
   svg.append("g")
     .call(xAxis);

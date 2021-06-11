@@ -36,7 +36,6 @@ $(document).ready(function () {
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
   for (var source in forecastsDictionary[firstInstallationId]) {
-    charts[source] = {};
     charts[source] = createForecastChart(source, firstInstallationId);
   }
 
@@ -109,81 +108,79 @@ function updateForecastCharts(selectedInstallationId) {
 }
 
 function createForecastChart(source, installationId) {
-  if (dataIsNotNullOrEmpty) {
-    const chart = {
-      margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
-      height: 500,
-      width: 900,
-    };
+  const chart = {
+    margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
+    height: 500,
+    width: 900,
+  };
 
-    const title = {
-      text: "CAQI",
-      fontSize: 13,
-      x: -chart.margin.left + 25,
-    };
+  const title = {
+    text: "CAQI",
+    fontSize: 13,
+    x: -chart.margin.left + 25,
+  };
 
-    title.y = title.fontSize;
+  title.y = title.fontSize;
 
-    let yTitle = g => g
-      .append("text")
-      .attr("x", title.x)
-      .attr("y", title.y)
-      .attr("fill", "currentColor")
-      .attr("text-anchor", "start")
-      .attr("font-family", "sans-serif")
-      .attr("font-weight", "bold")
-      .attr("font-size", title.fontSize)
-      .text(title.text);
+  let yTitle = g => g
+    .append("text")
+    .attr("x", title.x)
+    .attr("y", title.y)
+    .attr("fill", "currentColor")
+    .attr("text-anchor", "start")
+    .attr("font-family", "sans-serif")
+    .attr("font-weight", "bold")
+    .attr("font-size", title.fontSize)
+    .text(title.text);
 
-    let x = d3.scaleBand()
-      .domain(d3.range(forecastsDictionary[installationId][source].length))
-      .range([chart.margin.left, chart.width - chart.margin.right])
-      .padding(0.1);
+  let x = d3.scaleBand()
+    .domain(d3.range(forecastsDictionary[installationId][source].length))
+    .range([chart.margin.left, chart.width - chart.margin.right])
+    .padding(0.1);
 
-    let y = d3.scaleLinear()
-      .domain(
-        [0, d3.max(forecastsDictionary[installationId][source], d => d.AirlyCaqi)])
-      .nice()
-      .range([chart.height - chart.margin.bottom, chart.margin.top]);
+  let y = d3.scaleLinear()
+    .domain(
+      [0, d3.max(forecastsDictionary[installationId][source], d => d.AirlyCaqi)])
+    .nice()
+    .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
-    let xAxis = g => g
-      .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
-      .call(d3.axisBottom(x)
-        .tickFormat(i => forecastsDictionary[installationId][source][i].TillDateTime)
-        .tickSizeOuter(0));
+  let xAxis = g => g
+    .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
+    .call(d3.axisBottom(x)
+      .tickFormat(i => forecastsDictionary[installationId][source][i].TillDateTime)
+      .tickSizeOuter(0));
 
-    let yAxis = g => g
-      .attr("transform", `translate(${chart.margin.left},0)`)
-      .call(d3.axisLeft(y))
-      .call(yTitle);
+  let yAxis = g => g
+    .attr("transform", `translate(${chart.margin.left},0)`)
+    .call(d3.axisLeft(y))
+    .call(yTitle);
 
-    const chartDiv = d3.select("#mainDiv")
-      .append("div")
-      .attr("id", source)
-      .attr("class", "col-12 col-sm-12 col-md-6 mb-5")
+  const chartDiv = d3.select("#mainDiv")
+    .append("div")
+    .attr("id", source)
+    .attr("class", "col-12 col-sm-12 col-md-6 mb-5")
 
-    const svg = chartDiv
-      .append("svg")
-      .attr("viewBox", [0, 0, chart.width, chart.height]);
+  const svg = chartDiv
+    .append("svg")
+    .attr("viewBox", [0, 0, chart.width, chart.height]);
 
-    svg.append("g")
-      .selectAll("rect")
-      .data(forecastsDictionary[installationId][source])
-      .join("rect")
-      .attr("x", (d, i) => x(i))
-      .attr("y", d => y(d.AirlyCaqi))
-      .attr("height", d => y(0) - y(d.AirlyCaqi))
-      .attr("width", x.bandwidth())
-      .attr("fill", d => getColorForCaqiRange(d.AirlyCaqi));
+  svg.append("g")
+    .selectAll("rect")
+    .data(forecastsDictionary[installationId][source])
+    .join("rect")
+    .attr("x", (d, i) => x(i))
+    .attr("y", d => y(d.AirlyCaqi))
+    .attr("height", d => y(0) - y(d.AirlyCaqi))
+    .attr("width", x.bandwidth())
+    .attr("fill", d => getColorForCaqiRange(d.AirlyCaqi));
 
-    svg.append("g")
-      .call(xAxis);
+  svg.append("g")
+    .call(xAxis);
 
-    svg.append("g")
-      .call(yAxis);
+  svg.append("g")
+    .call(yAxis);
 
-    return chartDiv.node();
-  }
+  return chartDiv.node();
 }
 
 function getColorForCaqiRange(caqi) {

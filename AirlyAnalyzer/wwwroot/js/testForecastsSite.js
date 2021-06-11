@@ -32,35 +32,7 @@ let installationAddresses = {};
 let charts = {}
 
 $(document).ready(function () {
-  for (let i = 0; i < airQualityForecasts.length; i++) {
-    let installationForecasts = airQualityForecasts[i];
-
-    if (installationForecasts.length > 0) {
-      let installationId = installationForecasts[0].InstallationId;
-
-      installationAddresses[installationId]
-        = installationForecasts[0].InstallationAddress;
-
-      const forecastsBySource = installationForecasts.reduce(
-        (forecastsBySource, item) => {
-          const group = (forecastsBySource[item.Source] || []);
-          group.push(item);
-          forecastsBySource[item.Source] = group;
-          return forecastsBySource;
-        }, {});
-
-      forecastsDictionary[installationId] = forecastsBySource;
-    }
-
-    for (let j = 0; j < installationForecasts.length; j++) {
-      let dateTime = new Date(installationForecasts[j].TillDateTime);
-      let seconds = dateTime.getSeconds();
-      seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
-      installationForecasts[j].TillDateTime
-        = dateTime.getHours().toString() + ":" + seconds;
-    }
-  }
-
+  initForecastsDictionary();
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
   for (var source in forecastsDictionary[firstInstallationId]) {
@@ -89,6 +61,37 @@ function updateInstallationsSelect() {
   if (airQualityForecasts?.length > 0) {
     if (airQualityForecasts[0].length > 0) {
       select.value = airQualityForecasts[0][0].InstallationId;
+    }
+  }
+}
+
+function initForecastsDictionary() {
+  for (let i = 0; i < airQualityForecasts.length; i++) {
+    let installationForecasts = airQualityForecasts[i];
+
+    if (installationForecasts.length > 0) {
+      let installationId = installationForecasts[0].InstallationId;
+
+      installationAddresses[installationId]
+        = installationForecasts[0].InstallationAddress;
+
+      const forecastsBySource = installationForecasts.reduce(
+        (forecastsBySource, item) => {
+          const group = (forecastsBySource[item.Source] || []);
+          group.push(item);
+          forecastsBySource[item.Source] = group;
+          return forecastsBySource;
+        }, {});
+
+      forecastsDictionary[installationId] = forecastsBySource;
+    }
+
+    for (let j = 0; j < installationForecasts.length; j++) {
+      let dateTime = new Date(installationForecasts[j].TillDateTime);
+      let seconds = dateTime.getSeconds();
+      seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
+      installationForecasts[j].TillDateTime
+        = dateTime.getHours().toString() + ":" + seconds;
     }
   }
 }

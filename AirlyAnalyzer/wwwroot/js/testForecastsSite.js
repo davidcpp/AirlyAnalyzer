@@ -58,7 +58,7 @@ function fillNextForecastHours() {
   for (let i = 0; i < forecastHoursNumber; i++) {
     let currentHour = currentDate.getHours();
     forecastHours.push(currentHour);
-    currentDate = currentDate.setHours(currentHour + 1);
+    currentDate.setHours(currentHour + 1);
   }
 }
 

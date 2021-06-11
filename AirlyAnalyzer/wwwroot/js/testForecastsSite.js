@@ -38,7 +38,8 @@ $(document).ready(function () {
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
 
   for (var source in forecastsDictionary[firstInstallationId]) {
-    charts[source] = createForecastChart(source, firstInstallationId);
+    charts[source] = createForecastChart(
+      forecastsDictionary[firstInstallationId][source]);
   }
 });
 
@@ -102,12 +103,13 @@ function updateForecastCharts(selectedInstallationId) {
     }
 
     for (var source in forecastsDictionary[selectedInstallationId]) {
-      charts[source] = createForecastChart(source, selectedInstallationId);
+      charts[source] = createForecastChart(
+        forecastsDictionary[selectedInstallationId][source]);
     }
   }
 }
 
-function createForecastChart(source, installationId) {
+function createForecastChart(forecast) {
   const chart = {
     margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
     height: 500,
@@ -134,20 +136,19 @@ function createForecastChart(source, installationId) {
     .text(title.text);
 
   let x = d3.scaleBand()
-    .domain(d3.range(forecastsDictionary[installationId][source].length))
+    .domain(d3.range(forecast.length))
     .range([chart.margin.left, chart.width - chart.margin.right])
     .padding(0.1);
 
   let y = d3.scaleLinear()
-    .domain(
-      [0, d3.max(forecastsDictionary[installationId][source], d => d.AirlyCaqi)])
+    .domain([0, d3.max(forecast, d => d.AirlyCaqi)])
     .nice()
     .range([chart.height - chart.margin.bottom, chart.margin.top]);
 
   let xAxis = g => g
     .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
     .call(d3.axisBottom(x)
-      .tickFormat(i => forecastsDictionary[installationId][source][i].TillDateTime)
+      .tickFormat(i => forecast[i].TillDateTime)
       .tickSizeOuter(0));
 
   let yAxis = g => g
@@ -157,7 +158,7 @@ function createForecastChart(source, installationId) {
 
   const chartDiv = d3.select("#mainDiv")
     .append("div")
-    .attr("id", source)
+    .attr("id", forecast[0].Source)
     .attr("class", "col-12 col-sm-12 col-md-6 mb-5")
 
   const svg = chartDiv
@@ -166,7 +167,7 @@ function createForecastChart(source, installationId) {
 
   svg.append("g")
     .selectAll("rect")
-    .data(forecastsDictionary[installationId][source])
+    .data(forecast)
     .join("rect")
     .attr("x", (d, i) => x(i))
     .attr("y", d => y(d.AirlyCaqi))

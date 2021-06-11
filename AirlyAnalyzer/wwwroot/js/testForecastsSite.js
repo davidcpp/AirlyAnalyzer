@@ -51,6 +51,16 @@ $('#airQualityInstallations').change(function () {
   updateForecastCharts(selectedInstallationId);
 });
 
+function fillNextForecastHours() {
+  let currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 1, 0, 0, 0);
+  for (let i = 0; i < forecastHoursNumber; i++) {
+    let currentHour = currentDate.getHours();
+    forecastHours.push(currentHour);
+    currentDate = currentDate.setHours(currentHour + 1);
+  }
+}
+
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 

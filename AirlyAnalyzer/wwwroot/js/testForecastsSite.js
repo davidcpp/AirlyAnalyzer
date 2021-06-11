@@ -28,7 +28,6 @@
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationAddresses = {};
-let forecastSources = [];
 
 let charts = {}
 

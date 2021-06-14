@@ -110,6 +110,14 @@ function initForecastsDictionary() {
         }, {});
 
       forecastsDictionary[installationId] = forecastsBySource;
+
+      for (let forecastSource in forecastsDictionary[installationId]) {
+        let forecast = forecastsDictionary[installationId][forecastSource];
+
+        if (forecast.length != forecastHoursNumber) {
+          matchForecastToChartScale(forecast);
+        }
+      }
     }
 
     for (let j = 0; j < installationForecasts?.length; j++) {
@@ -120,6 +128,50 @@ function initForecastsDictionary() {
         = dateTime.getHours().toString() + ":" + seconds;
     }
   }
+}
+
+function matchForecastToChartScale(forecast) {
+  for (let i = 0, j = 0; i < forecast.length && j < forecastDates.length;) {
+
+    let currentForecastItemDate = new Date(forecast[i].TillDateTime);
+    let currentScaleItemDate = forecastDates[i];
+
+    // remove unnecessary past forecasts
+    if (currentForecastItemDate < currentScaleItemDate) {
+      forecast.splice(i, 1);
+    }
+    // fill with zero value objects 
+    else if (currentForecastItemDate > currentScaleItemDate) {
+      let blankForecast = createBlankForecast(currentForecastItemDate, forecast, i);
+      forecast.splice(i, 1, blankForecast);
+    }
+    else {
+      i++;
+      j++;
+    }
+  }
+}
+
+function createBlankForecast(currentForecastItemDate, forecast, i) {
+  let prevDate = currentForecastItemDate;
+  prevDate.setHours(prevDate.getUTCHours() - 1);
+
+  let prevFromDate = prevDate;
+  prevFromDate.setHours(prevFromDate.getUTCHours() - 1);
+
+  let blankForecast = {
+    InstallationId: forecast[i].InstallationId,
+    FromDateTime: prevFromDate,
+    TillDateTime: prevDate,
+    AirlyCaqi: 0,
+    Pm25: 0,
+    Pm10: 0,
+    RequestDateTime: forecast[i].RequestDateTime,
+    InstallationAddress: forecast[i].InstallationAddress,
+    Source: forecast[i].Source,
+  };
+
+  return blankForecast;
 }
 
 function updateForecastCharts(selectedInstallationId) {

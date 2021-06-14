@@ -24,6 +24,12 @@
   },
 }
 
+const chartSize = {
+  margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
+  height: 500,
+  width: 900,
+};
+
 let forecastHoursNumber = 24;
 
 // Variables/objects from model
@@ -178,12 +184,6 @@ function createInitForecastCharts() {
 }
 
 function createForecastChart(forecast) {
-  const chartSize = {
-    margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
-    height: 500,
-    width: 900,
-  };
-
   let yTitleSvg = createYAxisTitle(chartSize);
   let { x, y } = createScales(chartSize, forecast);
   let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitleSvg);

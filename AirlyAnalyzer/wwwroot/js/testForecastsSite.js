@@ -238,7 +238,7 @@ function createScales(chartSize, forecast) {
   return { x, y };
 }
 
-function createAxes(chartSize, x, y, yTitle) {
+function createAxes(chartSize, x, y, yTitleSvg) {
   let xAxis = g => g
     .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
     .call(d3.axisBottom(x)
@@ -248,7 +248,7 @@ function createAxes(chartSize, x, y, yTitle) {
   let yAxis = g => g
     .attr("transform", `translate(${chartSize.margin.left},0)`)
     .call(d3.axisLeft(y))
-    .call(yTitle);
+    .call(yTitleSvg);
 
   return { xAxis, yAxis };
 }

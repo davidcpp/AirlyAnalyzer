@@ -37,6 +37,7 @@ let charts = {}
 $(document).ready(function () {
   fillNextForecastDates();
   initForecastsDictionary();
+  initInstallationAddresses();
   updateInstallationsSelect();
 
   let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
@@ -63,6 +64,19 @@ function fillNextForecastDates() {
   }
 }
 
+function initInstallationAddresses() {
+  for (let i = 0; i < airQualityForecasts?.length; i++) {
+    let installationForecasts = airQualityForecasts[i];
+
+    if (installationForecasts?.length > 0) {
+      let installationId = installationForecasts[0]?.InstallationId;
+
+      installationAddresses[installationId]
+        = installationForecasts[0]?.InstallationAddress;
+    }
+  }
+}
+
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');
 
@@ -86,9 +100,6 @@ function initForecastsDictionary() {
 
     if (installationForecasts?.length > 0) {
       let installationId = installationForecasts[0]?.InstallationId;
-
-      installationAddresses[installationId]
-        = installationForecasts[0]?.InstallationAddress;
 
       const forecastsBySource = installationForecasts.reduce(
         (forecastsBySource, item) => {

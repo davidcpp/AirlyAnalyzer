@@ -188,14 +188,17 @@ function createForecastChart(forecast) {
   let { x, y } = createScales(chartSize, forecast);
   let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
   const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
+  addAxesToChart(svg, xAxis, yAxis);
 
+  return chartDiv.node();
+}
+
+function addAxesToChart(svg, xAxis, yAxis) {
   svg.append("g")
     .call(xAxis);
 
   svg.append("g")
     .call(yAxis);
-
-  return chartDiv.node();
 }
 
 function createYAxisTitle(chartSize) {
@@ -245,6 +248,7 @@ function createAxes(chartSize, x, y, yTitle) {
     .attr("transform", `translate(${chartSize.margin.left},0)`)
     .call(d3.axisLeft(y))
     .call(yTitle);
+
   return { xAxis, yAxis };
 }
 
@@ -267,6 +271,7 @@ function createChart(forecast, chartSize, x, y) {
     .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
     .attr("width", x.bandwidth())
     .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
+
   return { svg, chartDiv };
 }
 

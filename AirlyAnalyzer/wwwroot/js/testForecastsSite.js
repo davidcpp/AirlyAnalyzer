@@ -205,25 +205,7 @@ function createForecastChart(forecast) {
 
   let { x, y } = createScales(chartSize, forecast);
   let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitle);
-
-  const chartDiv = d3.select("#mainDiv")
-    .append("div")
-    .attr("id", forecast[0].Source)
-    .attr("class", "col-sm-12 col-lg-6 mb-5")
-
-  const svg = chartDiv
-    .append("svg")
-    .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
-
-  svg.append("g")
-    .selectAll("rect")
-    .data(forecast)
-    .join("rect")
-    .attr("x", (d, i) => x(i))
-    .attr("y", d => y(d?.AirlyCaqi ?? 0))
-    .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
-    .attr("width", x.bandwidth())
-    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
+  const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
 
   svg.append("g")
     .call(xAxis);
@@ -260,6 +242,28 @@ function createAxes(chartSize, x, y, yTitle) {
     .call(d3.axisLeft(y))
     .call(yTitle);
   return { xAxis, yAxis };
+}
+
+function createChart(forecast, chartSize, x, y) {
+  const chartDiv = d3.select("#mainDiv")
+    .append("div")
+    .attr("id", forecast[0].Source)
+    .attr("class", "col-sm-12 col-lg-6 mb-5")
+
+  const svg = chartDiv
+    .append("svg")
+    .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
+
+  svg.append("g")
+    .selectAll("rect")
+    .data(forecast)
+    .join("rect")
+    .attr("x", (d, i) => x(i))
+    .attr("y", d => y(d?.AirlyCaqi ?? 0))
+    .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
+    .attr("width", x.bandwidth())
+    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
+  return { svg, chartDiv };
 }
 
 function getColorForCaqiRange(caqi) {

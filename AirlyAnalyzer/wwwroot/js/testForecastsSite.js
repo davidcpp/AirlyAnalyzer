@@ -119,14 +119,6 @@ function initForecastsDictionary() {
         }
       }
     }
-
-    for (let j = 0; j < installationForecasts?.length; j++) {
-      let dateTime = new Date(installationForecasts[j].TillDateTime);
-      let seconds = dateTime.getSeconds();
-      seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
-      installationForecasts[j].TillDateTime
-        = dateTime.getHours().toString() + ":" + seconds;
-    }
   }
 }
 

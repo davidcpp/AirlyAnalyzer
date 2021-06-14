@@ -111,6 +111,11 @@ function initForecastsDictionary() {
 
       forecastsDictionary[installationId] = forecastsBySource;
 
+      for (let j = 0; j < installationForecasts?.length; j++) {
+        installationForecasts[j].TillDateTime
+          = new Date(installationForecasts[j].TillDateTime);
+      }
+
       for (let forecastSource in forecastsDictionary[installationId]) {
         let forecast = forecastsDictionary[installationId][forecastSource];
 
@@ -125,7 +130,7 @@ function initForecastsDictionary() {
 function matchForecastToChartScale(forecast) {
   for (let i = 0, j = 0; i < forecast.length && j < forecastDates.length;) {
 
-    let currentForecastItemDate = new Date(forecast[i].TillDateTime);
+    let currentForecastItemDate = forecast[i].TillDateTime;
     let currentScaleItemDate = forecastDates[i];
 
     // remove unnecessary past forecasts

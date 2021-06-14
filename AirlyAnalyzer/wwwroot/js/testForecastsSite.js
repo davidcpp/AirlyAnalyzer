@@ -184,9 +184,9 @@ function createForecastChart(forecast) {
     width: 900,
   };
 
-  let ySvgTitle = createYAxisTitle(chartSize);
+  let yTitleSvg = createYAxisTitle(chartSize);
   let { x, y } = createScales(chartSize, forecast);
-  let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
+  let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitleSvg);
   const { chartSvg, chartDiv } = createChart(forecast, chartSize, x, y);
   addAxesToChart(chartSvg, xAxis, yAxis);
 
@@ -210,7 +210,7 @@ function createYAxisTitle(chartSize) {
 
   yAxisTitle.y = yAxisTitle.fontSize;
 
-  let ySvgTitle = g => g
+  let yTitleSvg = g => g
     .append("text")
     .attr("x", yAxisTitle.x)
     .attr("y", yAxisTitle.y)
@@ -221,7 +221,7 @@ function createYAxisTitle(chartSize) {
     .attr("font-size", yAxisTitle.fontSize)
     .text(yAxisTitle.text);
 
-  return ySvgTitle;
+  return yTitleSvg;
 }
 
 function createScales(chartSize, forecast) {

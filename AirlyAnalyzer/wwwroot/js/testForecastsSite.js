@@ -178,7 +178,7 @@ function createInitForecastCharts() {
 }
 
 function createForecastChart(forecast) {
-  const chart = {
+  const chartSize = {
     margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
     height: 500,
     width: 900,
@@ -187,7 +187,7 @@ function createForecastChart(forecast) {
   const title = {
     text: "CAQI",
     fontSize: 13,
-    x: -chart.margin.left + 25,
+    x: -chartSize.margin.left + 25,
   };
 
   title.y = title.fontSize;
@@ -205,22 +205,22 @@ function createForecastChart(forecast) {
 
   let x = d3.scaleBand()
     .domain(d3.range(forecastDates.length))
-    .range([chart.margin.left, chart.width - chart.margin.right])
+    .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
     .padding(0.1);
 
   let y = d3.scaleLinear()
     .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
     .nice()
-    .range([chart.height - chart.margin.bottom, chart.margin.top]);
+    .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
 
   let xAxis = g => g
-    .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
+    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
     .call(d3.axisBottom(x)
       .tickFormat(i => forecastDates[i].getHours())
       .tickSizeOuter(0));
 
   let yAxis = g => g
-    .attr("transform", `translate(${chart.margin.left},0)`)
+    .attr("transform", `translate(${chartSize.margin.left},0)`)
     .call(d3.axisLeft(y))
     .call(yTitle);
 
@@ -231,7 +231,7 @@ function createForecastChart(forecast) {
 
   const svg = chartDiv
     .append("svg")
-    .attr("viewBox", [0, 0, chart.width, chart.height]);
+    .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
 
   svg.append("g")
     .selectAll("rect")

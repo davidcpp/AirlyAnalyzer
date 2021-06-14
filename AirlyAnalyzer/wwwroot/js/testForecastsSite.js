@@ -184,6 +184,21 @@ function createForecastChart(forecast) {
     width: 900,
   };
 
+  let ySvgTitle = createYAxisTitle(chartSize);
+  let { x, y } = createScales(chartSize, forecast);
+  let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
+  const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
+
+  svg.append("g")
+    .call(xAxis);
+
+  svg.append("g")
+    .call(yAxis);
+
+  return chartDiv.node();
+}
+
+function createYAxisTitle(chartSize) {
   const yAxisTitle = {
     text: "CAQI",
     fontSize: 13,
@@ -202,18 +217,7 @@ function createForecastChart(forecast) {
     .attr("font-weight", "bold")
     .attr("font-size", yAxisTitle.fontSize)
     .text(yAxisTitle.text);
-
-  let { x, y } = createScales(chartSize, forecast);
-  let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
-  const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
-
-  svg.append("g")
-    .call(xAxis);
-
-  svg.append("g")
-    .call(yAxis);
-
-  return chartDiv.node();
+  return ySvgTitle;
 }
 
 function createScales(chartSize, forecast) {

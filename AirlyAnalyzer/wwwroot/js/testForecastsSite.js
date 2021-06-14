@@ -184,24 +184,24 @@ function createForecastChart(forecast) {
     width: 900,
   };
 
-  const title = {
+  const yAxisTitle = {
     text: "CAQI",
     fontSize: 13,
     x: -chartSize.margin.left + 25,
   };
 
-  title.y = title.fontSize;
+  yAxisTitle.y = yAxisTitle.fontSize;
 
   let ySvgTitle = g => g
     .append("text")
-    .attr("x", title.x)
-    .attr("y", title.y)
+    .attr("x", yAxisTitle.x)
+    .attr("y", yAxisTitle.y)
     .attr("fill", "currentColor")
     .attr("text-anchor", "start")
     .attr("font-family", "sans-serif")
     .attr("font-weight", "bold")
-    .attr("font-size", title.fontSize)
-    .text(title.text);
+    .attr("font-size", yAxisTitle.fontSize)
+    .text(yAxisTitle.text);
 
   let { x, y } = createScales(chartSize, forecast);
   let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);

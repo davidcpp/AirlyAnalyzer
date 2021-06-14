@@ -177,19 +177,6 @@ function createInitForecastCharts() {
   }
 }
 
-function updateForecastCharts(selectedInstallationId) {
-  if (selectedInstallationId != 0) {
-    for (let forecastSource in charts) {
-      charts[forecastSource].remove();
-    }
-
-    for (let forecastSource in forecastsDictionary[selectedInstallationId]) {
-      charts[forecastSource] = createForecastChart(
-        forecastsDictionary[selectedInstallationId][forecastSource]);
-    }
-  }
-}
-
 function createForecastChart(forecast) {
   const chart = {
     margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
@@ -285,5 +272,18 @@ function getColorForCaqiRange(caqi) {
     default:
       return caqiRanges.extreme.color;
       break;
+  }
+}
+
+function updateForecastCharts(selectedInstallationId) {
+  if (selectedInstallationId != 0) {
+    for (let forecastSource in charts) {
+      charts[forecastSource].remove();
+    }
+
+    for (let forecastSource in forecastsDictionary[selectedInstallationId]) {
+      charts[forecastSource] = createForecastChart(
+        forecastsDictionary[selectedInstallationId][forecastSource]);
+    }
   }
 }

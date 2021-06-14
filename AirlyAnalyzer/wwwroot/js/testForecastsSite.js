@@ -193,11 +193,11 @@ function createForecastChart(forecast) {
   return chartDiv.node();
 }
 
-function addAxesToChart(svg, xAxis, yAxis) {
-  svg.append("g")
+function addAxesToChart(chartSvg, xAxis, yAxis) {
+  chartSvg.append("g")
     .call(xAxis);
 
-  svg.append("g")
+  chartSvg.append("g")
     .call(yAxis);
 }
 

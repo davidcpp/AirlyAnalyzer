@@ -192,7 +192,7 @@ function createForecastChart(forecast) {
 
   title.y = title.fontSize;
 
-  let yTitle = g => g
+  let ySvgTitle = g => g
     .append("text")
     .attr("x", title.x)
     .attr("y", title.y)
@@ -204,7 +204,7 @@ function createForecastChart(forecast) {
     .text(title.text);
 
   let { x, y } = createScales(chartSize, forecast);
-  let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitle);
+  let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
   const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
 
   svg.append("g")

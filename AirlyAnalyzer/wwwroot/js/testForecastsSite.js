@@ -203,15 +203,7 @@ function createForecastChart(forecast) {
     .attr("font-size", title.fontSize)
     .text(title.text);
 
-  let x = d3.scaleBand()
-    .domain(d3.range(forecastDates.length))
-    .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
-    .padding(0.1);
-
-  let y = d3.scaleLinear()
-    .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
-    .nice()
-    .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
+  let { x, y } = createScales(chartSize, forecast);
 
   let xAxis = g => g
     .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
@@ -250,6 +242,20 @@ function createForecastChart(forecast) {
     .call(yAxis);
 
   return chartDiv.node();
+}
+
+function createScales(chartSize, forecast) {
+  let x = d3.scaleBand()
+    .domain(d3.range(forecastDates.length))
+    .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
+    .padding(0.1);
+
+  let y = d3.scaleLinear()
+    .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
+    .nice()
+    .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
+
+  return { x, y };
 }
 
 function getColorForCaqiRange(caqi) {

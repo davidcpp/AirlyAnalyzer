@@ -39,13 +39,7 @@ $(document).ready(function () {
   initForecastsDictionary();
   initInstallationAddresses();
   updateInstallationsSelect();
-
-  let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
-
-  for (let forecastSource in forecastsDictionary[firstInstallationId]) {
-    charts[forecastSource] = createForecastChart(
-      forecastsDictionary[firstInstallationId][forecastSource]);
-  }
+  createInitForecastCharts();
 });
 
 $('#airQualityInstallations').change(function () {
@@ -172,6 +166,15 @@ function createBlankForecast(currentForecastItemDate, forecast, i) {
   };
 
   return blankForecast;
+}
+
+function createInitForecastCharts() {
+  let firstInstallationId = airQualityForecasts[0][0]?.InstallationId;
+
+  for (let forecastSource in forecastsDictionary[firstInstallationId]) {
+    charts[forecastSource] = createForecastChart(
+      forecastsDictionary[firstInstallationId][forecastSource]);
+  }
 }
 
 function updateForecastCharts(selectedInstallationId) {

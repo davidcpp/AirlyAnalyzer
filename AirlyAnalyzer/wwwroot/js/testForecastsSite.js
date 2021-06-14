@@ -30,12 +30,12 @@ let forecastHoursNumber = 24;
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationAddresses = {};
-let forecastHours = [];
+let forecastDates = [];
 
 let charts = {}
 
 $(document).ready(function () {
-  fillNextForecastHours();
+  fillNextForecastDates();
   initForecastsDictionary();
   updateInstallationsSelect();
 
@@ -52,13 +52,14 @@ $('#airQualityInstallations').change(function () {
   updateForecastCharts(selectedInstallationId);
 });
 
-function fillNextForecastHours() {
-  let currentDate = new Date();
-  currentDate.setHours(currentDate.getHours() + 1, 0, 0, 0);
+function fillNextForecastDates() {
+  let initDate = new Date();
+  initDate.setHours(initDate.getHours() + 1, 0, 0, 0);
+
   for (let i = 0; i < forecastHoursNumber; i++) {
-    let currentHour = currentDate.getHours();
-    forecastHours.push(currentHour);
-    currentDate.setHours(currentHour + 1);
+    let currentDate = new Date(initDate);
+    currentDate.setHours(currentDate.getHours() + i)
+    forecastDates.push(currentDate);
   }
 }
 
@@ -150,7 +151,7 @@ function createForecastChart(forecast) {
     .text(title.text);
 
   let x = d3.scaleBand()
-    .domain(d3.range(forecastHours.length))
+    .domain(d3.range(forecastDates.length))
     .range([chart.margin.left, chart.width - chart.margin.right])
     .padding(0.1);
 
@@ -162,7 +163,7 @@ function createForecastChart(forecast) {
   let xAxis = g => g
     .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
     .call(d3.axisBottom(x)
-      .tickFormat(i => forecastHours[i])
+      .tickFormat(i => forecastDates[i].getHours())
       .tickSizeOuter(0));
 
   let yAxis = g => g

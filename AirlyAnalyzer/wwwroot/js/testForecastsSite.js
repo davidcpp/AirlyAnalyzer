@@ -184,10 +184,10 @@ function createInitForecastCharts() {
 }
 
 function createForecastChart(forecast) {
-  let yTitleSvg = createYAxisTitle(chartSize);
-  let { x, y } = createScales(chartSize, forecast);
-  let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitleSvg);
-  const { chartSvg, chartDiv } = createChart(forecast, chartSize, x, y);
+  let yTitleSvg = createYAxisTitle();
+  let { x, y } = createScales(forecast);
+  let { xAxis, yAxis } = createAxes(x, y, yTitleSvg);
+  const { chartSvg, chartDiv } = createChart(forecast, x, y);
   addAxesToChart(chartSvg, xAxis, yAxis);
 
   return chartDiv.node();
@@ -201,7 +201,7 @@ function addAxesToChart(chartSvg, xAxis, yAxis) {
     .call(yAxis);
 }
 
-function createYAxisTitle(chartSize) {
+function createYAxisTitle() {
   const yAxisTitle = {
     text: "CAQI",
     fontSize: 13,
@@ -224,7 +224,7 @@ function createYAxisTitle(chartSize) {
   return yTitleSvg;
 }
 
-function createScales(chartSize, forecast) {
+function createScales(forecast) {
   let x = d3.scaleBand()
     .domain(d3.range(forecastDates.length))
     .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
@@ -238,7 +238,7 @@ function createScales(chartSize, forecast) {
   return { x, y };
 }
 
-function createAxes(chartSize, x, y, yTitleSvg) {
+function createAxes(x, y, yTitleSvg) {
   let xAxis = g => g
     .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
     .call(d3.axisBottom(x)
@@ -253,7 +253,7 @@ function createAxes(chartSize, x, y, yTitleSvg) {
   return { xAxis, yAxis };
 }
 
-function createChart(forecast, chartSize, x, y) {
+function createChart(forecast, x, y) {
   const chartDiv = d3.select("#mainDiv")
     .append("div")
     .attr("id", forecast[0].Source)

@@ -105,14 +105,7 @@ function initForecastsDictionary() {
       forecastsDictionary[installationId] = forecastsBySource;
 
       modifyForecastDates(installationForecasts);
-
-      for (let forecastSource in forecastsDictionary[installationId]) {
-        let forecast = forecastsDictionary[installationId][forecastSource];
-
-        if (forecast.length != forecastHoursNumber) {
-          matchForecastToChartScale(forecast);
-        }
-      }
+      matchForecastsToChartScale(installationId);
     }
   }
 }
@@ -131,6 +124,16 @@ function modifyForecastDates(installationForecasts) {
   for (let j = 0; j < installationForecasts?.length; j++) {
     installationForecasts[j].TillDateTime
       = new Date(installationForecasts[j].TillDateTime);
+  }
+}
+
+function matchForecastsToChartScale(installationId) {
+  for (let forecastSource in forecastsDictionary[installationId]) {
+    let forecast = forecastsDictionary[installationId][forecastSource];
+
+    if (forecast.length != forecastHoursNumber) {
+      matchForecastToChartScale(forecast);
+    }
   }
 }
 

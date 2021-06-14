@@ -220,6 +220,7 @@ function createYAxisTitle(chartSize) {
     .attr("font-weight", "bold")
     .attr("font-size", yAxisTitle.fontSize)
     .text(yAxisTitle.text);
+
   return ySvgTitle;
 }
 

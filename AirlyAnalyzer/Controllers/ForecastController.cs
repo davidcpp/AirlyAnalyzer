@@ -62,14 +62,18 @@
 
       foreach (short installationId in _installationIds)
       {
-        var currentForecast = await _unitOfWork
-            .ForecastRepository.GetLastElements(
-                _numberOfHours,
-                wherePredicate:
-                    f => f.InstallationId == installationId
-                      && f.TillDateTime > DateTime.UtcNow);
+        foreach (object item in Enum.GetValues(typeof(AirQualityDataSource)))
+        {
+          var currentForecast = await _unitOfWork
+              .ForecastRepository.GetLastElements(
+                  _numberOfHours,
+                  wherePredicate:
+                      f => f.InstallationId == installationId
+                        && f.Source == (AirQualityDataSource)item
+                        && f.TillDateTime > DateTime.UtcNow);
 
-        currentForecasts.AddRange(currentForecast);
+          currentForecasts.AddRange(currentForecast);
+        }
       }
 
       return View(currentForecasts);

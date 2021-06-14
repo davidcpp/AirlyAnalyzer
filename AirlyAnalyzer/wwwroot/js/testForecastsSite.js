@@ -101,8 +101,8 @@ function initForecastsDictionary() {
     if (installationForecasts?.length > 0) {
       let installationId = installationForecasts[0]?.InstallationId;
 
-      const forecastsBySource = splitForecastsBySource(installationForecasts);
-      forecastsDictionary[installationId] = forecastsBySource;
+      forecastsDictionary[installationId]
+        = splitForecastsBySource(installationForecasts);
 
       modifyForecastDates(installationForecasts);
       matchForecastsToChartScale(installationId);

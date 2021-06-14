@@ -204,17 +204,7 @@ function createForecastChart(forecast) {
     .text(title.text);
 
   let { x, y } = createScales(chartSize, forecast);
-
-  let xAxis = g => g
-    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
-    .call(d3.axisBottom(x)
-      .tickFormat(i => forecastDates[i].getHours())
-      .tickSizeOuter(0));
-
-  let yAxis = g => g
-    .attr("transform", `translate(${chartSize.margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .call(yTitle);
+  let { xAxis, yAxis } = createAxes(chartSize, x, y, yTitle);
 
   const chartDiv = d3.select("#mainDiv")
     .append("div")
@@ -256,6 +246,20 @@ function createScales(chartSize, forecast) {
     .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
 
   return { x, y };
+}
+
+function createAxes(chartSize, x, y, yTitle) {
+  let xAxis = g => g
+    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
+    .call(d3.axisBottom(x)
+      .tickFormat(i => forecastDates[i].getHours())
+      .tickSizeOuter(0));
+
+  let yAxis = g => g
+    .attr("transform", `translate(${chartSize.margin.left},0)`)
+    .call(d3.axisLeft(y))
+    .call(yTitle);
+  return { xAxis, yAxis };
 }
 
 function getColorForCaqiRange(caqi) {

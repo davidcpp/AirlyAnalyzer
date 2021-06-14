@@ -187,8 +187,8 @@ function createForecastChart(forecast) {
   let ySvgTitle = createYAxisTitle(chartSize);
   let { x, y } = createScales(chartSize, forecast);
   let { xAxis, yAxis } = createAxes(chartSize, x, y, ySvgTitle);
-  const { svg, chartDiv } = createChart(forecast, chartSize, x, y);
-  addAxesToChart(svg, xAxis, yAxis);
+  const { chartSvg, chartDiv } = createChart(forecast, chartSize, x, y);
+  addAxesToChart(chartSvg, xAxis, yAxis);
 
   return chartDiv.node();
 }
@@ -258,11 +258,11 @@ function createChart(forecast, chartSize, x, y) {
     .attr("id", forecast[0].Source)
     .attr("class", "col-sm-12 col-lg-6 mb-5")
 
-  const svg = chartDiv
+  const chartSvg = chartDiv
     .append("svg")
     .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
 
-  svg.append("g")
+  chartSvg.append("g")
     .selectAll("rect")
     .data(forecast)
     .join("rect")
@@ -272,7 +272,7 @@ function createChart(forecast, chartSize, x, y) {
     .attr("width", x.bandwidth())
     .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
 
-  return { svg, chartDiv };
+  return { chartSvg, chartDiv };
 }
 
 function getColorForCaqiRange(caqi) {

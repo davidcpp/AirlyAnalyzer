@@ -101,14 +101,7 @@ function initForecastsDictionary() {
     if (installationForecasts?.length > 0) {
       let installationId = installationForecasts[0]?.InstallationId;
 
-      const forecastsBySource = installationForecasts.reduce(
-        (forecastsBySource, item) => {
-          const group = (forecastsBySource[item.Source] || []);
-          group.push(item);
-          forecastsBySource[item.Source] = group;
-          return forecastsBySource;
-        }, {});
-
+      const forecastsBySource = splitForecastsBySource(installationForecasts);
       forecastsDictionary[installationId] = forecastsBySource;
 
       for (let j = 0; j < installationForecasts?.length; j++) {
@@ -125,6 +118,16 @@ function initForecastsDictionary() {
       }
     }
   }
+}
+
+function splitForecastsBySource(installationForecasts) {
+  return installationForecasts.reduce(
+    (forecastsBySource, item) => {
+      const group = (forecastsBySource[item.Source] || []);
+      group.push(item);
+      forecastsBySource[item.Source] = group;
+      return forecastsBySource;
+    }, {});
 }
 
 function matchForecastToChartScale(forecast) {

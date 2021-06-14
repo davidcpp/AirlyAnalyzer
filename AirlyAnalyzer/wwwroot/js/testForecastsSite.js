@@ -104,10 +104,7 @@ function initForecastsDictionary() {
       const forecastsBySource = splitForecastsBySource(installationForecasts);
       forecastsDictionary[installationId] = forecastsBySource;
 
-      for (let j = 0; j < installationForecasts?.length; j++) {
-        installationForecasts[j].TillDateTime
-          = new Date(installationForecasts[j].TillDateTime);
-      }
+      modifyForecastDates(installationForecasts);
 
       for (let forecastSource in forecastsDictionary[installationId]) {
         let forecast = forecastsDictionary[installationId][forecastSource];
@@ -128,6 +125,13 @@ function splitForecastsBySource(installationForecasts) {
       forecastsBySource[item.Source] = group;
       return forecastsBySource;
     }, {});
+}
+
+function modifyForecastDates(installationForecasts) {
+  for (let j = 0; j < installationForecasts?.length; j++) {
+    installationForecasts[j].TillDateTime
+      = new Date(installationForecasts[j].TillDateTime);
+  }
 }
 
 function matchForecastToChartScale(forecast) {

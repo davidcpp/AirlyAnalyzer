@@ -152,21 +152,6 @@ function addAxesToChart(chartSvg, xAxis, yAxis) {
     .call(yAxis);
 }
 
-function createYAxisTitle() {
-  let yTitleSvg = g => g
-    .append("text")
-    .attr("x", yAxisTitle.x)
-    .attr("y", yAxisTitle.y)
-    .attr("fill", "currentColor")
-    .attr("text-anchor", "start")
-    .attr("font-family", "sans-serif")
-    .attr("font-weight", "bold")
-    .attr("font-size", yAxisTitle.fontSize)
-    .text(yAxisTitle.text);
-
-  return yTitleSvg;
-}
-
 function createScales(forecast) {
   let x = d3.scaleBand()
     .domain(d3.range(forecastDates.length))

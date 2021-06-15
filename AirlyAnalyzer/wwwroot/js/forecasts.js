@@ -71,6 +71,21 @@ function initInstallationAddresses() {
   return installationAddresses;
 }
 
+function createYAxisTitle() {
+  let yTitleSvg = g => g
+    .append("text")
+    .attr("x", yAxisTitle.x)
+    .attr("y", yAxisTitle.y)
+    .attr("fill", "currentColor")
+    .attr("text-anchor", "start")
+    .attr("font-family", "sans-serif")
+    .attr("font-weight", "bold")
+    .attr("font-size", yAxisTitle.fontSize)
+    .text(yAxisTitle.text);
+
+  return yTitleSvg;
+}
+
 function getColorForCaqiRange(caqi) {
   switch (true) {
     case (caqi <= caqiRanges.veryLow.max):

@@ -5,13 +5,9 @@ let installationAddresses = {};
 let chart = {}
 
 installationAddresses = initInstallationAddresses(airQualityForecasts);
+initForecastsDictionary();
 
 for (let i = 0; i < airQualityForecasts.length; i++) {
-  if (airQualityForecasts[i].length > 0) {
-    forecastsDictionary[airQualityForecasts[i][0].InstallationId]
-      = airQualityForecasts[i];
-  }
-
   for (let j = 0; j < airQualityForecasts[i].length; j++) {
     let dateTime = new Date(airQualityForecasts[i][j].TillDateTime);
     let minutes = dateTime.getMinutes();
@@ -30,6 +26,15 @@ $('#airQualityInstallations').change(function () {
   let selectedInstallationId = $(this).val();
   updateForecastChart(selectedInstallationId);
 });
+
+function initForecastsDictionary() {
+  for (let i = 0; i < airQualityForecasts.length; i++) {
+    if (airQualityForecasts[i].length > 0) {
+      forecastsDictionary[airQualityForecasts[i][0].InstallationId]
+        = airQualityForecasts[i];
+    }
+  }
+}
 
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');

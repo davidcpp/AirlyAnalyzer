@@ -30,6 +30,13 @@ const chartSize = {
   width: 900,
 };
 
+const yAxisTitle = {
+  text: "CAQI",
+  fontSize: 13,
+  x: -chartSize.margin.left + 25,
+};
+yAxisTitle.y = yAxisTitle.fontSize;
+
 let forecastHoursNumber = 24;
 
 function createForecastDates() {

@@ -151,14 +151,6 @@ function addAxesToChart(chartSvg, xAxis, yAxis) {
 }
 
 function createYAxisTitle() {
-  const yAxisTitle = {
-    text: "CAQI",
-    fontSize: 13,
-    x: -chartSize.margin.left + 25,
-  };
-
-  yAxisTitle.y = yAxisTitle.fontSize;
-
   let yTitleSvg = g => g
     .append("text")
     .attr("x", yAxisTitle.x)

@@ -7,7 +7,7 @@ let forecastDates = [];
 let charts = {}
 
 $(document).ready(function () {
-  createForecastDates(forecastDates);
+  forecastDates = createForecastDates();
   initInstallationAddresses();
   updateInstallationsSelect();
   initForecastsDictionary();

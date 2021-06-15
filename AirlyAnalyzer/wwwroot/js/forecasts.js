@@ -32,7 +32,9 @@ const chartSize = {
 
 let forecastHoursNumber = 24;
 
-function createForecastDates(forecastDates) {
+function createForecastDates() {
+  let forecastDates = [];
+
   let initDate = new Date();
   initDate.setHours(initDate.getHours() + 1, 0, 0, 0);
 
@@ -41,6 +43,8 @@ function createForecastDates(forecastDates) {
     currentDate.setHours(currentDate.getHours() + i)
     forecastDates.push(currentDate);
   }
+
+  return forecastDates;
 }
 
 function getColorForCaqiRange(caqi) {

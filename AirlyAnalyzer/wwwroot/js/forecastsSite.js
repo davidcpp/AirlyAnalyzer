@@ -1,30 +1,4 @@
-﻿const caqiRanges = {
-  veryLow: {
-    max: 25,
-    color: "limegreen",
-  },
-  low: {
-    max: 50,
-    color: "yellowgreen",
-  },
-  medium: {
-    max: 75,
-    color: "orange",
-  },
-  high: {
-    max: 100,
-    color: "orangered",
-  },
-  veryHigh: {
-    max: 125,
-    color: "mediumvioletred",
-  },
-  extreme: {
-    color: "purple",
-  },
-}
-
-// Variables/objects from model
+﻿// Variables/objects from model
 let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationAddresses = {};
@@ -158,28 +132,5 @@ function createForecastChart(installationId) {
       .call(yAxis);
 
     return svg.node();
-  }
-}
-
-function getColorForCaqiRange(caqi) {
-  switch (true) {
-    case (caqi <= caqiRanges.veryLow.max):
-      return caqiRanges.veryLow.color;
-      break;
-    case (caqi <= caqiRanges.low.max):
-      return caqiRanges.low.color;
-      break;
-    case (caqi <= caqiRanges.medium.max):
-      return caqiRanges.medium.color;
-      break;
-    case (caqi <= caqiRanges.high.max):
-      return caqiRanges.high.color;
-      break;
-    case (caqi <= caqiRanges.veryHigh.max):
-      return caqiRanges.veryHigh.color;
-      break;
-    default:
-      return caqiRanges.extreme.color;
-      break;
   }
 }

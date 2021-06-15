@@ -4,18 +4,9 @@ let forecastsDictionary = {}
 let installationAddresses = {};
 let chart = {}
 
+forecastDates = createForecastDates();
 installationAddresses = initInstallationAddresses(airQualityForecasts);
 initForecastsDictionary();
-
-for (let i = 0; i < airQualityForecasts.length; i++) {
-  for (let j = 0; j < airQualityForecasts[i].length; j++) {
-    let dateTime = new Date(airQualityForecasts[i][j].TillDateTime);
-    let minutes = dateTime.getMinutes();
-    minutes = minutes < 10 ? minutes = "0" + minutes : minutes;
-    airQualityForecasts[i][j].TillDateTime
-      = dateTime.getHours().toString() + ":" + minutes;
-  }
-}
 
 $(document).ready(function () {
   chart = createForecastChart();
@@ -82,7 +73,7 @@ function createForecastChart(installationId) {
       .text(yAxisTitle.text);
 
     let x = d3.scaleBand()
-      .domain(d3.range(forecastsDictionary[installationId].length))
+      .domain(d3.range(forecastDates.length))
       .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
       .padding(0.1);
 
@@ -94,7 +85,7 @@ function createForecastChart(installationId) {
     let xAxis = g => g
       .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
       .call(d3.axisBottom(x)
-        .tickFormat(i => forecastsDictionary[installationId][i].TillDateTime)
+        .tickFormat(i => forecastDates[i].getHours())
         .tickSizeOuter(0));
 
     let yAxis = g => g

@@ -6,6 +6,8 @@ let forecastDates = [];
 
 let charts = {}
 
+let chartDivClass = "col-sm-12 col-lg-6 mb-5";
+
 $(document).ready(function () {
   forecastDates = createForecastDates();
   installationAddresses = initInstallationAddresses();
@@ -198,7 +200,7 @@ function createChart(forecast, x, y) {
   const chartDiv = d3.select("#mainDiv")
     .append("div")
     .attr("id", forecast[0].Source)
-    .attr("class", "col-sm-12 col-lg-6 mb-5");
+    .attr("class", chartDivClass);
 
   const chartSvg = chartDiv
     .append("svg")

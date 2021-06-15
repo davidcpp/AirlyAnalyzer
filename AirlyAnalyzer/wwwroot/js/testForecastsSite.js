@@ -8,7 +8,7 @@ let charts = {}
 
 $(document).ready(function () {
   forecastDates = createForecastDates();
-  initInstallationAddresses(installationAddresses);
+  installationAddresses = initInstallationAddresses();
   updateInstallationsSelect();
   initForecastsDictionary();
   createInitForecastCharts();

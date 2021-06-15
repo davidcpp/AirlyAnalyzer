@@ -47,7 +47,9 @@ function createForecastDates() {
   return forecastDates;
 }
 
-function initInstallationAddresses(installationAddresses) {
+function initInstallationAddresses() {
+  let installationAddresses = [];
+
   for (let i = 0; i < airQualityForecasts?.length; i++) {
     let installationForecasts = airQualityForecasts[i];
 
@@ -58,6 +60,8 @@ function initInstallationAddresses(installationAddresses) {
         = installationForecasts[0]?.InstallationAddress;
     }
   }
+
+  return installationAddresses;
 }
 
 function getColorForCaqiRange(caqi) {

@@ -113,7 +113,9 @@ class ForecastChart {
 
   #createAxes(x, y, yTitleSvg) {
     let xAxis = g => g
-      .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
+      .attr(
+        "transform",
+        `translate(0,${chartSize.height - chartSize.margin.bottom})`)
       .call(d3.axisBottom(x)
         .tickFormat(i => this.#forecastDates[i].getHours())
         .tickSizeOuter(0));

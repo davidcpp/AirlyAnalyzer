@@ -76,7 +76,7 @@ class ForecastChart {
   #forecastDates = [];
   #chartDivClass = "";
 
-  constructor(forecastDates, forecast, chartDivClass) {
+  constructor(forecastDates, forecast, chartDivClass = "") {
     this.#forecastDates = forecastDates;
     this.#forecast = forecast;
     this.#chartDivClass = chartDivClass;

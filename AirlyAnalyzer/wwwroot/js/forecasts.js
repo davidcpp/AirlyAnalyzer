@@ -115,6 +115,37 @@ function createAxes(x, y, forecastDates, yTitleSvg) {
   return { xAxis, yAxis };
 }
 
+function createChart(forecast, x, y, chartDivClass) {
+  const chartDiv = d3.select("#mainDiv")
+    .append("div")
+    .attr("id", forecast[0].Source)
+    .attr("class", chartDivClass);
+
+  const chartSvg = chartDiv
+    .append("svg")
+    .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
+
+  chartSvg.append("g")
+    .selectAll("rect")
+    .data(forecast)
+    .join("rect")
+    .attr("x", (d, i) => x(i))
+    .attr("y", d => y(d?.AirlyCaqi ?? 0))
+    .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
+    .attr("width", x.bandwidth())
+    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
+
+  return { chartSvg, chartDiv };
+}
+
+function addAxesToChart(chartSvg, xAxis, yAxis) {
+  chartSvg.append("g")
+    .call(xAxis);
+
+  chartSvg.append("g")
+    .call(yAxis);
+}
+
 function getColorForCaqiRange(caqi) {
   switch (true) {
     case (caqi <= caqiRanges.veryLow.max):

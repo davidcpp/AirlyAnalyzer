@@ -71,79 +71,101 @@ function initInstallationAddresses() {
   return installationAddresses;
 }
 
-function createYAxisTitle() {
-  let yTitleSvg = g => g
-    .append("text")
-    .attr("x", yAxisTitle.x)
-    .attr("y", yAxisTitle.y)
-    .attr("fill", "currentColor")
-    .attr("text-anchor", "start")
-    .attr("font-family", "sans-serif")
-    .attr("font-weight", "bold")
-    .attr("font-size", yAxisTitle.fontSize)
-    .text(yAxisTitle.text);
+class ForecastChart {
+  #forecast = [];
+  #forecastDates = [];
+  #chartDivClass = "";
 
-  return yTitleSvg;
-}
+  constructor(forecastDates, forecast, chartDivClass) {
+    this.#forecastDates = forecastDates;
+    this.#forecast = forecast;
+    this.#chartDivClass = chartDivClass;
+  }
 
-function createScales(forecastDates, forecast) {
-  let x = d3.scaleBand()
-    .domain(d3.range(forecastDates.length))
-    .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
-    .padding(0.1);
+  #createYAxisTitle() {
+    let yTitleSvg = g => g
+      .append("text")
+      .attr("x", yAxisTitle.x)
+      .attr("y", yAxisTitle.y)
+      .attr("fill", "currentColor")
+      .attr("text-anchor", "start")
+      .attr("font-family", "sans-serif")
+      .attr("font-weight", "bold")
+      .attr("font-size", yAxisTitle.fontSize)
+      .text(yAxisTitle.text);
 
-  let y = d3.scaleLinear()
-    .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
-    .nice()
-    .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
+    return yTitleSvg;
+  }
 
-  return { x, y };
-}
+  #createScales() {
+    let x = d3.scaleBand()
+      .domain(d3.range(this.#forecastDates.length))
+      .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
+      .padding(0.1);
 
-function createAxes(x, y, forecastDates, yTitleSvg) {
-  let xAxis = g => g
-    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
-    .call(d3.axisBottom(x)
-      .tickFormat(i => forecastDates[i].getHours())
-      .tickSizeOuter(0));
+    let y = d3.scaleLinear()
+      .domain([0, d3.max(this.#forecast, d => d?.AirlyCaqi ?? 0)])
+      .nice()
+      .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
 
-  let yAxis = g => g
-    .attr("transform", `translate(${chartSize.margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .call(yTitleSvg);
+    return { x, y };
+  }
 
-  return { xAxis, yAxis };
-}
+  #createAxes(x, y, yTitleSvg) {
+    let xAxis = g => g
+      .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
+      .call(d3.axisBottom(x)
+        .tickFormat(i => this.#forecastDates[i].getHours())
+        .tickSizeOuter(0));
 
-function createChart(forecast, x, y, chartDivClass) {
-  const chartDiv = d3.select("#mainDiv")
-    .append("div")
-    .attr("id", forecast[0].Source)
-    .attr("class", chartDivClass);
+    let yAxis = g => g
+      .attr("transform", `translate(${chartSize.margin.left},0)`)
+      .call(d3.axisLeft(y))
+      .call(yTitleSvg);
 
-  const chartSvg = chartDiv
-    .append("svg")
-    .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
+    return { xAxis, yAxis };
+  }
 
-  chartSvg.append("g")
-    .selectAll("rect")
-    .data(forecast)
-    .join("rect")
-    .attr("x", (d, i) => x(i))
-    .attr("y", d => y(d?.AirlyCaqi ?? 0))
-    .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
-    .attr("width", x.bandwidth())
-    .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
+  #createChart(x, y) {
+    const chartDiv = d3.select("#mainDiv")
+      .append("div")
+      .attr("id", this.#forecast[0].Source)
+      .attr("class", this.#chartDivClass);
 
-  return { chartSvg, chartDiv };
-}
+    const chartSvg = chartDiv
+      .append("svg")
+      .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
 
-function addAxesToChart(chartSvg, xAxis, yAxis) {
-  chartSvg.append("g")
-    .call(xAxis);
+    chartSvg.append("g")
+      .selectAll("rect")
+      .data(this.#forecast)
+      .join("rect")
+      .attr("x", (d, i) => x(i))
+      .attr("y", d => y(d?.AirlyCaqi ?? 0))
+      .attr("height", d => y(0) - y(d?.AirlyCaqi ?? 0))
+      .attr("width", x.bandwidth())
+      .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
 
-  chartSvg.append("g")
-    .call(yAxis);
+    return { chartSvg, chartDiv };
+  }
+
+  #addAxesToChart(chartSvg, xAxis, yAxis) {
+    chartSvg.append("g")
+      .call(xAxis);
+
+    chartSvg.append("g")
+      .call(yAxis);
+  }
+
+  createForecastChart() {
+    let yTitleSvg = this.#createYAxisTitle();
+    let { x, y } = this.#createScales();
+    let { xAxis, yAxis } = this.#createAxes(x, y, yTitleSvg);
+    const { chartSvg, chartDiv } = this.#createChart(x, y);
+    this.#addAxesToChart(chartSvg, xAxis, yAxis);
+
+    return chartDiv.node();
+  }
 }
 
 function getColorForCaqiRange(caqi) {

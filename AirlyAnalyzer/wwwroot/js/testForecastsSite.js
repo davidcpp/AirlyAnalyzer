@@ -135,13 +135,8 @@ function createInitForecastCharts() {
 }
 
 function createForecastChart(forecast) {
-  let yTitleSvg = createYAxisTitle();
-  let { x, y } = createScales(forecastDates, forecast);
-  let { xAxis, yAxis } = createAxes(x, y, forecastDates, yTitleSvg);
-  const { chartSvg, chartDiv } = createChart(forecast, x, y, chartDivClass);
-  addAxesToChart(chartSvg, xAxis, yAxis);
-
-  return chartDiv.node();
+  let forecastChart = new ForecastChart(forecastDates, forecast, chartDivClass);  
+  return forecastChart.createForecastChart();
 }
 
 function updateForecastCharts(selectedInstallationId) {

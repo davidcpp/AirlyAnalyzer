@@ -32,7 +32,7 @@ const chartSize = {
 
 let forecastHoursNumber = 24;
 
-function fillNextForecastDates(forecastDates) {
+function createForecastDates(forecastDates) {
   let initDate = new Date();
   initDate.setHours(initDate.getHours() + 1, 0, 0, 0);
 

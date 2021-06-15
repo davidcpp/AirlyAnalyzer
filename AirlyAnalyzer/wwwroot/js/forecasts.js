@@ -128,12 +128,16 @@ class ForecastChart {
     return { xAxis, yAxis };
   }
 
-  #createChart(x, y) {
+  #createChartDiv() {
     const chartDiv = d3.select("#mainDiv")
       .append("div")
       .attr("id", this.#forecast[0].Source)
       .attr("class", this.#chartDivClass);
 
+    return chartDiv;
+  }
+
+  #createChartSvg(chartDiv, x, y) {
     const chartSvg = chartDiv
       .append("svg")
       .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
@@ -148,7 +152,7 @@ class ForecastChart {
       .attr("width", x.bandwidth())
       .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
 
-    return { chartSvg, chartDiv };
+    return chartSvg;
   }
 
   #addAxesToChart(chartSvg, xAxis, yAxis) {
@@ -163,7 +167,8 @@ class ForecastChart {
     let yTitleSvg = this.#createYAxisTitle();
     let { x, y } = this.#createScales();
     let { xAxis, yAxis } = this.#createAxes(x, y, yTitleSvg);
-    const { chartSvg, chartDiv } = this.#createChart(x, y);
+    const chartDiv = this.#createChartDiv();
+    const chartSvg = this.#createChartSvg(chartDiv, x, y);
     this.#addAxesToChart(chartSvg, xAxis, yAxis);
 
     return chartDiv.node();

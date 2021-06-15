@@ -40,10 +40,10 @@ for (let i = 0; i < airQualityForecasts.length; i++) {
 
   for (let j = 0; j < airQualityForecasts[i].length; j++) {
     let dateTime = new Date(airQualityForecasts[i][j].TillDateTime);
-    let seconds = dateTime.getSeconds();
-    seconds = seconds < 10 ? seconds = "0" + seconds : seconds;
+    let minutes = dateTime.getMinutes();
+    minutes = minutes < 10 ? minutes = "0" + minutes : minutes;
     airQualityForecasts[i][j].TillDateTime
-      = dateTime.getHours().toString() + ":" + seconds;
+      = dateTime.getHours().toString() + ":" + minutes;
   }
 }
 

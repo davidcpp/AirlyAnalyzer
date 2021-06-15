@@ -137,26 +137,11 @@ function createInitForecastCharts() {
 function createForecastChart(forecast) {
   let yTitleSvg = createYAxisTitle();
   let { x, y } = createScales(forecastDates, forecast);
-  let { xAxis, yAxis } = createAxes(x, y, yTitleSvg);
+  let { xAxis, yAxis } = createAxes(x, y, forecastDates, yTitleSvg);
   const { chartSvg, chartDiv } = createChart(forecast, x, y);
   addAxesToChart(chartSvg, xAxis, yAxis);
 
   return chartDiv.node();
-}
-
-function createAxes(x, y, yTitleSvg) {
-  let xAxis = g => g
-    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
-    .call(d3.axisBottom(x)
-      .tickFormat(i => forecastDates[i].getHours())
-      .tickSizeOuter(0));
-
-  let yAxis = g => g
-    .attr("transform", `translate(${chartSize.margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .call(yTitleSvg);
-
-  return { xAxis, yAxis };
 }
 
 function createChart(forecast, x, y) {

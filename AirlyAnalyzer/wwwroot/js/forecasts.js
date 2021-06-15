@@ -100,6 +100,21 @@ function createScales(forecastDates, forecast) {
   return { x, y };
 }
 
+function createAxes(x, y, forecastDates, yTitleSvg) {
+  let xAxis = g => g
+    .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
+    .call(d3.axisBottom(x)
+      .tickFormat(i => forecastDates[i].getHours())
+      .tickSizeOuter(0));
+
+  let yAxis = g => g
+    .attr("transform", `translate(${chartSize.margin.left},0)`)
+    .call(d3.axisLeft(y))
+    .call(yTitleSvg);
+
+  return { xAxis, yAxis };
+}
+
 function getColorForCaqiRange(caqi) {
   switch (true) {
     case (caqi <= caqiRanges.veryLow.max):

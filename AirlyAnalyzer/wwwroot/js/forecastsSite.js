@@ -26,9 +26,9 @@ $('#airQualityInstallations').change(function () {
 });
 
 function initForecastsDictionary() {
-  for (let i = 0; i < airQualityForecasts.length; i++) {
-    if (airQualityForecasts[i].length > 0) {
-      forecastsDictionary[airQualityForecasts[i][0].InstallationId]
+  for (let i = 0; i < airQualityForecasts?.length; i++) {
+    if (airQualityForecasts[i]?.length > 0) {
+      forecastsDictionary[airQualityForecasts[i][0]?.InstallationId]
         = airQualityForecasts[i];
     }
   }
@@ -45,8 +45,8 @@ function updateInstallationsSelect() {
   }
 
   if (airQualityForecasts?.length > 0) {
-    if (airQualityForecasts[0].length > 0) {
-      select.value = airQualityForecasts[0][0].InstallationId;
+    if (airQualityForecasts[0]?.length > 0) {
+      select.value = airQualityForecasts[0][0]?.InstallationId;
     }
   }
 }

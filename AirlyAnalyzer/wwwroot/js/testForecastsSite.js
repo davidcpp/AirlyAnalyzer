@@ -136,26 +136,12 @@ function createInitForecastCharts() {
 
 function createForecastChart(forecast) {
   let yTitleSvg = createYAxisTitle();
-  let { x, y } = createScales(forecast);
+  let { x, y } = createScales(forecastDates, forecast);
   let { xAxis, yAxis } = createAxes(x, y, yTitleSvg);
   const { chartSvg, chartDiv } = createChart(forecast, x, y);
   addAxesToChart(chartSvg, xAxis, yAxis);
 
   return chartDiv.node();
-}
-
-function createScales(forecast) {
-  let x = d3.scaleBand()
-    .domain(d3.range(forecastDates.length))
-    .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
-    .padding(0.1);
-
-  let y = d3.scaleLinear()
-    .domain([0, d3.max(forecast, d => d?.AirlyCaqi ?? 0)])
-    .nice()
-    .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
-
-  return { x, y };
 }
 
 function createAxes(x, y, yTitleSvg) {

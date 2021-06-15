@@ -4,10 +4,10 @@ let forecastsDictionary = {}
 let installationAddresses = {};
 let chart = {}
 
+installationAddresses = initInstallationAddresses(airQualityForecasts);
+
 for (let i = 0; i < airQualityForecasts.length; i++) {
   if (airQualityForecasts[i].length > 0) {
-    installationAddresses[airQualityForecasts[i][0].InstallationId]
-      = airQualityForecasts[i][0].InstallationAddress;
     forecastsDictionary[airQualityForecasts[i][0].InstallationId]
       = airQualityForecasts[i];
   }

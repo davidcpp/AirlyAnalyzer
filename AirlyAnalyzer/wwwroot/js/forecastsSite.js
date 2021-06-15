@@ -65,16 +65,10 @@ function createForecastChart(installationId) {
       installationId = airQualityForecasts[0][0].InstallationId;
     }
 
-    const chart = {
-      margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
-      height: 500,
-      width: 900,
-    };
-
     const title = {
       text: "CAQI",
       fontSize: 13,
-      x: -chart.margin.left + 25,
+      x: -chartSize.margin.left + 25,
     };
 
     title.y = title.fontSize;
@@ -92,28 +86,28 @@ function createForecastChart(installationId) {
 
     let x = d3.scaleBand()
       .domain(d3.range(forecastsDictionary[installationId].length))
-      .range([chart.margin.left, chart.width - chart.margin.right])
+      .range([chartSize.margin.left, chartSize.width - chartSize.margin.right])
       .padding(0.1);
 
     let y = d3.scaleLinear()
       .domain([0, d3.max(forecastsDictionary[installationId], d => d.AirlyCaqi)])
       .nice()
-      .range([chart.height - chart.margin.bottom, chart.margin.top]);
+      .range([chartSize.height - chartSize.margin.bottom, chartSize.margin.top]);
 
     let xAxis = g => g
-      .attr("transform", `translate(0,${chart.height - chart.margin.bottom})`)
+      .attr("transform", `translate(0,${chartSize.height - chartSize.margin.bottom})`)
       .call(d3.axisBottom(x)
         .tickFormat(i => forecastsDictionary[installationId][i].TillDateTime)
         .tickSizeOuter(0));
 
     let yAxis = g => g
-      .attr("transform", `translate(${chart.margin.left},0)`)
+      .attr("transform", `translate(${chartSize.margin.left},0)`)
       .call(d3.axisLeft(y))
       .call(yTitle);
 
     const svg = d3.select("#mainDiv")
       .append("svg")
-      .attr("viewBox", [0, 0, chart.width, chart.height]);
+      .attr("viewBox", [0, 0, chartSize.width, chartSize.height]);
 
     svg.append("g")
       .selectAll("rect")

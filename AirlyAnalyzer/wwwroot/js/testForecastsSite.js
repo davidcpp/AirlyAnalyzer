@@ -136,7 +136,7 @@ function createInitForecastCharts() {
 
 function createForecastChart(forecast) {
   let forecastChart = new ForecastChart(forecastDates, forecast, chartDivClass);  
-  return forecastChart.createForecastChart();
+  return forecastChart.createForecastChartDiv();
 }
 
 function updateForecastCharts(selectedInstallationId) {

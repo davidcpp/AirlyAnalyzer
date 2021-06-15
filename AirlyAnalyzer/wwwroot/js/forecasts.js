@@ -159,7 +159,7 @@ class ForecastChart {
       .call(yAxis);
   }
 
-  createForecastChart() {
+  createForecastChartDiv() {
     let yTitleSvg = this.#createYAxisTitle();
     let { x, y } = this.#createScales();
     let { xAxis, yAxis } = this.#createAxes(x, y, yTitleSvg);

@@ -47,6 +47,19 @@ function createForecastDates() {
   return forecastDates;
 }
 
+function initInstallationAddresses(installationAddresses) {
+  for (let i = 0; i < airQualityForecasts?.length; i++) {
+    let installationForecasts = airQualityForecasts[i];
+
+    if (installationForecasts?.length > 0) {
+      let installationId = installationForecasts[0]?.InstallationId;
+
+      installationAddresses[installationId]
+        = installationForecasts[0]?.InstallationAddress;
+    }
+  }
+}
+
 function getColorForCaqiRange(caqi) {
   switch (true) {
     case (caqi <= caqiRanges.veryLow.max):

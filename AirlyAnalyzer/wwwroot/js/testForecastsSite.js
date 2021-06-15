@@ -8,7 +8,7 @@ let charts = {}
 
 $(document).ready(function () {
   forecastDates = createForecastDates();
-  initInstallationAddresses();
+  initInstallationAddresses(installationAddresses);
   updateInstallationsSelect();
   initForecastsDictionary();
   createInitForecastCharts();
@@ -18,19 +18,6 @@ $('#airQualityInstallations').change(function () {
   let selectedInstallationId = $(this).val();
   updateForecastCharts(selectedInstallationId);
 });
-
-function initInstallationAddresses() {
-  for (let i = 0; i < airQualityForecasts?.length; i++) {
-    let installationForecasts = airQualityForecasts[i];
-
-    if (installationForecasts?.length > 0) {
-      let installationId = installationForecasts[0]?.InstallationId;
-
-      installationAddresses[installationId]
-        = installationForecasts[0]?.InstallationAddress;
-    }
-  }
-}
 
 function updateInstallationsSelect() {
   let select = document.getElementById('airQualityInstallations');

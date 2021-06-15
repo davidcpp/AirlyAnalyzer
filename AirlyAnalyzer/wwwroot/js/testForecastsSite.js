@@ -7,7 +7,7 @@ let forecastDates = [];
 let charts = {}
 
 $(document).ready(function () {
-  fillNextForecastDates();
+  fillNextForecastDates(forecastDates);
   initInstallationAddresses();
   updateInstallationsSelect();
   initForecastsDictionary();
@@ -18,17 +18,6 @@ $('#airQualityInstallations').change(function () {
   let selectedInstallationId = $(this).val();
   updateForecastCharts(selectedInstallationId);
 });
-
-function fillNextForecastDates() {
-  let initDate = new Date();
-  initDate.setHours(initDate.getHours() + 1, 0, 0, 0);
-
-  for (let i = 0; i < forecastHoursNumber; i++) {
-    let currentDate = new Date(initDate);
-    currentDate.setHours(currentDate.getHours() + i)
-    forecastDates.push(currentDate);
-  }
-}
 
 function initInstallationAddresses() {
   for (let i = 0; i < airQualityForecasts?.length; i++) {

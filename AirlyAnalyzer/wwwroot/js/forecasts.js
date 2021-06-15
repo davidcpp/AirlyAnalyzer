@@ -26,7 +26,7 @@
 
 const chartSize = {
   margin: ({ top: 30, right: 60, bottom: 30, left: 60 }),
-  height: 500,
+  height: 360,
   width: 900,
 };
 

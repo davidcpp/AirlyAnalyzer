@@ -29,6 +29,7 @@
 {
   <script src="~/js/forecasts.js"></script>
   <script id="forecastsSite" src="~/js/forecastsSite.js"
-          airQualityForecasts='@System.Text.Json.JsonSerializer.Serialize(airQualityForecasts)'>
+          airQualityForecasts='@System.Text.Json.JsonSerializer.Serialize(
+                                    airQualityForecasts)'>
   </script>
 }

@@ -54,7 +54,7 @@ function createForecastDates() {
   return forecastDates;
 }
 
-function initInstallationAddresses() {
+function initInstallationAddresses(airQualityForecasts) {
   let installationAddresses = [];
 
   for (let i = 0; i < airQualityForecasts?.length; i++) {

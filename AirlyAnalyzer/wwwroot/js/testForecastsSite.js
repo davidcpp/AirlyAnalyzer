@@ -10,7 +10,7 @@ let chartDivClass = "col-sm-12 col-lg-6 mb-5";
 
 $(document).ready(function () {
   forecastDates = createForecastDates();
-  installationAddresses = initInstallationAddresses();
+  installationAddresses = initInstallationAddresses(airQualityForecasts);
   updateInstallationsSelect();
   initForecastsDictionary();
   createInitForecastCharts();

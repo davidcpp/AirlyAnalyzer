@@ -144,14 +144,6 @@ function createForecastChart(forecast) {
   return chartDiv.node();
 }
 
-function addAxesToChart(chartSvg, xAxis, yAxis) {
-  chartSvg.append("g")
-    .call(xAxis);
-
-  chartSvg.append("g")
-    .call(yAxis);
-}
-
 function createScales(forecast) {
   let x = d3.scaleBand()
     .domain(d3.range(forecastDates.length))
@@ -202,6 +194,14 @@ function createChart(forecast, x, y) {
     .attr("fill", d => getColorForCaqiRange(d?.AirlyCaqi ?? 0));
 
   return { chartSvg, chartDiv };
+}
+
+function addAxesToChart(chartSvg, xAxis, yAxis) {
+  chartSvg.append("g")
+    .call(xAxis);
+
+  chartSvg.append("g")
+    .call(yAxis);
 }
 
 function updateForecastCharts(selectedInstallationId) {

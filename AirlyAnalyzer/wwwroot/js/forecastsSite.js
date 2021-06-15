@@ -65,24 +65,16 @@ function createForecastChart(installationId) {
       installationId = airQualityForecasts[0][0].InstallationId;
     }
 
-    const title = {
-      text: "CAQI",
-      fontSize: 13,
-      x: -chartSize.margin.left + 25,
-    };
-
-    title.y = title.fontSize;
-
     let yTitle = g => g
       .append("text")
-      .attr("x", title.x)
-      .attr("y", title.y)
+      .attr("x", yAxisTitle.x)
+      .attr("y", yAxisTitle.y)
       .attr("fill", "currentColor")
       .attr("text-anchor", "start")
       .attr("font-family", "sans-serif")
       .attr("font-weight", "bold")
-      .attr("font-size", title.fontSize)
-      .text(title.text);
+      .attr("font-size", yAxisTitle.fontSize)
+      .text(yAxisTitle.text);
 
     let x = d3.scaleBand()
       .domain(d3.range(forecastsDictionary[installationId].length))

@@ -36,9 +36,9 @@ let charts = {}
 
 $(document).ready(function () {
   fillNextForecastDates();
-  initForecastsDictionary();
   initInstallationAddresses();
   updateInstallationsSelect();
+  initForecastsDictionary();
   createInitForecastCharts();
 });
 

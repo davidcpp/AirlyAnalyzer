@@ -129,7 +129,7 @@ class ForecastChart {
   }
 
   #createChartDiv() {
-    const chartDiv = d3.select("#mainDiv")
+    const chartDiv = d3.select("#forecastCharts")
       .append("div")
       .attr("id", this.#forecast[0].Source)
       .attr("class", this.#chartDivClass);

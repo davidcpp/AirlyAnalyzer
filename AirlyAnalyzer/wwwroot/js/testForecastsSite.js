@@ -1,5 +1,5 @@
 ﻿// Variables/objects from model
-let airQualityForecasts = eval($('#forecastsSite').attr('airQualityForecasts'));
+let airQualityForecasts = eval($('#testForecastsSite').attr('airQualityForecasts'));
 let forecastsDictionary = {}
 let installationAddresses = {};
 let forecastDates = [];

@@ -11,7 +11,7 @@ let chartDivClass = "col-sm-12 col-lg-6 mb-5";
 $(document).ready(function () {
   forecastDates = createForecastDates();
   installationAddresses = initInstallationAddresses(airQualityForecasts);
-  updateInstallationsSelect();
+  updateInstallationsSelect(airQualityForecasts, installationAddresses);
   initForecastsDictionary();
   createInitForecastCharts();
 });
@@ -20,23 +20,6 @@ $('#airQualityInstallations').change(function () {
   let selectedInstallationId = $(this).val();
   updateForecastCharts(selectedInstallationId);
 });
-
-function updateInstallationsSelect() {
-  let select = document.getElementById('airQualityInstallations');
-
-  for (let installationId in installationAddresses) {
-    let option = document.createElement("option");
-    option.text = installationAddresses[installationId];
-    option.value = installationId;
-    select.add(option);
-  }
-
-  if (airQualityForecasts?.length > 0) {
-    if (airQualityForecasts[0]?.length > 0) {
-      select.value = airQualityForecasts[0][0]?.InstallationId;
-    }
-  }
-}
 
 function initForecastsDictionary() {
   for (let i = 0; i < airQualityForecasts?.length; i++) {

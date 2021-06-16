@@ -3,6 +3,9 @@
 @{
   ViewData["Title"] = "Air Quality Forecast";
   var airQualityForecasts = Model.GroupBy(f => f.InstallationId);
+
+  var jsonSerializerOptions = new JsonSerializerOptions();
+  jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -29,7 +32,7 @@
 {
   <script src="~/js/forecasts.js"></script>
   <script id="forecastsSite" src="~/js/forecastsSite.js"
-          airQualityForecasts='@System.Text.Json.JsonSerializer.Serialize(
-                                    airQualityForecasts)'>
+          airQualityForecasts='@JsonSerializer.Serialize(
+                                    airQualityForecasts, jsonSerializerOptions)'>
   </script>
 }
